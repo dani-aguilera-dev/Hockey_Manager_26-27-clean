@@ -55,7 +55,17 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Escalada de tarjetas | `next_card_for_player` | Test | PASS |
 | PC, strokes y shootout | Motor existente y pruebas de partido | Suite de tests | PASS |
 
-## 6. Reglas FIH avanzadas y arbitraje
+## 6. Visor 3D mínimo conectado a MatchEngine
+
+| Criterio | Implementación | Evidencia | Estado |
+| --- | --- | --- | --- |
+| Campo 3D | `MatchViewer3D.tsx` con Three.js: césped, líneas, círculo, áreas y porterías | E2E `viewer3d` + captura `e2e_3d.png` | PASS |
+| 22 jugadores y balón | 11 locales y 11 visitantes, balón animado y cámara perspectiva | E2E comprueba canvas de 200×150 mínimo | PASS |
+| Conexión con MatchEngine | El visor consume `LivePayload`: `score`, `quarter`, `minute`, `line`, `events` y `tactics.formation` | `/api/match/live` y `/api/match/live/advance` | PASS |
+| Actualización en directo | El balón se mueve hacia el equipo del último evento y los jugadores reaccionan al lado atacante | E2E abre el partido en directo | PASS |
+| Física 3D completa | No hay colisiones, trayectorias físicas ni animación esquelética de jugadores | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
+
+## 7. Reglas FIH avanzadas y arbitraje
 
 | Criterio | Prueba | Estado |
 | --- | --- | --- |
@@ -67,14 +77,14 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Árbitro con nombre, estilo, exigencia y sesgo de tarjetas | `test_penalty_corner_stroke_and_referee_are_exposed`; `MatchResult.referee` | PASS |
 | Tarjetas verde/amarilla/roja y suspensiones temporales | `test_rules_cards.py` | PASS |
 
-## 7. E2E de la beta
+## 8. E2E de la beta
 
 Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -84,20 +94,21 @@ Flujo:
 3. Navegar al mes siguiente.
 4. Simular un partido rápido.
 5. Abrir el parte y comprobar árbitro y estadísticas de PC/strokes.
-6. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-7. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+6. Abrir `/app/game/live` y comprobar el canvas del visor 3D.
+7. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+8. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
-## 8. Límites convertidos en criterios pass/fail
+## 9. Límites convertidos en criterios pass/fail
 
 | Límite anterior | Criterio verificable | Estado |
 | --- | --- | --- |
-| “No hay motor 3D” | El alcance es manager 2D/texto; no se acepta como paridad gráfica con FM24 | FAIL / fuera de alcance |
+| “No hay motor 3D” | Visor 3D mínimo con campo, 22 jugadores, balón y actualización desde MatchEngine | PASS visor mínimo / FAIL física 3D completa |
 | “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones y árbitro tienen pruebas explícitas; el resto de interpretaciones discrecionales no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
 | “No replica todas las pantallas de FM24” | La matriz enumera los flujos cubiertos; la paridad total de pantallas no se declara | FAIL / fuera de alcance |
 | “Prensa textual” | Prensa previa y posterior con medios, efectos e historial | PASS |
 | “Marcas no cambian la física” | Contratos de club e individuales con efectos económicos, de marca y relación; no se promete física de material | PASS para gestión / FAIL para simulación física |
 | “No hay vídeo de comparecencia” | La prensa es una pantalla textual interactiva | FAIL / fuera de alcance |
 
-## 9. Resultado
+## 10. Resultado
 
 La beta avanzada pasa los criterios de los flujos solicitados y de las reglas FIH operativas. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total.

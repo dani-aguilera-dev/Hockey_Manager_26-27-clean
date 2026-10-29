@@ -7,6 +7,7 @@ import type { LivePayload } from '../types'
 import { useGame } from '../context/GameContext'
 import { useToast } from '../context/ToastContext'
 import { Avatar, Badge, Button, Card, Crest, Field, LoadingBlock, PageHeader } from '../components/ui'
+import MatchViewer3D from '../components/MatchViewer3D'
 
 export default function LiveMatch() {
   const navigate = useNavigate()
@@ -110,7 +111,9 @@ export default function LiveMatch() {
         actions={<Badge tone={data.finished ? 'ok' : 'danger'}>{data.finished ? 'Finalizado' : 'EN DIRECTO'}</Badge>}
       />
 
-      <Card>
+      <MatchViewer3D data={data} />
+
+      <Card className="mt-2">
         <div className="scoreboard">
           <div className="score-team"><Crest src={data.home.crest} name={data.home.name} size={58} /><div><h2>{data.home.name}</h2><span className="muted">{homePossession}% posesión</span></div></div>
           <div><div className="score-value">{data.score[0]} - {data.score[1]}</div><div className="score-meta">{data.quarter}º cuarto · {data.minute}'</div></div>

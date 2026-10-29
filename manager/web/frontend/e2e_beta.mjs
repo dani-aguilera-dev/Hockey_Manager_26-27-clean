@@ -41,6 +41,16 @@ try {
   await page.getByText('Rueda completada').waitFor()
   result.postPress = true
 
+  const live = await context.request.post('/api/match/live/start', { data: { travel: 'equilibrado' } })
+  if (!live.ok()) throw new Error(`live HTTP ${live.status()}: ${await live.text()}`)
+  await page.goto('/app/game/live')
+  const viewer = page.locator('[data-testid="match-viewer-3d"] canvas')
+  await viewer.waitFor()
+  const box = await viewer.boundingBox()
+  if (!box || box.width < 200 || box.height < 150) throw new Error(`viewer size ${JSON.stringify(box)}`)
+  result.viewer3d = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_3d.png' })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

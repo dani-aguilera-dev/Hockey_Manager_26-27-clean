@@ -20,7 +20,7 @@
 | Backend | `python3 -m pytest src/tests -q` → **173 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
-| E2E Playwright | calendario mensual, amistoso/partido, prensa posterior y marcas individuales | PASS |
+| E2E Playwright | calendario mensual, amistoso/partido, visor 3D, prensa posterior y marcas individuales | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media y equipación; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -49,7 +49,7 @@ curl /app → 200
 curl /static/react/assets/index-Bu3vFlBz.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

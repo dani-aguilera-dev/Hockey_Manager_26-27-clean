@@ -962,3 +962,42 @@ select option { background: #0b1220; color: #e8eef8; }
   .month-day { min-height: 64px; padding: 4px; }
   .month-event { font-size: 9px; }
 }
+
+/* Visor 3D del partido */
+.match-viewer-3d {
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: radial-gradient(circle at 50% 35%, #123047, #07101d 70%);
+}
+.match-viewer-3d canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+.match-viewer-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 5px 8px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 5px;
+  background: rgba(7,16,29,.7);
+  color: #dcecff;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.match-viewer-fallback {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+@media (max-width: 760px) {
+  .match-viewer-3d { height: 280px; }
+}
