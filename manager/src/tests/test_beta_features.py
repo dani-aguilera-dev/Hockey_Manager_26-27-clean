@@ -195,6 +195,7 @@ def test_api_calendar_brands_editor_and_press(client):
     # Flujo E2E de partido y rueda posterior.
     quick = client.post("/api/match/quick", json={"travel": "equilibrado"})
     assert quick.status_code == 200, quick.get_data(as_text=True)
+    assert quick.get_json()["data"]["report"]["referee"]["name"]
     post = client.get("/api/press/post").get_json()["data"]
     assert post["available"] is True
     assert len(post["questions"]) == 4
@@ -202,3 +203,13 @@ def test_api_calendar_brands_editor_and_press(client):
     post_response = client.post("/api/press/post", json={"answers": post_answers})
     assert post_response.status_code == 200, post_response.get_data(as_text=True)
     assert post_response.get_json()["data"]["state"]["press"]["post_done"] is True
+
+    live_start = client.post("/api/match/live/start", json={"travel": "equilibrado"})
+    assert live_start.status_code == 200, live_start.get_data(as_text=True)
+    live = live_start.get_json()["data"]
+    assert live["line"] and live["bench"]
+    out_id = live["line"][0]["id"]
+    in_id = live["bench"][0]["id"]
+    sub = client.post("/api/match/live/sub", json={"out_id": out_id, "in_id": in_id})
+    assert sub.status_code == 200, sub.get_data(as_text=True)
+    assert sub.get_json()["data"]["events"]

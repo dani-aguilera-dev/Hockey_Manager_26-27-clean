@@ -34,6 +34,7 @@ export default function ReportPage() {
     ['Tiros', report.home_stats.shots || 0, report.away_stats.shots || 0],
     ['A puerta', report.home_stats.shots_on_target || 0, report.away_stats.shots_on_target || 0],
     ['PC', report.home_stats.pc || 0, report.away_stats.pc || 0],
+    ['Strokes', report.home_stats.strokes || 0, report.away_stats.strokes || 0],
     ['Paradas', report.home_stats.saves || 0, report.away_stats.saves || 0],
   ]
 
@@ -52,7 +53,7 @@ export default function ReportPage() {
           <div><div className="score-value">{report.home_goals} - {report.away_goals}</div><div className="score-meta"><Badge tone={tone}>{report.result}</Badge></div></div>
           <div className="score-team right"><div><h2>{report.away_name}</h2><span className="muted">Visitante</span></div></div>
         </div>
-        <div className="match-strip"><span>Asistencia {report.attendance || '—'}</span><span>·</span><span>Gestión {report.home_management?.score || '—'} / {report.away_management?.score || '—'}</span><span>·</span><span>Preparación +{report.prep_bonus || 0}</span></div>
+        <div className="match-strip"><span>Asistencia {report.attendance || '—'}</span><span>·</span><span>Gestión {report.home_management?.score || '—'} / {report.away_management?.score || '—'}</span><span>·</span><span>Preparación +{report.prep_bonus || 0}</span>{report.referee?.name && <><span>·</span><span>Árbitro: {report.referee.name} ({report.referee.style})</span></>}</div>
       </Card>
 
       <div className="split-2 mt-2">

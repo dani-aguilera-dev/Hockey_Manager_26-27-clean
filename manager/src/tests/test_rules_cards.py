@@ -81,7 +81,7 @@ def test_yellow_card_is_temporary_and_does_not_ban_next_match():
 
 def test_red_card_is_permanent_for_match_and_creates_next_match_ban():
     engine = _engine()
-    engine.rng = FixedRng(0.99)
+    engine.rng = FixedRng(1.0)
     player = engine._lineup(0)[0]
     engine._card(0)
 

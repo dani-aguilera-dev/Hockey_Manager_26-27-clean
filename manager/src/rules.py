@@ -51,6 +51,14 @@ CARD_DESCRIPTIONS: dict[str, str] = {
 
 # Motivos genéricos para que el parte y el historial no muestren una tarjeta
 # sin contexto. El motor puede sustituirlos por un motivo más concreto.
+REFEREE_PROFILES: list[dict[str, object]] = [
+    {"name": "Marta Solís", "style": "técnica", "strictness": 62, "card_bias": 0.015},
+    {"name": "Hugo Peña", "style": "permisiva", "strictness": 38, "card_bias": -0.035},
+    {"name": "Clara Ferrán", "style": "estricta", "strictness": 82, "card_bias": 0.045},
+    {"name": "Iker Salas", "style": "experimentada", "strictness": 55, "card_bias": 0.0},
+    {"name": "Nora Vidal", "style": "de contacto", "strictness": 70, "card_bias": 0.025},
+]
+
 CARD_REASONS: dict[str, list[str]] = {
     "green": [
         "falta técnica repetida",

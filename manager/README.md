@@ -9,7 +9,7 @@ Diseño y prototipo de un juego de **entrenador y gestión de club** de hockey h
 - **Motor:** DHA y DHB jugables, partidos en directo, mercado, staff, entrenamiento, cantera, Copa, EHL, multi-temporada y guardado/carga.
 - **Web React:** Flask como backend/API + SPA React en `/app`, con fotos de jugadores, escudos oficiales de iSquad, noticias inmersivas y diseño responsive.
 - **Beta avanzada:** calendario de amistosos, prensa con periodistas y medios, marcas reales de equipación (Osaka, Ritual, Gryphon, TK, Grays, STX…), editor de fichas y auditoría de plantillas.
-- **Tests:** 170 superados.
+- **Tests:** 173 superados.
 
 ## Inicio rápido
 

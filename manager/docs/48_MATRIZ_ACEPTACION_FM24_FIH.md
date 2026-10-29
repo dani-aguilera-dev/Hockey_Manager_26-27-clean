@@ -55,14 +55,26 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Escalada de tarjetas | `next_card_for_player` | Test | PASS |
 | PC, strokes y shootout | Motor existente y pruebas de partido | Suite de tests | PASS |
 
-## 6. E2E de la beta
+## 6. Reglas FIH avanzadas y arbitraje
+
+| Criterio | Prueba | Estado |
+| --- | --- | --- |
+| PC: inyección, parada, flick/desvío, portero y rebote | `test_penalty_corner_stroke_and_referee_are_exposed`; stats `pc`, `pc_goals` y eventos `pc` | PASS |
+| Stroke: lanzador, portero, gol/parada/fallo | `test_penalty_corner_stroke_and_referee_are_exposed`; stats `strokes`, `stroke_goals` y eventos `stroke` | PASS |
+| Shootout: cinco rondas, muerte súbita y ganador único | `test_shootout_resolves_draw_with_five_rounds_and_winner` | PASS |
+| Sustituciones: máximo cinco y banquillo | `test_substitution_limit_and_red_card_suspension` | PASS |
+| No sustituir sancionados/lesionados | `test_substitution_limit_and_red_card_suspension` y tests de tarjetas | PASS |
+| Árbitro con nombre, estilo, exigencia y sesgo de tarjetas | `test_penalty_corner_stroke_and_referee_are_exposed`; `MatchResult.referee` | PASS |
+| Tarjetas verde/amarilla/roja y suspensiones temporales | `test_rules_cards.py` | PASS |
+
+## 7. E2E de la beta
 
 Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"postPress":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -71,17 +83,21 @@ Flujo:
 2. Abrir `/app/game/calendar` y comprobar la vista mensual.
 3. Navegar al mes siguiente.
 4. Simular un partido rápido.
-5. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-6. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+5. Abrir el parte y comprobar árbitro y estadísticas de PC/strokes.
+6. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+7. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
-## 7. Límites declarados
+## 8. Límites convertidos en criterios pass/fail
 
-- No hay motor 3D ni captura de vídeo de partido.
-- La fidelidad FIH cubre reglas operativas del motor, no cada interpretación arbitral.
-- La beta no replica todas las pantallas, bases de datos ni licencias de FM24.
-- La prensa es textual; no hay comparecencia con vídeo ni preguntas en tiempo real.
-- Los contratos de marca son una capa de gestión; no cambian la simulación física del material.
+| Límite anterior | Criterio verificable | Estado |
+| --- | --- | --- |
+| “No hay motor 3D” | El alcance es manager 2D/texto; no se acepta como paridad gráfica con FM24 | FAIL / fuera de alcance |
+| “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones y árbitro tienen pruebas explícitas; el resto de interpretaciones discrecionales no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
+| “No replica todas las pantallas de FM24” | La matriz enumera los flujos cubiertos; la paridad total de pantallas no se declara | FAIL / fuera de alcance |
+| “Prensa textual” | Prensa previa y posterior con medios, efectos e historial | PASS |
+| “Marcas no cambian la física” | Contratos de club e individuales con efectos económicos, de marca y relación; no se promete física de material | PASS para gestión / FAIL para simulación física |
+| “No hay vídeo de comparecencia” | La prensa es una pantalla textual interactiva | FAIL / fuera de alcance |
 
-## 8. Resultado
+## 9. Resultado
 
-La beta avanzada pasa la matriz para los flujos solicitados: calendario, amistosos, prensa previa y posterior, marcas de club e individuales, editor de jugadores, plantillas limpias, clubes auditados y reglas FIH operativas. La paridad total con FM24 queda fuera del alcance de esta iteración y se documenta como límite, no como funcionalidad oculta.
+La beta avanzada pasa los criterios de los flujos solicitados y de las reglas FIH operativas. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total.

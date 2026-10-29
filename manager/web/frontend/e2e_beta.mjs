@@ -26,6 +26,11 @@ try {
   if (!quick.ok()) throw new Error(`quick HTTP ${quick.status()}: ${await quick.text()}`)
   result.quickMatch = true
 
+  await page.goto('/app/game/report')
+  await page.getByText('Árbitro:').waitFor()
+  await page.getByText('Strokes').waitFor()
+  result.refereeAndSetPieces = true
+
   await page.goto('/app/game/press/post')
   await page.getByRole('heading', { name: 'La voz del vestuario' }).waitFor()
   const questionCount = await page.locator('.press-question').count()

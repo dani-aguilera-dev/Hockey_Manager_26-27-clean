@@ -575,6 +575,7 @@ def _user_result_payload(state: GameState, fixture: Fixture, result: MatchResult
         "away_management": away.management_profile(),
         "prep_bonus": state.user_team.prep_bonus,
         "shootout": result.shootout,
+        "referee": result.referee,
         "date": fixture.date,
     }
 

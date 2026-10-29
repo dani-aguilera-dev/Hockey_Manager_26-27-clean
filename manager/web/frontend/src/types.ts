@@ -706,6 +706,7 @@ export interface MatchReport {
   away_management: Record<string, number>
   prep_bonus: number
   shootout: Record<string, unknown>
+  referee?: { name?: string; style?: string; strictness?: number; card_bias?: number }
   injuries?: MatchInjury[]
   cards?: MatchCard[]
   player_minutes?: Record<string, number>

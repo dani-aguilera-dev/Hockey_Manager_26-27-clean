@@ -17,7 +17,7 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **170 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **173 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | E2E Playwright | calendario mensual, amistoso/partido, prensa posterior y marcas individuales | PASS |
@@ -39,7 +39,7 @@
 
 ```text
 python3 -m pytest src/tests -q
-170 passed in 277.07s
+173 passed in 278.08s
 
 cd manager/web/frontend && npm run build
 ✓ built in 3.68s
@@ -49,7 +49,7 @@ curl /app → 200
 curl /static/react/assets/index-Bu3vFlBz.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"postPress":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

@@ -35,6 +35,7 @@ class MatchResult:
     cards: list[dict[str, Any]] = field(default_factory=list)
     player_minutes: dict[str, int] = field(default_factory=dict)
     shootout: dict[str, Any] = field(default_factory=dict)
+    referee: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -71,6 +72,7 @@ class MatchEngine:
         self.home = home
         self.away = away
         self.rng = rng
+        self.referee = dict(self.rng.choice(rules.REFEREE_PROFILES))
         self.match_date = match_date
         self.neutral = neutral
         self.knockout = knockout
@@ -477,7 +479,7 @@ class MatchEngine:
         for card_type in ("green", "yellow", "red"):
             prior_cards.extend([card_type] * int(self.player_stats[p.id].get(card_type, 0)))
         forced = rules.next_card_for_player(prior_cards) if prior_cards else ""
-        roll = self.rng.random()
+        roll = max(0.0, min(0.999, self.rng.random() + float(self.referee.get("card_bias", 0.0))))
         if forced:
             card_type = forced
         elif roll < 0.72:
@@ -1095,6 +1097,7 @@ class MatchEngine:
             cards=self.cards,
             player_minutes=self.player_minutes,
             shootout=shootout,
+            referee=self.referee,
         )
         return self.result
 
@@ -1110,6 +1113,7 @@ class MatchEngine:
             "away_management": self.away.management_profile(self._lineup(1)),
             "home_tactical_bonus": round(self.tactical_matchup_bonus(0), 2),
             "away_tactical_bonus": round(self.tactical_matchup_bonus(1), 2),
+            "referee": self.referee,
         }
 
     def player_live_rows(self, side: int) -> list[dict]:
@@ -1169,6 +1173,8 @@ class MatchEngine:
             return False, "El jugador que sale no está en el campo."
         if out.id in self.red_cards[side] or self.suspensions[side].get(out.id, 0.0) > 0:
             return False, "No se puede sustituir a un jugador suspendido durante su suspensión."
+        if out.suspension > 0:
+            return False, "No se puede sustituir a un jugador sancionado para este partido."
         if out not in self._lineup(side) and out.injury <= 0:
             return False, "El jugador que sale no está disponible en el campo."
         if inn is None:

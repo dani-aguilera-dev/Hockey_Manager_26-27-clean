@@ -1,10 +1,13 @@
 """Matriz de aceptación deportiva/FIH de la beta avanzada."""
 
+import random
 from collections import Counter
 from datetime import date
 
 from src import rules
 from src.competitions import COMPETITIONS, competition, playable_competitions
+from src.data_loader import load_teams
+from src.match_engine import MatchEngine
 from src.season import new_game
 
 
@@ -72,3 +75,57 @@ def test_spanish_competition_boundaries_are_declared():
     assert competition("DHA").system == "dha"
     assert competition("DHB").system == "dhb_two_phase"
     assert competition("1A").system == "regional"
+
+
+def test_penalty_corner_stroke_and_referee_are_exposed():
+    teams, _, _ = load_teams()
+    engine = MatchEngine(teams["cd-terrassa"], teams["ud-taburiente"], random.Random(88), detailed=True)
+    assert engine.referee["name"]
+    assert engine.referee["style"]
+    before_pc = engine.stats[0]["pc"]
+    engine._penalty_corner(0)
+    assert engine.stats[0]["pc"] > before_pc
+    assert any(event["type"] == "pc" for event in engine.events)
+    before_strokes = engine.stats[0]["strokes"]
+    engine._stroke(0)
+    assert engine.stats[0]["strokes"] > before_strokes
+    assert any(event["type"] == "stroke" for event in engine.events)
+    result = engine.simulate()
+    assert result.referee["name"] == engine.referee["name"]
+
+
+def test_shootout_resolves_draw_with_five_rounds_and_winner():
+    teams, _, _ = load_teams()
+    engine = MatchEngine(teams["cd-terrassa"], teams["ud-taburiente"], random.Random(19), detailed=True, knockout=True)
+    shootout = engine._shootout()
+    assert len(shootout["log"]) >= 5
+    assert shootout["home_score"] != shootout["away_score"]
+    assert shootout["winner_id"] in (engine.home.id, engine.away.id)
+    assert all("home_goal" in row and "away_goal" in row for row in shootout["log"])
+
+
+def test_substitution_limit_and_red_card_suspension():
+    teams, _, _ = load_teams()
+    engine = MatchEngine(teams["cd-terrassa"], teams["ud-taburiente"], random.Random(91), detailed=True)
+    engine.advance_quarter()
+    for _ in range(5):
+        starters = [p for p in engine._lineup(0) if p.available]
+        bench = [p for p in engine._bench(0) if p.available]
+        if not starters or not bench:
+            break
+        ok, _ = engine.manual_substitute(0, starters[0].id, bench[0].id, coaching=True)
+        assert ok
+    assert engine._subs[0] == 5
+    starters = [p for p in engine._lineup(0) if p.available]
+    bench = [p for p in engine._bench(0) if p.available]
+    if starters and bench:
+        ok, message = engine.manual_substitute(0, starters[0].id, bench[0].id, coaching=True)
+        assert not ok
+        assert "cambios" in message.lower()
+
+    red_engine = MatchEngine(teams["cd-terrassa"], teams["ud-taburiente"], random.Random(92), detailed=True)
+    player = red_engine._lineup(0)[0]
+    player.suspension = 1
+    ok, message = red_engine.manual_substitute(0, player.id, red_engine._bench(0)[0].id)
+    assert not ok
+    assert "sancionado" in message.lower() or "suspendido" in message.lower()
