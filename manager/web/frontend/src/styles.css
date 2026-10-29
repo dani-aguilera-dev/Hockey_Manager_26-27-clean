@@ -1342,3 +1342,15 @@ select option { background: #0b1220; color: #e8eef8; }
 .responsibility-row small { color: var(--muted); font-size: 11px; }
 @media (max-width: 980px) { .responsibility-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .responsibility-grid { grid-template-columns: 1fr; } }
+
+/* Desarrollo individual */
+.development-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.development-card { display: flex; flex-direction: column; gap: 7px; padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.015); }
+.development-card.active { border-color: rgba(255,176,32,.35); }
+.development-card h3 { margin: 0; font-size: 14px; }
+.development-card p { margin: 0; }
+.development-form { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.development-form .field span { font-size: 10px; }
+.development-card .field span { font-size: 10px; }
+@media (max-width: 980px) { .development-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .development-grid { grid-template-columns: 1fr; } }

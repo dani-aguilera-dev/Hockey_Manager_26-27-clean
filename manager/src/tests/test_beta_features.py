@@ -466,3 +466,22 @@ def test_api_responsibilities_assignment(client):
     result = response.get_json()["data"]
     assert result["responsibilities"]["areas"][1]["staff_name"] == staff["name"]
     assert result["state"]["team"]["name"]
+
+
+def test_api_development_plan(client):
+    _new_api(client, seed="51")
+    data = client.get("/api/development")
+    assert data.status_code == 200, data.get_data(as_text=True)
+    payload = data.get_json()["data"]
+    player = payload["players"][0]
+    response = client.post(
+        f"/api/development/{player['player_id']}",
+        json={"focus": "tecnica", "intensity": "normal", "notes": "mejorar pase"},
+    )
+    assert response.status_code == 200, response.get_data(as_text=True)
+    result = response.get_json()["data"]
+    assert result["development"]["active"] == 1
+    assert result["development"]["players"][0]["focus"] == "tecnica"
+    cleared = client.delete(f"/api/development/{player['player_id']}")
+    assert cleared.status_code == 200, cleared.get_data(as_text=True)
+    assert cleared.get_json()["data"]["development"]["active"] == 0

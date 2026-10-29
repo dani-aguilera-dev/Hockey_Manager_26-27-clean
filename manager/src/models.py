@@ -213,6 +213,7 @@ class PlayerState:
     transfer_asking_price: int = 0
     brand_deal: dict[str, Any] = field(default_factory=dict)
     loan: dict[str, Any] = field(default_factory=dict)
+    development_plan: dict[str, Any] = field(default_factory=dict)
 
     @property
     def youth_category(self) -> str:

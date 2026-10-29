@@ -25,6 +25,7 @@ import {
   Save,
   Settings,
   Shield,
+  TrendingUp,
   Trophy,
   Users,
   Wallet,
@@ -49,6 +50,7 @@ const teamLinks = [
   { to: '/game/squad', label: 'Plantilla', icon: Users },
   { to: '/game/tactics', label: 'Táctica', icon: ClipboardList },
   { to: '/game/training', label: 'Entrenamiento', icon: Dumbbell },
+  { to: '/game/development', label: 'Desarrollo', icon: TrendingUp },
   { to: '/game/medical', label: 'Enfermería', icon: HeartPulse },
 ]
 

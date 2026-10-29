@@ -24,6 +24,7 @@ from .competitions import (
     promotion_groups,
 )
 from .cup import CUP_ACTIVATION_ROUND, CUP_OFFSETS, ROUND_NAMES, ROUND_PHASES, cup_round_fixtures, cup_start, new_cup
+from .development import advance_development
 from .data_loader import load_teams
 from .ehl import create_ehl, ehl_next_date, simulate_ehl
 from .finance import apply_round_finances
@@ -549,6 +550,7 @@ def _reset_week_training(state: GameState) -> None:
         t.prep_bonus = 0.0
     advance_mentoring(state)
     advance_scouting(state)
+    advance_development(state)
 
 
 def _user_result_payload(state: GameState, fixture: Fixture, result: MatchResult, travel: dict | None) -> dict:

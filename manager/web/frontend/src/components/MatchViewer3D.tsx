@@ -289,6 +289,13 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
       ;(debugRef.current as any).forcedContactFrames = 8
       return true
     }
+    ;(debugRef.current as any).forceBallBodyContact = () => {
+      const target = players[0]
+      if (!target) return false
+      ball.position.set(target.root.position.x, 0.62, target.root.position.z)
+      ;(ball.userData.velocity as THREE.Vector3).set(0, 0, 0)
+      return true
+    }
     ;(window as any).__matchViewer3D = debugRef.current
 
     const resize = () => {

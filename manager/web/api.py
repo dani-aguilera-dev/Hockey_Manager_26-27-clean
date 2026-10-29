@@ -57,6 +57,7 @@ from src.datahub import datahub_overview, set_instructions
 from src.history import history_overview
 from src.analysis import analysis_overview
 from src.responsibilities import responsibilities_overview, set_responsibility
+from src.development import clear_development_plan, development_overview, set_development_plan
 from src.affiliates import (
     affiliate_overview,
     assign_mentor,
@@ -2054,6 +2055,51 @@ def responsibilities_update():
     _save(state)
     return _ok(
         {"result": result, "responsibilities": responsibilities_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.get("/development")
+def development():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(development_overview(state))
+
+
+@api.post("/development/<player_id>")
+def development_set(player_id: str):
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = set_development_plan(
+        state,
+        player_id,
+        str(payload.get("focus", "tecnica") or "tecnica"),
+        str(payload.get("intensity", "normal") or "normal"),
+        str(payload.get("notes", "")),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo asignar el plan."), 409, "development_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "development": development_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.delete("/development/<player_id>")
+def development_clear(player_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = clear_development_plan(state, player_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo retirar el plan."), 409, "development_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "development": development_overview(state), "state": _state_payload(state)},
         result.get("message", ""),
     )
 

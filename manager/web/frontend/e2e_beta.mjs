@@ -61,6 +61,8 @@ try {
   const box = await viewer.boundingBox()
   if (!box || box.width < 200 || box.height < 150) throw new Error(`viewer size ${JSON.stringify(box)}`)
   await page.waitForTimeout(1800)
+  await page.evaluate(() => window.__matchViewer3D.forceBallBodyContact())
+  await page.waitForTimeout(250)
   const viewerState = await page.evaluate(() => window.__matchViewer3D)
   if (!viewerState || viewerState.players !== 22) throw new Error(`viewer players ${JSON.stringify(viewerState)}`)
   if (viewerState.frames < 10) throw new Error(`viewer frames ${viewerState.frames}`)
@@ -207,6 +209,13 @@ try {
   await page.locator('.responsibility-saved').waitFor()
   result.responsibilities = true
   await page.screenshot({ path: '/tmp/opencode/e2e_responsibilities.png', fullPage: true })
+
+  await page.goto('/app/game/development')
+  await page.getByRole('heading', { name: 'Desarrollo de jugadores' }).waitFor()
+  await page.locator('[data-testid^="development-save-"]').first().click()
+  await page.locator('.development-saved').waitFor()
+  result.development = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_development.png', fullPage: true })
 
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()

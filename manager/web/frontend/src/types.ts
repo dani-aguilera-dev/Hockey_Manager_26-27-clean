@@ -1961,3 +1961,32 @@ export interface ResponsibilitiesData {
   total: number
   staff: Array<{ name: string; role: string; rating: number; salary: number }>
 }
+
+export interface DevelopmentPlayer {
+  player_id: string
+  name: string
+  age: number
+  position: string
+  overall: number
+  potential: number
+  category: string
+  is_youth: boolean
+  focus: string
+  focus_label: string
+  intensity: string
+  intensity_label: string
+  notes: string
+  since: string
+  sessions: number
+  progress: number
+  last_gain: string
+}
+
+export interface DevelopmentData {
+  players: DevelopmentPlayer[]
+  active: number
+  youth_active: number
+  average_progress: number
+  focuses: Array<{ id: string; label: string; attributes: string[] }>
+  intensities: Array<{ id: string; label: string; progress: number; gain: number; fatigue: number }>
+}

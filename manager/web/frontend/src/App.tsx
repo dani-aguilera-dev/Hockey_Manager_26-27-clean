@@ -18,6 +18,7 @@ import TeamMeetingPage from './pages/TeamMeeting'
 import FinancePage from './pages/Finance'
 import AnalysisPage from './pages/Analysis'
 import ResponsibilitiesPage from './pages/Responsibilities'
+import DevelopmentPage from './pages/Development'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -87,6 +88,7 @@ export default function App() {
         <Route path="finance" element={<FinancePage />} />
         <Route path="analysis" element={<AnalysisPage />} />
         <Route path="responsibilities" element={<ResponsibilitiesPage />} />
+        <Route path="development" element={<DevelopmentPage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />
