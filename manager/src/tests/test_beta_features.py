@@ -326,3 +326,20 @@ def test_api_affiliates_and_mentoring(client):
     deleted = client.delete(f"/api/mentoring/{pair_id}")
     assert deleted.status_code == 200, deleted.get_data(as_text=True)
     assert deleted.get_json()["data"]["mentoring"]["pairs"] == []
+
+
+def test_api_history_and_filters(client):
+    _new_api(client, seed="43")
+    quick = client.post("/api/match/quick", json={"travel": "equilibrado"})
+    assert quick.status_code == 200, quick.get_data(as_text=True)
+    history = client.get("/api/history")
+    assert history.status_code == 200, history.get_data(as_text=True)
+    data = history.get_json()["data"]
+    assert data["matches"]
+    assert data["players"]
+    assert data["summary"]["matches"] > 0
+    assert data["options"]["seasons"]
+    team_id = data["matches"][0]["home_id"]
+    filtered = client.get(f"/api/history?team_id={team_id}").get_json()["data"]
+    assert filtered["matches"]
+    assert all(team_id in (row["home_id"], row["away_id"]) for row in filtered["matches"])

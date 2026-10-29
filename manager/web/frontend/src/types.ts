@@ -1690,3 +1690,96 @@ export interface AffiliatesPayload {
   affiliates: AffiliateOverview
   mentoring: MentoringOverview
 }
+
+export interface HistorySeason {
+  season: string
+  competition: string
+  group?: string
+  champion: string | null
+  user_club: string
+  user_position: number | null
+  table: Array<{ position: number; team: string; points: number; played: number; won: number; drawn: number; lost: number; gf: number; ga: number; gd: number }>
+  top_scorers: Array<{ player: string; team: string; goals: number; assists: number }>
+  cup_winner?: string | null
+  cup_third?: string | null
+  ehl_winner?: string | null
+  promoted?: string[]
+  relegated?: string[]
+  board_review?: Record<string, unknown>
+}
+
+export interface HistoryMatch {
+  season: string
+  fixture_id: string
+  date: string
+  phase: string
+  round: number
+  competition: string
+  competition_name: string
+  home_id: string
+  home_name: string
+  away_id: string
+  away_name: string
+  home_goals: number
+  away_goals: number
+  attendance: number
+  scorers: Array<{ player: string | null; team: string | null }>
+}
+
+export interface HistoryPlayer {
+  player_id: string
+  name: string
+  seasons: string[]
+  teams: string[]
+  apps: number
+  goals: number
+  assists: number
+  rating: number
+  overall: number
+  position: string
+}
+
+export interface HistoryCompetition {
+  season: string
+  competition: string
+  user_club: string
+  user_position: number | null
+  points: number | null
+  champion: string | null
+  cup_winner: string | null
+  ehl_winner: string | null
+  promoted: string[]
+  relegated: string[]
+}
+
+export interface HistoryRecords {
+  top_scorer: HistoryPlayer | null
+  most_apps: HistoryPlayer | null
+  best_rating: HistoryPlayer | null
+  biggest_win: HistoryMatch | null
+  most_titles: Array<{ team: string; titles: number }>
+  best_points: Record<string, unknown> | null
+  best_user_finish: number | null
+}
+
+export interface HistoryData {
+  seasons: HistorySeason[]
+  competitions: HistoryCompetition[]
+  matches: HistoryMatch[]
+  players: HistoryPlayer[]
+  records: HistoryRecords
+  summary: {
+    seasons: number
+    matches: number
+    players: number
+    user_titles: number
+    current_season: string
+    current_competition: string
+  }
+  filters: { season: string; competition: string; team_id: string; player_query: string }
+  options: {
+    seasons: string[]
+    competitions: Array<{ code: string; name: string }>
+    teams: Array<{ id: string; name: string }>
+  }
+}

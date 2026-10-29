@@ -135,6 +135,17 @@ try {
   result.mentoring = true
   await page.screenshot({ path: '/tmp/opencode/e2e_affiliates.png', fullPage: true })
 
+  await page.goto('/app/game/history')
+  await page.getByRole('heading', { name: 'Historial completo' }).waitFor()
+  await page.getByRole('button', { name: 'Partidos' }).click()
+  await page.locator('.data-table tbody tr').first().waitFor()
+  await page.getByRole('button', { name: 'Jugadores' }).click()
+  await page.locator('.data-table tbody tr').first().waitFor()
+  await page.getByRole('button', { name: 'Récords' }).click()
+  await page.getByText('MÁXIMO GOLEADOR', { exact: true }).waitFor()
+  result.history = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_history.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

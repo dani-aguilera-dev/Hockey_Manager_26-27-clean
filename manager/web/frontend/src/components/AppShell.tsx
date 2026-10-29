@@ -11,6 +11,7 @@ import {
   Flag,
   FolderOpen,
   HeartPulse,
+  History,
   LayoutDashboard,
   Landmark,
   ListChecks,
@@ -66,6 +67,7 @@ const clubLinks = [
   { to: '/game/board', label: 'Junta y visión', icon: Landmark },
   { to: '/game/youth', label: 'Cantera', icon: Shield },
   { to: '/game/affiliates', label: 'Afiliados y mentoring', icon: Network },
+  { to: '/game/history', label: 'Historial', icon: History },
   { to: '/game/press', label: 'Prensa', icon: Newspaper },
 ]
 

@@ -27,6 +27,7 @@ from .cup import CUP_ACTIVATION_ROUND, CUP_OFFSETS, ROUND_NAMES, ROUND_PHASES, c
 from .data_loader import load_teams
 from .ehl import create_ehl, ehl_next_date, simulate_ehl
 from .finance import apply_round_finances
+from .history import archive_season
 from .loans import return_loans
 from .logistics import apply_travel, travel_options
 from .match_engine import MatchEngine, MatchResult
@@ -2410,6 +2411,7 @@ def advance_to_next_season(state: GameState) -> None:
     if state.phase != "season_end":
         return
     new_year = int(state.season[:4]) + 1
+    archive_season(state)
     return_loans(state)
     old_system = competition(state.competition).system
     top_code = _system_code("dha")

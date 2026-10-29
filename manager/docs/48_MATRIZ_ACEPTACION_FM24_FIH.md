@@ -25,6 +25,11 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Clubes afiliados | `src/affiliates.py`, `/api/affiliates`, `Affiliates.tsx`: candidatos, cuota, beneficios de ojeo/cantera y prioridad en cesiones | `test_affiliate_request_accepts_and_applies_benefits`, E2E `affiliates` | PASS |
 | Mentoring de jóvenes | `/api/mentoring`, `TeamState.mentoring`: mentor veterano, joven, plan y progreso semanal | `test_mentoring_assigns_and_develops_young_player`, E2E `mentoring` | PASS |
 | Persistencia de afiliados y mentorías | `GameState.affiliates`, `GameState.affiliate_history`, `TeamState.mentoring` y `mentoring_history` | `test_mentoring_validation_and_persistence` | PASS |
+| Archivo de partidos | `archive_season_matches`, `GameState.match_history`: temporada, competición, ronda, marcador, estadísticas y goleadores | `test_history_current_matches_and_archive` | PASS |
+| Archivo de jugadores | `archive_season_players`, `GameState.player_history`: partidos, goles, asistencias, rating y equipo por temporada | `test_history_current_matches_and_archive` | PASS |
+| Consulta y filtros | `GET /api/history`, `History.tsx`: temporada, competición, equipo y jugador; pestañas de temporadas, competiciones, partidos, jugadores y récords | `test_history_filters_and_records`, E2E `history` | PASS |
+| Récords históricos | Máximo goleador, más partidos, mejor rating, mayor victoria, club con más títulos y mejor posición | `test_history_filters_and_records` | PASS |
+| Persistencia del historial | `GameState.match_history` y `GameState.player_history` serializados y compatibles con partidas antiguas | `test_history_archive_is_idempotent_and_persists` | PASS |
 
 ## 2. Plantillas y datos
 
@@ -109,7 +114,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2772},"viewerPhysics":{"frames":63,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.60},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":34,"ballSpeed":6.41},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -125,8 +130,9 @@ Flujo:
 9. Abrir `/app/game/loans`, comprobar las cesiones entrantes y solicitar una cesión.
 10. Abrir `/app/game/datahub`, revisar el análisis del rival y guardar instrucciones.
 11. Abrir `/app/game/affiliates`, solicitar una afiliación y crear una mentoría.
-12. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-13. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+12. Abrir `/app/game/history`, consultar partidos, jugadores y récords.
+13. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+14. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
 ## 9. Límites convertidos en criterios pass/fail
 
@@ -167,11 +173,11 @@ Flujo:
 | Junta, visión de club e instalaciones | PASS | `Board.tsx`, `/api/board`, `/api/board/request`, visión a corto/medio/largo plazo, instalaciones y peticiones con historial |
 | Instrucciones al rival y data hub | PASS | `DataHub.tsx`, `/api/datahub`, `/api/datahub/instructions`, análisis del rival e instrucciones aplicadas al motor |
 | Clubes afiliados y mentoring | PASS | `Affiliates.tsx`, `/api/affiliates`, `/api/mentoring`, red de clubes, beneficios y planes de desarrollo |
-| Historial/base de datos consultable | FAIL | No hay pantalla de historial completo |
+| Historial/base de datos consultable | PASS | `History.tsx`, `/api/history`, archivo de partidos y jugadores, filtros y récords |
 | Arbitraje discrecional completo | FAIL | Solo están modeladas las decisiones revisables (gol, PC, stroke), no cada interpretación subjetiva |
 
 La lista permite priorizar la siguiente iteración sin confundir “flujo cubierto” con “paridad total”. Las pantallas marcadas FAIL no se presentan como terminadas.
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival y de afiliados/mentoring. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: historial completo, física AAA, paridad total de pantallas y arbitraje discrecional.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring y del historial completo. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA, paridad total de pantallas y arbitraje discrecional.

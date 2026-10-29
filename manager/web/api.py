@@ -54,6 +54,7 @@ from src.brands import (
 from src.board import board_overview, request_board
 from src.loans import loan_overview, offer_loan_out, request_loan_in
 from src.datahub import datahub_overview, set_instructions
+from src.history import history_overview
 from src.affiliates import (
     affiliate_overview,
     assign_mentor,
@@ -1894,6 +1895,27 @@ def mentoring_delete(pair_id: str):
             "state": _state_payload(state),
         },
         result.get("message", ""),
+    )
+
+
+@api.get("/history")
+def history():
+    state, err = _state()
+    if err:
+        return err
+    try:
+        limit = max(1, min(500, int(request.args.get("limit", 200))))
+    except (TypeError, ValueError):
+        limit = 200
+    return _ok(
+        history_overview(
+            state,
+            season=str(request.args.get("season", "")),
+            competition_code=str(request.args.get("competition", "")),
+            team_id=str(request.args.get("team_id", "")),
+            player_query=str(request.args.get("player", "")),
+            limit=limit,
+        )
     )
 
 

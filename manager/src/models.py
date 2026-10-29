@@ -783,6 +783,8 @@ class GameState:
     opposition_instructions: dict[str, dict[str, str]] = field(default_factory=dict)
     affiliates: list[dict[str, Any]] = field(default_factory=list)
     affiliate_history: list[dict[str, Any]] = field(default_factory=list)
+    match_history: list[dict[str, Any]] = field(default_factory=list)
+    player_history: list[dict[str, Any]] = field(default_factory=list)
 
     @property
     def total_rounds(self) -> int:
@@ -901,6 +903,8 @@ class GameState:
             "opposition_instructions": self.opposition_instructions,
             "affiliates": self.affiliates,
             "affiliate_history": self.affiliate_history,
+            "match_history": self.match_history,
+            "player_history": self.player_history,
         }
 
     @classmethod
@@ -973,6 +977,8 @@ class GameState:
             opposition_instructions=d.get("opposition_instructions", {}),
             affiliates=d.get("affiliates", []),
             affiliate_history=d.get("affiliate_history", []),
+            match_history=d.get("match_history", []),
+            player_history=d.get("player_history", []),
         )
         if state.league_fixtures.get(state.competition):
             # Los partidos de Copa y de la fase de ascenso viven en

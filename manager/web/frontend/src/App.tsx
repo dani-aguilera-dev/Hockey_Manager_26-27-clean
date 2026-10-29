@@ -12,6 +12,7 @@ import BoardPage from './pages/Board'
 import LoansPage from './pages/Loans'
 import DataHubPage from './pages/DataHub'
 import AffiliatesPage from './pages/Affiliates'
+import HistoryPage from './pages/History'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -75,6 +76,7 @@ export default function App() {
         <Route path="loans" element={<LoansPage />} />
         <Route path="datahub" element={<DataHubPage />} />
         <Route path="affiliates" element={<AffiliatesPage />} />
+        <Route path="history" element={<HistoryPage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />
