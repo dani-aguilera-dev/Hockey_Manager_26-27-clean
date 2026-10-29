@@ -30,7 +30,7 @@
 | Arbitraje discrecional | Ventaja, juego peligroso, distancia de 5 m y decisión de PC/stroke con eventos, estadísticas y parte | PASS |
 | Finanzas detalladas | `/api/finance`, `/api/finance/ticket`, `Finance.tsx`: cuenta de resultados, salarios, proyección y taquilla | PASS |
 | Análisis de partido | `/api/analysis`, `Analysis.tsx`: eficiencia, comparativa, cronología, ratings y archivo | PASS |
-| E2E Playwright | calendario, amistosos, visor 3D, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje, finanzas, análisis, prensa y marcas | PASS |
+| E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje, finanzas, análisis, prensa y marcas | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media y equipación; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -138,14 +138,14 @@ python3 -m pytest src/tests -q
 226 passed in 335.86s
 
 cd manager/web/frontend && npm run build
-✓ built in 4.98s
+✓ built in 4.88s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-BNDsBpNu.js → 200
+curl /static/react/assets/index-Bu3jjThk.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"analysis":true,"postPress":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":37,"stickFlexes":47},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2772},"viewerPhysics":{"frames":63,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":31,"ballSpeed":5.65},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2464,"clothUpdates":1232},"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":38,"stickFlexes":47},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2464},"viewerPhysics":{"frames":56,"playerCollisions":0,"bodyCollisions":46,"stickCollisions":31,"ballSpeed":7.82},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

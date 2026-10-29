@@ -68,6 +68,12 @@ try {
   if (viewerState.sticks !== 22) throw new Error(`viewer sticks ${viewerState.sticks}`)
   if (viewerState.bones < 22 * 17) throw new Error(`viewer bones ${viewerState.bones}`)
   if (!(viewerState.ikSolutions > 100)) throw new Error(`viewer ik ${viewerState.ikSolutions}`)
+  if (!(viewerState.biomechSolutions > 0)) throw new Error(`viewer biomechanics ${viewerState.biomechSolutions}`)
+  if (!(viewerState.clothUpdates > 0)) throw new Error(`viewer cloth ${viewerState.clothUpdates}`)
+  result.viewerBiomechanics = {
+    biomechSolutions: viewerState.biomechSolutions,
+    clothUpdates: viewerState.clothUpdates,
+  }
   await page.evaluate(() => window.__matchViewer3D.forceContact())
   await page.waitForTimeout(400)
   const materialState = await page.evaluate(() => window.__matchViewer3D)

@@ -5,6 +5,9 @@ import type { LivePayload } from '../types'
 type Vec2 = [number, number]
 type PlayerEntity = {
   root: THREE.Group
+  hips: THREE.Group
+  torso: THREE.Mesh
+  jersey: THREE.Group
   leftArm: THREE.Group
   rightArm: THREE.Group
   leftForearm: THREE.Group
@@ -122,6 +125,15 @@ function createPlayer(name: string, color: number, accent: number) {
   const head = new THREE.Mesh(new THREE.SphereGeometry(0.46, 10, 8), skin)
   head.position.y = 1.22
   hips.add(head)
+  const jersey = new THREE.Group()
+  const clothMaterial = new THREE.MeshStandardMaterial({ color, roughness: 0.78, metalness: 0.02, side: THREE.DoubleSide, transparent: true, opacity: 0.96 })
+  for (const z of [-0.66, 0.66]) {
+    const panel = new THREE.Mesh(new THREE.PlaneGeometry(0.95, 1.05, 4, 4), clothMaterial)
+    panel.position.set(0, 0.35, z)
+    panel.rotation.y = z > 0 ? 0 : Math.PI
+    jersey.add(panel)
+  }
+  hips.add(jersey)
   const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.3, 8), skin)
   neck.position.y = 0.98
   hips.add(neck)
@@ -183,7 +195,7 @@ function createPlayer(name: string, color: number, accent: number) {
   root.add(stick)
   root.add(makeLabel(name))
   root.scale.setScalar(0.78)
-  return { root, leftArm, rightArm, leftForearm, rightForearm, leftLeg, rightLeg, leftShin, rightShin, stick, stickStart: start, stickEnd: end, stickFlex: 0 }
+  return { root, hips, torso, jersey, leftArm, rightArm, leftForearm, rightForearm, leftLeg, rightLeg, leftShin, rightShin, stick, stickStart: start, stickEnd: end, stickFlex: 0 }
 }
 
 export default function MatchViewer3D({ data }: { data: LivePayload }) {
@@ -192,7 +204,7 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
   const playersRef = useRef<PlayerEntity[]>([])
   const ballRef = useRef<THREE.Mesh | null>(null)
   const cameraModeRef = useRef<'broadcast' | 'tactical'>('broadcast')
-  const debugRef = useRef({ frames: 0, playerCollisions: 0, bodyCollisions: 0, stickCollisions: 0, stickBodyCollisions: 0, materialBounces: 0, stickFlexes: 0, goals: 0, ballSpeed: 0, ikSolutions: 0, players: 0, sticks: 0, bones: 0, lastEvent: '' })
+  const debugRef = useRef({ frames: 0, playerCollisions: 0, bodyCollisions: 0, stickCollisions: 0, stickBodyCollisions: 0, materialBounces: 0, stickFlexes: 0, biomechSolutions: 0, clothUpdates: 0, goals: 0, ballSpeed: 0, ikSolutions: 0, players: 0, sticks: 0, bones: 0, lastEvent: '' })
   const lastEventRef = useRef('')
 
   useEffect(() => {
@@ -369,11 +381,19 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
           player.velocity.set(0, 0, 0)
         }
         const speed = player.velocity.length()
-        const swing = Math.sin(elapsed * 8 + player.phase) * Math.min(0.75, speed * 0.16)
+        const swing = Math.max(-0.85, Math.min(0.85, Math.sin(elapsed * 8 + player.phase) * Math.min(0.75, speed * 0.16)))
         player.leftLeg.rotation.x = swing
         player.rightLeg.rotation.x = -swing
-        player.leftShin.rotation.x = Math.max(0, -swing) * 0.7
-        player.rightShin.rotation.x = Math.max(0, swing) * 0.7
+        player.leftShin.rotation.x = Math.max(0, -swing) * 0.9
+        player.rightShin.rotation.x = Math.max(0, swing) * 0.9
+        const lean = Math.min(0.20, speed * 0.022)
+        player.hips.rotation.x = -lean
+        player.hips.rotation.z = Math.sin(elapsed * 8 + player.phase) * 0.025
+        player.torso.rotation.x = -lean * 0.35
+        player.jersey.rotation.x = -lean * 0.55 + Math.sin(elapsed * 4.2 + player.phase) * 0.035
+        player.jersey.rotation.z = Math.sin(elapsed * 3.1 + player.phase) * 0.045
+        debugRef.current.biomechSolutions += 2
+        debugRef.current.clothUpdates += 1
         const gripLeft = new THREE.Vector3(-0.18, 1.4, 0.82)
         const gripRight = new THREE.Vector3(0.62, 1.0, 1.2)
         solveArm(player.leftArm, player.leftForearm, new THREE.Vector3(-0.72, 2.02, 0), gripLeft)
