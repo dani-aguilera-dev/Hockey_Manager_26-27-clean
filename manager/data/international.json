@@ -2172,7 +2172,7 @@
       "full_name": "Hurling Club",
       "league": "ARG",
       "country": "Argentina",
-      "city": "Buenos Aires",
+      "city": "Hurlingham",
       "stadium": {
         "name": "Hurling Club",
         "capacity": 600
@@ -2191,11 +2191,11 @@
       "academy": 2,
       "nickname": "Hurling",
       "location_verified": true,
-      "history": "Hurling Club es un club de hockey de Buenos Aires, Argentina, fundado en 1922. Es un club de Hurlingham, en la provincia de Buenos Aires. Juega en Hurling Club y compite en la Metropolitano.",
-      "description": "Hurling Club es un club de hockey de Buenos Aires, Argentina, fundado en 1922. Es un club de Hurlingham, en la provincia de Buenos Aires. Juega en Hurling Club y compite en la Metropolitano.",
-      "source_url": "https://en.wikipedia.org/wiki/Hurling_Club",
+      "history": "Hurling Club es un club deportivo argentino de Hurlingham (Buenos Aires), fundado en 1922. Aunque nació como equipo de hurling, su sección de hockey sobre césped se convirtió en la más exitosa, con títulos metropolitanos masculinos y femeninos; juega en Hurlingham y compite en la Asociación de Hockey de Buenos Aires.",
+      "description": "Hurling Club es un club deportivo argentino de Hurlingham (Buenos Aires), fundado en 1922. Aunque nació como equipo de hurling, su sección de hockey sobre césped se convirtió en la más exitosa, con títulos metropolitanos masculinos y femeninos; juega en Hurlingham y compite en la Asociación de Hockey de Buenos Aires.",
+      "source_url": "https://es.wikipedia.org/wiki/Hurling_Club",
       "source_type": "wikipedia",
-      "history_source": "https://en.wikipedia.org/wiki/Hurling_Club",
+      "history_source": "https://es.wikipedia.org/wiki/Hurling_Club",
       "description_verified": true
     },
     {
@@ -2236,7 +2236,7 @@
       "full_name": "Club Atlético Mitre",
       "league": "ARG",
       "country": "Argentina",
-      "city": "Olivos",
+      "city": "Buenos Aires",
       "stadium": {
         "name": "Mitre Hockey",
         "capacity": 1200
@@ -2255,11 +2255,11 @@
       "academy": 3,
       "nickname": "Mitre",
       "location_verified": true,
-      "history": "Club Atlético Mitre es un club de hockey de Olivos, Argentina, fundado en 1905. Es un club de Buenos Aires con sección de hockey. Juega en Mitre Hockey y compite en la Metropolitano.",
-      "description": "Club Atlético Mitre es un club de hockey de Olivos, Argentina, fundado en 1905. Es un club de Buenos Aires con sección de hockey. Juega en Mitre Hockey y compite en la Metropolitano.",
-      "source_url": "https://en.wikipedia.org/wiki/Club_Atlético_Mitre",
-      "source_type": "wikipedia",
-      "history_source": "https://en.wikipedia.org/wiki/Club_Atlético_Mitre",
+      "history": "Club Atlético Mitre es un club de Buenos Aires con sección de hockey sobre césped. Compite en los torneos metropolitanos argentinos y forma parte del ecosistema de clubes de la Asociación de Hockey de Buenos Aires.",
+      "description": "Club Atlético Mitre es un club de Buenos Aires con sección de hockey sobre césped. Compite en los torneos metropolitanos argentinos y forma parte del ecosistema de clubes de la Asociación de Hockey de Buenos Aires.",
+      "source_url": "https://www.cahockey.org.ar/",
+      "source_type": "league",
+      "history_source": "https://www.cahockey.org.ar/",
       "description_verified": true
     },
     {
@@ -2332,7 +2332,7 @@
       "full_name": "Club Santa Bárbara",
       "league": "ARG",
       "country": "Argentina",
-      "city": "Buenos Aires",
+      "city": "La Plata",
       "stadium": {
         "name": "Santa Bárbara Hockey",
         "capacity": 1000
@@ -2341,7 +2341,7 @@
         "rojo",
         "blanco"
       ],
-      "founded": 1921,
+      "founded": 1974,
       "expectation": "Top 8",
       "finances": {
         "tier": 3,
@@ -2351,11 +2351,11 @@
       "academy": 3,
       "nickname": "Santa",
       "location_verified": true,
-      "history": "Club Santa Bárbara es un club de hockey de Buenos Aires, Argentina, fundado en 1921. Es un club de La Plata fundado en 1974. Juega en Santa Bárbara Hockey y compite en la Metropolitano.",
-      "description": "Club Santa Bárbara es un club de hockey de Buenos Aires, Argentina, fundado en 1921. Es un club de La Plata fundado en 1974. Juega en Santa Bárbara Hockey y compite en la Metropolitano.",
-      "source_url": "https://santabarbarahockeyclub.com/",
-      "source_type": "official",
-      "history_source": "https://santabarbarahockeyclub.com/",
+      "history": "Santa Bárbara Hockey Club es un club social y deportivo de Gonnet, La Plata (Buenos Aires), fundado el 3 de febrero de 1974. Es un club dedicado principalmente al hockey hierba, con una de las divisiones femeninas más reconocidas de Argentina; juega en sus campos de césped sintético y compite en el Metropolitano.",
+      "description": "Santa Bárbara Hockey Club es un club social y deportivo de Gonnet, La Plata (Buenos Aires), fundado el 3 de febrero de 1974. Es un club dedicado principalmente al hockey hierba, con una de las divisiones femeninas más reconocidas de Argentina; juega en sus campos de césped sintético y compite en el Metropolitano.",
+      "source_url": "https://es.wikipedia.org/wiki/Santa_B%C3%A1rbara_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://es.wikipedia.org/wiki/Santa_B%C3%A1rbara_Hockey_Club",
       "description_verified": true
     },
     {
