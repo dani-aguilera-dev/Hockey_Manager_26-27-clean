@@ -46,8 +46,10 @@ from src.friendlies import (
 )
 from src.brands import (
     accept_brand_offer,
+    accept_player_brand_offer,
     brand_summary,
     reject_brand_offer,
+    reject_player_brand_offer,
 )
 from src.player_editor import edit_player, editor_payload, find_player
 from src.international import club_catalog, international_cities, load_all_teams
@@ -80,7 +82,16 @@ from src.negotiation import (
 from src.models import FORMATION_SLOTS
 from src.news import awards_for_last_match, news_feed
 from src.persistence import delete_save as delete_saved_game, list_saves, load_game, rename_save as rename_saved_game
-from src.press import answer_press, mark_press_done, press_context, press_questions
+from src.press import (
+    answer_post_press,
+    answer_press,
+    mark_press_done,
+    post_press_available,
+    post_press_context,
+    post_press_questions,
+    press_context,
+    press_questions,
+)
 from src.objectives import competition_objectives
 from src.promotion import promotion_path
 from src.ratings import league_label, profile, scout_stars, stars_bar, stars_text, tier
@@ -197,6 +208,7 @@ def _player(p, team=None):
         "career": p.career,
         "transfer_listed": p.transfer_listed,
         "transfer_asking_price": p.transfer_asking_price,
+        "brand_deal": p.brand_deal,
     }
 
 
@@ -486,7 +498,9 @@ def _state_payload(state):
         "chat_messages": list(reversed(state.chat_messages[-30:])),
         "press": {
             "done": state.press_done_round == state.round,
-            "history": state.press_history[-5:],
+            "history": state.press_history[-8:],
+            "post_available": post_press_available(state),
+            "post_done": not post_press_available(state),
         },
         "market": {
             "window": market_window(state),
@@ -1906,6 +1920,20 @@ def brand_action(offer_id: str):
     return _ok({"result": result, "state": _state_payload(state)}, result.get("message", ""))
 
 
+@api.post("/brands/players/<offer_id>")
+def player_brand_action(offer_id: str):
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    action = payload.get("action", "accept")
+    result = accept_player_brand_offer(state, offer_id) if action == "accept" else reject_player_brand_offer(state, offer_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo procesar el contrato individual."), 409, "player_brand_failed")
+    _save(state)
+    return _ok({"result": result, "state": _state_payload(state)}, result.get("message", ""))
+
+
 @api.post("/player/<player_id>/edit")
 def player_edit(player_id: str):
     state, err = _state()
@@ -1959,9 +1987,61 @@ def press():
             "questions": questions,
             "context": press_context(state),
             "done": state.press_done_round == state.round,
+            "post_available": post_press_available(state),
             "history": state.press_history[-8:],
         }
     )
+
+
+@api.get("/press/post")
+def post_press():
+    state, err = _state()
+    if err:
+        return err
+    questions = []
+    for q in post_press_questions(state):
+        questions.append(
+            {
+                "id": q["id"],
+                "question": q["question"],
+                "topic": q.get("topic", ""),
+                "options": [
+                    {"label": label, "effects": effects, "headline": headline}
+                    for label, effects, headline in q["options"]
+                ],
+            }
+        )
+    return _ok(
+        {
+            "questions": questions,
+            "context": post_press_context(state),
+            "done": not post_press_available(state),
+            "available": post_press_available(state),
+            "history": [item for item in state.press_history if item.get("kind") == "post"][-8:],
+        }
+    )
+
+
+@api.post("/press/post")
+def post_press_answer():
+    state, err = _state()
+    if err:
+        return err
+    if not post_press_available(state):
+        return _error("No hay una rueda de prensa posterior disponible.", 409, "post_press_unavailable")
+    payload = request.get_json(silent=True) or request.form
+    answers = payload.get("answers", {})
+    questions = post_press_questions(state)
+    results = []
+    for q in questions:
+        raw = answers.get(q["id"], 0) if isinstance(answers, dict) else 0
+        try:
+            idx = int(raw)
+        except (TypeError, ValueError):
+            idx = 0
+        results.append(answer_post_press(state, q["id"], idx))
+    _save(state)
+    return _ok({"results": results, "state": _state_payload(state)}, "Rueda de prensa posterior completada.")
 
 
 @api.post("/press")

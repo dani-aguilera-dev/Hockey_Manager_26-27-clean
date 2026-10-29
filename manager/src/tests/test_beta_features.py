@@ -1,6 +1,11 @@
 import pytest
 
-from src.brands import accept_brand_offer, brand_summary, load_brands
+from src.brands import (
+    accept_brand_offer,
+    accept_player_brand_offer,
+    brand_summary,
+    load_brands,
+)
 from src.data_loader import load_clubs
 from src.friendlies import (
     available_friendly_dates,
@@ -95,6 +100,18 @@ def test_brand_offers_and_equipment_bonus():
     assert state.user_team.equipment_bonus > 0
 
 
+def test_player_brand_contract_is_individual():
+    state = new_game("cd-terrassa", "Beta Test", seed=36)
+    summary = brand_summary(state)
+    assert summary["player_offers"]
+    offer = summary["player_offers"][0]
+    player = next(item for item in state.user_team.players if item.id == offer["player_id"])
+    result = accept_player_brand_offer(state, offer["id"])
+    assert result["ok"] is True
+    assert player.brand_deal["brand"] == offer["brand"]
+    assert summary["player_offers"][0]["player_name"] == player.name
+
+
 def test_player_editor_can_fix_position_and_attributes():
     state = new_game("cd-terrassa", "Beta Test", seed=33)
     player = state.user_team.players[0]
@@ -153,6 +170,11 @@ def test_api_calendar_brands_editor_and_press(client):
     offer_id = brands["brands"]["offers"][0]["id"]
     signed = client.post(f"/api/brands/{offer_id}", json={"action": "accept"})
     assert signed.status_code == 200, signed.get_data(as_text=True)
+    assert brands["brands"]["player_offers"]
+    player_offer_id = brands["brands"]["player_offers"][0]["id"]
+    player_signed = client.post(f"/api/brands/players/{player_offer_id}", json={"action": "accept"})
+    assert player_signed.status_code == 200, player_signed.get_data(as_text=True)
+    assert player_signed.get_json()["data"]["state"]["team"]["players"]
 
     player_id = brands["team"]["players"][0]["id"]
     edited = client.post(
@@ -169,3 +191,14 @@ def test_api_calendar_brands_editor_and_press(client):
     response = client.post("/api/press", json={"answers": answers})
     assert response.status_code == 200
     assert response.get_json()["data"]["state"]["press"]["done"] is True
+
+    # Flujo E2E de partido y rueda posterior.
+    quick = client.post("/api/match/quick", json={"travel": "equilibrado"})
+    assert quick.status_code == 200, quick.get_data(as_text=True)
+    post = client.get("/api/press/post").get_json()["data"]
+    assert post["available"] is True
+    assert len(post["questions"]) == 4
+    post_answers = {question["id"]: 0 for question in post["questions"]}
+    post_response = client.post("/api/press/post", json={"answers": post_answers})
+    assert post_response.status_code == 200, post_response.get_data(as_text=True)
+    assert post_response.get_json()["data"]["state"]["press"]["post_done"] is True

@@ -23,6 +23,7 @@ import RenewPage from './pages/Renew'
 import StaffPage from './pages/Staff'
 import YouthPage from './pages/Youth'
 import PressPage from './pages/Press'
+import PostPressPage from './pages/PostPress'
 import TablePage from './pages/Table'
 import CupPage from './pages/Cup'
 import EhlPage from './pages/Ehl'
@@ -83,6 +84,7 @@ export default function App() {
         <Route path="staff" element={<StaffPage />} />
         <Route path="youth" element={<YouthPage />} />
         <Route path="press" element={<PressPage />} />
+        <Route path="press/post" element={<PostPressPage />} />
         <Route path="table" element={<TablePage />} />
         <Route path="promotion" element={<PromotionPage />} />
         <Route path="objectives" element={<ObjectivesPage />} />

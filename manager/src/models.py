@@ -211,6 +211,7 @@ class PlayerState:
     career: list[dict[str, Any]] = field(default_factory=list)
     transfer_listed: bool = False
     transfer_asking_price: int = 0
+    brand_deal: dict[str, Any] = field(default_factory=dict)
 
     @property
     def youth_category(self) -> str:
@@ -728,6 +729,8 @@ class GameState:
     sponsor_offer_date: str = ""
     brand_offers: list[dict[str, Any]] = field(default_factory=list)
     brand_offer_date: str = ""
+    player_brand_offers: list[dict[str, Any]] = field(default_factory=list)
+    player_brand_offer_date: str = ""
     friendlies: list[Fixture] = field(default_factory=list)
     pending_transfers: list[dict[str, Any]] = field(default_factory=list)
     daily_events: list[dict[str, Any]] = field(default_factory=list)
@@ -839,6 +842,8 @@ class GameState:
             "sponsor_offer_date": self.sponsor_offer_date,
             "brand_offers": self.brand_offers,
             "brand_offer_date": self.brand_offer_date,
+            "player_brand_offers": self.player_brand_offers,
+            "player_brand_offer_date": self.player_brand_offer_date,
             "friendlies": [f.to_dict() for f in self.friendlies],
             "pending_transfers": self.pending_transfers,
             "daily_events": self.daily_events,
@@ -904,6 +909,8 @@ class GameState:
             sponsor_offer_date=d.get("sponsor_offer_date", ""),
             brand_offers=d.get("brand_offers", []),
             brand_offer_date=d.get("brand_offer_date", ""),
+            player_brand_offers=d.get("player_brand_offers", []),
+            player_brand_offer_date=d.get("player_brand_offer_date", ""),
             friendlies=[Fixture.from_dict(f) for f in d.get("friendlies", [])],
             pending_transfers=d.get("pending_transfers", []),
             daily_events=d.get("daily_events", []),

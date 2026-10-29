@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CalendarDays, Check, Clock3, Play, Plus, Trash2, X } from 'lucide-react'
+import { CalendarDays, Check, ChevronLeft, ChevronRight, Clock3, Play, Plus, Trash2, X } from 'lucide-react'
 import { api } from '../lib/api'
 import { dateLabel } from '../lib/format'
 import type { CalendarPayload, FriendlyItem } from '../types'
@@ -19,12 +19,14 @@ export default function CalendarPage() {
   const [day, setDay] = useState('')
   const [home, setHome] = useState(true)
   const [notes, setNotes] = useState('')
+  const [monthCursor, setMonthCursor] = useState('')
 
   function load() {
     setLoading(true)
     api.get<CalendarPayload>('/calendar')
       .then(({ data }) => {
         setData(data)
+        if (!monthCursor) setMonthCursor(data.today.slice(0, 7))
         if (!opponent && data.friendlies.candidates[0]) setOpponent(data.friendlies.candidates[0].id)
         if (!day && data.friendlies.dates[0]) setDay(data.friendlies.dates[0])
       })
@@ -84,6 +86,25 @@ export default function CalendarPage() {
   const pending = data.friendlies.items.filter((item) => !item.played)
   const played = data.friendlies.items.filter((item) => item.played)
   const upcoming = data.fixtures.filter((fixture) => !fixture.played).slice(0, 8)
+  const cursor = monthCursor || data.today.slice(0, 7)
+  const cursorDate = new Date(`${cursor}-01T00:00:00`)
+  const monthLabel = cursorDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })
+  const firstWeekday = (cursorDate.getDay() + 6) % 7
+  const daysInMonth = new Date(cursorDate.getFullYear(), cursorDate.getMonth() + 1, 0).getDate()
+  const officialByDate = new Map<string, typeof data.fixtures>()
+  data.fixtures.forEach((fixture) => officialByDate.set(fixture.date, [...(officialByDate.get(fixture.date) || []), fixture]))
+  const friendlyByDate = new Map<string, typeof data.friendlies.items>()
+  data.friendlies.items.forEach((item) => friendlyByDate.set(item.date, [...(friendlyByDate.get(item.date) || []), item]))
+  const monthCells = Array.from({ length: 42 }, (_, index) => {
+    const dayNumber = index - firstWeekday + 1
+    if (dayNumber < 1 || dayNumber > daysInMonth) return null
+    const day = `${cursor}-${String(dayNumber).padStart(2, '0')}`
+    return { day, dayNumber, official: officialByDate.get(day) || [], friendlies: friendlyByDate.get(day) || [] }
+  })
+  function moveMonth(delta: number) {
+    const next = new Date(cursorDate.getFullYear(), cursorDate.getMonth() + delta, 1)
+    setMonthCursor(`${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}`)
+  }
 
   return (
     <>
@@ -100,6 +121,24 @@ export default function CalendarPage() {
         <StatCard label="Próximo oficial" value={data.next_fixture ? dateLabel(data.next_fixture.date) : '—'} hint={data.next_fixture ? `${data.next_fixture.home_name} vs ${data.next_fixture.away_name}` : 'Sin partido'} />
         <StatCard label="Fechas libres" value={data.friendlies.dates.length} hint="Próximos 75 días" />
       </div>
+
+      <Card className="mt-2">
+        <div className="inline" style={{ justifyContent: 'space-between' }}>
+          <div><div className="cat">VISTA MENSUAL</div><h3 style={{ margin: '3px 0 0', textTransform: 'capitalize' }}>{monthLabel}</h3></div>
+          <div className="inline"><Button size="sm" icon={ChevronLeft} onClick={() => moveMonth(-1)} aria-label="Mes anterior" /><Button size="sm" icon={ChevronRight} onClick={() => moveMonth(1)} aria-label="Mes siguiente" /></div>
+        </div>
+        <div className="month-grid mt-2">
+          {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map((label) => <div className="month-weekday" key={label}>{label}</div>)}
+          {monthCells.map((cell, index) => cell ? (
+            <div className={`month-day ${cell.day === data.today ? 'today' : ''}`} key={cell.day}>
+              <span className="month-day-number">{cell.dayNumber}</span>
+              {cell.official.slice(0, 2).map((fixture) => <button type="button" className="month-event official" key={fixture.id} onClick={() => navigate('/game/match')} title={`${fixture.home_name} vs ${fixture.away_name}`}>{fixture.home_name} · {fixture.away_name}</button>)}
+              {cell.friendlies.slice(0, 2).map((item) => <button type="button" className="month-event friendly" key={item.id} onClick={() => navigate('/game/calendar')} title={`Amistoso · ${item.home_name} vs ${item.away_name}`}>Amistoso · {item.home_name}</button>)}
+            </div>
+          ) : <div className="month-day empty" key={`empty-${index}`} />)}
+        </div>
+        <div className="inline mt-2"><Badge tone="blue">Oficial</Badge><Badge tone="gold">Amistoso</Badge><span className="small muted">Haz clic en un partido para prepararlo.</span></div>
+      </Card>
 
       <div className="split-2 mt-2">
         <Card>

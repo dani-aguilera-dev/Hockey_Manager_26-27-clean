@@ -71,7 +71,7 @@ export default function PressPage() {
         eyebrow="Sala de prensa · medios y vestuario"
         title="Rueda de prensa"
         subtitle="Cada respuesta deja titular y mueve moral, junta, afición, vestuario y confianza de los medios."
-        actions={<Badge tone={data.done ? 'ok' : 'warn'}>{data.done ? 'Completada' : 'Pendiente'}</Badge>}
+        actions={<><Badge tone={data.done ? 'ok' : 'warn'}>{data.done ? 'Completada' : 'Pendiente'}</Badge>{data.post_available && <Button icon={Newspaper} onClick={() => navigate('/game/press/post')}>Rueda posterior</Button>}</>}
       />
 
       {context && (

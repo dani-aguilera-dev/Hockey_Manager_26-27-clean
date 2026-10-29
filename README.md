@@ -73,6 +73,7 @@ El proyecto incluye un juego de entrenador/gestión, solo texto, inspirado en Fo
 - [`manager/docs/15_WEB_ALPHA.md`](manager/docs/15_WEB_ALPHA.md) — alpha web.
 - [`manager/docs/45_BETA_AVANZADA.md`](manager/docs/45_BETA_AVANZADA.md) — beta avanzada: calendario, amistosos, prensa, marcas, editor y auditoría.
 - [`manager/docs/46_AUDITORIA_CLUBES.md`](manager/docs/46_AUDITORIA_CLUBES.md) — ubicaciones y fuentes de clubes.
+- [`manager/docs/48_MATRIZ_ACEPTACION_FM24_FIH.md`](manager/docs/48_MATRIZ_ACEPTACION_FM24_FIH.md) — matriz FM24/FIH y evidencia E2E.
 - [`manager/docs/16_DISENO_UI.md`](manager/docs/16_DISENO_UI.md) — diseño visual, paleta, escudos y usabilidad.
 - [`manager/docs/17_CANTERA_Y_CATEGORIAS.md`](manager/docs/17_CANTERA_Y_CATEGORIAS.md) — cantera Sub-16/Sub-18/Sub-21 y nombres por comunidad.
 - [`manager/docs/18_SIMULACION_DIARIA_Y_SCOUTING.md`](manager/docs/18_SIMULACION_DIARIA_Y_SCOUTING.md) — calendario diario, eventos, vestuario, mercado, equipos e histórico.

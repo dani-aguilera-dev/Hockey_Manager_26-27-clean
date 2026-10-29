@@ -77,6 +77,7 @@ export interface Player {
   career: CareerRow[]
   transfer_listed: boolean
   transfer_asking_price: number
+  brand_deal?: BrandDeal
 }
 
 export interface CareerRow {
@@ -585,7 +586,7 @@ export interface GameState {
   decisions?: PendingDecision[]
   event_history?: EventHistoryItem[]
   chat_messages: ChatMessage[]
-  press: { done: boolean; history: PressHistoryItem[] }
+  press: { done: boolean; history: PressHistoryItem[]; post_available?: boolean; post_done?: boolean }
   market: { window: string; status: string; offers: IncomingOffer[]; history: MarketHistoryItem[]; negotiations?: Negotiation[] }
   cup: CupData
   ehl: EhlData
@@ -602,6 +603,7 @@ export interface GameState {
 
 export interface PressHistoryItem {
   round: number
+  kind?: 'pre' | 'post' | string
   question: string
   topic?: string
   answer: string
@@ -877,6 +879,27 @@ export interface PressPayload {
     media_confidence?: number
   }
   done: boolean
+  post_available?: boolean
+  history: PressHistoryItem[]
+}
+
+export interface PostPressPayload {
+  questions: PressQuestion[]
+  context: {
+    fixture_id: string
+    rival: string
+    score: string
+    result: string
+    date: string
+    journalist: string
+    outlet: string
+    style?: string
+    bias?: string
+    tone: string
+    media_confidence: number
+  }
+  done: boolean
+  available: boolean
   history: PressHistoryItem[]
 }
 
@@ -926,9 +949,16 @@ export interface BrandDeal {
 
 export interface BrandOffer extends BrandDeal {}
 
+export interface PlayerBrandOffer extends BrandDeal {
+  player_id: string
+  player_name: string
+}
+
 export interface BrandData {
   offers: BrandOffer[]
+  player_offers: PlayerBrandOffer[]
   active_deals: BrandDeal[]
+  player_deals: Array<BrandDeal & { player_id: string; player_name: string }>
   equipment_bonus: number
   brand_rating: number
   history: CommercialHistory[]
@@ -990,6 +1020,7 @@ export interface MarketPlayer extends Player {
   minimum_salary: number
   transfer_listed: boolean
   transfer_asking_price: number
+  brand_deal?: BrandDeal
 }
 
 export interface ScoutRecommendation {

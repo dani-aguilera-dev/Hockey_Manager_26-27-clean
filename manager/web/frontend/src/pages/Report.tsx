@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Flag } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Flag, MessageSquare } from 'lucide-react'
 import { api } from '../lib/api'
 import { dateLabel, money, resultTone } from '../lib/format'
 import type { MatchReport } from '../types'
@@ -43,7 +43,7 @@ export default function ReportPage() {
         eyebrow={`${report.round ? `Jornada ${report.round}` : 'Partido'} · ${dateLabel(report.date)}`}
         title={report.result}
         subtitle={`${report.home_name} ${report.home_goals}-${report.away_goals} ${report.away_name} · ${report.user_goals} goles a favor · ${report.user_against} en contra`}
-        actions={<><Button icon={ArrowLeft} onClick={() => navigate('/game')}>Volver al club</Button><Button variant="primary" icon={ArrowRight} onClick={() => navigate('/game/match')}>Próximo partido</Button></>}
+        actions={<><Button icon={ArrowLeft} onClick={() => navigate('/game')}>Volver al club</Button>{game?.press?.post_available && <Button icon={MessageSquare} onClick={() => navigate('/game/press/post')}>Rueda posterior</Button>}<Button variant="primary" icon={ArrowRight} onClick={() => navigate('/game/match')}>Próximo partido</Button></>}
       />
 
       <Card>
