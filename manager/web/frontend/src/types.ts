@@ -1887,3 +1887,18 @@ export interface TeamMeetingResult {
   promise: Record<string, unknown> | null
   meeting: TeamMeetingHistory
 }
+
+export interface FinanceOverview extends Finance {
+  log: FinanceEntry[]
+  top_earners: Array<{ id: string; name: string; position: string; overall: number; salary: number; share: number }>
+  staff_wage_rows: Array<{ name: string; role: string; salary: number }>
+  annual_income: number
+  annual_expenses: number
+  annual_net: number
+  wage_ratio: number
+  runway_rounds: number
+  ticket_scenarios: Array<{ price: number; attendance: number; revenue: number; season_revenue: number }>
+  active_sponsors: SponsorDeal[]
+  equipment_deals: BrandDeal[]
+  commercial_history: CommercialHistory[]
+}

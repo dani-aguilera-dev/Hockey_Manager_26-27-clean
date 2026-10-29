@@ -95,3 +95,61 @@ def financial_summary(team) -> dict:
         "net": income - expenses,
         "entries": log[-6:],
     }
+
+
+def finance_overview(state: Any) -> dict:
+    """Vista completa de finanzas para la pantalla dedicada."""
+    team = state.user_team
+    summary = financial_summary(team)
+    from .commercial import active_sponsor_annual, ticket_income_estimate
+
+    sponsor_annual = active_sponsor_annual(team) or summary["sponsor_round"] * 22
+    ticket_match = ticket_income_estimate(team)
+    annual_income = sponsor_annual + ticket_match * 22
+    annual_expenses = team.player_wage_bill() + team.staff_wage_bill()
+    annual_net = annual_income - annual_expenses
+    round_burn = max(0, int(team.player_wage_bill() / 22) + int(team.staff_wage_bill() / 22) - summary["sponsor_round"])
+    runway = int(team.budget / round_burn) if round_burn > 0 else 99
+    top_earners = sorted(team.players, key=lambda player: player.salary, reverse=True)[:8]
+    wage_bill = max(1, team.player_wage_bill())
+    scenarios = []
+    base_attendance = max(1, int(team.stadium_capacity * 0.62))
+    for price in sorted({10, 15, 20, 25, 30, 35, int(team.ticket_price)}):
+        factor = max(0.45, min(1.12, 1 - (price - 15) * 0.018))
+        attendance = int(base_attendance * factor)
+        scenarios.append(
+            {
+                "price": price,
+                "attendance": attendance,
+                "revenue": attendance * price,
+                "season_revenue": attendance * price * 22,
+            }
+        )
+    return {
+        **summary,
+        "log": list(reversed(team.finance_log[-12:])),
+        "top_earners": [
+            {
+                "id": player.id,
+                "name": player.name,
+                "position": player.subposition,
+                "overall": round(float(player.overall), 1),
+                "salary": int(player.salary),
+                "share": round(100 * player.salary / wage_bill, 1),
+            }
+            for player in top_earners
+        ],
+        "staff_wage_rows": [
+            {"name": member.name, "role": member.role, "salary": int(member.salary)}
+            for member in sorted(team.staff, key=lambda item: item.salary, reverse=True)
+        ],
+        "annual_income": annual_income,
+        "annual_expenses": annual_expenses,
+        "annual_net": annual_net,
+        "wage_ratio": round(100 * annual_expenses / max(1, annual_income), 1),
+        "runway_rounds": runway,
+        "ticket_scenarios": scenarios,
+        "active_sponsors": [deal for deal in team.sponsor_deals if deal.get("active", True)],
+        "equipment_deals": [deal for deal in team.equipment_deals if deal.get("active", True)],
+        "commercial_history": team.commercial_history[-10:],
+    }

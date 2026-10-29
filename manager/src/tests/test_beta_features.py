@@ -395,3 +395,18 @@ def test_api_team_meeting(client):
     assert payload["result"]["ok"] is True
     assert payload["meeting"]["history"]
     assert payload["state"]["team"]["name"]
+
+
+def test_api_finance_overview_and_ticket(client):
+    _new_api(client, seed="46")
+    response = client.get("/api/finance")
+    assert response.status_code == 200, response.get_data(as_text=True)
+    data = response.get_json()["data"]
+    assert data["cash"] >= 0
+    assert data["ticket_scenarios"]
+    assert data["top_earners"]
+    ticket = client.post("/api/finance/ticket", json={"price": 22})
+    assert ticket.status_code == 200, ticket.get_data(as_text=True)
+    payload = ticket.get_json()["data"]
+    assert payload["finance"]["ticket_price"] == 22
+    assert any(row["price"] == 22 for row in payload["finance"]["ticket_scenarios"])

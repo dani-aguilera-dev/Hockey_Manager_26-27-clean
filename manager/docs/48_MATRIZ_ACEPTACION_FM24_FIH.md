@@ -33,6 +33,8 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Asignaciones de ojeo | `src/scouting.py`, `/api/scouting/assignments`, `Scouting.tsx`: ojeador, competición, posición, edad y enfoque | `test_create_assignment_and_complete_report`, E2E `scouting` | PASS |
 | Progreso e informes de ojeo | `advance_scouting` avanza con las jornadas y genera informes con objetivos reales de la competición asignada | `test_create_assignment_and_complete_report` | PASS |
 | Persistencia del ojeo | `GameState.scouting_assignments` y `GameState.scouting_reports` serializados | `test_scouting_assignments_persist` | PASS |
+| Finanzas detalladas | `src/finance.py`, `/api/finance`, `Finance.tsx`: caja, presupuesto, salarios, ingresos, gastos, proyección y taquilla | `test_finance_overview_has_breakdown_projection_and_earners`, E2E `finance` | PASS |
+| Control de taquilla | `/api/finance/ticket` y escenarios de precio/asistencia/ingresos | `test_finance_ticket_price_updates_and_persists` | PASS |
 | Reunión de equipo | `src/team_meeting.py`, `/api/team-meeting`, `TeamMeeting.tsx`: tipo, tono, temas, dinámica y efectos | `test_team_meeting_applies_effects_and_history`, E2E `teamMeeting` | PASS |
 | Promesas de la reunión | Promesas de minutos o renovación persistentes en `PlayerState.promises` y comprobadas por `check_promises` | `test_team_meeting_creates_persistent_promise` | PASS |
 | Persistencia de reuniones | `TeamState.team_meetings` serializado con efectos, temas y promesas | `test_team_meeting_creates_persistent_promise` | PASS |
@@ -127,7 +129,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"postPress":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":39,"stickFlexes":48},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":32,"ballSpeed":7.41},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"postPress":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":40,"stickFlexes":49},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.60},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -146,8 +148,9 @@ Flujo:
 12. Abrir `/app/game/history`, consultar partidos, jugadores y récords.
 13. Abrir `/app/game/scouting`, crear una asignación de ojeo y comprobar la pantalla dedicada.
 14. Abrir `/app/game/team-meeting`, convocar una reunión y comprobar el resultado y el historial.
-15. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-16. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+15. Abrir `/app/game/finance`, cambiar el precio de taquilla y comprobar la proyección.
+16. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+17. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
 ## 9. Límites convertidos en criterios pass/fail
 
@@ -189,10 +192,11 @@ Flujo:
 | Instrucciones al rival y data hub | PASS | `DataHub.tsx`, `/api/datahub`, `/api/datahub/instructions`, análisis del rival e instrucciones aplicadas al motor |
 | Clubes afiliados y mentoring | PASS | `Affiliates.tsx`, `/api/affiliates`, `/api/mentoring`, red de clubes, beneficios y planes de desarrollo |
 | Historial/base de datos consultable | PASS | `History.tsx`, `/api/history`, archivo de partidos y jugadores, filtros y récords |
+| Finanzas detalladas | PASS | `Finance.tsx`, `/api/finance`, `/api/finance/ticket`, cuenta de resultados, proyección, salarios y taquilla |
 | Arbitraje discrecional completo | FAIL / parcial | Ventaja, juego peligroso, 5 m y decisión de PC están modelados; el resto de interpretaciones subjetivas sigue fuera de alcance |
 
 La lista permite priorizar la siguiente iteración sin confundir “flujo cubierto” con “paridad total”. Las pantallas marcadas FAIL no se presentan como terminadas.
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas y de la respuesta de materiales/colisiones stick-cuerpo del visor. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA (tejido/mocap/biomecánica), paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas, de la respuesta de materiales/colisiones stick-cuerpo del visor y del centro financiero. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA (tejido/mocap/biomecánica), paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.

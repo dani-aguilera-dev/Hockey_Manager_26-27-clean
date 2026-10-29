@@ -1291,3 +1291,20 @@ select option { background: #0b1220; color: #e8eef8; }
 .team-meeting-history-row span { color: var(--muted); font-size: 12px; }
 @media (max-width: 980px) { .team-meeting-form { grid-template-columns: repeat(2, minmax(0, 1fr)); } .team-meeting-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .team-meeting-form, .team-meeting-topics { grid-template-columns: 1fr; } .team-meeting-history-row { align-items: flex-start; flex-direction: column; } }
+
+/* Centro financiero */
+.finance-breakdown { display: flex; flex-direction: column; gap: 5px; }
+.finance-breakdown > div { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.finance-breakdown > div:last-child { border-bottom: 0; }
+.finance-breakdown span { color: var(--muted); }
+.finance-breakdown b { font-weight: 700; }
+.finance-total { margin-top: 5px; padding-top: 8px; border-top: 1px solid var(--line); }
+.finance-row { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.finance-row:last-child { border-bottom: 0; }
+.finance-row span { display: flex; flex-direction: column; gap: 2px; }
+.finance-row small { color: var(--muted); font-size: 11px; }
+.finance-ticket-form { display: flex; align-items: end; gap: 8px; }
+.finance-ticket-form .field { max-width: 180px; }
+.selected-row { background: rgba(255,176,32,.06); }
+.danger { color: var(--danger, #e05252); }
+@media (max-width: 640px) { .finance-ticket-form { align-items: stretch; flex-direction: column; } }

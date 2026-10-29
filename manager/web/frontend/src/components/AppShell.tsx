@@ -27,6 +27,7 @@ import {
   Shield,
   Trophy,
   Users,
+  Wallet,
   X,
 } from 'lucide-react'
 import { api } from '../lib/api'
@@ -66,6 +67,7 @@ const clubLinks = [
   { to: '/game/scouting', label: 'Ojeo', icon: Compass },
   { to: '/game/loans', label: 'Cesiones', icon: Repeat },
   { to: '/game/commercial', label: 'Comercial y marca', icon: Building2 },
+  { to: '/game/finance', label: 'Finanzas', icon: Wallet },
   { to: '/game/staff', label: 'Staff', icon: Users },
   { to: '/game/board', label: 'Junta y visión', icon: Landmark },
   { to: '/game/youth', label: 'Cantera', icon: Shield },

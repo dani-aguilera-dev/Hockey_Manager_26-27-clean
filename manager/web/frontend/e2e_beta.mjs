@@ -174,6 +174,14 @@ try {
   result.teamMeeting = true
   await page.screenshot({ path: '/tmp/opencode/e2e_team_meeting.png', fullPage: true })
 
+  await page.goto('/app/game/finance')
+  await page.getByRole('heading', { name: 'Centro financiero' }).waitFor()
+  await page.getByTestId('finance-ticket-input').fill('22')
+  await page.getByTestId('finance-ticket-save').click()
+  await page.locator('.finance-saved').waitFor()
+  result.finance = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_finance.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

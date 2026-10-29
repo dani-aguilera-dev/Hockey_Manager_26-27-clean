@@ -37,7 +37,7 @@ from src.events import pending_events as pending_game_events
 from src.events import resolve_event as resolve_game_event
 from src.data_loader import load_clubs
 from src.ehl import ehl_next_date, ehl_status_text, simulate_ehl_round
-from src.finance import financial_summary
+from src.finance import finance_overview, financial_summary
 from src.friendlies import (
     cancel_friendly,
     friendlies_payload,
@@ -1534,6 +1534,32 @@ def board_request():
     return _ok(
         {"result": result, "board": board_overview(state), "state": _state_payload(state)},
         result.get("message", "Petición registrada."),
+    )
+
+
+@api.get("/finance")
+def finance():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(finance_overview(state))
+
+
+@api.post("/finance/ticket")
+def finance_ticket():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    try:
+        price = int(payload.get("price", state.user_team.ticket_price))
+    except (TypeError, ValueError):
+        return _error("Precio no válido.", 400, "invalid_price")
+    result = set_ticket_price(state, price)
+    _save(state)
+    return _ok(
+        {"result": result, "finance": finance_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
     )
 
 
