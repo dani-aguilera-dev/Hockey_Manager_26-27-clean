@@ -43,6 +43,13 @@ REFERRALS_PER_TEAM = 1
 # Faltas y discrecionalidad arbitral.
 FREE_HIT_DISTANCE_METERS = 5
 ADVANTAGE_SECONDS = 3
+UNSPORTSMANLIKE_TYPES: dict[str, dict[str, object]] = {
+    "delay": {"label": "retraso deliberado", "card": False},
+    "simulation": {"label": "simulación", "card": True},
+    "misconduct": {"label": "conducta antideportiva", "card": True},
+}
+MAX_ADDED_TIME_MINUTES = 5
+
 FOUL_TYPES: dict[str, dict[str, object]] = {
     "stick": {"label": "golpe de stick", "dangerous": True, "weight": 0.30},
     "dangerous": {"label": "juego peligroso", "dangerous": True, "weight": 0.15},

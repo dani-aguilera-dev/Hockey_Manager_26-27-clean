@@ -708,6 +708,7 @@ export interface MatchReport {
   shootout: Record<string, unknown>
   referee?: { name?: string; style?: string; strictness?: number; card_bias?: number }
   reviews?: MatchReview[]
+  added_time?: Record<string, number>
   injuries?: MatchInjury[]
   cards?: MatchCard[]
   player_minutes?: Record<string, number>

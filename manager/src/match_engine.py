@@ -37,6 +37,7 @@ class MatchResult:
     shootout: dict[str, Any] = field(default_factory=dict)
     referee: dict[str, Any] = field(default_factory=dict)
     reviews: list[dict[str, Any]] = field(default_factory=list)
+    added_time: dict[int, int] = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -118,6 +119,7 @@ class MatchEngine:
         self.referrals: dict[int, int] = {0: rules.REFERRALS_PER_TEAM, 1: rules.REFERRALS_PER_TEAM}
         self.reviews: list[dict[str, Any]] = []
         self.last_decision: dict[str, Any] | None = None
+        self.added_time: dict[int, int] = {1: 0, 2: 0, 3: 0, 4: 0}
         # Suspensiones temporales en minutos de juego. El equipo juega con
         # un jugador menos mientras el jugador siga en el diccionario.
         self.suspensions: dict[int, dict[str, float]] = {0: {}, 1: {}}
@@ -163,6 +165,8 @@ class MatchEngine:
             "distance_5m": 0,
             "pc_denied": 0,
             "stroke_awarded": 0,
+            "dissent": 0,
+            "unsportsmanlike": 0,
         }
 
     # ---------- utilidades ----------
@@ -797,6 +801,78 @@ class MatchEngine:
             suffix = "expulsado; el equipo juega con uno menos el resto del partido."
         self._add_event("card", side, p, f"{rules.CARD_LABELS[card_type]} para {p.name} ({t.name}): {reason}. {suffix}")
         p.morale = max(1, p.morale - {"green": 1, "yellow": 2, "red": 4}[card_type])
+        if reason in ("retraso deliberado", "conducta antideportiva"):
+            kind = "delay" if reason == "retraso deliberado" else "misconduct"
+            self._unsportsmanlike(side, kind, p, card=False)
+        if card_type in ("yellow", "red"):
+            self._protest(side, p, "card", "warning")
+
+    def _protest(
+        self,
+        side: int,
+        player: PlayerState | None = None,
+        decision_type: str = "card",
+        outcome: str = "warning",
+    ) -> dict[str, Any]:
+        """Protesta de un jugador; puede quedarse en aviso o derivar en tarjeta."""
+        lineup = self._lineup(side)
+        if not lineup:
+            return {"ok": False}
+        player = player or lineup[0]
+        self._inc_stat(side, "dissent")
+        self._add_event(
+            "protest",
+            side,
+            player,
+            f"{player.name} protesta la decisión arbitral ({decision_type}). El árbitro responde con {('tarjeta' if outcome == 'card' else 'un aviso')}.",
+        )
+        if outcome == "card":
+            self._card(side)
+        return {"ok": True, "outcome": outcome, "player_id": player.id}
+
+    def _unsportsmanlike(
+        self,
+        side: int,
+        kind: str = "delay",
+        player: PlayerState | None = None,
+        card: bool = False,
+    ) -> dict[str, Any]:
+        """Conducta antideportiva: retraso, simulación o falta de respeto."""
+        profile = rules.UNSPORTSMANLIKE_TYPES.get(kind, rules.UNSPORTSMANLIKE_TYPES["delay"])
+        lineup = self._lineup(side)
+        if not lineup:
+            return {"ok": False}
+        player = player or lineup[0]
+        self._inc_stat(side, "unsportsmanlike")
+        self._add_event(
+            "unsportsmanlike",
+            side,
+            player,
+            f"Conducta antideportiva de {player.name}: {profile['label']}.",
+        )
+        if card or profile.get("card"):
+            self._card(side)
+        return {"ok": True, "kind": kind, "player_id": player.id}
+
+    def compute_added_time(self, quarter: int) -> int:
+        """Tiempo añadido por paradas reales del cuarto (lesiones, tarjetas, revisiones...)."""
+        relevant = [
+            event
+            for event in self.events
+            if int(event.get("quarter", 0)) == quarter
+            and event.get("type") in (
+                "injury",
+                "card",
+                "review",
+                "protest",
+                "unsportsmanlike",
+                "pc_decision",
+                "stroke",
+            )
+        ]
+        weights = {"injury": 1.0, "card": 0.5, "review": 1.0, "protest": 0.25, "unsportsmanlike": 0.5, "pc_decision": 0.5, "stroke": 0.5}
+        raw = sum(weights.get(str(event.get("type")), 0.0) for event in relevant)
+        return max(0, min(rules.MAX_ADDED_TIME_MINUTES, int(round(raw))))
 
     def _tick_suspensions(self):
         """Descuenta las suspensiones temporales en tiempo de juego."""
@@ -1290,6 +1366,17 @@ class MatchEngine:
                 f"Final del {self.quarter}º cuarto: {self.home.name} {self.score[0]}-{self.score[1]} {self.away.name}.",
                 minute=int(self.quarter * QUARTER_MINUTES),
             )
+        quarter = self.quarter
+        added = self.compute_added_time(quarter)
+        self.added_time[quarter] = added
+        if added > 0:
+            self._add_event(
+                "added_time",
+                None,
+                None,
+                f"El árbitro añade {added} minuto(s) al final del {quarter}º cuarto.",
+                minute=int(quarter * QUARTER_MINUTES),
+            )
         self.quarter += 1
         self.moment_in_quarter = 0
         if self.quarter > 4:
@@ -1374,6 +1461,7 @@ class MatchEngine:
             shootout=shootout,
             referee=self.referee,
             reviews=self.reviews,
+            added_time=self.added_time,
         )
         return self.result
 
@@ -1396,6 +1484,7 @@ class MatchEngine:
                 "instructions": self.opposition,
             },
             "referrals": [self.referrals.get(0, 0), self.referrals.get(1, 0)],
+            "added_time": self.added_time,
             "last_decision": self.last_decision,
             "reviews": self.reviews,
         }

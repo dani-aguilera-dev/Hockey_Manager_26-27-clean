@@ -16,7 +16,7 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **226 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **231 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -27,7 +27,7 @@
 | Historial completo | `/api/history`, `History.tsx`: temporadas, competiciones, partidos, jugadores, filtros y récords | PASS |
 | Ojeo con pantalla dedicada | `/api/scouting`, `/api/scouting/assignments`, `Scouting.tsx`: asignaciones, progreso e informes | PASS |
 | Reunión de equipo | `/api/team-meeting`, `TeamMeeting.tsx`: charla, dinámica, promesas y efectos persistentes | PASS |
-| Arbitraje discrecional | Ventaja, juego peligroso, distancia de 5 m y decisión de PC/stroke con eventos, estadísticas y parte | PASS |
+| Arbitraje discrecional | Ventaja, juego peligroso, 5 m, PC/stroke, protestas, conducta antideportiva y tiempo añadido | PASS |
 | Finanzas detalladas | `/api/finance`, `/api/finance/ticket`, `Finance.tsx`: cuenta de resultados, salarios, proyección y taquilla | PASS |
 | Análisis de partido | `/api/analysis`, `Analysis.tsx`: eficiencia, comparativa, cronología, ratings y archivo | PASS |
 | E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje, finanzas, análisis, prensa y marcas | PASS |
@@ -54,6 +54,7 @@
 15. `test_api_team_meeting`
 16. `test_api_finance_overview_and_ticket`
 17. `test_api_analysis_overview_and_archive`
+18. `test_api_report_has_added_time_and_discipline_stats`
 
 `src/tests/test_referee_discretion.py`:
 
@@ -72,6 +73,13 @@
 
 - `test_analysis_overview_has_metrics_timeline_and_players`
 - `test_analysis_can_open_archived_match`
+
+`src/tests/test_referee_discipline.py`:
+
+- `test_protest_warning_records_dissent_without_card`
+- `test_protest_can_draw_card`
+- `test_unsportsmanlike_delay_and_simulation`
+- `test_added_time_is_computed_and_in_result`
 
 `src/tests/test_acceptance_beta.py` incluye además:
 
@@ -135,17 +143,17 @@
 
 ```text
 python3 -m pytest src/tests -q
-226 passed in 335.86s
+231 passed in 339.61s
 
 cd manager/web/frontend && npm run build
 ✓ built in 4.88s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-Bu3jjThk.js → 200
+curl /static/react/assets/index-D6YQevpM.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2464,"clothUpdates":1232},"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":38,"stickFlexes":47},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2464},"viewerPhysics":{"frames":56,"playerCollisions":0,"bodyCollisions":46,"stickCollisions":31,"ballSpeed":7.82},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2464,"clothUpdates":1232},"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":36,"stickFlexes":45},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2464},"viewerPhysics":{"frames":56,"playerCollisions":0,"bodyCollisions":46,"stickCollisions":29,"ballSpeed":7.82},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

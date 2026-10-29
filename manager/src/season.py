@@ -591,6 +591,7 @@ def _user_result_payload(state: GameState, fixture: Fixture, result: MatchResult
         "shootout": result.shootout,
         "referee": result.referee,
         "reviews": result.reviews,
+        "added_time": result.added_time,
         "date": fixture.date,
     }
 

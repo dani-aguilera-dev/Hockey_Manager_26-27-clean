@@ -8,8 +8,8 @@ Diseño y prototipo de un juego de **entrenador y gestión de club** de hockey h
 - **Datos:** 29 clubes españoles y 70 internacionales, plantillas reales en las seis ligas internacionales y 37 atributos.
 - **Motor:** DHA y DHB jugables, partidos en directo, mercado, staff, entrenamiento, cantera, Copa, EHL, multi-temporada y guardado/carga.
 - **Web React:** Flask como backend/API + SPA React en `/app`, con fotos de jugadores, escudos oficiales de iSquad, noticias inmersivas y diseño responsive.
-- **Beta avanzada:** calendario de amistosos, prensa con periodistas y medios, marcas reales de equipación (Osaka, Ritual, Gryphon, TK, Grays, STX…), editor de fichas, auditoría de plantillas y simulación 3D del partido con esqueleto, IK, sticks, respuesta de materiales, colisiones de cuerpo/stick-cuerpo, biomecánica procedural, tejido estilizado, revisión de vídeo, junta y visión de club, cesiones, data hub, afiliados y mentoring, historial completo, ojeo con asignaciones, reunión de equipo, arbitraje discrecional, centro financiero, análisis de partido y conexión a MatchEngine.
-- **Tests:** 226 superados.
+- **Beta avanzada:** calendario de amistosos, prensa con periodistas y medios, marcas reales de equipación (Osaka, Ritual, Gryphon, TK, Grays, STX…), editor de fichas, auditoría de plantillas y simulación 3D del partido con esqueleto, IK, sticks, respuesta de materiales, colisiones de cuerpo/stick-cuerpo, biomecánica procedural, tejido estilizado, revisión de vídeo, junta y visión de club, cesiones, data hub, afiliados y mentoring, historial completo, ojeo con asignaciones, reunión de equipo, arbitraje discrecional, protestas, tiempo añadido, centro financiero, análisis de partido y conexión a MatchEngine.
+- **Tests:** 231 superados.
 
 ## Inicio rápido
 

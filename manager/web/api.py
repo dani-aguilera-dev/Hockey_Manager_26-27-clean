@@ -2590,6 +2590,9 @@ def _live_payload(state, ctx):
             "dangerous_play",
             "distance_5m",
             "pc_decision",
+            "protest",
+            "unsportsmanlike",
+            "added_time",
         )
     ]
     user_side = ctx.user_side

@@ -427,3 +427,14 @@ def test_api_analysis_overview_and_archive(client):
     archived = client.get(f"/api/analysis?fixture_id={fixture_id}")
     assert archived.status_code == 200, archived.get_data(as_text=True)
     assert archived.get_json()["data"]["match"]["fixture_id"] == fixture_id
+
+
+def test_api_report_has_added_time_and_discipline_stats(client):
+    _new_api(client, seed="48")
+    quick = client.post("/api/match/quick", json={"travel": "equilibrado"})
+    assert quick.status_code == 200, quick.get_data(as_text=True)
+    report = client.get("/api/match/report").get_json()["data"]["report"]
+    assert "added_time" in report
+    assert set(report["added_time"]) >= {"1", "2", "3", "4"}
+    assert "dissent" in report["home_stats"]
+    assert "unsportsmanlike" in report["away_stats"]

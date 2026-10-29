@@ -31,8 +31,10 @@ try {
   await page.getByText('Strokes', { exact: true }).waitFor()
   await page.getByText('Decisiones arbitrales').waitFor()
   await page.getByText('Ventajas').waitFor()
+  await page.getByText('Tiempo añadido').waitFor()
   result.refereeAndSetPieces = true
   result.refereeDiscretion = true
+  result.refereeDiscipline = true
 
   await page.goto('/app/game/analysis')
   await page.getByRole('heading', { name: 'Análisis de partido' }).waitFor()

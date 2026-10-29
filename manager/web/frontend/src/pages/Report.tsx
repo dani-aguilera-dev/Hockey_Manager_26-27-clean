@@ -90,6 +90,15 @@ export default function ReportPage() {
       </Card>
 
       <Card className="mt-2">
+        <div className="inline" style={{ justifyContent: 'space-between' }}><h3 style={{ margin: 0 }}>Tiempo añadido</h3><Badge tone="neutral">{Object.values(report.added_time || {}).reduce((sum, value) => sum + Number(value || 0), 0)}′</Badge></div>
+        <div className="stack-sm mt-2">
+          {[1, 2, 3, 4].map((quarter) => (
+            <div className="stat-line" key={quarter}><b>{report.added_time?.[String(quarter)] || 0}′</b><span>{quarter}º cuarto</span><b className="num">{report.added_time?.[String(quarter)] || 0}′</b></div>
+          ))}
+        </div>
+      </Card>
+
+      <Card className="mt-2">
         <h3>Crónica</h3>
         <div className="event-list" style={{ maxHeight: 420 }}>
           {report.events?.length ? report.events.map((event, index) => <div className={`event-row ${event.type}`} key={`${event.minute}-${index}`}><span className="event-minute">{event.minute}'</span><p><b>{event.text}</b></p></div>) : <p className="small muted">Sin eventos registrados.</p>}
