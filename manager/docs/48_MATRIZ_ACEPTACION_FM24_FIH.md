@@ -60,9 +60,9 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Criterio | Implementación | Evidencia | Estado |
 | --- | --- | --- | --- |
 | Campo 3D | `MatchViewer3D.tsx` con Three.js: césped, líneas, círculo, áreas y porterías | E2E `viewer3d` + captura `e2e_3d.png` | PASS |
-| 22 jugadores con locomoción | 11 locales y 11 visitantes, piernas/brazos animados, desplazamiento y separación | E2E `players=22`, `frames=63` | PASS |
-| Balón con física | Velocidad, gravedad, rebote, fricción, límites y detección de gol | E2E `ballSpeed=7.58` | PASS |
-| Colisiones | Colisión jugador-jugador y jugador-balón con separación y rebote | E2E `collisions=58` | PASS |
+| 22 jugadores con locomoción | 11 locales y 11 visitantes, piernas/brazos animados, desplazamiento y separación | E2E `players=22`, `frames=60` | PASS |
+| Balón con física | Velocidad, gravedad, rebote, fricción, límites y detección de gol | E2E `ballSpeed=9.04` | PASS |
+| Colisiones | Colisión jugador-jugador y jugador-balón con separación y rebote | E2E `collisions=55` | PASS |
 | UI 3D | Marcador, cuarto, minuto, estado y último evento superpuestos al canvas | E2E `match-viewer-ui` + captura | PASS |
 | Conexión con MatchEngine | El visor consume `LivePayload`: `score`, `quarter`, `minute`, `line`, `events`, formación y equipo atacante | `/api/match/live` y `/api/match/live/advance` | PASS |
 | Física 3D de alta fidelidad | No hay colisiones de stick/cuerpo completas, tejido, IK ni física de material | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
@@ -86,7 +86,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerPhysics":{"frames":63,"collisions":58,"ballSpeed":7.58},"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerPhysics":{"frames":60,"collisions":55,"ballSpeed":9.04},"playerBrands":true}
 ```
 
 Flujo:
