@@ -707,6 +707,7 @@ export interface MatchReport {
   prep_bonus: number
   shootout: Record<string, unknown>
   referee?: { name?: string; style?: string; strictness?: number; card_bias?: number }
+  reviews?: MatchReview[]
   injuries?: MatchInjury[]
   cards?: MatchCard[]
   player_minutes?: Record<string, number>
@@ -1336,4 +1337,41 @@ export interface LivePayload {
     away_tactical_bonus: number
   }
   subs_left: number
+  referrals: [number, number]
+  last_decision: ReviewDecision | null
+  reviews: MatchReview[]
+}
+
+export interface ReviewDecision {
+  type: string
+  label: string
+  side: number
+  team_name: string
+  player_id?: string | null
+  player_name?: string | null
+  minute: number
+  quarter: number
+  score: string
+  reviewed: boolean
+  overturned?: boolean
+  goal: boolean
+  scorer_id?: string | null
+  scorer_name?: string | null
+  assister_id?: string | null
+  goal_kind?: string
+}
+
+export interface MatchReview {
+  minute: number
+  quarter: number
+  type: string
+  label: string
+  requested_by: string
+  requested_side: number
+  beneficiary: string
+  overturned: boolean
+  referrals_left: number
+  score_before: string
+  score_after: string
+  text: string
 }

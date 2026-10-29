@@ -36,6 +36,7 @@ class MatchResult:
     player_minutes: dict[str, int] = field(default_factory=dict)
     shootout: dict[str, Any] = field(default_factory=dict)
     referee: dict[str, Any] = field(default_factory=dict)
+    reviews: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -110,6 +111,11 @@ class MatchEngine:
             self.player_minutes[p.id] = 0
         self.injuries: list[dict[str, Any]] = []
         self.cards: list[dict[str, Any]] = []
+        # Videoarbitraje: una referencia por equipo y una decisión revisable
+        # (gol, penalty corner o penalty stroke) por jugada.
+        self.referrals: dict[int, int] = {0: rules.REFERRALS_PER_TEAM, 1: rules.REFERRALS_PER_TEAM}
+        self.reviews: list[dict[str, Any]] = []
+        self.last_decision: dict[str, Any] | None = None
         # Suspensiones temporales en minutos de juego. El equipo juega con
         # un jugador menos mientras el jugador siga en el diccionario.
         self.suspensions: dict[int, dict[str, float]] = {0: {}, 1: {}}
@@ -258,6 +264,144 @@ class MatchEngine:
             r -= 0.2
         return max(1.0, min(10.0, round(r, 2)))
 
+    # ---------- videoarbitraje ----------
+    def _record_decision(
+        self, kind: str, side: int, player: PlayerState | None = None, **extra: Any
+    ) -> None:
+        """Guarda la última decisión revisable por el árbitro de vídeo."""
+        self.last_decision = {
+            "type": kind,
+            "label": rules.REFERRAL_DECISIONS.get(kind, kind),
+            "side": side,
+            "team_name": self._team(side).name,
+            "player_id": player.id if player else None,
+            "player_name": player.name if player else None,
+            "minute": int(self.minute),
+            "quarter": self.quarter,
+            "score": f"{self.score[0]}-{self.score[1]}",
+            "reviewed": False,
+            "goal": False,
+            "scorer_id": None,
+            "scorer_name": None,
+            "assister_id": None,
+            "goal_kind": "",
+        }
+        self.last_decision.update(extra)
+
+    def _mark_decision_goal(
+        self, scorer: PlayerState, assister: PlayerState | None, goal_kind: str
+    ) -> None:
+        if not self.last_decision:
+            return
+        self.last_decision.update(
+            {
+                "goal": True,
+                "scorer_id": scorer.id,
+                "scorer_name": scorer.name,
+                "assister_id": assister.id if assister else None,
+                "goal_kind": goal_kind,
+            }
+        )
+
+    def _annul_goal(self, decision: dict[str, Any]) -> None:
+        side = int(decision["side"])
+        stats = self.stats[side]
+        stats["goals"] = max(0, int(stats.get("goals", 0)) - 1)
+        stats["shots"] = max(0, int(stats.get("shots", 0)) - 1)
+        stats["shots_on_target"] = max(0, int(stats.get("shots_on_target", 0)) - 1)
+        if decision.get("type") == "penalty_corner" or decision.get("goal_kind") in ("pc", "pc_rebound"):
+            stats["pc_goals"] = max(0, int(stats.get("pc_goals", 0)) - 1)
+        if decision.get("type") == "penalty_corner":
+            stats["pc"] = max(0, int(stats.get("pc", 0)) - 1)
+        if decision.get("type") == "penalty_stroke" or decision.get("goal_kind") == "stroke":
+            stats["stroke_goals"] = max(0, int(stats.get("stroke_goals", 0)) - 1)
+        if decision.get("type") == "penalty_stroke":
+            stats["strokes"] = max(0, int(stats.get("strokes", 0)) - 1)
+        self.score[side] = max(0, self.score[side] - 1)
+        scorer_id = decision.get("scorer_id")
+        if scorer_id and scorer_id in self.player_stats:
+            self.player_stats[scorer_id]["goals"] = max(0, self.player_stats[scorer_id]["goals"] - 1)
+        assister_id = decision.get("assister_id")
+        if assister_id and assister_id in self.player_stats and assister_id != scorer_id:
+            self.player_stats[assister_id]["assists"] = max(0, self.player_stats[assister_id]["assists"] - 1)
+
+    def review_decision(self, side: int, decision_type: str = "") -> dict[str, Any]:
+        """Revisión de vídeo solicitada por un equipo.
+
+        El capitán pide revisar la última decisión (gol, PC o stroke). Si el
+        árbitro de vídeo corrige la decisión, el equipo conserva su referencia;
+        si la decisión se mantiene, la pierde.
+        """
+        if side not in (0, 1):
+            return {"ok": False, "message": "Equipo no válido."}
+        decision = self.last_decision
+        if not decision:
+            return {"ok": False, "message": "No hay ninguna decisión revisable."}
+        if decision.get("reviewed"):
+            return {"ok": False, "message": "Esa decisión ya fue revisada."}
+        if decision_type and decision_type != decision.get("type"):
+            return {"ok": False, "message": "La decisión ya no coincide con la jugada revisable."}
+        if int(decision.get("side", -1)) == side:
+            return {"ok": False, "message": "Solo puedes revisar una decisión contra tu equipo."}
+        if self.referrals.get(side, 0) <= 0:
+            return {"ok": False, "message": "No te quedan referencias de vídeo."}
+        strictness = float(self.referee.get("strictness", 55))
+        base = {"goal": 0.46, "penalty_corner": 0.34, "penalty_stroke": 0.30}.get(
+            str(decision.get("type")), 0.30
+        )
+        chance = max(0.15, min(0.65, base + (55 - strictness) / 400))
+        overturned = self.rng.random() < chance
+        score_before = f"{self.score[0]}-{self.score[1]}"
+        if overturned:
+            if decision.get("goal"):
+                self._annul_goal(decision)
+            elif decision.get("type") == "penalty_corner":
+                stats = self.stats[int(decision["side"])]
+                stats["pc"] = max(0, int(stats.get("pc", 0)) - 1)
+            elif decision.get("type") == "penalty_stroke":
+                stats = self.stats[int(decision["side"])]
+                stats["strokes"] = max(0, int(stats.get("strokes", 0)) - 1)
+            text = (
+                f"Revisión de vídeo: el árbitro corrige la decisión y anula "
+                f"{decision.get('label', 'la jugada')} a favor de {decision.get('team_name')}."
+            )
+            if decision.get("goal"):
+                text = (
+                    f"Revisión de vídeo: gol anulado a {decision.get('scorer_name') or decision.get('team_name')}. "
+                    f"El árbitro de vídeo corrige la decisión."
+                )
+        else:
+            self.referrals[side] = max(0, self.referrals.get(side, 0) - 1)
+            text = (
+                f"Revisión de vídeo sin éxito para {self._team(side).name}: "
+                f"se mantiene {decision.get('label', 'la decisión')} y se pierde la referencia."
+            )
+        decision["reviewed"] = True
+        decision["overturned"] = overturned
+        review = {
+            "minute": int(self.minute),
+            "quarter": self.quarter,
+            "type": decision.get("type"),
+            "label": decision.get("label"),
+            "requested_by": self._team(side).name,
+            "requested_side": side,
+            "beneficiary": decision.get("team_name"),
+            "overturned": overturned,
+            "referrals_left": self.referrals[side],
+            "score_before": score_before,
+            "score_after": f"{self.score[0]}-{self.score[1]}",
+            "text": text,
+        }
+        self.reviews.append(review)
+        self._add_event("review", int(decision.get("side", 0)), None, text)
+        return {
+            "ok": True,
+            "message": text,
+            "review": review,
+            "referrals": dict(self.referrals),
+            "score": list(self.score),
+        }
+
     # ---------- set pieces ----------
     def _penalty_corner(self, side: int):
         t = self._team(side)
@@ -273,6 +417,7 @@ class MatchEngine:
         rebounder = spec.get("pc_rebounder") or deflector
         first_runner = opp_spec.get("pc_first_runner")
         self._inc_stat(side, "pc")
+        self._record_decision("penalty_corner", side, inj)
         self._add_event("pc", side, inj, f"Penalty corner para {t.name}. {inj.name} coloca la bola en la marca.")
         # 1. saque vs primer runner
         inj_roll = inj.attributes.get("pc_injection", 50) + self.rng.gauss(0, 7)
@@ -317,6 +462,7 @@ class MatchEngine:
             self.player_stats[shooter.id]["goals"] += 1
             assister = inj if self.rng.random() < 0.6 else stopper
             self.player_stats[assister.id]["assists"] += 1
+            self._mark_decision_goal(shooter, assister, "pc")
             self._add_event(
                 "goal",
                 side,
@@ -341,6 +487,7 @@ class MatchEngine:
                     self._inc_stat(side, "goals")
                     self._inc_stat(side, "pc_goals")
                     self.player_stats[reb.id]["goals"] += 1
+                    self._mark_decision_goal(reb, None, "pc_rebound")
                     self._add_event("goal", side, reb, f"{reb.name} caza el rebote y empuja la bola. Gol de {t.name}.")
             else:
                 self._add_event("pc", side, shooter, f"{shooter.name} tira el PC, pero la bola se marcha fuera.")
@@ -355,6 +502,7 @@ class MatchEngine:
         gk = opp_spec.get("stroke_goalkeeper") or self._gk(opp)
         taker = spec.get("stroke_taker")
         self._inc_stat(side, "strokes")
+        self._record_decision("penalty_stroke", side, taker)
         self._add_event("stroke", side, taker, f"Penalty stroke para {t.name}. {taker.name} toma la bola.")
         shot = taker.attributes.get("stroke_shot", 50) + self.rng.gauss(0, 6)
         save = gk.attributes.get("stroke_save", 50) + self.rng.gauss(0, 6)
@@ -367,6 +515,7 @@ class MatchEngine:
             self._inc_stat(side, "shots")
             self._inc_stat(side, "shots_on_target")
             self.player_stats[taker.id]["goals"] += 1
+            self._mark_decision_goal(taker, None, "stroke")
             self._add_event(
                 "goal", side, taker, f"¡Gol de {t.name}! {taker.name} engaña al portero y convierte el stroke."
             )
@@ -385,6 +534,16 @@ class MatchEngine:
     # ---------- acciones de juego ----------
     def _goal(self, side: int, scorer: PlayerState, assister: PlayerState | None, kind: str):
         t = self._team(side)
+        self._record_decision(
+            "goal",
+            side,
+            scorer,
+            goal=True,
+            scorer_id=scorer.id,
+            scorer_name=scorer.name,
+            assister_id=assister.id if assister else None,
+            goal_kind=kind,
+        )
         self.score[side] += 1
         self._inc_stat(side, "goals")
         self._inc_stat(side, "shots")
@@ -1098,6 +1257,7 @@ class MatchEngine:
             player_minutes=self.player_minutes,
             shootout=shootout,
             referee=self.referee,
+            reviews=self.reviews,
         )
         return self.result
 
@@ -1114,6 +1274,9 @@ class MatchEngine:
             "home_tactical_bonus": round(self.tactical_matchup_bonus(0), 2),
             "away_tactical_bonus": round(self.tactical_matchup_bonus(1), 2),
             "referee": self.referee,
+            "referrals": [self.referrals.get(0, 0), self.referrals.get(1, 0)],
+            "last_decision": self.last_decision,
+            "reviews": self.reviews,
         }
 
     def player_live_rows(self, side: int) -> list[dict]:

@@ -129,3 +129,88 @@ def test_substitution_limit_and_red_card_suspension():
     ok, message = red_engine.manual_substitute(0, player.id, red_engine._bench(0)[0].id)
     assert not ok
     assert "sancionado" in message.lower() or "suspendido" in message.lower()
+
+
+class _FixedRng:
+    """RNG mínimo para forzar el resultado de una revisión de vídeo."""
+
+    def __init__(self, value: float):
+        self.value = value
+
+    def random(self) -> float:
+        return self.value
+
+    def gauss(self, mu: float, sigma: float) -> float:
+        return 0.0
+
+    def choice(self, seq):
+        return seq[0]
+
+    def choices(self, seq, weights=None, k=1):
+        return [seq[0]] * k
+
+    def sample(self, seq, k):
+        return list(seq)[:k]
+
+
+def test_video_review_overturns_goal_and_retains_referral():
+    teams, _, _ = load_teams()
+    engine = MatchEngine(teams["cd-terrassa"], teams["ud-taburiente"], random.Random(101), detailed=True)
+    engine.prepare()
+    scorer = engine._lineup(0)[0]
+    engine._goal(0, scorer, None, "open")
+    assert engine.score == [1, 0]
+    assert engine.last_decision["type"] == "goal"
+    assert engine.last_decision["side"] == 0
+    engine.rng = _FixedRng(0.0)
+    result = engine.review_decision(1, "goal")
+    assert result["ok"] is True
+    assert result["review"]["overturned"] is True
+    assert engine.score == [0, 0]
+    assert engine.stats[0]["goals"] == 0
+    assert engine.player_stats[scorer.id]["goals"] == 0
+    # Una revisión acertada conserva la referencia.
+    assert engine.referrals[1] == 1
+    assert any(event["type"] == "review" for event in engine.events)
+
+
+def test_video_review_upheld_consumes_referral():
+    teams, _, _ = load_teams()
+    engine = MatchEngine(teams["cd-terrassa"], teams["ud-taburiente"], random.Random(102), detailed=True)
+    engine.prepare()
+    scorer = engine._lineup(0)[0]
+    engine._goal(0, scorer, None, "open")
+    engine.rng = _FixedRng(0.99)
+    result = engine.review_decision(1, "goal")
+    assert result["ok"] is True
+    assert result["review"]["overturned"] is False
+    assert engine.score == [1, 0]
+    assert engine.referrals[1] == 0
+    # La misma decisión no se puede revisar dos veces.
+    again = engine.review_decision(1, "goal")
+    assert again["ok"] is False
+
+
+def test_penalty_corner_and_stroke_are_reviewable():
+    teams, _, _ = load_teams()
+    engine = MatchEngine(teams["cd-terrassa"], teams["ud-taburiente"], random.Random(104), detailed=True)
+    engine.prepare()
+    engine._penalty_corner(0)
+    assert engine.last_decision["type"] == "penalty_corner"
+    engine._stroke(1)
+    assert engine.last_decision["type"] == "penalty_stroke"
+    engine.rng = _FixedRng(0.0)
+    result = engine.review_decision(0, "penalty_stroke")
+    assert result["ok"] is True
+    assert result["review"]["type"] == "penalty_stroke"
+
+
+def test_video_review_rejects_own_decision_and_unknown_play():
+    teams, _, _ = load_teams()
+    engine = MatchEngine(teams["cd-terrassa"], teams["ud-taburiente"], random.Random(103), detailed=True)
+    engine.prepare()
+    assert engine.review_decision(0, "goal")["ok"] is False
+    engine._goal(0, engine._lineup(0)[0], None, "open")
+    assert engine.review_decision(0, "goal")["ok"] is False
+    assert engine.review_decision(1, "penalty_stroke")["ok"] is False
+    assert engine.review_decision(1, "goal")["ok"] is True

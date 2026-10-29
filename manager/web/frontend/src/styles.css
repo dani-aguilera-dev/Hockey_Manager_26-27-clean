@@ -1064,3 +1064,14 @@ select option { background: #0b1220; color: #e8eef8; }
   cursor: pointer;
 }
 .match-viewer-camera:hover { background: rgba(255,255,255,.13); }
+
+/* Revisión de vídeo en directo */
+.review-row {
+  padding: 8px 10px;
+  border-left: 3px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255,255,255,.02);
+}
+.review-row.overturned { border-left-color: var(--ok, #3ecf8e); }
+.review-row.upheld { border-left-color: var(--danger, #e05252); }
+.review-row p { margin: 6px 0 0; }

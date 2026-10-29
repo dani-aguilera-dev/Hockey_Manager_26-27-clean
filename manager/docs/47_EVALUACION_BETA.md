@@ -2,7 +2,6 @@
 
 **Fecha:** 2026-10-29  
 **Rama:** `main`  
-**Commit de la actualización:** `49bb4df`
 
 ## Criterios y resultado
 
@@ -17,10 +16,11 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **173 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **178 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
-| E2E Playwright | calendario mensual, amistoso/partido, visor 3D, prensa posterior y marcas individuales | PASS |
+| Revisión de vídeo | `/api/match/live/review`, gol/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
+| E2E Playwright | calendario mensual, amistoso/partido, visor 3D, revisión de vídeo, prensa posterior y marcas individuales | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media y equipación; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -34,30 +34,37 @@
 5. `test_player_editor_can_fix_position_and_attributes`
 6. `test_press_has_journalist_media_and_six_topics`
 7. `test_api_calendar_brands_editor_and_press`
+8. `test_api_video_review_flow`
+
+`src/tests/test_acceptance_beta.py` incluye además:
+
+- `test_video_review_overturns_goal_and_retains_referral`
+- `test_video_review_upheld_consumes_referral`
+- `test_penalty_corner_and_stroke_are_reviewable`
+- `test_video_review_rejects_own_decision_and_unknown_play`
 
 ## Comandos ejecutados
 
 ```text
 python3 -m pytest src/tests -q
-173 passed in 278.27s
+178 passed in 281.30s
 
 cd manager/web/frontend && npm run build
-✓ built in 3.68s
+✓ built in 4.71s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-Bu3vFlBz.js → 200
+curl /static/react/assets/index-CogsA2k0.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":34,"ballSpeed":7.64},"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.66},"videoReview":true,"videoReviewType":"penalty_corner","playerBrands":true}
 ```
 
 ## Límites conscientes
 
 La beta ya tiene una capa de gestión mucho más amplia, pero no se presenta como una réplica completa de Football Manager 24. Las siguientes piezas de mayor valor serían:
 
-- rueda de prensa posterior al partido;
-- vista mensual de calendario con drag-and-drop;
-- contratos individuales de imagen con marcas;
-- más animaciones y eventos únicos de hockey;
+- revisión de vídeo con interpretación arbitral completa (solo están modeladas las decisiones revisables);
+- física 3D AAA (tejido, materiales, captura de movimiento);
+- paridad total de pantallas y bases de datos de FM24;
 - auditoría visual de fotos de jugadores (la incidencia principal era el staff cargado como plantilla).

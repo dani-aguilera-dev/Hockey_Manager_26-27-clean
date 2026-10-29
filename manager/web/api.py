@@ -2249,6 +2249,8 @@ def _live_payload(state, ctx):
             "circle_entry",
             "talk",
             "tactic",
+            "review",
+            "goal_disallowed",
         )
     ]
     user_side = ctx.user_side
@@ -2273,6 +2275,9 @@ def _live_payload(state, ctx):
         "travel": ctx.travel,
         "snapshot": engine.live_snapshot(),
         "subs_left": max(0, 5 - engine._subs[user_side]),
+        "referrals": [engine.referrals.get(0, 0), engine.referrals.get(1, 0)],
+        "last_decision": engine.last_decision,
+        "reviews": engine.reviews,
     }
 
 
@@ -2363,6 +2368,23 @@ def match_live_sub():
     if not ok:
         return _error(message, 409, "sub_failed")
     return _ok(_live_payload(state, ctx), message)
+
+
+@api.post("/match/live/review")
+def match_live_review():
+    state, err = _state()
+    if err:
+        return err
+    web = _web()
+    ctx = web.LIVE.get(session.get("game_id"))
+    if not ctx:
+        return _error("No hay partido en directo.", 409, "no_live")
+    payload = request.get_json(silent=True) or request.form
+    decision = str(payload.get("decision", "") or "")
+    result = ctx.engine.review_decision(ctx.user_side, decision)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo revisar la decisión."), 409, "review_failed")
+    return _ok(_live_payload(state, ctx), result.get("message", "Revisión completada."))
 
 
 @api.post("/match/live/finish")

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FastForward, Flag, Play, SkipForward, Timer, UserRoundPlus } from 'lucide-react'
+import { FastForward, Flag, MonitorCheck, Play, Timer, UserRoundPlus } from 'lucide-react'
 import { api } from '../lib/api'
 import { dateLabel } from '../lib/format'
 import type { LivePayload } from '../types'
@@ -80,6 +80,20 @@ export default function LiveMatch() {
     }
   }
 
+  async function requestReview() {
+    if (!data?.last_decision) return
+    setBusy('review')
+    try {
+      const response = await api.post<LivePayload>('/match/live/review', { decision: data.last_decision.type })
+      setData(response.data)
+      toast(response.message || 'Revisión completada.', 'success')
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudo solicitar la revisión.', 'danger')
+    } finally {
+      setBusy(null)
+    }
+  }
+
   async function finish() {
     setBusy('finish')
     try {
@@ -101,6 +115,9 @@ export default function LiveMatch() {
   const homePossession = Number(homeStats.possession || 0)
   const awayPossession = Number(awayStats.possession || 0)
   const barHome = homePossession || 50
+  const decisionLabels: Record<string, string> = { goal: 'Gol', penalty_corner: 'Penalty corner', penalty_stroke: 'Penalty stroke' }
+  const referralsLeft = data.referrals?.[data.user_side] ?? 0
+  const reviewable = data.last_decision && !data.last_decision.reviewed && data.last_decision.side !== data.user_side
 
   return (
     <>
@@ -147,6 +164,32 @@ export default function LiveMatch() {
             ].map(([label, home, away]) => (
               <div className="stat-line" key={label}><b>{home}</b><span>{label}</span><b className="num">{away}</b></div>
             ))}
+          </Card>
+          <Card>
+            <div className="inline" style={{ justifyContent: 'space-between' }}>
+              <h3 style={{ margin: 0 }}>Revisión de vídeo</h3>
+              <Badge tone={referralsLeft ? 'neutral' : 'danger'}>{referralsLeft} referencia(s)</Badge>
+            </div>
+            {reviewable ? (
+              <>
+                <p className="small muted mt-1">
+                  Última decisión revisable: <b>{decisionLabels[data.last_decision!.type] || data.last_decision!.type}</b> a favor de {data.last_decision!.team_name} ({data.last_decision!.minute}'). El capitán puede pedir revisión.
+                </p>
+                <Button size="sm" icon={MonitorCheck} onClick={requestReview} loading={busy === 'review'} disabled={!referralsLeft}>Solicitar revisión</Button>
+              </>
+            ) : (
+              <p className="small muted mt-1">No hay una decisión revisable contra tu equipo. Avanza el partido para generar una jugada.</p>
+            )}
+            {data.reviews.length > 0 && (
+              <div className="stack-sm mt-2">
+                {data.reviews.slice().reverse().slice(0, 3).map((review, index) => (
+                  <div className={`review-row ${review.overturned ? 'overturned' : 'upheld'}`} key={`${review.minute}-${index}`}>
+                    <Badge tone={review.overturned ? 'ok' : 'danger'}>{review.overturned ? 'Corregida' : 'Mantenida'}</Badge>
+                    <p className="small">{review.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </Card>
           <Card>
             <h3>Tu once</h3>

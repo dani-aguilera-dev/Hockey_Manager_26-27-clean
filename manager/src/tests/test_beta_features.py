@@ -213,3 +213,28 @@ def test_api_calendar_brands_editor_and_press(client):
     sub = client.post("/api/match/live/sub", json={"out_id": out_id, "in_id": in_id})
     assert sub.status_code == 200, sub.get_data(as_text=True)
     assert sub.get_json()["data"]["events"]
+
+
+def test_api_video_review_flow(client):
+    _new_api(client, seed="38")
+    start = client.post("/api/match/live/start", json={"travel": "equilibrado"})
+    assert start.status_code == 200, start.get_data(as_text=True)
+    data = start.get_json()["data"]
+    assert data["referrals"] == [1, 1]
+    for _ in range(4):
+        decision = data.get("last_decision")
+        if decision and decision["side"] != data["user_side"]:
+            break
+        advance = client.post("/api/match/live/advance", json={"mode": "quarter"})
+        assert advance.status_code == 200, advance.get_data(as_text=True)
+        data = advance.get_json()["data"]
+    decision = data.get("last_decision")
+    assert decision, "El partido debe generar alguna decisión revisable"
+    assert decision["side"] != data["user_side"], decision
+    review = client.post("/api/match/live/review", json={"decision": decision["type"]})
+    assert review.status_code == 200, review.get_data(as_text=True)
+    payload = review.get_json()["data"]
+    assert payload["reviews"], payload
+    assert payload["last_decision"]["reviewed"] is True
+    assert payload["reviews"][-1]["type"] == decision["type"]
+    assert payload["referrals"][payload["user_side"]] in (0, 1)

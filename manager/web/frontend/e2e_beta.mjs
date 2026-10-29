@@ -70,6 +70,28 @@ try {
   }
   await page.screenshot({ path: '/tmp/opencode/e2e_3d.png' })
 
+  let liveData = (await (await context.request.get('/api/match/live')).json()).data
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const decision = liveData.last_decision
+    if (decision && !decision.reviewed && decision.side !== liveData.user_side) break
+    const advanced = await context.request.post('/api/match/live/advance', { data: { mode: 'quarter' } })
+    if (!advanced.ok()) throw new Error(`live advance HTTP ${advanced.status()}: ${await advanced.text()}`)
+    liveData = (await advanced.json()).data
+  }
+  const reviewDecision = liveData.last_decision
+  if (!reviewDecision || reviewDecision.side === liveData.user_side) {
+    throw new Error(`no reviewable decision ${JSON.stringify(reviewDecision)}`)
+  }
+  await page.reload()
+  await page.getByRole('heading', { name: 'Partido en directo' }).waitFor()
+  const reviewButton = page.getByRole('button', { name: 'Solicitar revisión' })
+  await reviewButton.waitFor()
+  await reviewButton.click()
+  await page.locator('.review-row').first().waitFor()
+  result.videoReview = true
+  result.videoReviewType = reviewDecision.type
+  await page.screenshot({ path: '/tmp/opencode/e2e_review.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

@@ -60,11 +60,11 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Criterio | Implementación | Evidencia | Estado |
 | --- | --- | --- | --- |
 | Campo 3D | `MatchViewer3D.tsx` con Three.js: césped, líneas, círculo, áreas y porterías | E2E `viewer3d` + captura `e2e_3d.png` | PASS |
-| 22 jugadores con locomoción | 11 locales y 11 visitantes, piernas/brazos animados, desplazamiento y separación | E2E `players=22`, `frames=65` | PASS |
+| 22 jugadores con locomoción | 11 locales y 11 visitantes, piernas/brazos animados, desplazamiento y separación | E2E `players=22`, `frames=64` | PASS |
 | Esqueleto jerárquico | Cadera, torso, cabeza, cuello, brazos, antebrazos, manos, muslos, espinillas y pies; 17 huesos por jugador | E2E `bones=374` | PASS |
-| IK de brazos | IK analítico de dos huesos para llevar ambas manos a las agarraderas del stick en cada frame | E2E `ikSolutions=2860` | PASS |
-| Sticks | 22 sticks con mango y pala; colisión segmento-bola | E2E `sticks=22`, `stickCollisions=34` | PASS |
-| Balón con física | Velocidad, gravedad, rebote, fricción, límites y detección de gol | E2E `ballSpeed=7.64` | PASS |
+| IK de brazos | IK analítico de dos huesos para llevar ambas manos a las agarraderas del stick en cada frame | E2E `ikSolutions=2816` | PASS |
+| Sticks | 22 sticks con mango y pala; colisión segmento-bola | E2E `sticks=22`, `stickCollisions=33` | PASS |
+| Balón con física | Velocidad, gravedad, rebote, fricción, límites y detección de gol | E2E `ballSpeed=7.66` | PASS |
 | Colisiones de cuerpo | Colisión cuerpo-bola con rebote y separación jugador-jugador | E2E `bodyCollisions=50` | PASS |
 | UI 3D | Marcador, cuarto, minuto, estado, último evento y cámara táctica superpuestos al canvas | E2E `match-viewer-ui` + captura | PASS |
 | Conexión con MatchEngine | El visor consume `LivePayload`: `score`, `quarter`, `minute`, `line`, `events`, formación y equipo atacante | `/api/match/live` y `/api/match/live/advance` | PASS |
@@ -81,6 +81,13 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | No sustituir sancionados/lesionados | `test_substitution_limit_and_red_card_suspension` y tests de tarjetas | PASS |
 | Árbitro con nombre, estilo, exigencia y sesgo de tarjetas | `test_penalty_corner_stroke_and_referee_are_exposed`; `MatchResult.referee` | PASS |
 | Tarjetas verde/amarilla/roja y suspensiones temporales | `test_rules_cards.py` | PASS |
+| Revisión de vídeo de gol, PC y stroke | `MatchEngine.review_decision`, `/api/match/live/review`, tarjeta “Revisión de vídeo” en `LiveMatch.tsx` | `test_video_review_overturns_goal_and_retains_referral`, `test_penalty_corner_and_stroke_are_reviewable`, `test_api_video_review_flow`, E2E `videoReview` | PASS |
+| Referencia por equipo y retención si prospera | `REFERRALS_PER_TEAM=1`; una revisión acertada conserva la referencia y una fallida la consume | `test_video_review_overturns_goal_and_retains_referral`, `test_video_review_upheld_consumes_referral` | PASS |
+| Corrección de marcador y estadísticas | El gol anulado resta marcador, stats de equipo y stats individuales | `test_video_review_overturns_goal_and_retains_referral` | PASS |
+| Arbitraje discrecional completo | No se modela cada interpretación subjetiva del reglamento; solo las decisiones revisables y sus correcciones | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
+
+
+> Los contadores de frames, IK y colisiones varían entre ejecuciones; el E2E exige que sean mayores que cero y que el esqueleto y los sticks estén completos.
 
 ## 8. E2E de la beta
 
@@ -89,7 +96,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":34,"ballSpeed":7.64},"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.66},"videoReview":true,"videoReviewType":"penalty_corner","playerBrands":true}
 ```
 
 Flujo:
@@ -100,15 +107,16 @@ Flujo:
 4. Simular un partido rápido.
 5. Abrir el parte y comprobar árbitro y estadísticas de PC/strokes.
 6. Abrir `/app/game/live`, comprobar el canvas, el esqueleto, los sticks, el IK y las colisiones de cuerpo/stick.
-7. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-8. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+7. Avanzar hasta una decisión contra el usuario y solicitar la revisión de vídeo desde la pantalla en directo.
+8. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+9. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
 ## 9. Límites convertidos en criterios pass/fail
 
 | Límite anterior | Criterio verificable | Estado |
 | --- | --- | --- |
 | “No hay motor 3D” | Simulación 3D con campo, 22 jugadores con esqueleto e IK, 22 sticks, balón con física, colisiones de cuerpo/stick y UI | PASS simulación 3D / FAIL física AAA |
-| “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones y árbitro tienen pruebas explícitas; el resto de interpretaciones discrecionales no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
+| “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones, árbitro y revisión de vídeo tienen pruebas explícitas; el resto de interpretaciones discrecionales no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
 | “No replica todas las pantallas de FM24” | La matriz enumera los flujos cubiertos; la paridad total de pantallas no se declara | FAIL / fuera de alcance |
 | “Prensa textual” | Prensa previa y posterior con medios, efectos e historial | PASS |
 | “Marcas no cambian la física” | Contratos de club e individuales con efectos económicos, de marca y relación; no se promete física de material | PASS para gestión / FAIL para simulación física |
@@ -116,4 +124,4 @@ Flujo:
 
 ## 10. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados y de las reglas FIH operativas. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas y de la revisión de vídeo. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total.

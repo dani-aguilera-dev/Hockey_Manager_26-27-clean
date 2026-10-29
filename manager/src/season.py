@@ -576,6 +576,7 @@ def _user_result_payload(state: GameState, fixture: Fixture, result: MatchResult
         "prep_bonus": state.user_team.prep_bonus,
         "shootout": result.shootout,
         "referee": result.referee,
+        "reviews": result.reviews,
         "date": fixture.date,
     }
 

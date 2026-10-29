@@ -35,6 +35,17 @@ RED_CARD_REST_OF_MATCH = True
 # El módulo disciplinario podrá ampliarla según el comité.
 RED_CARD_NEXT_MATCHES = 1
 
+# Revisión de vídeo (video umpire). En las competiciones con videoarbitraje
+# cada equipo dispone de una referencia; si prospera, la conserva, y si no,
+# la pierde. El capitán puede solicitar la revisión de un gol, un penalty
+# corner o un penalty stroke.
+REFERRALS_PER_TEAM = 1
+REFERRAL_DECISIONS: dict[str, str] = {
+    "goal": "Gol",
+    "penalty_corner": "Penalty corner",
+    "penalty_stroke": "Penalty stroke",
+}
+
 CardType = Literal["green", "yellow", "red"]
 
 CARD_LABELS: dict[str, str] = {
