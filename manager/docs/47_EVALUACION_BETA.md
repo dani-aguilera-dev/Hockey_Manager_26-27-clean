@@ -39,7 +39,7 @@
 
 ```text
 python3 -m pytest src/tests -q
-173 passed in 280.67s
+173 passed in 278.27s
 
 cd manager/web/frontend && npm run build
 ✓ built in 3.68s
@@ -49,7 +49,7 @@ curl /app → 200
 curl /static/react/assets/index-Bu3vFlBz.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerPhysics":{"frames":60,"collisions":55,"ballSpeed":9.04},"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":33,"ballSpeed":7.64},"playerBrands":true}
 ```
 
 ## Límites conscientes

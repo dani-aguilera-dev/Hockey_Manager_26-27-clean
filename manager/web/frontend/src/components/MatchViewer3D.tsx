@@ -3,14 +3,19 @@ import * as THREE from 'three'
 import type { LivePayload } from '../types'
 
 type Vec2 = [number, number]
-
 type PlayerEntity = {
-  group: THREE.Group
-  body: THREE.Mesh
+  root: THREE.Group
   leftArm: THREE.Group
   rightArm: THREE.Group
+  leftForearm: THREE.Group
+  rightForearm: THREE.Group
   leftLeg: THREE.Group
   rightLeg: THREE.Group
+  leftShin: THREE.Group
+  rightShin: THREE.Group
+  stick: THREE.Group
+  stickStart: THREE.Vector3
+  stickEnd: THREE.Vector3
   base: Vec2
   velocity: THREE.Vector3
   side: number
@@ -25,8 +30,8 @@ const FORMATIONS: Record<string, Vec2[]> = {
   '3-3-3-1': [[-44, 0], [-30, -12], [-30, 0], [-30, 12], [-15, -18], [-15, 0], [-15, 18], [4, -18], [4, 0], [4, 18], [16, 0]],
   '5-3-2': [[-44, 0], [-30, -22], [-30, -11], [-30, 0], [-30, 11], [-30, 22], [-15, -12], [-15, 0], [-15, 12], [5, -8], [5, 8]],
 }
-
 const fallbackPositions = FORMATIONS['4-3-3']
+const Y_AXIS = new THREE.Vector3(0, 1, 0)
 
 function mirror(position: Vec2): Vec2 {
   return [-position[0], position[1]]
@@ -34,8 +39,7 @@ function mirror(position: Vec2): Vec2 {
 
 function addLine(parent: THREE.Object3D, points: Vec2[], color: number, opacity = 0.75) {
   const geometry = new THREE.BufferGeometry().setFromPoints(points.map(([x, z]) => new THREE.Vector3(x, 0.03, z)))
-  const line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color, transparent: true, opacity }))
-  parent.add(line)
+  parent.add(new THREE.Line(geometry, new THREE.LineBasicMaterial({ color, transparent: true, opacity })))
 }
 
 function addCircle(parent: THREE.Object3D, x: number, z: number, radius: number, color: number) {
@@ -45,6 +49,14 @@ function addCircle(parent: THREE.Object3D, x: number, z: number, radius: number,
     points.push([x + Math.cos(angle) * radius, z + Math.sin(angle) * radius])
   }
   addLine(parent, points, color, 0.7)
+}
+
+function segmentMesh(a: THREE.Vector3, b: THREE.Vector3, radius: number, material: THREE.Material) {
+  const direction = b.clone().sub(a)
+  const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, direction.length(), 8), material)
+  mesh.position.copy(a).add(b).multiplyScalar(0.5)
+  mesh.quaternion.setFromUnitVectors(Y_AXIS, direction.clone().normalize())
+  return mesh
 }
 
 function makeLabel(text: string) {
@@ -63,49 +75,107 @@ function makeLabel(text: string) {
   }
   const texture = new THREE.CanvasTexture(canvas)
   texture.minFilter = THREE.LinearFilter
-  const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false })
-  const sprite = new THREE.Sprite(material)
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false }))
   sprite.scale.set(4.5, 0.85, 1)
-  sprite.position.y = 3.8
+  sprite.position.y = 3.7
   return sprite
 }
 
+function solveArm(upper: THREE.Group, forearm: THREE.Group, shoulder: THREE.Vector3, target: THREE.Vector3) {
+  const L1 = 0.78
+  const L2 = 0.72
+  const toTarget = target.clone().sub(shoulder)
+  const distance = Math.max(Math.abs(L1 - L2) + 0.01, Math.min(L1 + L2 - 0.01, toTarget.length()))
+  const direction = toTarget.clone().normalize()
+  const a = (L1 * L1 - L2 * L2 + distance * distance) / (2 * distance)
+  const h = Math.sqrt(Math.max(0, L1 * L1 - a * a))
+  const pole = new THREE.Vector3(0, 0.4, 0.9).normalize()
+  const perpendicular = new THREE.Vector3().crossVectors(direction, pole).normalize()
+  const elbow = shoulder.clone().addScaledVector(direction, a).addScaledVector(perpendicular, h)
+  upper.quaternion.setFromUnitVectors(Y_AXIS, elbow.clone().sub(shoulder).normalize())
+  forearm.position.set(0, -L1, 0)
+  const localDirection = target.clone().sub(elbow).normalize().applyQuaternion(upper.quaternion.clone().invert())
+  forearm.quaternion.setFromUnitVectors(Y_AXIS, localDirection)
+}
+
 function createPlayer(name: string, color: number, accent: number) {
-  const group = new THREE.Group()
+  const root = new THREE.Group()
   const kit = new THREE.MeshStandardMaterial({ color, roughness: 0.58, metalness: 0.06 })
   const skin = new THREE.MeshStandardMaterial({ color: accent, roughness: 0.55 })
   const dark = new THREE.MeshStandardMaterial({ color: 0x182435, roughness: 0.7 })
+  const carbon = new THREE.MeshStandardMaterial({ color: 0x151b22, roughness: 0.35, metalness: 0.15 })
 
-  const body = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.62, 1.65, 10), kit)
-  body.position.y = 1.45
-  group.add(body)
-
-  const head = new THREE.Mesh(new THREE.SphereGeometry(0.48, 10, 8), skin)
-  head.position.y = 2.65
-  group.add(head)
+  const hips = new THREE.Group()
+  hips.position.y = 0.9
+  root.add(hips)
+  const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.62, 1.25, 10), kit)
+  torso.position.y = 0.35
+  hips.add(torso)
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.46, 10, 8), skin)
+  head.position.y = 1.22
+  hips.add(head)
+  const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.3, 8), skin)
+  neck.position.y = 0.98
+  hips.add(neck)
 
   const leftArm = new THREE.Group()
   const rightArm = new THREE.Group()
-  for (const [arm, x] of [[leftArm, -0.85], [rightArm, 0.85]] as Array<[THREE.Group, number]>) {
-    const limb = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.13, 0.95, 7), skin)
-    limb.position.y = -0.45
-    arm.position.set(x, 2.1, 0)
-    arm.add(limb)
-    group.add(arm)
+  const leftForearm = new THREE.Group()
+  const rightForearm = new THREE.Group()
+  for (const [arm, forearm, x] of [
+    [leftArm, leftForearm, -0.72],
+    [rightArm, rightForearm, 0.72],
+  ] as Array<[THREE.Group, THREE.Group, number]>) {
+    arm.position.set(x, 2.02, 0)
+    const upper = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.14, 0.8, 7), skin)
+    upper.position.y = -0.4
+    arm.add(upper)
+    forearm.position.set(0, -0.78, 0)
+    const lower = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.11, 0.72, 7), skin)
+    lower.position.y = -0.36
+    forearm.add(lower)
+    const hand = new THREE.Mesh(new THREE.SphereGeometry(0.18, 8, 6), skin)
+    hand.position.y = -0.74
+    forearm.add(hand)
+    arm.add(forearm)
+    root.add(arm)
   }
 
   const leftLeg = new THREE.Group()
   const rightLeg = new THREE.Group()
-  for (const [leg, x] of [[leftLeg, -0.35], [rightLeg, 0.35]] as Array<[THREE.Group, number]>) {
-    const limb = new THREE.Mesh(new THREE.CylinderGeometry(0.21, 0.16, 1.25, 7), dark)
-    limb.position.y = -0.62
+  const leftShin = new THREE.Group()
+  const rightShin = new THREE.Group()
+  for (const [leg, shin, x] of [
+    [leftLeg, leftShin, -0.32],
+    [rightLeg, rightShin, 0.32],
+  ] as Array<[THREE.Group, THREE.Group, number]>) {
     leg.position.set(x, 0.92, 0)
-    leg.add(limb)
-    group.add(leg)
+    const thigh = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.18, 0.72, 7), dark)
+    thigh.position.y = -0.36
+    leg.add(thigh)
+    shin.position.set(0, -0.7, 0)
+    const lower = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.13, 0.7, 7), dark)
+    lower.position.y = -0.35
+    shin.add(lower)
+    const shoe = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.18, 0.62), dark)
+    shoe.position.set(0, -0.72, 0.16)
+    shin.add(shoe)
+    leg.add(shin)
+    root.add(leg)
   }
 
-  group.add(makeLabel(name))
-  return { group, body, leftArm, rightArm, leftLeg, rightLeg }
+  const stick = new THREE.Group()
+  const start = new THREE.Vector3(-0.18, 1.4, 0.82)
+  const end = new THREE.Vector3(0.62, 0.12, 1.42)
+  stick.add(segmentMesh(start, end, 0.045, carbon))
+  const blade = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.08, 0.55), carbon)
+  blade.position.set(0.65, 0.1, 1.6)
+  blade.rotation.y = -0.2
+  stick.add(blade)
+  root.add(stick)
+  root.add(makeLabel(name))
+  root.scale.setScalar(0.78)
+  return { root, leftArm, rightArm, leftForearm, rightForearm, leftLeg, rightLeg, leftShin, rightShin, stick, stickStart: start, stickEnd: end }
 }
 
 export default function MatchViewer3D({ data }: { data: LivePayload }) {
@@ -113,10 +183,9 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
   const dataRef = useRef(data)
   const playersRef = useRef<PlayerEntity[]>([])
   const ballRef = useRef<THREE.Mesh | null>(null)
-  const debugRef = useRef({ frames: 0, collisions: 0, goals: 0, lastEvent: '', ballSpeed: 0 })
+  const cameraModeRef = useRef<'broadcast' | 'tactical'>('broadcast')
+  const debugRef = useRef({ frames: 0, playerCollisions: 0, bodyCollisions: 0, stickCollisions: 0, goals: 0, ballSpeed: 0, ikSolutions: 0, players: 0, sticks: 0, bones: 0, lastEvent: '' })
   const lastEventRef = useRef('')
-  const homeColor = 0x2f8fe8
-  const awayColor = 0xff9d2e
 
   useEffect(() => {
     dataRef.current = data
@@ -142,7 +211,6 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
     const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 220)
     camera.position.set(0, 58, 55)
     camera.lookAt(0, 0, 0)
-
     scene.add(new THREE.HemisphereLight(0xd9f4ff, 0x16261b, 2.4))
     const key = new THREE.DirectionalLight(0xffffff, 2.8)
     key.position.set(-30, 55, 30)
@@ -154,13 +222,11 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
     const pitch = new THREE.Mesh(new THREE.PlaneGeometry(100, 60), new THREE.MeshStandardMaterial({ color: 0x3d8b4b, roughness: 0.9 }))
     pitch.rotation.x = -Math.PI / 2
     scene.add(pitch)
-
     addLine(scene, [[-50, -30], [50, -30], [50, 30], [-50, 30], [-50, -30]], 0xe6f5e8)
     addLine(scene, [[0, -30], [0, 30]], 0xe6f5e8)
     addCircle(scene, 0, 0, 9, 0xe6f5e8)
     addLine(scene, [[-50, -18], [-42, -18], [-42, 18], [-50, 18]], 0xe6f5e8)
     addLine(scene, [[50, -18], [42, -18], [42, 18], [50, 18]], 0xe6f5e8)
-
     const goalMaterial = new THREE.MeshStandardMaterial({ color: 0xf1f5f8, roughness: 0.5 })
     for (const side of [-1, 1]) {
       const goal = new THREE.Mesh(new THREE.BoxGeometry(1.2, 3.2, 10), goalMaterial)
@@ -181,18 +247,17 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
     for (let index = 0; index < 11; index += 1) {
       const homePosition = formation[index] || fallbackPositions[index]
       const awayPosition = mirror(formation[index] || fallbackPositions[index])
-      const homeName = homeLine[index]?.name || `Local ${index + 1}`
-      const awayName = awayLine[index]?.name || `Visitante ${index + 1}`
-      const home = createPlayer(homeName, homeColor, 0xd8a06a)
-      const away = createPlayer(awayName, awayColor, 0xd8a06a)
-      home.group.position.set(homePosition[0], 0, homePosition[1])
-      away.group.position.set(awayPosition[0], 0, awayPosition[1])
-      scene.add(home.group, away.group)
-      players.push({ ...home, base: homePosition, velocity: new THREE.Vector3(), side: 0, phase: index * 0.7, name: homeName })
-      players.push({ ...away, base: awayPosition, velocity: new THREE.Vector3(), side: 1, phase: index * 0.9 + 1, name: awayName })
+      const home = createPlayer(homeLine[index]?.name || `Local ${index + 1}`, 0x2f8fe8, 0xd8a06a)
+      const away = createPlayer(awayLine[index]?.name || `Visitante ${index + 1}`, 0xff9d2e, 0xd8a06a)
+      home.root.position.set(homePosition[0], 0, homePosition[1])
+      away.root.position.set(awayPosition[0], 0, awayPosition[1])
+      away.root.rotation.y = Math.PI
+      scene.add(home.root, away.root)
+      players.push({ ...home, base: homePosition, velocity: new THREE.Vector3(), side: 0, phase: index * 0.7, name: homeLine[index]?.name || `Local ${index + 1}` })
+      players.push({ ...away, base: awayPosition, velocity: new THREE.Vector3(), side: 1, phase: index * 0.9 + 1, name: awayLine[index]?.name || `Visitante ${index + 1}` })
     }
     playersRef.current = players
-    ;(debugRef.current as any).players = players.length
+    Object.assign(debugRef.current, { players: players.length, sticks: players.length, bones: players.length * 17 })
     ;(window as any).__matchViewer3D = debugRef.current
 
     const resize = () => {
@@ -219,15 +284,15 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
       if (eventKey !== lastEventRef.current) {
         lastEventRef.current = eventKey
         debugRef.current.lastEvent = eventKey
-        if (latest?.team_id && ballRef.current) {
+        if (latest?.team_id) {
           const direction = latest.team_id === current.home.id ? 1 : -1
-          const velocity = ballRef.current.userData.velocity as THREE.Vector3
+          const velocity = ball.userData.velocity as THREE.Vector3
           if (latest.type === 'goal') {
             debugRef.current.goals += 1
-            ballRef.current.position.set(0, 0.62, 0)
+            ball.position.set(0, 0.62, 0)
             velocity.set(direction * 6, 0, 1.5)
           } else if (latest.type === 'pc' || latest.type === 'stroke' || latest.type === 'chance') {
-            ballRef.current.position.set(direction * 26, 0.62, 0)
+            ball.position.set(direction * 26, 0.62, 0)
             velocity.set(direction * 12, 1.8, Math.sin(elapsed * 2) * 3)
           }
         }
@@ -265,49 +330,73 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
         const targetZ = player.base[1] + (player.base[1] > 0 ? -1 : 1) * 0.8
         const desiredX = targetX + (ball.position.x - targetX) * 0.035
         const desiredZ = targetZ + (ball.position.z - targetZ) * 0.045
-        player.velocity.x += (desiredX - player.group.position.x) * 0.42 * dt
-        player.velocity.z += (desiredZ - player.group.position.z) * 0.42 * dt
+        player.velocity.x += (desiredX - player.root.position.x) * 0.42 * dt
+        player.velocity.z += (desiredZ - player.root.position.z) * 0.42 * dt
         player.velocity.multiplyScalar(0.9)
-        player.group.position.x = Math.max(-47, Math.min(47, player.group.position.x + player.velocity.x * dt))
-        player.group.position.z = Math.max(-27, Math.min(27, player.group.position.z + player.velocity.z * dt))
+        player.root.position.x = Math.max(-47, Math.min(47, player.root.position.x + player.velocity.x * dt))
+        player.root.position.z = Math.max(-27, Math.min(27, player.root.position.z + player.velocity.z * dt))
         const speed = player.velocity.length()
         const swing = Math.sin(elapsed * 8 + player.phase) * Math.min(0.75, speed * 0.16)
         player.leftLeg.rotation.x = swing
         player.rightLeg.rotation.x = -swing
-        player.leftArm.rotation.x = -swing * 0.8
-        player.rightArm.rotation.x = swing * 0.8
-        player.body.position.y = 1.45 + Math.abs(Math.sin(elapsed * 8 + player.phase)) * Math.min(0.09, speed * 0.02)
+        player.leftShin.rotation.x = Math.max(0, -swing) * 0.7
+        player.rightShin.rotation.x = Math.max(0, swing) * 0.7
+        const gripLeft = new THREE.Vector3(-0.18, 1.4, 0.82)
+        const gripRight = new THREE.Vector3(0.62, 1.0, 1.2)
+        solveArm(player.leftArm, player.leftForearm, new THREE.Vector3(-0.72, 2.02, 0), gripLeft)
+        solveArm(player.rightArm, player.rightForearm, new THREE.Vector3(0.72, 2.02, 0), gripRight)
+        debugRef.current.ikSolutions += 2
+        player.stick.rotation.y = Math.sin(elapsed * 1.3 + player.phase) * 0.08
       }
 
       for (let i = 0; i < players.length; i += 1) {
         for (let j = i + 1; j < players.length; j += 1) {
           const a = players[i]
           const b = players[j]
-          const dx = a.group.position.x - b.group.position.x
-          const dz = a.group.position.z - b.group.position.z
+          const dx = a.root.position.x - b.root.position.x
+          const dz = a.root.position.z - b.root.position.z
           const distance = Math.hypot(dx, dz)
-          if (distance > 0 && distance < 2.15) {
-            const push = (2.15 - distance) * 0.5
+          if (distance > 0 && distance < 1.65) {
+            const push = (1.65 - distance) * 0.5
             const nx = dx / distance
             const nz = dz / distance
-            a.group.position.x += nx * push
-            a.group.position.z += nz * push
-            b.group.position.x -= nx * push
-            b.group.position.z -= nz * push
-            debugRef.current.collisions += 1
+            a.root.position.x += nx * push
+            a.root.position.z += nz * push
+            b.root.position.x -= nx * push
+            b.root.position.z -= nz * push
+            debugRef.current.playerCollisions += 1
           }
         }
-        const dx = players[i].group.position.x - ball.position.x
-        const dz = players[i].group.position.z - ball.position.z
-        if (Math.hypot(dx, dz) < 1.15 && ball.position.y < 2.2) {
-          const distance = Math.max(0.1, Math.hypot(dx, dz))
-          ballVelocity.x = (dx / distance) * 9 + players[i].velocity.x * 0.3
-          ballVelocity.z = (dz / distance) * 9 + players[i].velocity.z * 0.3
+        const player = players[i]
+        const bodyDx = player.root.position.x - ball.position.x
+        const bodyDz = player.root.position.z - ball.position.z
+        if (Math.hypot(bodyDx, bodyDz) < 0.72 && ball.position.y < 2.3) {
+          const distance = Math.max(0.1, Math.hypot(bodyDx, bodyDz))
+          ballVelocity.x = (bodyDx / distance) * 8 + player.velocity.x * 0.3
+          ballVelocity.z = (bodyDz / distance) * 8 + player.velocity.z * 0.3
           ballVelocity.y = 1.2
-          debugRef.current.collisions += 1
+          debugRef.current.bodyCollisions += 1
+        }
+        const stickWorldStart = player.root.localToWorld(player.stickStart.clone())
+        const stickWorldEnd = player.root.localToWorld(player.stickEnd.clone())
+        const stickDirection = stickWorldEnd.clone().sub(stickWorldStart)
+        const stickLengthSq = Math.max(0.001, stickDirection.lengthSq())
+        const t = Math.max(0, Math.min(1, ball.position.clone().sub(stickWorldStart).dot(stickDirection) / stickLengthSq))
+        const closest = stickWorldStart.clone().addScaledVector(stickDirection, t)
+        if (closest.distanceTo(ball.position) < 1.0 && ball.position.y < 2.2) {
+          ballVelocity.x += (ball.position.x - closest.x) * 8
+          ballVelocity.z += (ball.position.z - closest.z) * 8
+          ballVelocity.y = 1.4
+          debugRef.current.stickCollisions += 1
         }
       }
 
+      if (cameraModeRef.current === 'tactical') {
+        camera.position.set(0, 78, 0.1)
+      } else {
+        camera.position.set(0, 58, 55)
+      }
+      camera.lookAt(0, 0, 0)
       debugRef.current.frames += 1
       debugRef.current.ballSpeed = ballVelocity.length()
       renderer.render(scene, camera)
@@ -329,6 +418,7 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
         <div className="match-viewer-score"><b>{data.home.name}</b><span>{data.score[0]} - {data.score[1]}</span><b>{data.away.name}</b></div>
         <div className="match-viewer-meta"><span>{data.quarter}º cuarto</span><span>{data.minute}′</span><span>{data.finished ? 'Finalizado' : 'En directo'}</span></div>
         <div className="match-viewer-event">{latest ? latest.text : 'Partido en juego'}</div>
+        <button type="button" className="match-viewer-camera" onClick={() => { cameraModeRef.current = cameraModeRef.current === 'broadcast' ? 'tactical' : 'broadcast' }}>Cámara táctica</button>
       </div>
       <div className="match-viewer-badge">3D · MatchEngine</div>
     </div>

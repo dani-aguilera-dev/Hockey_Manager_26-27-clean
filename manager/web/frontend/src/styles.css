@@ -1050,3 +1050,17 @@ select option { background: #0b1220; color: #e8eef8; }
   .match-viewer-score { font-size: 10px; }
   .match-viewer-score span { font-size: 16px; }
 }
+
+.match-viewer-camera {
+  margin-top: 8px;
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 5px;
+  background: rgba(255,255,255,.06);
+  color: #dcecff;
+  font-size: 10px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.match-viewer-camera:hover { background: rgba(255,255,255,.13); }

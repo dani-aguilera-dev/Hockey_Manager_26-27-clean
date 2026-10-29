@@ -60,12 +60,15 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Criterio | Implementación | Evidencia | Estado |
 | --- | --- | --- | --- |
 | Campo 3D | `MatchViewer3D.tsx` con Three.js: césped, líneas, círculo, áreas y porterías | E2E `viewer3d` + captura `e2e_3d.png` | PASS |
-| 22 jugadores con locomoción | 11 locales y 11 visitantes, piernas/brazos animados, desplazamiento y separación | E2E `players=22`, `frames=60` | PASS |
-| Balón con física | Velocidad, gravedad, rebote, fricción, límites y detección de gol | E2E `ballSpeed=9.04` | PASS |
-| Colisiones | Colisión jugador-jugador y jugador-balón con separación y rebote | E2E `collisions=55` | PASS |
-| UI 3D | Marcador, cuarto, minuto, estado y último evento superpuestos al canvas | E2E `match-viewer-ui` + captura | PASS |
+| 22 jugadores con locomoción | 11 locales y 11 visitantes, piernas/brazos animados, desplazamiento y separación | E2E `players=22`, `frames=65` | PASS |
+| Esqueleto jerárquico | Cadera, torso, cabeza, cuello, brazos, antebrazos, manos, muslos, espinillas y pies; 17 huesos por jugador | E2E `bones=374` | PASS |
+| IK de brazos | IK analítico de dos huesos para llevar ambas manos a las agarraderas del stick en cada frame | E2E `ikSolutions=2860` | PASS |
+| Sticks | 22 sticks con mango y pala; colisión segmento-bola | E2E `sticks=22`, `stickCollisions=33` | PASS |
+| Balón con física | Velocidad, gravedad, rebote, fricción, límites y detección de gol | E2E `ballSpeed=7.64` | PASS |
+| Colisiones de cuerpo | Colisión cuerpo-bola con rebote y separación jugador-jugador | E2E `bodyCollisions=51` | PASS |
+| UI 3D | Marcador, cuarto, minuto, estado, último evento y cámara táctica superpuestos al canvas | E2E `match-viewer-ui` + captura | PASS |
 | Conexión con MatchEngine | El visor consume `LivePayload`: `score`, `quarter`, `minute`, `line`, `events`, formación y equipo atacante | `/api/match/live` y `/api/match/live/advance` | PASS |
-| Física 3D de alta fidelidad | No hay colisiones de stick/cuerpo completas, tejido, IK ni física de material | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
+| Física 3D AAA | No hay tejido, física de materiales, colisión de stick contra cuerpo ni animación de captura de movimiento | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
 
 ## 7. Reglas FIH avanzadas y arbitraje
 
@@ -86,7 +89,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerPhysics":{"frames":60,"collisions":55,"ballSpeed":9.04},"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":33,"ballSpeed":7.64},"playerBrands":true}
 ```
 
 Flujo:
@@ -96,7 +99,7 @@ Flujo:
 3. Navegar al mes siguiente.
 4. Simular un partido rápido.
 5. Abrir el parte y comprobar árbitro y estadísticas de PC/strokes.
-6. Abrir `/app/game/live` y comprobar el canvas del visor 3D.
+6. Abrir `/app/game/live`, comprobar el canvas, el esqueleto, los sticks, el IK y las colisiones de cuerpo/stick.
 7. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
 8. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
@@ -104,7 +107,7 @@ Flujo:
 
 | Límite anterior | Criterio verificable | Estado |
 | --- | --- | --- |
-| “No hay motor 3D” | Simulación 3D con campo, 22 jugadores animados, balón con física, colisiones y UI | PASS simulación 3D / FAIL física AAA |
+| “No hay motor 3D” | Simulación 3D con campo, 22 jugadores con esqueleto e IK, 22 sticks, balón con física, colisiones de cuerpo/stick y UI | PASS simulación 3D / FAIL física AAA |
 | “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones y árbitro tienen pruebas explícitas; el resto de interpretaciones discrecionales no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
 | “No replica todas las pantallas de FM24” | La matriz enumera los flujos cubiertos; la paridad total de pantallas no se declara | FAIL / fuera de alcance |
 | “Prensa textual” | Prensa previa y posterior con medios, efectos e historial | PASS |

@@ -48,14 +48,26 @@ try {
   await viewer.waitFor()
   const box = await viewer.boundingBox()
   if (!box || box.width < 200 || box.height < 150) throw new Error(`viewer size ${JSON.stringify(box)}`)
-  await page.waitForTimeout(1300)
+  await page.waitForTimeout(1800)
   const viewerState = await page.evaluate(() => window.__matchViewer3D)
   if (!viewerState || viewerState.players !== 22) throw new Error(`viewer players ${JSON.stringify(viewerState)}`)
   if (viewerState.frames < 10) throw new Error(`viewer frames ${viewerState.frames}`)
   if (!(viewerState.ballSpeed > 0)) throw new Error(`viewer ball ${viewerState.ballSpeed}`)
-  if (!(viewerState.collisions > 0)) throw new Error(`viewer collisions ${viewerState.collisions}`)
+  if (!(viewerState.bodyCollisions > 0)) throw new Error(`viewer body collisions ${viewerState.bodyCollisions}`)
+  if (!(viewerState.stickCollisions > 0)) throw new Error(`viewer stick collisions ${viewerState.stickCollisions}`)
+  if (viewerState.sticks !== 22) throw new Error(`viewer sticks ${viewerState.sticks}`)
+  if (viewerState.bones < 22 * 17) throw new Error(`viewer bones ${viewerState.bones}`)
+  if (!(viewerState.ikSolutions > 100)) throw new Error(`viewer ik ${viewerState.ikSolutions}`)
+  await page.getByRole('button', { name: 'Cámara táctica' }).click()
   result.viewer3d = true
-  result.viewerPhysics = { frames: viewerState.frames, collisions: viewerState.collisions, ballSpeed: viewerState.ballSpeed }
+  result.viewerSkeleton = { bones: viewerState.bones, sticks: viewerState.sticks, ikSolutions: viewerState.ikSolutions }
+  result.viewerPhysics = {
+    frames: viewerState.frames,
+    playerCollisions: viewerState.playerCollisions,
+    bodyCollisions: viewerState.bodyCollisions,
+    stickCollisions: viewerState.stickCollisions,
+    ballSpeed: viewerState.ballSpeed,
+  }
   await page.screenshot({ path: '/tmp/opencode/e2e_3d.png' })
 
   await page.goto('/app/game/commercial')
