@@ -1,6 +1,6 @@
 # Auditoría de clubes · Beta avanzada
 
-Revisión de ubicación, descripción y fuente. Los clubes españoles se contrastaron con iSquad/RFEH, federaciones y webs oficiales; los internacionales se cargan con ciudad, país y descripción desde su ficha.
+Revisión de ubicación, descripción y fuente. Los clubes españoles se contrastaron con iSquad/RFEH, federaciones, Wikipedia y webs oficiales; los internacionales tienen fuente individual (Wikipedia o web oficial) y una descripción específica con ciudad, país, fundación, instalación y liga.
 
 ## España · DHA / DHB / 1ª Andaluza
 

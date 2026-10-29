@@ -13,7 +13,7 @@
       "negro"
     ],
     "nickname": "Atlètic",
-    "history": "Fundado en 1952 por un grupo de jóvenes jugadores, el Atlètic es uno de los clubes más laureados del hockey español. Se trasladó a Can Salas en 1969 y ha ganado ligas, Copas del Rey y Copas de Europa. Su cantera ha formado a numerosos internacionales.",
+    "history": "El Atlètic Terrassa Hockey Club es un club deportivo de la ciudad de Tarrasa, España. Fundado en 1952 como un club de hockey sobre hierba, actualmente también dispone de otras secciones deportivas:",
     "stadium": {
       "name": "Estadi Josep Marquès (Can Salas)",
       "address": "Urbanització Can Salas, 8, 08227 Terrassa, Barcelona",
@@ -57,7 +57,9 @@
     "data_quality": "alta",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/Atl%C3%A8tic_Terrassa_Hockey_Club",
+    "source_type": "wikipedia",
+    "description_verified": true
   },
   {
     "id": "cd-terrassa",
@@ -116,7 +118,9 @@
     "data_quality": "alta",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://visitvalles.com/es/portfolio_page/club-deportiu-terrassa-hockey/"
+    "source_url": "https://visitvalles.com/es/portfolio_page/club-deportiu-terrassa-hockey/",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "ch-carpesa",
@@ -174,7 +178,9 @@
     "data_quality": "media",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3926&id=9359",
+    "source_type": "isquad",
+    "description_verified": true
   },
   {
     "id": "fc-barcelona",
@@ -190,7 +196,7 @@
       "grana"
     ],
     "nickname": "Barça",
-    "history": "Sección de hockey hierba fundada en 1923. Juega en el Pau Negre, en el Anillo Olímpico de Montjuïc; es un club con gran cantera y presencia habitual en la élite.",
+    "history": "El Fútbol Club Barcelona de hockey hierba es una sección deportiva del Fútbol Club Barcelona, de Barcelona (Cataluña) España. Tiene un equipo masculino en la División de Honor A y un equipo femenino en la División de Honor A, junto con equipos en todas las categorías formativas.",
     "stadium": {
       "name": "Estadi Pau Negre",
       "address": "Passeig Olímpic, 6, 08038 Barcelona",
@@ -233,7 +239,9 @@
     "data_quality": "alta",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/F%C3%BAtbol_Club_Barcelona_%28hockey_hierba%29",
+    "source_type": "wikipedia",
+    "description_verified": true
   },
   {
     "id": "club-egara",
@@ -292,7 +300,9 @@
     "data_quality": "alta",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://egara.es/"
+    "source_url": "https://egara.es/",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "rc-polo",
@@ -308,7 +318,7 @@
       "blanco"
     ],
     "nickname": "Polo",
-    "history": "Club fundado en 1897; el hockey llegó en 1907. Tiene su sede en Eduardo Dualde, en Barcelona, y es organizador histórico de torneos y club de referencia en Cataluña.",
+    "history": "El Real Club de Polo de Barcelona​ es uno de los clubs deportivos históricos de la ciudad de Barcelona y de toda España, que destaca en la práctica del polo, la equitación, el tenis, el pádel y el hockey sobre hierba. Entre muchos otros eventos internacionales, el Real Club de Polo organiza anualmente el Concurso de Saltos Internacional de Barcelona, que acoge la final mundial de la Copa de las Naciones de Saltos, la competición más importante por equipos del calendario internacional. Otras competiciones que se celebran en el club son los Torneos Internacionales de Hockey Reyes y de la Inmaculada; el Barcelona Polo Challenge - Negrita Cup de Polo; el ITF Seniors Barcelona de Tenis o diversos",
     "stadium": {
       "name": "Campo Eduardo Dualde",
       "address": "Av. Dr. Marañón, 17, 08028 Barcelona",
@@ -351,7 +361,9 @@
     "data_quality": "alta",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/Real_Club_de_Polo",
+    "source_type": "wikipedia",
+    "description_verified": true
   },
   {
     "id": "rc-de-campo",
@@ -367,7 +379,7 @@
       "blanco"
     ],
     "nickname": "Campo",
-    "history": "Fundado en 1930, el Club de Campo Villa de Madrid es uno de los grandes clubes sociales de Madrid. Su hockey masculino ganó la liga en 2021, 2023 y 2026; juega en el campo de hockey del club, inaugurado en 1989.",
+    "history": "El Real Club de Campo Villa de Madrid​ es un club social y deportivo de la ciudad de Madrid, España. Fue fundado en 1930 como Club de Campo, su sociedad originaria, siendo creada en 1984 la vigente sociedad que lo gestiona. Cuenta con alrededor de 34.000 socios y dispone de secciones deportivas en golf, hockey sobre hierba, tenis, pádel, equitación, natación, patinaje, ajedrez y croquet. Destaca sobre todo la sección de hockey sobre hierba, tanto su equipo masculino como femenino.",
     "stadium": {
       "name": "Campo de Hockey Club de Campo - C1",
       "address": "Ctra. de Castilla, km 2, Moncloa-Aravaca, 28040 Madrid",
@@ -410,7 +422,9 @@
     "data_quality": "alta",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/Real_Club_de_Campo_Villa_de_Madrid",
+    "source_type": "wikipedia",
+    "description_verified": true
   },
   {
     "id": "sanse-complutense",
@@ -469,7 +483,9 @@
     "data_quality": "media",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://es.wikipedia.org/wiki/SPV_Complutense"
+    "source_url": "https://es.wikipedia.org/wiki/SPV_Complutense",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "sardinero",
@@ -485,7 +501,7 @@
       "azul"
     ],
     "nickname": "Sardinero",
-    "history": "Fundado en 1984 en Santander, el Sardinero HC es el club de referencia de Cantabria. Juega en La Albericia y ha combinado formación, hockey hierba y sala.",
+    "history": "El Sardinero Hockey Club es un club deportivo de hockey sobre hierba y hockey sala ubicado en Santander, Cantabria (España). Su equipo femenino compite en la División de Honor Femenina de Hockey Hierba, mientras que su equipo masculino milita en División de Honor A de hockey hierba, máxima categoría nacional. Ambos equipos cuentan con filiales en distintas categorías tanto nacionales como regionales. También se cuenta con numerosos equipos en categorías inferiores y una cantera formada por más de 300 niños siendo así uno de los clubs referentes y pioneros en el norte de España.",
     "stadium": {
       "name": "Campo Municipal de La Albericia",
       "address": "Instituto La Albericia, 39011 Santander, Cantabria",
@@ -527,7 +543,9 @@
     "data_quality": "media",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/Sardinero_Hockey_Club",
+    "source_type": "wikipedia",
+    "description_verified": true
   },
   {
     "id": "rs-tenis",
@@ -543,7 +561,7 @@
       "verde"
     ],
     "nickname": "Tenis",
-    "history": "Club fundado en 1906 en Santander; la sección de hockey se creó en 1945. Tiene su sede social en La Magdalena y juega en La Albericia; es una de las entidades históricas del deporte cántabro.",
+    "history": "La Real Sociedad de Tenis de la Magdalena, comúnmente conocido como el Tenis de Santander, es un club deportivo y social ubicado en el Real Sitio de la Magdalena, en la ciudad cántabre de Santander (España). Es uno de los clubes sociales más antiguos de España,​ y fue fundado el 7 de abril de 1906 como lugar de recreo de la alta nobleza española, quienes frecuentaron la ciudad durante sus veranos debido a ser esta la localidad de veraneo de la familia real española.​ Varios años después de la exitosa fundación del Madrid Polo Club (hoy Real Club de la Puerta de Hierro), el rey Alfonso XIII incentivó la apertura de un equivalente veraniego de la entidad madrileña en el norte de España.​ Cuent",
     "stadium": {
       "name": "Campo Municipal de La Albericia",
       "address": "Instituto La Albericia, 39011 Santander, Cantabria",
@@ -585,7 +603,9 @@
     "data_quality": "media",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/Real_Sociedad_de_Tenis_de_La_Magdalena",
+    "source_type": "wikipedia",
+    "description_verified": true
   },
   {
     "id": "ud-taburiente",
@@ -601,7 +621,7 @@
       "azul"
     ],
     "nickname": "Tabu",
-    "history": "Fundado en mayo de 1980, la UD Taburiente es el referente del hockey en Canarias. Juega en Siete Palmas (Las Palmas) y ha competido en la élite masculina y femenina.",
+    "history": "La Unión Deportiva Taburiente es un club deportivo de hockey sobre hierba ubicado en Las Palmas de Gran Canaria, España.​ Su equipo femenino compite en la División de Honor y su equipo masculino en la División de Honor A.",
     "stadium": {
       "name": "Campo de Hockey Siete Palmas",
       "address": "Las Palmas de Gran Canaria",
@@ -641,7 +661,9 @@
     "data_quality": "media",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/Uni%C3%B3n_Deportiva_Taburiente",
+    "source_type": "wikipedia",
+    "description_verified": true
   },
   {
     "id": "junior-fc",
@@ -700,7 +722,9 @@
     "data_quality": "media",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=22&id=9359",
+    "source_type": "isquad",
+    "description_verified": true
   },
   {
     "id": "ad-rimas",
@@ -758,7 +782,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://resultadoshockey.isquad.es/equipo.php?seleccion=0&id_equipo=339&id=6308"
+    "source_url": "https://resultadoshockey.isquad.es/equipo.php?seleccion=0&id_equipo=339&id=6308",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "aticos-san-fernando",
@@ -816,7 +842,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://resultadoshockey.isquad.es/equipo.php?seleccion=0&id_superficie=1&id_equipo=3891&id=9367",
+    "source_type": "isquad",
+    "description_verified": true
   },
   {
     "id": "castelldefels",
@@ -874,7 +902,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=2934&id=9368",
+    "source_type": "isquad",
+    "description_verified": true
   },
   {
     "id": "cd-giner",
@@ -934,7 +964,9 @@
     "data_quality": "alta",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://yosoynoticia.es/hockey/giner-de-los-rios-la-gran-familia-del-hockey-en-valencia"
+    "source_url": "https://yosoynoticia.es/hockey/giner-de-los-rios-la-gran-familia-del-hockey-en-valencia",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "ch-madrid-las-rozas",
@@ -992,7 +1024,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://www.chmlasrozas.es/es"
+    "source_url": "https://www.chmlasrozas.es/es",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "egara-1935",
@@ -1051,7 +1085,9 @@
     "data_quality": "media",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://egara.es/"
+    "source_url": "https://egara.es/",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "hc-sant-cugat",
@@ -1110,7 +1146,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://resultadoshockey.isquad.es/equipo_movil.php?id_equipo=26&id=6309"
+    "source_url": "https://resultadoshockey.isquad.es/equipo_movil.php?id_equipo=26&id=6309",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "iluro",
@@ -1166,7 +1204,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://ilurohc.com/"
+    "source_url": "https://ilurohc.com/",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "linia-22",
@@ -1225,7 +1265,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://www.linia22.cat/historia/"
+    "source_url": "https://www.linia22.cat/historia/",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "pedralbes",
@@ -1283,7 +1325,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://www.fchockey.cat/club/7"
+    "source_url": "https://www.fchockey.cat/club/7",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "rc-jolaseta",
@@ -1299,7 +1343,7 @@
       "blanco"
     ],
     "nickname": "Jolaseta",
-    "history": "Club histórico de Getxo (Bizkaia); sede en el Campo Julio Solaun y una de las entidades veteranas del hockey vasco.",
+    "history": "El Real Club Jolaseta es un club deportivo de Guecho, Vizcaya (España). Tiene cuatro secciones en deporte federado: tenis, pádel, hockey sobre hierba y hockey sobre patines.​",
     "stadium": {
       "name": "Campo Julio Solaun",
       "address": "Los Chopos, Etorbidea, 18008 Getxo, Bizkaia",
@@ -1341,7 +1385,9 @@
     "data_quality": "media",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/Real_Club_Jolaseta",
+    "source_type": "wikipedia",
+    "description_verified": true
   },
   {
     "id": "pozuelo",
@@ -1357,7 +1403,7 @@
       "blanco"
     ],
     "nickname": "Pozuelo",
-    "history": "Club de Pozuelo de Alarcón (Madrid); juega en el CD Valle de las Cañas y compite en DHB.",
+    "history": "El Club Hockey Pozuelo es un club deportivo de hockey sobre hierba y hockey sala de Pozuelo de Alarcón, España.​ Su equipo femenino compite en la Primera División.",
     "stadium": {
       "name": "CD Valle de las Cañas - C1",
       "address": "Centro Deportivo Valle de las Cañas, 28223 Madrid",
@@ -1399,7 +1445,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/Club_Hockey_Pozuelo",
+    "source_type": "wikipedia",
+    "description_verified": true
   },
   {
     "id": "real-sociedad-1927",
@@ -1457,7 +1505,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://resultadoshockey.isquad.es/equipo.php?seleccion=0&id_superficie=1&id_equipo=136&id=5867"
+    "source_url": "https://resultadoshockey.isquad.es/equipo.php?seleccion=0&id_superficie=1&id_equipo=136&id=5867",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "spv",
@@ -1515,7 +1565,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://es.wikipedia.org/wiki/SPV_Complutense"
+    "source_url": "https://es.wikipedia.org/wiki/SPV_Complutense",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "universitat-alacant",
@@ -1571,7 +1623,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=1868&id=9368",
+    "source_type": "isquad",
+    "description_verified": true
   },
   {
     "id": "valles-esportiu",
@@ -1630,7 +1684,9 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": "https://athc.cat/category/vallesesportiu/"
+    "source_url": "https://athc.cat/category/vallesesportiu/",
+    "description_verified": true,
+    "source_type": "official"
   },
   {
     "id": "san-fernando-andaluza",
@@ -1646,7 +1702,7 @@
       "blanco"
     ],
     "nickname": "San Fernando",
-    "history": "Equipo de San Fernando (Cádiz) que compite en la Primera Andaluza; juega en el IMD Pablo Negre.",
+    "history": "El Club de Hockey San Fernando es un club deportivo español de hockey hierba de la ciudad de San Fernando, en la provincia de Cádiz. El Club de Hockey San Fernando juega sus partidos en el Campo municipal de Hockey Pablo Negre, que cuenta con capacidad para 300 espectadores. Su equipo femenino compite en la Primera División, la primera categoría nacional, y su equipo masculino en Primera División, la tercera categoría nacional.",
     "stadium": {
       "name": "IMH Pablo Negre",
       "address": "C. Cartageneras, 38, 11100 San Fernando, Cádiz",
@@ -1688,6 +1744,8 @@
     "data_quality": "baja",
     "country": "España",
     "location_verified": true,
-    "source_url": ""
+    "source_url": "https://es.wikipedia.org/wiki/Club_de_Hockey_San_Fernando",
+    "source_type": "wikipedia",
+    "description_verified": true
   }
 ]

@@ -50,6 +50,8 @@ def test_clubs_have_verified_location_and_description():
     assert all(club.get("city") for club in clubs.values())
     assert all(club.get("province") for club in clubs.values())
     assert all(club.get("history") for club in clubs.values())
+    assert all(club.get("source_url", "").startswith("http") for club in clubs.values())
+    assert all(club.get("description_verified") for club in clubs.values())
     giner = clubs["cd-giner"]
     assert giner["city"] == "Valencia"
     assert giner["province"] == "Valencia"
@@ -59,6 +61,9 @@ def test_clubs_have_verified_location_and_description():
     intl = international_data()["clubs"]
     assert len(intl) == 70
     assert all(club.get("city") and club.get("country") and club.get("history") for club in intl)
+    assert all(club.get("source_url", "").startswith("http") for club in intl)
+    assert all(club.get("description_verified") for club in intl)
+    assert all(len(club.get("history", "")) >= 120 for club in intl)
 
 
 def test_friendlies_are_scheduled_and_do_not_touch_league_table():

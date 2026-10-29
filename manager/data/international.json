@@ -559,9 +559,12 @@
       "academy": 5,
       "nickname": "Amsterdam",
       "location_verified": true,
-      "history": "Amsterdam H&BC es un club de Amstelveen (Países Bajos), fundado en 1892. Compite en NED y disputa sus partidos en Wagener Stadium.",
-      "description": "Amsterdam H&BC es un club de Amstelveen (Países Bajos), fundado en 1892. Compite en NED y disputa sus partidos en Wagener Stadium.",
-      "source_url": "https://hockey.nl/"
+      "history": "Amsterdamsche Hockey & Bandy Club es un club de hockey de Amstelveen, Países Bajos, fundado en 1892. Es uno de los clubes más laureados de los Países Bajos y disputa sus partidos en el Wagener Stadium. Juega en Wagener Stadium y compite en la Hoofdklasse.",
+      "description": "Amsterdamsche Hockey & Bandy Club es un club de hockey de Amstelveen, Países Bajos, fundado en 1892. Es uno de los clubes más laureados de los Países Bajos y disputa sus partidos en el Wagener Stadium. Juega en Wagener Stadium y compite en la Hoofdklasse.",
+      "source_url": "https://en.wikipedia.org/wiki/Amsterdamsche_Hockey_&_Bandy_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Amsterdamsche_Hockey_&_Bandy_Club",
+      "description_verified": true
     },
     {
       "id": "ned-bloemendaal",
@@ -588,9 +591,12 @@
       "academy": 5,
       "nickname": "Bloemendaal",
       "location_verified": true,
-      "history": "HC Bloemendaal es un club de Bloemendaal (Países Bajos), fundado en 1895. Compite en NED y disputa sus partidos en Sportpark 't Kopje.",
-      "description": "HC Bloemendaal es un club de Bloemendaal (Países Bajos), fundado en 1895. Compite en NED y disputa sus partidos en Sportpark 't Kopje.",
-      "source_url": "https://hockey.nl/"
+      "history": "Hockey Club Bloemendaal es un club de hockey de Bloemendaal, Países Bajos, fundado en 1895. Es uno de los grandes dominadores de la Hoofdklasse y de la EHL. Juega en Sportpark 't Kopje y compite en la Hoofdklasse.",
+      "description": "Hockey Club Bloemendaal es un club de hockey de Bloemendaal, Países Bajos, fundado en 1895. Es uno de los grandes dominadores de la Hoofdklasse y de la EHL. Juega en Sportpark 't Kopje y compite en la Hoofdklasse.",
+      "source_url": "https://en.wikipedia.org/wiki/HC_Bloemendaal",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/HC_Bloemendaal",
+      "description_verified": true
     },
     {
       "id": "ned-den-bosch",
@@ -617,9 +623,12 @@
       "academy": 4,
       "nickname": "Den Bosch",
       "location_verified": true,
-      "history": "HC Den Bosch es un club de 's-Hertogenbosch (Países Bajos), fundado en 1907. Compite en NED y disputa sus partidos en Sportpark Oosterplas.",
-      "description": "HC Den Bosch es un club de 's-Hertogenbosch (Países Bajos), fundado en 1907. Compite en NED y disputa sus partidos en Sportpark Oosterplas.",
-      "source_url": "https://hockey.nl/"
+      "history": "Hockey Club 's-Hertogenbosch es un club de hockey de 's-Hertogenbosch, Países Bajos, fundado en 1907. Es un club histórico de la Hoofdklasse, con sede en Orthen. Juega en Sportpark Oosterplas y compite en la Hoofdklasse.",
+      "description": "Hockey Club 's-Hertogenbosch es un club de hockey de 's-Hertogenbosch, Países Bajos, fundado en 1907. Es un club histórico de la Hoofdklasse, con sede en Orthen. Juega en Sportpark Oosterplas y compite en la Hoofdklasse.",
+      "source_url": "https://en.wikipedia.org/wiki/HC_'s-Hertogenbosch",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/HC_'s-Hertogenbosch",
+      "description_verified": true
     },
     {
       "id": "ned-hdm",
@@ -646,9 +655,12 @@
       "academy": 4,
       "nickname": "HDM",
       "location_verified": true,
-      "history": "HDM es un club de La Haya (Países Bajos), fundado en 1908. Compite en NED y disputa sus partidos en Sportpark Duinzigt.",
-      "description": "HDM es un club de La Haya (Países Bajos), fundado en 1908. Compite en NED y disputa sus partidos en Sportpark Duinzigt.",
-      "source_url": "https://hockey.nl/"
+      "history": "Hockeyclub De Middenstand es un club de hockey de La Haya, Países Bajos, fundado en 1908. Nació en 1908 de la unión de estudiantes de Delft y jugadoras de La Haya. Juega en Sportpark Duinzigt y compite en la Hoofdklasse.",
+      "description": "Hockeyclub De Middenstand es un club de hockey de La Haya, Países Bajos, fundado en 1908. Nació en 1908 de la unión de estudiantes de Delft y jugadoras de La Haya. Juega en Sportpark Duinzigt y compite en la Hoofdklasse.",
+      "source_url": "https://www.hdmonline.nl/",
+      "source_type": "official",
+      "history_source": "https://www.hdmonline.nl/",
+      "description_verified": true
     },
     {
       "id": "ned-kampong",
@@ -675,9 +687,12 @@
       "academy": 5,
       "nickname": "Kampong",
       "location_verified": true,
-      "history": "SV Kampong es un club de Utrecht (Países Bajos), fundado en 1902. Compite en NED y disputa sus partidos en De Klapperboom.",
-      "description": "SV Kampong es un club de Utrecht (Países Bajos), fundado en 1902. Compite en NED y disputa sus partidos en De Klapperboom.",
-      "source_url": "https://hockey.nl/"
+      "history": "Sportvereniging Kampong es un club de hockey de Utrecht, Países Bajos, fundado en 1902. Es un club de Utrecht con una de las canteras más grandes del país. Juega en De Klapperboom y compite en la Hoofdklasse.",
+      "description": "Sportvereniging Kampong es un club de hockey de Utrecht, Países Bajos, fundado en 1902. Es un club de Utrecht con una de las canteras más grandes del país. Juega en De Klapperboom y compite en la Hoofdklasse.",
+      "source_url": "https://en.wikipedia.org/wiki/SV_Kampong",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/SV_Kampong",
+      "description_verified": true
     },
     {
       "id": "ned-klein-zwitserland",
@@ -704,9 +719,12 @@
       "academy": 4,
       "nickname": "KZ",
       "location_verified": true,
-      "history": "Klein Zwitserland es un club de La Haya (Países Bajos), fundado en 1908. Compite en NED y disputa sus partidos en Sportpark Klein Zwitserland.",
-      "description": "Klein Zwitserland es un club de La Haya (Países Bajos), fundado en 1908. Compite en NED y disputa sus partidos en Sportpark Klein Zwitserland.",
-      "source_url": "https://hockey.nl/"
+      "history": "Hockeyclub Klein Zwitserland es un club de hockey de La Haya, Países Bajos, fundado en 1908. Fundado en 1908, es un clásico de La Haya. Juega en Sportpark Klein Zwitserland y compite en la Hoofdklasse.",
+      "description": "Hockeyclub Klein Zwitserland es un club de hockey de La Haya, Países Bajos, fundado en 1908. Fundado en 1908, es un clásico de La Haya. Juega en Sportpark Klein Zwitserland y compite en la Hoofdklasse.",
+      "source_url": "https://www.kleinzwitserland.nl/",
+      "source_type": "official",
+      "history_source": "https://www.kleinzwitserland.nl/",
+      "description_verified": true
     },
     {
       "id": "ned-oranje-rood",
@@ -733,9 +751,12 @@
       "academy": 4,
       "nickname": "Oranje-Rood",
       "location_verified": true,
-      "history": "HC Oranje-Rood es un club de Eindhoven (Países Bajos), fundado en 2012. Compite en NED y disputa sus partidos en Sportpark Aalsterweg.",
-      "description": "HC Oranje-Rood es un club de Eindhoven (Países Bajos), fundado en 2012. Compite en NED y disputa sus partidos en Sportpark Aalsterweg.",
-      "source_url": "https://hockey.nl/"
+      "history": "Hockey Club Oranje-Rood es un club de hockey de Eindhoven, Países Bajos, fundado en 2012. Nació de la fusión de Oranje Zwart y EMHC en Eindhoven. Juega en Sportpark Aalsterweg y compite en la Hoofdklasse.",
+      "description": "Hockey Club Oranje-Rood es un club de hockey de Eindhoven, Países Bajos, fundado en 2012. Nació de la fusión de Oranje Zwart y EMHC en Eindhoven. Juega en Sportpark Aalsterweg y compite en la Hoofdklasse.",
+      "source_url": "https://en.wikipedia.org/wiki/HC_Oranje-Rood",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/HC_Oranje-Rood",
+      "description_verified": true
     },
     {
       "id": "ned-pinoke",
@@ -762,9 +783,12 @@
       "academy": 4,
       "nickname": "Pinoké",
       "location_verified": true,
-      "history": "HC Pinoké es un club de Amstelveen (Países Bajos), fundado en 1930. Compite en NED y disputa sus partidos en Amsterdamse Bos.",
-      "description": "HC Pinoké es un club de Amstelveen (Países Bajos), fundado en 1930. Compite en NED y disputa sus partidos en Amsterdamse Bos.",
-      "source_url": "https://hockey.nl/"
+      "history": "Hockey Club Pinoké es un club de hockey de Amstelveen, Países Bajos, fundado en 1930. Es un club de Ámsterdam con tradición en la Hoofdklasse. Juega en Amsterdamse Bos y compite en la Hoofdklasse.",
+      "description": "Hockey Club Pinoké es un club de hockey de Amstelveen, Países Bajos, fundado en 1930. Es un club de Ámsterdam con tradición en la Hoofdklasse. Juega en Amsterdamse Bos y compite en la Hoofdklasse.",
+      "source_url": "https://en.wikipedia.org/wiki/Pinoké",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Pinoké",
+      "description_verified": true
     },
     {
       "id": "ned-rotterdam",
@@ -791,9 +815,12 @@
       "academy": 4,
       "nickname": "Rotterdam",
       "location_verified": true,
-      "history": "HC Rotterdam es un club de Rotterdam (Países Bajos), fundado en 1925. Compite en NED y disputa sus partidos en Hazelaarweg Stadion.",
-      "description": "HC Rotterdam es un club de Rotterdam (Países Bajos), fundado en 1925. Compite en NED y disputa sus partidos en Hazelaarweg Stadion.",
-      "source_url": "https://hockey.nl/"
+      "history": "Hockey Club Rotterdam es un club de hockey de Rotterdam, Países Bajos, fundado en 1925. Es un club de Róterdam con presencia habitual en la élite neerlandesa. Juega en Hazelaarweg Stadion y compite en la Hoofdklasse.",
+      "description": "Hockey Club Rotterdam es un club de hockey de Rotterdam, Países Bajos, fundado en 1925. Es un club de Róterdam con presencia habitual en la élite neerlandesa. Juega en Hazelaarweg Stadion y compite en la Hoofdklasse.",
+      "source_url": "https://en.wikipedia.org/wiki/HC_Rotterdam",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/HC_Rotterdam",
+      "description_verified": true
     },
     {
       "id": "ned-schaerweijde",
@@ -820,9 +847,12 @@
       "academy": 3,
       "nickname": "Schaerweijde",
       "location_verified": true,
-      "history": "HC Schaerweijde es un club de Zeist (Países Bajos), fundado en 1903. Compite en NED y disputa sus partidos en Sportpark Krakelingsweg.",
-      "description": "HC Schaerweijde es un club de Zeist (Países Bajos), fundado en 1903. Compite en NED y disputa sus partidos en Sportpark Krakelingsweg.",
-      "source_url": "https://hockey.nl/"
+      "history": "Hockey Club Schaerweijde es un club de hockey de Zeist, Países Bajos, fundado en 1903. Es un club de Zeist, en la provincia de Utrecht. Juega en Sportpark Krakelingsweg y compite en la Hoofdklasse.",
+      "description": "Hockey Club Schaerweijde es un club de hockey de Zeist, Países Bajos, fundado en 1903. Es un club de Zeist, en la provincia de Utrecht. Juega en Sportpark Krakelingsweg y compite en la Hoofdklasse.",
+      "source_url": "https://en.wikipedia.org/wiki/ZSV_Schaerweijde",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/ZSV_Schaerweijde",
+      "description_verified": true
     },
     {
       "id": "ned-schc",
@@ -849,9 +879,12 @@
       "academy": 4,
       "nickname": "SCHC",
       "location_verified": true,
-      "history": "SCHC es un club de Bilthoven (Países Bajos), fundado en 1901. Compite en NED y disputa sus partidos en Sportpark Kees Boekelaan.",
-      "description": "SCHC es un club de Bilthoven (Países Bajos), fundado en 1901. Compite en NED y disputa sus partidos en Sportpark Kees Boekelaan.",
-      "source_url": "https://hockey.nl/"
+      "history": "Stichtse Cricket en Hockey Club es un club de hockey de Bilthoven, Países Bajos, fundado en 1901. Es un club de Bilthoven, fundado a comienzos del siglo XX. Juega en Sportpark Kees Boekelaan y compite en la Hoofdklasse.",
+      "description": "Stichtse Cricket en Hockey Club es un club de hockey de Bilthoven, Países Bajos, fundado en 1901. Es un club de Bilthoven, fundado a comienzos del siglo XX. Juega en Sportpark Kees Boekelaan y compite en la Hoofdklasse.",
+      "source_url": "https://en.wikipedia.org/wiki/Stichtsche_Cricket_en_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Stichtsche_Cricket_en_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "ned-tilburg",
@@ -878,9 +911,12 @@
       "academy": 3,
       "nickname": "Tilburg",
       "location_verified": true,
-      "history": "HC Tilburg es un club de Tilburg (Países Bajos), fundado en 1929. Compite en NED y disputa sus partidos en Sportpark Oude Warande.",
-      "description": "HC Tilburg es un club de Tilburg (Países Bajos), fundado en 1929. Compite en NED y disputa sus partidos en Sportpark Oude Warande.",
-      "source_url": "https://hockey.nl/"
+      "history": "Hockey Club Tilburg es un club de hockey de Tilburg, Países Bajos, fundado en 1929. Nació en 2011 de la fusión de TMHC Tilburg y TMHC Forward. Juega en Sportpark Oude Warande y compite en la Hoofdklasse.",
+      "description": "Hockey Club Tilburg es un club de hockey de Tilburg, Países Bajos, fundado en 1929. Nació en 2011 de la fusión de TMHC Tilburg y TMHC Forward. Juega en Sportpark Oude Warande y compite en la Hoofdklasse.",
+      "source_url": "https://www.hctilburg.com/",
+      "source_type": "official",
+      "history_source": "https://www.hctilburg.com/",
+      "description_verified": true
     },
     {
       "id": "bel-beerschot",
@@ -907,9 +943,12 @@
       "academy": 4,
       "nickname": "Beerschot",
       "location_verified": true,
-      "history": "Royal Beerschot THC es un club de Kontich (Bélgica), fundado en 1899. Compite en BEL y disputa sus partidos en Beerschot Hockey.",
-      "description": "Royal Beerschot THC es un club de Kontich (Bélgica), fundado en 1899. Compite en BEL y disputa sus partidos en Beerschot Hockey.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Royal Beerschot Tennis & Hockey Club es un club de hockey de Kontich, Bélgica, fundado en 1899. Es un club de Amberes con tradición en la élite belga. Juega en Beerschot Hockey y compite en la Belgian League.",
+      "description": "Royal Beerschot Tennis & Hockey Club es un club de hockey de Kontich, Bélgica, fundado en 1899. Es un club de Amberes con tradición en la élite belga. Juega en Beerschot Hockey y compite en la Belgian League.",
+      "source_url": "https://en.wikipedia.org/wiki/Royal_Beerschot_THC",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Royal_Beerschot_THC",
+      "description_verified": true
     },
     {
       "id": "bel-braxgata",
@@ -936,9 +975,12 @@
       "academy": 4,
       "nickname": "Braxgata",
       "location_verified": true,
-      "history": "Braxgata HC es un club de Boom (Bélgica), fundado en 1923. Compite en BEL y disputa sus partidos en Braxgata.",
-      "description": "Braxgata HC es un club de Boom (Bélgica), fundado en 1923. Compite en BEL y disputa sus partidos en Braxgata.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Braxgata Hockey Club es un club de hockey de Boom, Bélgica, fundado en 1923. Es un club de Boom, en la provincia de Amberes. Juega en Braxgata y compite en la Belgian League.",
+      "description": "Braxgata Hockey Club es un club de hockey de Boom, Bélgica, fundado en 1923. Es un club de Boom, en la provincia de Amberes. Juega en Braxgata y compite en la Belgian League.",
+      "source_url": "https://en.wikipedia.org/wiki/Braxgata_HC",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Braxgata_HC",
+      "description_verified": true
     },
     {
       "id": "bel-daring",
@@ -965,9 +1007,12 @@
       "academy": 4,
       "nickname": "Daring",
       "location_verified": true,
-      "history": "Royal Daring THC es un club de Molenbeek-Saint-Jean (Bélgica), fundado en 1920. Compite en BEL y disputa sus partidos en Daring Hockey.",
-      "description": "Royal Daring THC es un club de Molenbeek-Saint-Jean (Bélgica), fundado en 1920. Compite en BEL y disputa sus partidos en Daring Hockey.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Royal Daring Hockey Club es un club de hockey de Molenbeek-Saint-Jean, Bélgica, fundado en 1920. Es un club histórico de Bruselas. Juega en Daring Hockey y compite en la Belgian League.",
+      "description": "Royal Daring Hockey Club es un club de hockey de Molenbeek-Saint-Jean, Bélgica, fundado en 1920. Es un club histórico de Bruselas. Juega en Daring Hockey y compite en la Belgian League.",
+      "source_url": "https://en.wikipedia.org/wiki/Royal_Daring",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Royal_Daring",
+      "description_verified": true
     },
     {
       "id": "bel-dragons",
@@ -994,9 +1039,12 @@
       "academy": 5,
       "nickname": "Dragons",
       "location_verified": true,
-      "history": "KHC Dragons es un club de Brasschaat (Bélgica), fundado en 1943. Compite en BEL y disputa sus partidos en Dragons Hockey.",
-      "description": "KHC Dragons es un club de Brasschaat (Bélgica), fundado en 1943. Compite en BEL y disputa sus partidos en Dragons Hockey.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Koninklijke Hockey Club Dragons es un club de hockey de Brasschaat, Bélgica, fundado en 1943. Es un club de Brasschaat, habitual en la EHL. Juega en Dragons Hockey y compite en la Belgian League.",
+      "description": "Koninklijke Hockey Club Dragons es un club de hockey de Brasschaat, Bélgica, fundado en 1943. Es un club de Brasschaat, habitual en la EHL. Juega en Dragons Hockey y compite en la Belgian League.",
+      "source_url": "https://en.wikipedia.org/wiki/KHC_Dragons",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/KHC_Dragons",
+      "description_verified": true
     },
     {
       "id": "bel-gantoise",
@@ -1023,9 +1071,12 @@
       "academy": 4,
       "nickname": "Gantoise",
       "location_verified": true,
-      "history": "La Gantoise HC es un club de Gante (Bélgica), fundado en 1919. Compite en BEL y disputa sus partidos en La Gantoise.",
-      "description": "La Gantoise HC es un club de Gante (Bélgica), fundado en 1919. Compite en BEL y disputa sus partidos en La Gantoise.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "La Gantoise Hockey Club es un club de hockey de Gante, Bélgica, fundado en 1919. Es un club de Gante, con equipos masculino y femenino en la élite. Juega en La Gantoise y compite en la Belgian League.",
+      "description": "La Gantoise Hockey Club es un club de hockey de Gante, Bélgica, fundado en 1919. Es un club de Gante, con equipos masculino y femenino en la élite. Juega en La Gantoise y compite en la Belgian League.",
+      "source_url": "https://en.wikipedia.org/wiki/La_Gantoise_HC",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/La_Gantoise_HC",
+      "description_verified": true
     },
     {
       "id": "bel-herakles",
@@ -1052,9 +1103,12 @@
       "academy": 4,
       "nickname": "Herakles",
       "location_verified": true,
-      "history": "Royal Herakles HC es un club de Lier (Bélgica), fundado en 1919. Compite en BEL y disputa sus partidos en Herakles Hockey.",
-      "description": "Royal Herakles HC es un club de Lier (Bélgica), fundado en 1919. Compite en BEL y disputa sus partidos en Herakles Hockey.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Royal Herakles Hockey Club es un club de hockey de Lier, Bélgica, fundado en 1919. Es un club de Lier, fundado en 1921. Juega en Herakles Hockey y compite en la Belgian League.",
+      "description": "Royal Herakles Hockey Club es un club de hockey de Lier, Bélgica, fundado en 1919. Es un club de Lier, fundado en 1921. Juega en Herakles Hockey y compite en la Belgian League.",
+      "source_url": "http://www.herakles.be",
+      "source_type": "official",
+      "history_source": "http://www.herakles.be",
+      "description_verified": true
     },
     {
       "id": "bel-leopold",
@@ -1081,9 +1135,12 @@
       "academy": 4,
       "nickname": "Léopold",
       "location_verified": true,
-      "history": "Royal Léopold Club es un club de Uccle (Bélgica), fundado en 1893. Compite en BEL y disputa sus partidos en Léopold Hockey.",
-      "description": "Royal Léopold Club es un club de Uccle (Bélgica), fundado en 1893. Compite en BEL y disputa sus partidos en Léopold Hockey.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Royal Léopold Club es un club de hockey de Uccle, Bélgica, fundado en 1893. Es un club de Bruselas fundado en 1893. Juega en Léopold Hockey y compite en la Belgian League.",
+      "description": "Royal Léopold Club es un club de hockey de Uccle, Bélgica, fundado en 1893. Es un club de Bruselas fundado en 1893. Juega en Léopold Hockey y compite en la Belgian League.",
+      "source_url": "https://en.wikipedia.org/wiki/Royal_Léopold_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Royal_Léopold_Club",
+      "description_verified": true
     },
     {
       "id": "bel-namur",
@@ -1110,9 +1167,12 @@
       "academy": 3,
       "nickname": "Namur",
       "location_verified": true,
-      "history": "Royal HC Namur es un club de Namur (Bélgica), fundado en 1922. Compite en BEL y disputa sus partidos en Hockey Namur.",
-      "description": "Royal HC Namur es un club de Namur (Bélgica), fundado en 1922. Compite en BEL y disputa sus partidos en Hockey Namur.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Royal Hockey Club Namur es un club de hockey de Namur, Bélgica, fundado en 1922. Fundado en 1912, es uno de los clubes más antiguos de Bélgica. Juega en Hockey Namur y compite en la Belgian League.",
+      "description": "Royal Hockey Club Namur es un club de hockey de Namur, Bélgica, fundado en 1922. Fundado en 1912, es uno de los clubes más antiguos de Bélgica. Juega en Hockey Namur y compite en la Belgian League.",
+      "source_url": "https://www.hockeynamur.be/",
+      "source_type": "official",
+      "history_source": "https://www.hockeynamur.be/",
+      "description_verified": true
     },
     {
       "id": "bel-oree",
@@ -1139,9 +1199,12 @@
       "academy": 4,
       "nickname": "Orée",
       "location_verified": true,
-      "history": "Royal Orée THC es un club de Woluwe-Saint-Pierre (Bélgica), fundado en 1920. Compite en BEL y disputa sus partidos en Orée Hockey.",
-      "description": "Royal Orée THC es un club de Woluwe-Saint-Pierre (Bélgica), fundado en 1920. Compite en BEL y disputa sus partidos en Orée Hockey.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Royal Orée Tennis Hockey Club es un club de hockey de Woluwe-Saint-Pierre, Bélgica, fundado en 1920. Es un club de Bruselas con una gran base social. Juega en Orée Hockey y compite en la Belgian League.",
+      "description": "Royal Orée Tennis Hockey Club es un club de hockey de Woluwe-Saint-Pierre, Bélgica, fundado en 1920. Es un club de Bruselas con una gran base social. Juega en Orée Hockey y compite en la Belgian League.",
+      "source_url": "https://oree.be/",
+      "source_type": "official",
+      "history_source": "https://oree.be/",
+      "description_verified": true
     },
     {
       "id": "bel-racing",
@@ -1168,9 +1231,12 @@
       "academy": 4,
       "nickname": "Racing",
       "location_verified": true,
-      "history": "Royal Racing Club Bruxelles es un club de Uccle (Bélgica), fundado en 1891. Compite en BEL y disputa sus partidos en Racing Hockey.",
-      "description": "Royal Racing Club Bruxelles es un club de Uccle (Bélgica), fundado en 1891. Compite en BEL y disputa sus partidos en Racing Hockey.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Royal Racing Club de Bruxelles es un club de hockey de Uccle, Bélgica, fundado en 1891. Es un club histórico de Bruselas. Juega en Racing Hockey y compite en la Belgian League.",
+      "description": "Royal Racing Club de Bruxelles es un club de hockey de Uccle, Bélgica, fundado en 1891. Es un club histórico de Bruselas. Juega en Racing Hockey y compite en la Belgian League.",
+      "source_url": "https://en.wikipedia.org/wiki/Royal_Racing_Club_Bruxelles",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Royal_Racing_Club_Bruxelles",
+      "description_verified": true
     },
     {
       "id": "bel-uccle-sport",
@@ -1197,9 +1263,12 @@
       "academy": 4,
       "nickname": "UccleSport",
       "location_verified": true,
-      "history": "Royal Uccle Sport THC es un club de Uccle (Bélgica), fundado en 1897. Compite en BEL y disputa sus partidos en Uccle Sport.",
-      "description": "Royal Uccle Sport THC es un club de Uccle (Bélgica), fundado en 1897. Compite en BEL y disputa sus partidos en Uccle Sport.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Royal Uccle Sport Tennis Hockey Club es un club de hockey de Uccle, Bélgica, fundado en 1897. Es un club de Uccle con una larga tradición en hockey femenino. Juega en Uccle Sport y compite en la Belgian League.",
+      "description": "Royal Uccle Sport Tennis Hockey Club es un club de hockey de Uccle, Bélgica, fundado en 1897. Es un club de Uccle con una larga tradición en hockey femenino. Juega en Uccle Sport y compite en la Belgian League.",
+      "source_url": "https://www.ucclesport.be/",
+      "source_type": "official",
+      "history_source": "https://www.ucclesport.be/",
+      "description_verified": true
     },
     {
       "id": "bel-waterloo-ducks",
@@ -1226,9 +1295,12 @@
       "academy": 4,
       "nickname": "Ducks",
       "location_verified": true,
-      "history": "Waterloo Ducks HC es un club de Waterloo (Bélgica), fundado en 1929. Compite en BEL y disputa sus partidos en Waterloo Ducks.",
-      "description": "Waterloo Ducks HC es un club de Waterloo (Bélgica), fundado en 1929. Compite en BEL y disputa sus partidos en Waterloo Ducks.",
-      "source_url": "https://carlsberg00hockeyleague.be"
+      "history": "Waterloo Ducks Hockey Club es un club de hockey de Waterloo, Bélgica, fundado en 1929. Es un club de Waterloo, campeón de Bélgica y participante en la EHL. Juega en Waterloo Ducks y compite en la Belgian League.",
+      "description": "Waterloo Ducks Hockey Club es un club de hockey de Waterloo, Bélgica, fundado en 1929. Es un club de Waterloo, campeón de Bélgica y participante en la EHL. Juega en Waterloo Ducks y compite en la Belgian League.",
+      "source_url": "https://en.wikipedia.org/wiki/Waterloo_Ducks_H.C.",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Waterloo_Ducks_H.C.",
+      "description_verified": true
     },
     {
       "id": "ger-hamburger-polo",
@@ -1255,9 +1327,12 @@
       "academy": 5,
       "nickname": "Polo",
       "location_verified": true,
-      "history": "Hamburger Polo Club es un club de Hamburgo (Alemania), fundado en 1908. Compite en GER y disputa sus partidos en Hamburger Polo Club.",
-      "description": "Hamburger Polo Club es un club de Hamburgo (Alemania), fundado en 1908. Compite en GER y disputa sus partidos en Hamburger Polo Club.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Hamburger Polo Club es un club de hockey de Hamburgo, Alemania, fundado en 1908. Es un club de Hamburgo con tradición en la Bundesliga. Juega en Hamburger Polo Club y compite en la Feldhockey-Bundesliga.",
+      "description": "Hamburger Polo Club es un club de hockey de Hamburgo, Alemania, fundado en 1908. Es un club de Hamburgo con tradición en la Bundesliga. Juega en Hamburger Polo Club y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://en.wikipedia.org/wiki/Hamburger_Polo_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Hamburger_Polo_Club",
+      "description_verified": true
     },
     {
       "id": "ger-rw-koln",
@@ -1284,9 +1359,12 @@
       "academy": 5,
       "nickname": "RW Köln",
       "location_verified": true,
-      "history": "Rot-Weiss Köln es un club de Colonia (Alemania), fundado en 1906. Compite en GER y disputa sus partidos en Rot-Weiss Köln.",
-      "description": "Rot-Weiss Köln es un club de Colonia (Alemania), fundado en 1906. Compite en GER y disputa sus partidos en Rot-Weiss Köln.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Rot-Weiss Köln Hockey Club es un club de hockey de Colonia, Alemania, fundado en 1906. Es un club de Colonia, uno de los grandes de la Bundesliga. Juega en Rot-Weiss Köln y compite en la Feldhockey-Bundesliga.",
+      "description": "Rot-Weiss Köln Hockey Club es un club de hockey de Colonia, Alemania, fundado en 1906. Es un club de Colonia, uno de los grandes de la Bundesliga. Juega en Rot-Weiss Köln y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://en.wikipedia.org/wiki/Rot-Weiss_Köln",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Rot-Weiss_Köln",
+      "description_verified": true
     },
     {
       "id": "ger-alster",
@@ -1313,9 +1391,12 @@
       "academy": 4,
       "nickname": "Alster",
       "location_verified": true,
-      "history": "Der Club an der Alster es un club de Hamburgo (Alemania), fundado en 1899. Compite en GER y disputa sus partidos en Club an der Alster.",
-      "description": "Der Club an der Alster es un club de Hamburgo (Alemania), fundado en 1899. Compite en GER y disputa sus partidos en Club an der Alster.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Der Club an der Alster es un club de hockey de Hamburgo, Alemania, fundado en 1899. Es un club de Hamburgo, habitual en la élite alemana. Juega en Club an der Alster y compite en la Feldhockey-Bundesliga.",
+      "description": "Der Club an der Alster es un club de hockey de Hamburgo, Alemania, fundado en 1899. Es un club de Hamburgo, habitual en la élite alemana. Juega en Club an der Alster y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://en.wikipedia.org/wiki/Der_Club_an_der_Alster",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Der_Club_an_der_Alster",
+      "description_verified": true
     },
     {
       "id": "ger-tsv-mannheim",
@@ -1342,9 +1423,12 @@
       "academy": 4,
       "nickname": "TSV",
       "location_verified": true,
-      "history": "TSV Mannheim Hockey es un club de Mannheim (Alemania), fundado en 1846. Compite en GER y disputa sus partidos en TSV Mannheim.",
-      "description": "TSV Mannheim Hockey es un club de Mannheim (Alemania), fundado en 1846. Compite en GER y disputa sus partidos en TSV Mannheim.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "TSV Mannheim Hockey es un club de hockey de Mannheim, Alemania, fundado en 1846. Es la sección de hockey del TSV Mannheim, en la Bundesliga. Juega en TSV Mannheim y compite en la Feldhockey-Bundesliga.",
+      "description": "TSV Mannheim Hockey es un club de hockey de Mannheim, Alemania, fundado en 1846. Es la sección de hockey del TSV Mannheim, en la Bundesliga. Juega en TSV Mannheim y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://www.tsvmannheim.de/abteilungen/hockey/",
+      "source_type": "official",
+      "history_source": "https://www.tsvmannheim.de/abteilungen/hockey/",
+      "description_verified": true
     },
     {
       "id": "ger-harvestehude",
@@ -1371,9 +1455,12 @@
       "academy": 4,
       "nickname": "HTHC",
       "location_verified": true,
-      "history": "Harvestehuder THC es un club de Hamburgo (Alemania), fundado en 1899. Compite en GER y disputa sus partidos en Harvestehuder THC.",
-      "description": "Harvestehuder THC es un club de Hamburgo (Alemania), fundado en 1899. Compite en GER y disputa sus partidos en Harvestehuder THC.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Harvestehuder Tennis- und Hockey-Club es un club de hockey de Hamburgo, Alemania, fundado en 1899. Es un club de Hamburgo con una fuerte cantera. Juega en Harvestehuder THC y compite en la Feldhockey-Bundesliga.",
+      "description": "Harvestehuder Tennis- und Hockey-Club es un club de hockey de Hamburgo, Alemania, fundado en 1899. Es un club de Hamburgo con una fuerte cantera. Juega en Harvestehuder THC y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://en.wikipedia.org/wiki/Harvestehuder_THC",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Harvestehuder_THC",
+      "description_verified": true
     },
     {
       "id": "ger-uhlenhorst",
@@ -1400,9 +1487,12 @@
       "academy": 5,
       "nickname": "Uhlenhorst",
       "location_verified": true,
-      "history": "HTC Uhlenhorst Mülheim es un club de Mülheim (Alemania), fundado en 1905. Compite en GER y disputa sus partidos en Uhlenhorst Mülheim.",
-      "description": "HTC Uhlenhorst Mülheim es un club de Mülheim (Alemania), fundado en 1905. Compite en GER y disputa sus partidos en Uhlenhorst Mülheim.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "HTC Uhlenhorst Mülheim es un club de hockey de Mülheim, Alemania, fundado en 1905. Es un club de Mülheim, campeón de Alemania y Europa. Juega en Uhlenhorst Mülheim y compite en la Feldhockey-Bundesliga.",
+      "description": "HTC Uhlenhorst Mülheim es un club de hockey de Mülheim, Alemania, fundado en 1905. Es un club de Mülheim, campeón de Alemania y Europa. Juega en Uhlenhorst Mülheim y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://en.wikipedia.org/wiki/HTC_Uhlenhorst_Mülheim",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/HTC_Uhlenhorst_Mülheim",
+      "description_verified": true
     },
     {
       "id": "ger-uhc-hamburg",
@@ -1429,9 +1519,12 @@
       "academy": 4,
       "nickname": "UHC",
       "location_verified": true,
-      "history": "UHC Hamburg es un club de Hamburgo (Alemania), fundado en 1901. Compite en GER y disputa sus partidos en UHC Hamburg.",
-      "description": "UHC Hamburg es un club de Hamburgo (Alemania), fundado en 1901. Compite en GER y disputa sus partidos en UHC Hamburg.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Uhlenhorster Hockey-Club es un club de hockey de Hamburgo, Alemania, fundado en 1901. Es un club de Hamburgo ligado a la tradición del Uhlenhorster HC. Juega en UHC Hamburg y compite en la Feldhockey-Bundesliga.",
+      "description": "Uhlenhorster Hockey-Club es un club de hockey de Hamburgo, Alemania, fundado en 1901. Es un club de Hamburgo ligado a la tradición del Uhlenhorster HC. Juega en UHC Hamburg y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://en.wikipedia.org/wiki/Uhlenhorster_HC",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Uhlenhorster_HC",
+      "description_verified": true
     },
     {
       "id": "ger-crefelder",
@@ -1458,9 +1551,12 @@
       "academy": 4,
       "nickname": "Crefelder",
       "location_verified": true,
-      "history": "Crefelder HTC es un club de Krefeld (Alemania), fundado en 1898. Compite en GER y disputa sus partidos en Crefelder HTC.",
-      "description": "Crefelder HTC es un club de Krefeld (Alemania), fundado en 1898. Compite en GER y disputa sus partidos en Crefelder HTC.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Crefelder Hockey- und Tennis-Club es un club de hockey de Krefeld, Alemania, fundado en 1898. Es un club de Krefeld, uno de los históricos de la Bundesliga. Juega en Crefelder HTC y compite en la Feldhockey-Bundesliga.",
+      "description": "Crefelder Hockey- und Tennis-Club es un club de hockey de Krefeld, Alemania, fundado en 1898. Es un club de Krefeld, uno de los históricos de la Bundesliga. Juega en Crefelder HTC y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://www.crefelder-htc.de/",
+      "source_type": "official",
+      "history_source": "https://www.crefelder-htc.de/",
+      "description_verified": true
     },
     {
       "id": "ger-mannheimer-hc",
@@ -1487,9 +1583,12 @@
       "academy": 5,
       "nickname": "MHC",
       "location_verified": true,
-      "history": "Mannheimer HC es un club de Mannheim (Alemania), fundado en 1901. Compite en GER y disputa sus partidos en Mannheimer HC.",
-      "description": "Mannheimer HC es un club de Mannheim (Alemania), fundado en 1901. Compite en GER y disputa sus partidos en Mannheimer HC.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Mannheimer Hockey Club es un club de hockey de Mannheim, Alemania, fundado en 1901. Es un club de Mannheim con presencia en la Bundesliga. Juega en Mannheimer HC y compite en la Feldhockey-Bundesliga.",
+      "description": "Mannheimer Hockey Club es un club de hockey de Mannheim, Alemania, fundado en 1901. Es un club de Mannheim con presencia en la Bundesliga. Juega en Mannheimer HC y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://en.wikipedia.org/wiki/Mannheimer_HC",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Mannheimer_HC",
+      "description_verified": true
     },
     {
       "id": "ger-munchner-sc",
@@ -1516,9 +1615,12 @@
       "academy": 3,
       "nickname": "MSC",
       "location_verified": true,
-      "history": "Münchner SC es un club de Múnich (Alemania), fundado en 1900. Compite en GER y disputa sus partidos en Münchner SC.",
-      "description": "Münchner SC es un club de Múnich (Alemania), fundado en 1900. Compite en GER y disputa sus partidos en Münchner SC.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Münchner Sport-Club es un club de hockey de Múnich, Alemania, fundado en 1900. Es un club de Múnich fundado en 1896. Juega en Münchner SC y compite en la Feldhockey-Bundesliga.",
+      "description": "Münchner Sport-Club es un club de hockey de Múnich, Alemania, fundado en 1900. Es un club de Múnich fundado en 1896. Juega en Münchner SC y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://www.muenchner-sportclub.de/",
+      "source_type": "official",
+      "history_source": "https://www.muenchner-sportclub.de/",
+      "description_verified": true
     },
     {
       "id": "eng-beeston",
@@ -1545,9 +1647,12 @@
       "academy": 4,
       "nickname": "Beeston",
       "location_verified": true,
-      "history": "Beeston HC es un club de Beeston (Inglaterra), fundado en 1907. Compite en ENG y disputa sus partidos en Nottingham Hockey Centre.",
-      "description": "Beeston HC es un club de Beeston (Inglaterra), fundado en 1907. Compite en ENG y disputa sus partidos en Nottingham Hockey Centre.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Beeston Hockey Club es un club de hockey de Beeston, Inglaterra, fundado en 1907. Es un club de Nottingham, habitual en la Premier Division. Juega en Nottingham Hockey Centre y compite en la England Hockey League.",
+      "description": "Beeston Hockey Club es un club de hockey de Beeston, Inglaterra, fundado en 1907. Es un club de Nottingham, habitual en la Premier Division. Juega en Nottingham Hockey Centre y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Beeston_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Beeston_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-bowdon",
@@ -1574,9 +1679,12 @@
       "academy": 3,
       "nickname": "Bowdon",
       "location_verified": true,
-      "history": "Bowdon HC es un club de Altrincham (Inglaterra), fundado en 1886. Compite en ENG y disputa sus partidos en Bowdon Cricket & Hockey Club.",
-      "description": "Bowdon HC es un club de Altrincham (Inglaterra), fundado en 1886. Compite en ENG y disputa sus partidos en Bowdon Cricket & Hockey Club.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Bowdon Hockey Club es un club de hockey de Altrincham, Inglaterra, fundado en 1886. Es un club de Altrincham, en la liga inglesa. Juega en Bowdon Cricket & Hockey Club y compite en la England Hockey League.",
+      "description": "Bowdon Hockey Club es un club de hockey de Altrincham, Inglaterra, fundado en 1886. Es un club de Altrincham, en la liga inglesa. Juega en Bowdon Cricket & Hockey Club y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Bowdon_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Bowdon_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-exeter",
@@ -1603,9 +1711,12 @@
       "academy": 4,
       "nickname": "Exeter",
       "location_verified": true,
-      "history": "University of Exeter HC es un club de Exeter (Inglaterra), fundado en 1920. Compite en ENG y disputa sus partidos en University of Exeter Sports Park.",
-      "description": "University of Exeter HC es un club de Exeter (Inglaterra), fundado en 1920. Compite en ENG y disputa sus partidos en University of Exeter Sports Park.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "University of Exeter Hockey Club es un club de hockey de Exeter, Inglaterra, fundado en 1920. Es el club de hockey de la Universidad de Exeter. Juega en University of Exeter Sports Park y compite en la England Hockey League.",
+      "description": "University of Exeter Hockey Club es un club de hockey de Exeter, Inglaterra, fundado en 1920. Es el club de hockey de la Universidad de Exeter. Juega en University of Exeter Sports Park y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/University_of_Exeter_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/University_of_Exeter_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-cardiff-met",
@@ -1632,9 +1743,12 @@
       "academy": 3,
       "nickname": "Cardiff",
       "location_verified": true,
-      "history": "Cardiff & Met HC es un club de Cardiff (Inglaterra), fundado en 1896. Compite en ENG y disputa sus partidos en Sophia Gardens.",
-      "description": "Cardiff & Met HC es un club de Cardiff (Inglaterra), fundado en 1896. Compite en ENG y disputa sus partidos en Sophia Gardens.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Cardiff & Met Hockey Club es un club de hockey de Cardiff, Inglaterra, fundado en 1896. Es un club de Cardiff, en la liga inglesa. Juega en Sophia Gardens y compite en la England Hockey League.",
+      "description": "Cardiff & Met Hockey Club es un club de hockey de Cardiff, Inglaterra, fundado en 1896. Es un club de Cardiff, en la liga inglesa. Juega en Sophia Gardens y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Cardiff_&_Met_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Cardiff_&_Met_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-east-grinstead",
@@ -1661,9 +1775,12 @@
       "academy": 4,
       "nickname": "EG",
       "location_verified": true,
-      "history": "East Grinstead HC es un club de East Grinstead (Inglaterra), fundado en 1898. Compite en ENG y disputa sus partidos en East Grinstead Sports Club.",
-      "description": "East Grinstead HC es un club de East Grinstead (Inglaterra), fundado en 1898. Compite en ENG y disputa sus partidos en East Grinstead Sports Club.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "East Grinstead Hockey Club es un club de hockey de East Grinstead, Inglaterra, fundado en 1898. Es un club de East Grinstead, habitual en la élite inglesa. Juega en East Grinstead Sports Club y compite en la England Hockey League.",
+      "description": "East Grinstead Hockey Club es un club de hockey de East Grinstead, Inglaterra, fundado en 1898. Es un club de East Grinstead, habitual en la élite inglesa. Juega en East Grinstead Sports Club y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/East_Grinstead_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/East_Grinstead_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-hampstead",
@@ -1690,9 +1807,12 @@
       "academy": 4,
       "nickname": "H&W",
       "location_verified": true,
-      "history": "Hampstead & Westminster HC es un club de Londres (Inglaterra), fundado en 1894. Compite en ENG y disputa sus partidos en Paddington Recreation Ground.",
-      "description": "Hampstead & Westminster HC es un club de Londres (Inglaterra), fundado en 1894. Compite en ENG y disputa sus partidos en Paddington Recreation Ground.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Hampstead & Westminster Hockey Club es un club de hockey de Londres, Inglaterra, fundado en 1894. Es un club de Londres, en la Premier Division. Juega en Paddington Recreation Ground y compite en la England Hockey League.",
+      "description": "Hampstead & Westminster Hockey Club es un club de hockey de Londres, Inglaterra, fundado en 1894. Es un club de Londres, en la Premier Division. Juega en Paddington Recreation Ground y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Hampstead_&_Westminster_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Hampstead_&_Westminster_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-holcombe",
@@ -1719,9 +1839,12 @@
       "academy": 3,
       "nickname": "Holcombe",
       "location_verified": true,
-      "history": "Holcombe HC es un club de Rochester (Inglaterra), fundado en 1897. Compite en ENG y disputa sus partidos en Holcombe Park.",
-      "description": "Holcombe HC es un club de Rochester (Inglaterra), fundado en 1897. Compite en ENG y disputa sus partidos en Holcombe Park.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Holcombe Hockey Club es un club de hockey de Rochester, Inglaterra, fundado en 1897. Es un club de Rochester, en la liga inglesa. Juega en Holcombe Park y compite en la England Hockey League.",
+      "description": "Holcombe Hockey Club es un club de hockey de Rochester, Inglaterra, fundado en 1897. Es un club de Rochester, en la liga inglesa. Juega en Holcombe Park y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Holcombe_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Holcombe_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-old-georgians",
@@ -1748,9 +1871,12 @@
       "academy": 4,
       "nickname": "OGs",
       "location_verified": true,
-      "history": "Old Georgians HC es un club de Addlestone (Inglaterra), fundado en 1995. Compite en ENG y disputa sus partidos en St George's College.",
-      "description": "Old Georgians HC es un club de Addlestone (Inglaterra), fundado en 1995. Compite en ENG y disputa sus partidos en St George's College.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Old Georgians Hockey Club es un club de hockey de Addlestone, Inglaterra, fundado en 1995. Es un club de Londres, campeón de la liga inglesa. Juega en St George's College y compite en la England Hockey League.",
+      "description": "Old Georgians Hockey Club es un club de hockey de Addlestone, Inglaterra, fundado en 1995. Es un club de Londres, campeón de la liga inglesa. Juega en St George's College y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Old_Georgians_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Old_Georgians_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-oxted",
@@ -1777,9 +1903,12 @@
       "academy": 3,
       "nickname": "Oxted",
       "location_verified": true,
-      "history": "Oxted HC es un club de Oxted (Inglaterra), fundado en 1946. Compite en ENG y disputa sus partidos en Caterham School.",
-      "description": "Oxted HC es un club de Oxted (Inglaterra), fundado en 1946. Compite en ENG y disputa sus partidos en Caterham School.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Oxted Hockey Club es un club de hockey de Oxted, Inglaterra, fundado en 1946. Es un club de Oxted, en la liga inglesa. Juega en Caterham School y compite en la England Hockey League.",
+      "description": "Oxted Hockey Club es un club de hockey de Oxted, Inglaterra, fundado en 1946. Es un club de Oxted, en la liga inglesa. Juega en Caterham School y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Oxted_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Oxted_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-reading",
@@ -1806,9 +1935,12 @@
       "academy": 4,
       "nickname": "Reading",
       "location_verified": true,
-      "history": "Reading HC es un club de Reading (Inglaterra), fundado en 1900. Compite en ENG y disputa sus partidos en Sonning Lane.",
-      "description": "Reading HC es un club de Reading (Inglaterra), fundado en 1900. Compite en ENG y disputa sus partidos en Sonning Lane.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Reading Hockey Club es un club de hockey de Reading, Inglaterra, fundado en 1900. Es un club de Reading, con tradición en la Premier Division. Juega en Sonning Lane y compite en la England Hockey League.",
+      "description": "Reading Hockey Club es un club de hockey de Reading, Inglaterra, fundado en 1900. Es un club de Reading, con tradición en la Premier Division. Juega en Sonning Lane y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Reading_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Reading_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-surbiton",
@@ -1835,9 +1967,12 @@
       "academy": 5,
       "nickname": "Surbiton",
       "location_verified": true,
-      "history": "Surbiton HC es un club de Long Ditton (Inglaterra), fundado en 1874. Compite en ENG y disputa sus partidos en Sugden Road.",
-      "description": "Surbiton HC es un club de Long Ditton (Inglaterra), fundado en 1874. Compite en ENG y disputa sus partidos en Sugden Road.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Surbiton Hockey Club es un club de hockey de Long Ditton, Inglaterra, fundado en 1874. Es un club de Surbiton, uno de los grandes de Inglaterra. Juega en Sugden Road y compite en la England Hockey League.",
+      "description": "Surbiton Hockey Club es un club de hockey de Long Ditton, Inglaterra, fundado en 1874. Es un club de Surbiton, uno de los grandes de Inglaterra. Juega en Sugden Road y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Surbiton_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Surbiton_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "eng-wimbledon",
@@ -1864,9 +1999,12 @@
       "academy": 4,
       "nickname": "Wimbledon",
       "location_verified": true,
-      "history": "Wimbledon HC es un club de Londres (Inglaterra), fundado en 1883. Compite en ENG y disputa sus partidos en Raynes Park High School.",
-      "description": "Wimbledon HC es un club de Londres (Inglaterra), fundado en 1883. Compite en ENG y disputa sus partidos en Raynes Park High School.",
-      "source_url": "https://www.englandhockey.co.uk/"
+      "history": "Wimbledon Hockey Club es un club de hockey de Londres, Inglaterra, fundado en 1883. Es un club de Wimbledon, en la élite inglesa. Juega en Raynes Park High School y compite en la England Hockey League.",
+      "description": "Wimbledon Hockey Club es un club de hockey de Londres, Inglaterra, fundado en 1883. Es un club de Wimbledon, en la élite inglesa. Juega en Raynes Park High School y compite en la England Hockey League.",
+      "source_url": "https://en.wikipedia.org/wiki/Wimbledon_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Wimbledon_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "arg-san-fernando",
@@ -1893,9 +2031,12 @@
       "academy": 4,
       "nickname": "Sanfer",
       "location_verified": true,
-      "history": "Club San Fernando es un club de San Fernando (Argentina), fundado en 1904. Compite en ARG y disputa sus partidos en San Fernando Hockey.",
-      "description": "Club San Fernando es un club de San Fernando (Argentina), fundado en 1904. Compite en ARG y disputa sus partidos en San Fernando Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Club San Fernando es un club de hockey de San Fernando, Argentina, fundado en 1904. Es un club de San Fernando, en la provincia de Buenos Aires. Juega en San Fernando Hockey y compite en la Metropolitano.",
+      "description": "Club San Fernando es un club de hockey de San Fernando, Argentina, fundado en 1904. Es un club de San Fernando, en la provincia de Buenos Aires. Juega en San Fernando Hockey y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Club_San_Fernando",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Club_San_Fernando",
+      "description_verified": true
     },
     {
       "id": "arg-banco-provincia",
@@ -1922,9 +2063,12 @@
       "academy": 4,
       "nickname": "Banco",
       "location_verified": true,
-      "history": "Banco Provincia es un club de Buenos Aires (Argentina), fundado en 1915. Compite en ARG y disputa sus partidos en Banco Provincia Hockey.",
-      "description": "Banco Provincia es un club de Buenos Aires (Argentina), fundado en 1915. Compite en ARG y disputa sus partidos en Banco Provincia Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Club Banco de la Provincia de Buenos Aires es un club de hockey de Buenos Aires, Argentina, fundado en 1915. Es un club de La Plata con tradición en el hockey argentino. Juega en Banco Provincia Hockey y compite en la Metropolitano.",
+      "description": "Club Banco de la Provincia de Buenos Aires es un club de hockey de Buenos Aires, Argentina, fundado en 1915. Es un club de La Plata con tradición en el hockey argentino. Juega en Banco Provincia Hockey y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Club_Atlético_Banco_de_la_Provincia_de_Buenos_Aires",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Club_Atlético_Banco_de_la_Provincia_de_Buenos_Aires",
+      "description_verified": true
     },
     {
       "id": "arg-ciudad",
@@ -1951,9 +2095,12 @@
       "academy": 4,
       "nickname": "Ciudad",
       "location_verified": true,
-      "history": "Club Ciudad de Buenos Aires es un club de Buenos Aires (Argentina), fundado en 1930. Compite en ARG y disputa sus partidos en Ciudad Hockey.",
-      "description": "Club Ciudad de Buenos Aires es un club de Buenos Aires (Argentina), fundado en 1930. Compite en ARG y disputa sus partidos en Ciudad Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Club Ciudad de Buenos Aires es un club de hockey de Buenos Aires, Argentina, fundado en 1930. Es un club de Núñez, Buenos Aires, conocido como Muni. Juega en Ciudad Hockey y compite en la Metropolitano.",
+      "description": "Club Ciudad de Buenos Aires es un club de hockey de Buenos Aires, Argentina, fundado en 1930. Es un club de Núñez, Buenos Aires, conocido como Muni. Juega en Ciudad Hockey y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Club_Ciudad_de_Buenos_Aires",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Club_Ciudad_de_Buenos_Aires",
+      "description_verified": true
     },
     {
       "id": "arg-san-martin",
@@ -1980,9 +2127,12 @@
       "academy": 3,
       "nickname": "San Martín",
       "location_verified": true,
-      "history": "Club San Martín es un club de Buenos Aires (Argentina), Compite en ARG y disputa sus partidos en Club San Martín.",
-      "description": "Club San Martín es un club de Buenos Aires (Argentina), Compite en ARG y disputa sus partidos en Club San Martín.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Club San Martín de Buenos Aires es un club de hockey de Buenos Aires, Argentina. Es un club de Buenos Aires fundado en 1908. Juega en Club San Martín y compite en la Metropolitano.",
+      "description": "Club San Martín de Buenos Aires es un club de hockey de Buenos Aires, Argentina. Es un club de Buenos Aires fundado en 1908. Juega en Club San Martín y compite en la Metropolitano.",
+      "source_url": "https://clubsanmartin.org/",
+      "source_type": "official",
+      "history_source": "https://clubsanmartin.org/",
+      "description_verified": true
     },
     {
       "id": "arg-quilmes",
@@ -2009,9 +2159,12 @@
       "academy": 3,
       "nickname": "Quilmes",
       "location_verified": true,
-      "history": "Quilmes es un club de Quilmes (Argentina), fundado en 1887. Compite en ARG y disputa sus partidos en Quilmes.",
-      "description": "Quilmes es un club de Quilmes (Argentina), fundado en 1887. Compite en ARG y disputa sus partidos en Quilmes.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Quilmes Atlético Club es un club de hockey de Quilmes, Argentina, fundado en 1887. Es un club de Quilmes, en la provincia de Buenos Aires. Juega en Quilmes y compite en la Metropolitano.",
+      "description": "Quilmes Atlético Club es un club de hockey de Quilmes, Argentina, fundado en 1887. Es un club de Quilmes, en la provincia de Buenos Aires. Juega en Quilmes y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Quilmes_Atlético_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Quilmes_Atlético_Club",
+      "description_verified": true
     },
     {
       "id": "arg-hurling",
@@ -2038,9 +2191,12 @@
       "academy": 2,
       "nickname": "Hurling",
       "location_verified": true,
-      "history": "Hurling es un club de Buenos Aires (Argentina), fundado en 1922. Compite en ARG y disputa sus partidos en Hurling Club.",
-      "description": "Hurling es un club de Buenos Aires (Argentina), fundado en 1922. Compite en ARG y disputa sus partidos en Hurling Club.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Hurling Club es un club de hockey de Buenos Aires, Argentina, fundado en 1922. Es un club de Hurlingham, en la provincia de Buenos Aires. Juega en Hurling Club y compite en la Metropolitano.",
+      "description": "Hurling Club es un club de hockey de Buenos Aires, Argentina, fundado en 1922. Es un club de Hurlingham, en la provincia de Buenos Aires. Juega en Hurling Club y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Hurling_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Hurling_Club",
+      "description_verified": true
     },
     {
       "id": "arg-ciudad-b",
@@ -2067,9 +2223,12 @@
       "academy": 2,
       "nickname": "Ciudad B",
       "location_verified": true,
-      "history": "Ciudad B es un club de Buenos Aires (Argentina), Compite en ARG y disputa sus partidos en Ciudad de Buenos Aires.",
-      "description": "Ciudad B es un club de Buenos Aires (Argentina), Compite en ARG y disputa sus partidos en Ciudad de Buenos Aires.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Club Ciudad de Buenos Aires B es un club de hockey de Buenos Aires, Argentina. Es el equipo B del Club Ciudad de Buenos Aires. Juega en Ciudad de Buenos Aires y compite en la Metropolitano.",
+      "description": "Club Ciudad de Buenos Aires B es un club de hockey de Buenos Aires, Argentina. Es el equipo B del Club Ciudad de Buenos Aires. Juega en Ciudad de Buenos Aires y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Club_Ciudad_de_Buenos_Aires",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Club_Ciudad_de_Buenos_Aires",
+      "description_verified": true
     },
     {
       "id": "arg-mitre",
@@ -2096,9 +2255,12 @@
       "academy": 3,
       "nickname": "Mitre",
       "location_verified": true,
-      "history": "Club Mitre es un club de Olivos (Argentina), fundado en 1905. Compite en ARG y disputa sus partidos en Mitre Hockey.",
-      "description": "Club Mitre es un club de Olivos (Argentina), fundado en 1905. Compite en ARG y disputa sus partidos en Mitre Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Club Atlético Mitre es un club de hockey de Olivos, Argentina, fundado en 1905. Es un club de Buenos Aires con sección de hockey. Juega en Mitre Hockey y compite en la Metropolitano.",
+      "description": "Club Atlético Mitre es un club de hockey de Olivos, Argentina, fundado en 1905. Es un club de Buenos Aires con sección de hockey. Juega en Mitre Hockey y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Club_Atlético_Mitre",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Club_Atlético_Mitre",
+      "description_verified": true
     },
     {
       "id": "arg-geba",
@@ -2125,9 +2287,12 @@
       "academy": 4,
       "nickname": "GEBA",
       "location_verified": true,
-      "history": "GEBA es un club de Buenos Aires (Argentina), fundado en 1880. Compite en ARG y disputa sus partidos en GEBA Hockey.",
-      "description": "GEBA es un club de Buenos Aires (Argentina), fundado en 1880. Compite en ARG y disputa sus partidos en GEBA Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Gimnasia y Esgrima de Buenos Aires es un club de hockey de Buenos Aires, Argentina, fundado en 1880. Es el club Gimnasia y Esgrima de Buenos Aires. Juega en GEBA Hockey y compite en la Metropolitano.",
+      "description": "Gimnasia y Esgrima de Buenos Aires es un club de hockey de Buenos Aires, Argentina, fundado en 1880. Es el club Gimnasia y Esgrima de Buenos Aires. Juega en GEBA Hockey y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Gimnasia_y_Esgrima_de_Buenos_Aires",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Gimnasia_y_Esgrima_de_Buenos_Aires",
+      "description_verified": true
     },
     {
       "id": "arg-ducilo",
@@ -2154,9 +2319,12 @@
       "academy": 3,
       "nickname": "Ducilo",
       "location_verified": true,
-      "history": "Ducilo es un club de Berazategui (Argentina), fundado en 1910. Compite en ARG y disputa sus partidos en Ducilo Hockey.",
-      "description": "Ducilo es un club de Berazategui (Argentina), fundado en 1910. Compite en ARG y disputa sus partidos en Ducilo Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Club Ducilo es un club de hockey de Berazategui, Argentina, fundado en 1910. Es un club de Berazategui, en Buenos Aires. Juega en Ducilo Hockey y compite en la Metropolitano.",
+      "description": "Club Ducilo es un club de hockey de Berazategui, Argentina, fundado en 1910. Es un club de Berazategui, en Buenos Aires. Juega en Ducilo Hockey y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Club_Atlético_Ducilo",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Club_Atlético_Ducilo",
+      "description_verified": true
     },
     {
       "id": "arg-santa-barbara",
@@ -2183,9 +2351,12 @@
       "academy": 3,
       "nickname": "Santa",
       "location_verified": true,
-      "history": "Santa Bárbara es un club de Buenos Aires (Argentina), fundado en 1921. Compite en ARG y disputa sus partidos en Santa Bárbara Hockey.",
-      "description": "Santa Bárbara es un club de Buenos Aires (Argentina), fundado en 1921. Compite en ARG y disputa sus partidos en Santa Bárbara Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Club Santa Bárbara es un club de hockey de Buenos Aires, Argentina, fundado en 1921. Es un club de La Plata fundado en 1974. Juega en Santa Bárbara Hockey y compite en la Metropolitano.",
+      "description": "Club Santa Bárbara es un club de hockey de Buenos Aires, Argentina, fundado en 1921. Es un club de La Plata fundado en 1974. Juega en Santa Bárbara Hockey y compite en la Metropolitano.",
+      "source_url": "https://santabarbarahockeyclub.com/",
+      "source_type": "official",
+      "history_source": "https://santabarbarahockeyclub.com/",
+      "description_verified": true
     },
     {
       "id": "arg-sag-lomas",
@@ -2212,9 +2383,12 @@
       "academy": 3,
       "nickname": "SAG",
       "location_verified": true,
-      "history": "SAG Lomas es un club de Lomas de Zamora (Argentina), fundado en 1925. Compite en ARG y disputa sus partidos en SAG Lomas Hockey.",
-      "description": "SAG Lomas es un club de Lomas de Zamora (Argentina), fundado en 1925. Compite en ARG y disputa sus partidos en SAG Lomas Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Sociedad Alemana de Gimnasia de Lomas es un club de hockey de Lomas de Zamora, Argentina, fundado en 1925. Es la Sociedad Alemana de Gimnasia de Lomas de Zamora. Juega en SAG Lomas Hockey y compite en la Metropolitano.",
+      "description": "Sociedad Alemana de Gimnasia de Lomas es un club de hockey de Lomas de Zamora, Argentina, fundado en 1925. Es la Sociedad Alemana de Gimnasia de Lomas de Zamora. Juega en SAG Lomas Hockey y compite en la Metropolitano.",
+      "source_url": "http://sagab.com.ar/",
+      "source_type": "official",
+      "history_source": "http://sagab.com.ar/",
+      "description_verified": true
     },
     {
       "id": "arg-lomas-athletic",
@@ -2241,9 +2415,12 @@
       "academy": 3,
       "nickname": "Lomas",
       "location_verified": true,
-      "history": "Lomas Athletic Club es un club de Lomas de Zamora (Argentina), fundado en 1891. Compite en ARG y disputa sus partidos en Lomas Hockey.",
-      "description": "Lomas Athletic Club es un club de Lomas de Zamora (Argentina), fundado en 1891. Compite en ARG y disputa sus partidos en Lomas Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Lomas Athletic Club es un club de hockey de Lomas de Zamora, Argentina, fundado en 1891. Es un club de Lomas de Zamora, fundado en 1891. Juega en Lomas Hockey y compite en la Metropolitano.",
+      "description": "Lomas Athletic Club es un club de hockey de Lomas de Zamora, Argentina, fundado en 1891. Es un club de Lomas de Zamora, fundado en 1891. Juega en Lomas Hockey y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Lomas_Athletic_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Lomas_Athletic_Club",
+      "description_verified": true
     },
     {
       "id": "arg-universitario-la-plata",
@@ -2270,9 +2447,12 @@
       "academy": 3,
       "nickname": "Uni",
       "location_verified": true,
-      "history": "Universitario de La Plata es un club de La Plata (Argentina), fundado en 1905. Compite en ARG y disputa sus partidos en Universitario Hockey.",
-      "description": "Universitario de La Plata es un club de La Plata (Argentina), fundado en 1905. Compite en ARG y disputa sus partidos en Universitario Hockey.",
-      "source_url": "https://www.cahockey.org.ar/"
+      "history": "Club Universitario de La Plata es un club de hockey de La Plata, Argentina, fundado en 1905. Es un club de La Plata. Juega en Universitario Hockey y compite en la Metropolitano.",
+      "description": "Club Universitario de La Plata es un club de hockey de La Plata, Argentina, fundado en 1905. Es un club de La Plata. Juega en Universitario Hockey y compite en la Metropolitano.",
+      "source_url": "https://en.wikipedia.org/wiki/Club_Universitario_de_La_Plata",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Club_Universitario_de_La_Plata",
+      "description_verified": true
     },
     {
       "id": "ind-delhi-sg-pipers",
@@ -2299,9 +2479,12 @@
       "academy": 4,
       "nickname": "Pipers",
       "location_verified": true,
-      "history": "Delhi SG Pipers es un club de Nueva Delhi (India), fundado en 2024. Compite en IND y disputa sus partidos en Major Dhyan Chand Stadium.",
-      "description": "Delhi SG Pipers es un club de Nueva Delhi (India), fundado en 2024. Compite en IND y disputa sus partidos en Major Dhyan Chand Stadium.",
-      "source_url": "https://hockeyindialeague.com/"
+      "history": "Delhi SG Pipers es un club de hockey de Nueva Delhi, India, fundado en 2024. Es una franquicia de Delhi en la Hockey India League. Juega en Major Dhyan Chand Stadium y compite en la Hockey India League.",
+      "description": "Delhi SG Pipers es un club de hockey de Nueva Delhi, India, fundado en 2024. Es una franquicia de Delhi en la Hockey India League. Juega en Major Dhyan Chand Stadium y compite en la Hockey India League.",
+      "source_url": "https://en.wikipedia.org/wiki/Delhi_SG_Pipers",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Delhi_SG_Pipers",
+      "description_verified": true
     },
     {
       "id": "ind-hyderabad-toofans",
@@ -2328,9 +2511,12 @@
       "academy": 4,
       "nickname": "Toofans",
       "location_verified": true,
-      "history": "Hyderabad Toofans es un club de Hyderabad (India), fundado en 2024. Compite en IND y disputa sus partidos en Hyderabad Hockey Stadium.",
-      "description": "Hyderabad Toofans es un club de Hyderabad (India), fundado en 2024. Compite en IND y disputa sus partidos en Hyderabad Hockey Stadium.",
-      "source_url": "https://hockeyindialeague.com/"
+      "history": "Hyderabad Toofans es un club de hockey de Hyderabad, India, fundado en 2024. Es una franquicia de Hyderabad en la Hockey India League. Juega en Hyderabad Hockey Stadium y compite en la Hockey India League.",
+      "description": "Hyderabad Toofans es un club de hockey de Hyderabad, India, fundado en 2024. Es una franquicia de Hyderabad en la Hockey India League. Juega en Hyderabad Hockey Stadium y compite en la Hockey India League.",
+      "source_url": "https://en.wikipedia.org/wiki/Hyderabad_Toofans",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Hyderabad_Toofans",
+      "description_verified": true
     },
     {
       "id": "ind-kalinga-lancers",
@@ -2357,9 +2543,12 @@
       "academy": 4,
       "nickname": "Lancers",
       "location_verified": true,
-      "history": "Kalinga Lancers es un club de Bhubaneswar (India), fundado en 2013. Compite en IND y disputa sus partidos en Kalinga Stadium.",
-      "description": "Kalinga Lancers es un club de Bhubaneswar (India), fundado en 2013. Compite en IND y disputa sus partidos en Kalinga Stadium.",
-      "source_url": "https://hockeyindialeague.com/"
+      "history": "Vedanta Kalinga Lancers es un club de hockey de Bhubaneswar, India, fundado en 2013. Es una franquicia de Bhubaneswar en la Hockey India League. Juega en Kalinga Stadium y compite en la Hockey India League.",
+      "description": "Vedanta Kalinga Lancers es un club de hockey de Bhubaneswar, India, fundado en 2013. Es una franquicia de Bhubaneswar en la Hockey India League. Juega en Kalinga Stadium y compite en la Hockey India League.",
+      "source_url": "https://en.wikipedia.org/wiki/Kalinga_Lancers",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Kalinga_Lancers",
+      "description_verified": true
     },
     {
       "id": "ind-ranchi-royals",
@@ -2386,9 +2575,12 @@
       "academy": 4,
       "nickname": "Royals",
       "location_verified": true,
-      "history": "Ranchi Royals es un club de Ranchi (India), fundado en 2026. Compite en IND y disputa sus partidos en Birsa Munda Hockey Stadium.",
-      "description": "Ranchi Royals es un club de Ranchi (India), fundado en 2026. Compite en IND y disputa sus partidos en Birsa Munda Hockey Stadium.",
-      "source_url": "https://hockeyindialeague.com/"
+      "history": "Ranchi Royals es un club de hockey de Ranchi, India, fundado en 2026. Es una franquicia de Ranchi en la Hockey India League. Juega en Birsa Munda Hockey Stadium y compite en la Hockey India League.",
+      "description": "Ranchi Royals es un club de hockey de Ranchi, India, fundado en 2026. Es una franquicia de Ranchi en la Hockey India League. Juega en Birsa Munda Hockey Stadium y compite en la Hockey India League.",
+      "source_url": "https://en.wikipedia.org/wiki/Ranchi_Royals",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Ranchi_Royals",
+      "description_verified": true
     },
     {
       "id": "ind-rarh-bengal",
@@ -2415,9 +2607,12 @@
       "academy": 4,
       "nickname": "Tigers",
       "location_verified": true,
-      "history": "Shrachi Rarh Bengal Tigers es un club de Kolkata (India), fundado en 2024. Compite en IND y disputa sus partidos en Kolkata Hockey Stadium.",
-      "description": "Shrachi Rarh Bengal Tigers es un club de Kolkata (India), fundado en 2024. Compite en IND y disputa sus partidos en Kolkata Hockey Stadium.",
-      "source_url": "https://hockeyindialeague.com/"
+      "history": "Shrachi Rarh Bengal Tigers es un club de hockey de Kolkata, India, fundado en 2024. Es una franquicia de Bengala en la Hockey India League. Juega en Kolkata Hockey Stadium y compite en la Hockey India League.",
+      "description": "Shrachi Rarh Bengal Tigers es un club de hockey de Kolkata, India, fundado en 2024. Es una franquicia de Bengala en la Hockey India League. Juega en Kolkata Hockey Stadium y compite en la Hockey India League.",
+      "source_url": "https://en.wikipedia.org/wiki/Shrachi_Bengal_Tigers",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Shrachi_Bengal_Tigers",
+      "description_verified": true
     },
     {
       "id": "ind-soorma",
@@ -2444,9 +2639,12 @@
       "academy": 4,
       "nickname": "Soorma",
       "location_verified": true,
-      "history": "Soorma Hockey Club es un club de Mohali (India), fundado en 2024. Compite en IND y disputa sus partidos en Soorma Hockey Arena.",
-      "description": "Soorma Hockey Club es un club de Mohali (India), fundado en 2024. Compite en IND y disputa sus partidos en Soorma Hockey Arena.",
-      "source_url": "https://hockeyindialeague.com/"
+      "history": "Soorma Hockey Club es un club de hockey de Mohali, India, fundado en 2024. Es una franquicia de la Hockey India League. Juega en Soorma Hockey Arena y compite en la Hockey India League.",
+      "description": "Soorma Hockey Club es un club de hockey de Mohali, India, fundado en 2024. Es una franquicia de la Hockey India League. Juega en Soorma Hockey Arena y compite en la Hockey India League.",
+      "source_url": "https://en.wikipedia.org/wiki/Soorma_Hockey_Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Soorma_Hockey_Club",
+      "description_verified": true
     },
     {
       "id": "ind-tamil-nadu-dragons",
@@ -2473,9 +2671,12 @@
       "academy": 4,
       "nickname": "Dragons",
       "location_verified": true,
-      "history": "Tamil Nadu Dragons es un club de Chennai (India), fundado en 2024. Compite en IND y disputa sus partidos en Chennai Hockey Stadium.",
-      "description": "Tamil Nadu Dragons es un club de Chennai (India), fundado en 2024. Compite en IND y disputa sus partidos en Chennai Hockey Stadium.",
-      "source_url": "https://hockeyindialeague.com/"
+      "history": "Tamil Nadu Dragons es un club de hockey de Chennai, India, fundado en 2024. Es una franquicia de Tamil Nadu en la Hockey India League. Juega en Chennai Hockey Stadium y compite en la Hockey India League.",
+      "description": "Tamil Nadu Dragons es un club de hockey de Chennai, India, fundado en 2024. Es una franquicia de Tamil Nadu en la Hockey India League. Juega en Chennai Hockey Stadium y compite en la Hockey India League.",
+      "source_url": "https://en.wikipedia.org/wiki/Tamil_Nadu_Dragons",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Tamil_Nadu_Dragons",
+      "description_verified": true
     },
     {
       "id": "ind-hil-gc",
@@ -2502,9 +2703,12 @@
       "academy": 4,
       "nickname": "HIL GC",
       "location_verified": true,
-      "history": "HIL GC es un club de Nueva Delhi (India), fundado en 2026. Compite en IND y disputa sus partidos en Major Dhyan Chand National Stadium.",
-      "description": "HIL GC es un club de Nueva Delhi (India), fundado en 2026. Compite en IND y disputa sus partidos en Major Dhyan Chand National Stadium.",
-      "source_url": "https://hockeyindialeague.com/"
+      "history": "HIL Governing Council es un club de hockey de Nueva Delhi, India, fundado en 2026. Es el consejo rector de la Hockey India League. Juega en Major Dhyan Chand National Stadium y compite en la Hockey India League.",
+      "description": "HIL Governing Council es un club de hockey de Nueva Delhi, India, fundado en 2026. Es el consejo rector de la Hockey India League. Juega en Major Dhyan Chand National Stadium y compite en la Hockey India League.",
+      "source_url": "https://hockeyindialeague.com/",
+      "source_type": "official",
+      "history_source": "https://hockeyindialeague.com/",
+      "description_verified": true
     },
     {
       "id": "ger-berliner-hc",
@@ -2531,9 +2735,12 @@
       "academy": 4,
       "nickname": "BHC",
       "location_verified": true,
-      "history": "Berliner HC es un club de Berlín (Alemania), fundado en 1905. Compite en GER y disputa sus partidos en Berliner HC.",
-      "description": "Berliner HC es un club de Berlín (Alemania), fundado en 1905. Compite en GER y disputa sus partidos en Berliner HC.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Berliner Hockey-Club es un club de hockey de Berlín, Alemania, fundado en 1905. Es un club de Berlín con equipos en la Bundesliga. Juega en Berliner HC y compite en la Feldhockey-Bundesliga.",
+      "description": "Berliner Hockey-Club es un club de hockey de Berlín, Alemania, fundado en 1905. Es un club de Berlín con equipos en la Bundesliga. Juega en Berliner HC y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://en.wikipedia.org/wiki/Berliner_Hockey-Club",
+      "source_type": "wikipedia",
+      "history_source": "https://en.wikipedia.org/wiki/Berliner_Hockey-Club",
+      "description_verified": true
     },
     {
       "id": "ger-dsd-duesseldorf",
@@ -2560,9 +2767,12 @@
       "academy": 3,
       "nickname": "DSD",
       "location_verified": true,
-      "history": "DSD Düsseldorf es un club de Düsseldorf (Alemania), fundado en 1898. Compite en GER y disputa sus partidos en DSD Düsseldorf.",
-      "description": "DSD Düsseldorf es un club de Düsseldorf (Alemania), fundado en 1898. Compite en GER y disputa sus partidos en DSD Düsseldorf.",
-      "source_url": "https://www.hockeybundesliga.de/"
+      "history": "Deutscher Sportklub Düsseldorf es un club de hockey de Düsseldorf, Alemania, fundado en 1898. Es un club de Düsseldorf con una larga historia deportiva. Juega en DSD Düsseldorf y compite en la Feldhockey-Bundesliga.",
+      "description": "Deutscher Sportklub Düsseldorf es un club de hockey de Düsseldorf, Alemania, fundado en 1898. Es un club de Düsseldorf con una larga historia deportiva. Juega en DSD Düsseldorf y compite en la Feldhockey-Bundesliga.",
+      "source_url": "https://dsd-online.de/hockey/",
+      "source_type": "official",
+      "history_source": "https://dsd-online.de/hockey/",
+      "description_verified": true
     }
   ]
 }
