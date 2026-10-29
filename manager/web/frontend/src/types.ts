@@ -1432,3 +1432,86 @@ export interface BoardData {
   requests: BoardRequestOption[]
   history: BoardHistoryEntry[]
 }
+
+export interface LoanTarget {
+  id: string
+  name: string
+  age: number
+  position_group: string
+  subposition: string
+  overall: number
+  potential: number
+  team_id: string
+  team_name: string
+  league: string
+  league_name: string
+  salary: number
+  value: number
+  loan_fee: number
+  wage_share_options: number[]
+  playing_time_options: Array<{ id: string; label: string }>
+  is_key: boolean
+}
+
+export interface LoanOutgoing extends LoanTarget {
+  interested_clubs: Array<{
+    id: string
+    name: string
+    league: string
+    league_name: string
+    squad_size: number
+  }>
+}
+
+export interface ActiveLoan {
+  id: string
+  player_id: string
+  player_name: string
+  parent_club_id: string
+  parent_club_name: string
+  loan_club_id: string
+  loan_club_name: string
+  start_date: string
+  end_date: string
+  wage_share: number
+  playing_time: string
+  playing_time_label: string
+  fee: number
+  incoming: boolean
+  is_incoming: boolean
+  player_overall: number | null
+  player_position: string
+  player_age: number | null
+  apps: number
+  goals: number
+  assists: number
+}
+
+export interface LoanHistoryEntry {
+  date: string
+  player_id: string
+  player_name: string
+  parent_club_id: string
+  parent_club_name: string
+  loan_club_id: string
+  loan_club_name: string
+  wage_share: number
+  playing_time: string
+  fee: number
+  accepted: boolean
+  chance: number
+  direction: 'in' | 'out'
+  message: string
+  returned_on?: string
+}
+
+export interface LoansData {
+  window: string
+  window_text: string
+  squad_size: number
+  targets: LoanTarget[]
+  outgoing: LoanOutgoing[]
+  active: ActiveLoan[]
+  history: LoanHistoryEntry[]
+  playing_times: Array<{ id: string; label: string }>
+}

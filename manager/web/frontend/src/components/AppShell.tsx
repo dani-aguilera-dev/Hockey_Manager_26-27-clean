@@ -17,6 +17,7 @@ import {
   Menu,
   MessageSquare,
   Newspaper,
+  Repeat,
   Save,
   Settings,
   Shield,
@@ -56,6 +57,7 @@ const competitionLinks = [
 
 const clubLinks = [
   { to: '/game/market', label: 'Mercado', icon: ArrowLeftRight },
+  { to: '/game/loans', label: 'Cesiones', icon: Repeat },
   { to: '/game/commercial', label: 'Comercial y marca', icon: Building2 },
   { to: '/game/staff', label: 'Staff', icon: Users },
   { to: '/game/board', label: 'Junta y visión', icon: Landmark },

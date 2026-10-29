@@ -52,6 +52,7 @@ from src.brands import (
     reject_player_brand_offer,
 )
 from src.board import board_overview, request_board
+from src.loans import loan_overview, offer_loan_out, request_loan_in
 from src.player_editor import edit_player, editor_payload, find_player
 from src.international import club_catalog, international_cities, load_all_teams
 from src.logistics import travel_options
@@ -1721,6 +1722,51 @@ def market_renew_player(player_id):
 # ---------------------------------------------------------------------------
 # staff / youth
 # ---------------------------------------------------------------------------
+
+
+@api.get("/loans")
+def loans():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(loan_overview(state))
+
+
+@api.post("/loans/in")
+def loan_in():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = request_loan_in(
+        state,
+        str(payload.get("player_id", "")),
+        int(payload.get("wage_share", 50) or 50),
+        str(payload.get("playing_time", "rotacion") or "rotacion"),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo cerrar la cesión."), 409, "loan_in_failed")
+    _save(state)
+    return _ok({"result": result, "loans": loan_overview(state), "state": _state_payload(state)}, result.get("message", ""))
+
+
+@api.post("/loans/out")
+def loan_out():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = offer_loan_out(
+        state,
+        str(payload.get("player_id", "")),
+        str(payload.get("club_id", "")),
+        int(payload.get("wage_share", 50) or 50),
+        str(payload.get("playing_time", "rotacion") or "rotacion"),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo ofrecer la cesión."), 409, "loan_out_failed")
+    _save(state)
+    return _ok({"result": result, "loans": loan_overview(state), "state": _state_payload(state)}, result.get("message", ""))
 
 
 @api.get("/staff")

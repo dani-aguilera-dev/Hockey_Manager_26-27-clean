@@ -212,6 +212,7 @@ class PlayerState:
     transfer_listed: bool = False
     transfer_asking_price: int = 0
     brand_deal: dict[str, Any] = field(default_factory=dict)
+    loan: dict[str, Any] = field(default_factory=dict)
 
     @property
     def youth_category(self) -> str:
@@ -771,6 +772,8 @@ class GameState:
     event_history: list[dict[str, Any]] = field(default_factory=list)
     event_flags: dict[str, Any] = field(default_factory=dict)
     negotiations: list[dict[str, Any]] = field(default_factory=list)
+    loans: list[dict[str, Any]] = field(default_factory=list)
+    loan_history: list[dict[str, Any]] = field(default_factory=list)
 
     @property
     def total_rounds(self) -> int:
@@ -884,6 +887,8 @@ class GameState:
             "event_history": self.event_history,
             "event_flags": self.event_flags,
             "negotiations": self.negotiations,
+            "loans": self.loans,
+            "loan_history": self.loan_history,
         }
 
     @classmethod
@@ -951,6 +956,8 @@ class GameState:
             event_history=d.get("event_history", []),
             event_flags=d.get("event_flags", {}),
             negotiations=d.get("negotiations", []),
+            loans=d.get("loans", []),
+            loan_history=d.get("loan_history", []),
         )
         if state.league_fixtures.get(state.competition):
             # Los partidos de Copa y de la fase de ascenso viven en

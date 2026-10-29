@@ -9,6 +9,7 @@ import Options from './pages/Options'
 import Dashboard from './pages/Dashboard'
 import CalendarPage from './pages/Calendar'
 import BoardPage from './pages/Board'
+import LoansPage from './pages/Loans'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -69,6 +70,7 @@ export default function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="calendar" element={<CalendarPage />} />
         <Route path="board" element={<BoardPage />} />
+        <Route path="loans" element={<LoansPage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />

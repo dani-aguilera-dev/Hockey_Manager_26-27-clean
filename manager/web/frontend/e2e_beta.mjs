@@ -102,6 +102,16 @@ try {
   result.boardRequest = true
   await page.screenshot({ path: '/tmp/opencode/e2e_board.png', fullPage: true })
 
+  await page.goto('/app/game/loans')
+  await page.getByRole('heading', { name: 'Cesiones y préstamos' }).waitFor()
+  await page.getByText('CESIONES ENTRANTES', { exact: true }).waitFor()
+  const loanButton = page.locator('[data-testid^="loan-in-"]').first()
+  await loanButton.waitFor()
+  await loanButton.click()
+  await page.locator('.loan-history-row').first().waitFor()
+  result.loans = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_loans.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

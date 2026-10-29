@@ -255,3 +255,26 @@ def test_api_board_overview_and_request(client):
     assert payload["board"]["history"]
     assert payload["board"]["history"][0]["request_id"] == "training"
     assert payload["state"]["team"]["name"]
+
+
+def test_api_loans_in_and_active_list(client):
+    _new_api(client, seed="40")
+    loans = client.get("/api/loans")
+    assert loans.status_code == 200, loans.get_data(as_text=True)
+    data = loans.get_json()["data"]
+    assert data["targets"] and data["outgoing"]
+    accepted = None
+    for target in data["targets"][:10]:
+        response = client.post(
+            "/api/loans/in",
+            json={"player_id": target["id"], "wage_share": 100, "playing_time": "titular"},
+        )
+        assert response.status_code == 200, response.get_data(as_text=True)
+        payload = response.get_json()["data"]
+        if payload["result"]["accepted"]:
+            accepted = payload
+            break
+    assert accepted is not None, "Al menos una cesión debe aceptarse en la ventana de prueba"
+    assert accepted["loans"]["active"]
+    assert accepted["loans"]["active"][0]["is_incoming"] is True
+    assert accepted["loans"]["history"]
