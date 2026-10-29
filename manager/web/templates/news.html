@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Noticias{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between;align-items:end">
+  <div><h1>Actualidad</h1><p class="muted">Noticias generadas desde la temporada, el mercado, la enfermería y la junta.</p></div>
+  <div class="match-crest">{{ m.crest(team, 'crest-lg') }}<b>{{ team.name }}</b></div>
+</div>
+{% if news %}
+{% set lead = news[0] %}
+<div class="card feature-news">
+  <div class="feature-media {{ 'duo' if lead.crest_id2 else '' }}">{% if lead.crest_id %}<img src="{{ crest_src(lead.crest_id) }}" alt="">{% if lead.crest_id2 %}<img src="{{ crest_src(lead.crest_id2) }}" alt="">{% endif %}{% elif lead.photo %}<img class="face" src="{{ url_for('player_photo', filename=lead.photo) }}" alt="">{% endif %}</div>
+  <div class="feature-body">
+    <div class="cat">{{ lead.category }} · {{ lead.date|fdate }}</div>
+    <h1>{{ lead.headline }}</h1>
+    <p>{{ lead.body }}</p>
+  </div>
+</div>
+<div class="grid news-grid">
+{% for n in news[1:] %}
+<div class="card news-card {{ 'hot' if n.hot else '' }}">
+  <div class="news-head">
+    {% if n.crest_id or n.photo %}<div class="news-thumb">{% if n.crest_id %}<img src="{{ crest_src(n.crest_id) }}" alt="">{% else %}<img class="face" src="{{ url_for('player_photo', filename=n.photo) }}" alt="">{% endif %}</div>{% endif %}
+    <div><div class="cat">{{ n.category }} · {{ n.date|fdate }}</div><h2>{{ n.headline }}</h2></div>
+  </div>
+  <p>{{ n.body }}</p>
+</div>
+{% endfor %}
+</div>
+{% endif %}
+{% if daily_events %}
+<div class="card" style="margin-top:14px"><h2>Diario del club</h2>
+{% for e in daily_events %}<div class="news-card"><div class="cat">{{ e.category }} · {{ e.date|fdate }}{% if e.league %} · {{ e.league }}{% endif %}</div><h3>{{ e.headline }}</h3><p>{{ e.body }}</p></div>{% endfor %}
+</div>
+{% endif %}
+{% endblock %}

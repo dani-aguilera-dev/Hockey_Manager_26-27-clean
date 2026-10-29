@@ -1,0 +1,2288 @@
+{
+  "leagues": {
+    "NED": {
+      "name": "Tulp Hoofdklasse Heren",
+      "short_name": "Hoofdklasse",
+      "country": "Países Bajos",
+      "country_code": "NL",
+      "confederation": "EHF",
+      "standard": 84.0,
+      "start_date": "2026-09-27",
+      "teams": 12,
+      "format": "double_round_robin",
+      "playoffs": 4,
+      "relegation": 2,
+      "source": "hockey.nl / KNHB y webs oficiales de club",
+      "data_quality": "clubes, plantillas, fotos y escudos reales 2026-27 (HDM: base 2025-26; Schaerweijde: altas públicas)"
+    },
+    "BEL": {
+      "name": "Men's Belgian Hockey League",
+      "short_name": "Belgian League",
+      "country": "Bélgica",
+      "country_code": "BE",
+      "confederation": "EHF",
+      "standard": 82.0,
+      "start_date": "2026-09-05",
+      "teams": 12,
+      "format": "double_round_robin",
+      "playoffs": 4,
+      "relegation": 2,
+      "source": "carlsberg00hockeyleague.be / RBHA",
+      "data_quality": "clubes, plantillas, fotos y escudos reales 2026-27"
+    },
+    "GER": {
+      "name": "1. Feldhockey Bundesliga Herren",
+      "short_name": "Bundesliga",
+      "country": "Alemania",
+      "country_code": "DE",
+      "confederation": "EHF",
+      "standard": 81.0,
+      "start_date": "2026-09-05",
+      "teams": 12,
+      "format": "double_round_robin",
+      "playoffs": 4,
+      "relegation": 2,
+      "source": "hockey.de / hockeybundesliga.de",
+      "data_quality": "clubes, plantillas, fotos y escudos reales 2026-27"
+    },
+    "ENG": {
+      "name": "England Hockey Premier Division",
+      "short_name": "Premier Division",
+      "country": "Inglaterra",
+      "country_code": "GB",
+      "confederation": "EHF",
+      "standard": 79.0,
+      "start_date": "2026-09-19",
+      "teams": 12,
+      "format": "double_round_robin",
+      "playoffs": 4,
+      "relegation": 2,
+      "source": "England Hockey GMS / England Hockey League",
+      "data_quality": "clubes y plantillas reales 2026-27; posiciones estimadas cuando la fuente no publica posición individual"
+    },
+    "ARG": {
+      "name": "Torneo Metropolitano Masculino",
+      "short_name": "Metropolitano",
+      "country": "Argentina",
+      "country_code": "AR",
+      "confederation": "PAHF",
+      "standard": 77.0,
+      "start_date": "2026-08-01",
+      "teams": 14,
+      "format": "double_round_robin",
+      "playoffs": 6,
+      "relegation": 0,
+      "source": "AAHBA TournamentTracker / planillas oficiales",
+      "data_quality": "clubes y plantillas reales 2026 (planillas AHBA); posiciones estimadas"
+    },
+    "IND": {
+      "name": "Hockey India League",
+      "short_name": "HIL",
+      "country": "India",
+      "country_code": "IN",
+      "confederation": "AHF",
+      "standard": 76.0,
+      "start_date": "2027-01-01",
+      "teams": 8,
+      "format": "double_round_robin",
+      "playoffs": 4,
+      "relegation": 0,
+      "source": "hockeyindialeague.com",
+      "data_quality": "franquicias, plantillas, fotos y escudos reales 2026-27"
+    }
+  },
+  "cities": [
+    {
+      "name": "Amstelveen",
+      "country": "Países Bajos",
+      "lat": 52.311,
+      "lon": 4.87,
+      "airport": "AMS",
+      "train": "Sí"
+    },
+    {
+      "name": "Bloemendaal",
+      "country": "Países Bajos",
+      "lat": 52.402,
+      "lon": 4.622,
+      "airport": "AMS",
+      "train": "Sí"
+    },
+    {
+      "name": "'s-Hertogenbosch",
+      "country": "Países Bajos",
+      "lat": 51.697,
+      "lon": 5.303,
+      "airport": "AMS",
+      "train": "Sí"
+    },
+    {
+      "name": "La Haya",
+      "country": "Países Bajos",
+      "lat": 52.08,
+      "lon": 4.31,
+      "airport": "AMS",
+      "train": "Sí"
+    },
+    {
+      "name": "Utrecht",
+      "country": "Países Bajos",
+      "lat": 52.091,
+      "lon": 5.122,
+      "airport": "AMS",
+      "train": "Sí"
+    },
+    {
+      "name": "Laren",
+      "country": "Países Bajos",
+      "lat": 52.256,
+      "lon": 5.227,
+      "airport": "AMS",
+      "train": "Sí"
+    },
+    {
+      "name": "Eindhoven",
+      "country": "Países Bajos",
+      "lat": 51.441,
+      "lon": 5.469,
+      "airport": "EIN",
+      "train": "Sí"
+    },
+    {
+      "name": "Rotterdam",
+      "country": "Países Bajos",
+      "lat": 51.924,
+      "lon": 4.477,
+      "airport": "RTM",
+      "train": "Sí"
+    },
+    {
+      "name": "Zeist",
+      "country": "Países Bajos",
+      "lat": 52.09,
+      "lon": 5.233,
+      "airport": "AMS",
+      "train": "Sí"
+    },
+    {
+      "name": "Kontich",
+      "country": "Bélgica",
+      "lat": 51.132,
+      "lon": 4.447,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Boom",
+      "country": "Bélgica",
+      "lat": 51.087,
+      "lon": 4.366,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Molenbeek-Saint-Jean",
+      "country": "Bélgica",
+      "lat": 50.854,
+      "lon": 4.326,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Brasschaat",
+      "country": "Bélgica",
+      "lat": 51.291,
+      "lon": 4.492,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Gante",
+      "country": "Bélgica",
+      "lat": 51.054,
+      "lon": 3.717,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Lier",
+      "country": "Bélgica",
+      "lat": 51.131,
+      "lon": 4.57,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Uccle",
+      "country": "Bélgica",
+      "lat": 50.801,
+      "lon": 4.339,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Namur",
+      "country": "Bélgica",
+      "lat": 50.467,
+      "lon": 4.872,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Woluwe-Saint-Pierre",
+      "country": "Bélgica",
+      "lat": 50.833,
+      "lon": 4.433,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Waterloo",
+      "country": "Bélgica",
+      "lat": 50.717,
+      "lon": 4.399,
+      "airport": "BRU",
+      "train": "Sí"
+    },
+    {
+      "name": "Hamburgo",
+      "country": "Alemania",
+      "lat": 53.551,
+      "lon": 9.993,
+      "airport": "HAM",
+      "train": "Sí"
+    },
+    {
+      "name": "Colonia",
+      "country": "Alemania",
+      "lat": 50.938,
+      "lon": 6.96,
+      "airport": "CGN",
+      "train": "Sí"
+    },
+    {
+      "name": "Mannheim",
+      "country": "Alemania",
+      "lat": 49.487,
+      "lon": 8.466,
+      "airport": "FRA",
+      "train": "Sí"
+    },
+    {
+      "name": "Mülheim",
+      "country": "Alemania",
+      "lat": 51.432,
+      "lon": 6.879,
+      "airport": "DUS",
+      "train": "Sí"
+    },
+    {
+      "name": "Krefeld",
+      "country": "Alemania",
+      "lat": 51.339,
+      "lon": 6.586,
+      "airport": "DUS",
+      "train": "Sí"
+    },
+    {
+      "name": "Múnich",
+      "country": "Alemania",
+      "lat": 48.135,
+      "lon": 11.582,
+      "airport": "MUC",
+      "train": "Sí"
+    },
+    {
+      "name": "Mönchengladbach",
+      "country": "Alemania",
+      "lat": 51.18,
+      "lon": 6.442,
+      "airport": "DUS",
+      "train": "Sí"
+    },
+    {
+      "name": "Fráncfort",
+      "country": "Alemania",
+      "lat": 50.11,
+      "lon": 8.682,
+      "airport": "FRA",
+      "train": "Sí"
+    },
+    {
+      "name": "Beeston",
+      "country": "Inglaterra",
+      "lat": 52.927,
+      "lon": -1.216,
+      "airport": "EMA",
+      "train": "Sí"
+    },
+    {
+      "name": "Exeter",
+      "country": "Inglaterra",
+      "lat": 50.718,
+      "lon": -3.533,
+      "airport": "EXT",
+      "train": "Sí"
+    },
+    {
+      "name": "Cardiff",
+      "country": "Inglaterra",
+      "lat": 51.481,
+      "lon": -3.179,
+      "airport": "CWL",
+      "train": "Sí"
+    },
+    {
+      "name": "East Grinstead",
+      "country": "Inglaterra",
+      "lat": 51.128,
+      "lon": -0.015,
+      "airport": "LGW",
+      "train": "Sí"
+    },
+    {
+      "name": "Londres",
+      "country": "Inglaterra",
+      "lat": 51.507,
+      "lon": -0.128,
+      "airport": "LHR",
+      "train": "Sí"
+    },
+    {
+      "name": "Rochester",
+      "country": "Inglaterra",
+      "lat": 51.388,
+      "lon": 0.507,
+      "airport": "LGW",
+      "train": "Sí"
+    },
+    {
+      "name": "Addlestone",
+      "country": "Inglaterra",
+      "lat": 51.371,
+      "lon": -0.49,
+      "airport": "LHR",
+      "train": "Sí"
+    },
+    {
+      "name": "Oxted",
+      "country": "Inglaterra",
+      "lat": 51.258,
+      "lon": -0.006,
+      "airport": "LGW",
+      "train": "Sí"
+    },
+    {
+      "name": "Reading",
+      "country": "Inglaterra",
+      "lat": 51.454,
+      "lon": -0.978,
+      "airport": "LHR",
+      "train": "Sí"
+    },
+    {
+      "name": "Long Ditton",
+      "country": "Inglaterra",
+      "lat": 51.385,
+      "lon": -0.321,
+      "airport": "LHR",
+      "train": "Sí"
+    },
+    {
+      "name": "Buenos Aires",
+      "country": "Argentina",
+      "lat": -34.603,
+      "lon": -58.381,
+      "airport": "EZE",
+      "train": "Sí"
+    },
+    {
+      "name": "San Fernando",
+      "country": "Argentina",
+      "lat": -34.441,
+      "lon": -58.558,
+      "airport": "EZE",
+      "train": "Sí"
+    },
+    {
+      "name": "Olivos",
+      "country": "Argentina",
+      "lat": -34.511,
+      "lon": -58.491,
+      "airport": "EZE",
+      "train": "Sí"
+    },
+    {
+      "name": "Berazategui",
+      "country": "Argentina",
+      "lat": -34.766,
+      "lon": -58.213,
+      "airport": "EZE",
+      "train": "Sí"
+    },
+    {
+      "name": "Lomas de Zamora",
+      "country": "Argentina",
+      "lat": -34.759,
+      "lon": -58.403,
+      "airport": "EZE",
+      "train": "Sí"
+    },
+    {
+      "name": "La Plata",
+      "country": "Argentina",
+      "lat": -34.921,
+      "lon": -57.954,
+      "airport": "EZE",
+      "train": "Sí"
+    },
+    {
+      "name": "Nueva Delhi",
+      "country": "India",
+      "lat": 28.614,
+      "lon": 77.209,
+      "airport": "DEL",
+      "train": "Sí"
+    },
+    {
+      "name": "Hyderabad",
+      "country": "India",
+      "lat": 17.385,
+      "lon": 78.486,
+      "airport": "HYD",
+      "train": "Sí"
+    },
+    {
+      "name": "Bhubaneswar",
+      "country": "India",
+      "lat": 20.296,
+      "lon": 85.824,
+      "airport": "BBI",
+      "train": "Sí"
+    },
+    {
+      "name": "Ranchi",
+      "country": "India",
+      "lat": 23.344,
+      "lon": 85.309,
+      "airport": "IXR",
+      "train": "Sí"
+    },
+    {
+      "name": "Kolkata",
+      "country": "India",
+      "lat": 22.573,
+      "lon": 88.364,
+      "airport": "CCU",
+      "train": "Sí"
+    },
+    {
+      "name": "Mohali",
+      "country": "India",
+      "lat": 30.704,
+      "lon": 76.717,
+      "airport": "IXC",
+      "train": "Sí"
+    },
+    {
+      "name": "Chennai",
+      "country": "India",
+      "lat": 13.083,
+      "lon": 80.27,
+      "airport": "MAA",
+      "train": "Sí"
+    },
+    {
+      "name": "Lucknow",
+      "country": "India",
+      "lat": 26.846,
+      "lon": 80.946,
+      "airport": "LKO",
+      "train": "Sí"
+    },
+    {
+      "name": "Bilthoven",
+      "country": "Países Bajos",
+      "lat": 52.13,
+      "lon": 5.205,
+      "airport": "AMS",
+      "train": "Sí"
+    },
+    {
+      "name": "Tilburg",
+      "country": "Países Bajos",
+      "lat": 51.56,
+      "lon": 5.091,
+      "airport": "EIN",
+      "train": "Sí"
+    },
+    {
+      "name": "Berlín",
+      "country": "Alemania",
+      "lat": 52.52,
+      "lon": 13.405,
+      "airport": "BER",
+      "train": "Sí"
+    },
+    {
+      "name": "Düsseldorf",
+      "country": "Alemania",
+      "lat": 51.228,
+      "lon": 6.773,
+      "airport": "DUS",
+      "train": "Sí"
+    }
+  ],
+  "clubs": [
+    {
+      "id": "ned-amsterdam",
+      "name": "Amsterdam H&BC",
+      "full_name": "Amsterdamsche Hockey & Bandy Club",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "Amstelveen",
+      "stadium": {
+        "name": "Wagener Stadium",
+        "capacity": 5000
+      },
+      "colors": [
+        "rojo",
+        "blanco"
+      ],
+      "founded": 1892,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 450000,
+        "wage_budget": 950000
+      },
+      "academy": 5,
+      "nickname": "Amsterdam"
+    },
+    {
+      "id": "ned-bloemendaal",
+      "name": "HC Bloemendaal",
+      "full_name": "Hockey Club Bloemendaal",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "Bloemendaal",
+      "stadium": {
+        "name": "Sportpark 't Kopje",
+        "capacity": 4000
+      },
+      "colors": [
+        "naranja",
+        "negro"
+      ],
+      "founded": 1895,
+      "expectation": "Final Four y pelear el título",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 400000,
+        "wage_budget": 900000
+      },
+      "academy": 5,
+      "nickname": "Bloemendaal"
+    },
+    {
+      "id": "ned-den-bosch",
+      "name": "HC Den Bosch",
+      "full_name": "Hockey Club 's-Hertogenbosch",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "'s-Hertogenbosch",
+      "stadium": {
+        "name": "Sportpark Oosterplas",
+        "capacity": 3000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1907,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 350000,
+        "wage_budget": 800000
+      },
+      "academy": 4,
+      "nickname": "Den Bosch"
+    },
+    {
+      "id": "ned-hdm",
+      "name": "HDM",
+      "full_name": "Hockeyclub De Middenstand",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "La Haya",
+      "stadium": {
+        "name": "Sportpark Duinzigt",
+        "capacity": 2500
+      },
+      "colors": [
+        "verde",
+        "blanco"
+      ],
+      "founded": 1908,
+      "expectation": "Consolidarse en la zona media",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 200000,
+        "wage_budget": 550000
+      },
+      "academy": 4,
+      "nickname": "HDM"
+    },
+    {
+      "id": "ned-kampong",
+      "name": "SV Kampong",
+      "full_name": "Sportvereniging Kampong",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "Utrecht",
+      "stadium": {
+        "name": "De Klapperboom",
+        "capacity": 3500
+      },
+      "colors": [
+        "rojo",
+        "blanco"
+      ],
+      "founded": 1902,
+      "expectation": "Final Four",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 380000,
+        "wage_budget": 850000
+      },
+      "academy": 5,
+      "nickname": "Kampong"
+    },
+    {
+      "id": "ned-klein-zwitserland",
+      "name": "Klein Zwitserland",
+      "full_name": "Hockeyclub Klein Zwitserland",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "La Haya",
+      "stadium": {
+        "name": "Sportpark Klein Zwitserland",
+        "capacity": 2200
+      },
+      "colors": [
+        "azul",
+        "amarillo"
+      ],
+      "founded": 1908,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 220000,
+        "wage_budget": 600000
+      },
+      "academy": 4,
+      "nickname": "KZ"
+    },
+    {
+      "id": "ned-oranje-rood",
+      "name": "HC Oranje-Rood",
+      "full_name": "Hockey Club Oranje-Rood",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "Eindhoven",
+      "stadium": {
+        "name": "Sportpark Aalsterweg",
+        "capacity": 3000
+      },
+      "colors": [
+        "naranja",
+        "rojo"
+      ],
+      "founded": 2012,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 300000,
+        "wage_budget": 700000
+      },
+      "academy": 4,
+      "nickname": "Oranje-Rood"
+    },
+    {
+      "id": "ned-pinoke",
+      "name": "HC Pinoké",
+      "full_name": "Hockey Club Pinoké",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "Amstelveen",
+      "stadium": {
+        "name": "Amsterdamse Bos",
+        "capacity": 2200
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1930,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 280000,
+        "wage_budget": 680000
+      },
+      "academy": 4,
+      "nickname": "Pinoké"
+    },
+    {
+      "id": "ned-rotterdam",
+      "name": "HC Rotterdam",
+      "full_name": "Hockey Club Rotterdam",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "Rotterdam",
+      "stadium": {
+        "name": "Hazelaarweg Stadion",
+        "capacity": 3500
+      },
+      "colors": [
+        "verde",
+        "blanco"
+      ],
+      "founded": 1925,
+      "expectation": "Final Four",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 360000,
+        "wage_budget": 800000
+      },
+      "academy": 4,
+      "nickname": "Rotterdam"
+    },
+    {
+      "id": "ned-schaerweijde",
+      "name": "HC Schaerweijde",
+      "full_name": "Hockey Club Schaerweijde",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "Zeist",
+      "stadium": {
+        "name": "Sportpark Krakelingsweg",
+        "capacity": 1800
+      },
+      "colors": [
+        "amarillo",
+        "negro"
+      ],
+      "founded": 1903,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 100000,
+        "wage_budget": 380000
+      },
+      "academy": 3,
+      "nickname": "Schaerweijde"
+    },
+    {
+      "id": "ned-schc",
+      "name": "SCHC",
+      "full_name": "Stichtse Cricket en Hockey Club",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "Bilthoven",
+      "stadium": {
+        "name": "Sportpark Kees Boekelaan",
+        "capacity": 2500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1901,
+      "expectation": "Consolidarse en la zona media",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 240000,
+        "wage_budget": 650000
+      },
+      "academy": 4,
+      "nickname": "SCHC"
+    },
+    {
+      "id": "ned-tilburg",
+      "name": "HC Tilburg",
+      "full_name": "Hockey Club Tilburg",
+      "league": "NED",
+      "country": "Países Bajos",
+      "city": "Tilburg",
+      "stadium": {
+        "name": "Sportpark Oude Warande",
+        "capacity": 2000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1929,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 120000,
+        "wage_budget": 400000
+      },
+      "academy": 3,
+      "nickname": "Tilburg"
+    },
+    {
+      "id": "bel-beerschot",
+      "name": "Royal Beerschot THC",
+      "full_name": "Royal Beerschot Tennis & Hockey Club",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Kontich",
+      "stadium": {
+        "name": "Beerschot Hockey",
+        "capacity": 2500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1899,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 260000,
+        "wage_budget": 650000
+      },
+      "academy": 4,
+      "nickname": "Beerschot"
+    },
+    {
+      "id": "bel-braxgata",
+      "name": "Braxgata HC",
+      "full_name": "Braxgata Hockey Club",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Boom",
+      "stadium": {
+        "name": "Braxgata",
+        "capacity": 2500
+      },
+      "colors": [
+        "rojo",
+        "blanco"
+      ],
+      "founded": 1923,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 300000,
+        "wage_budget": 700000
+      },
+      "academy": 4,
+      "nickname": "Braxgata"
+    },
+    {
+      "id": "bel-daring",
+      "name": "Royal Daring THC",
+      "full_name": "Royal Daring Hockey Club",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Molenbeek-Saint-Jean",
+      "stadium": {
+        "name": "Daring Hockey",
+        "capacity": 2000
+      },
+      "colors": [
+        "rojo",
+        "negro"
+      ],
+      "founded": 1920,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 220000,
+        "wage_budget": 580000
+      },
+      "academy": 4,
+      "nickname": "Daring"
+    },
+    {
+      "id": "bel-dragons",
+      "name": "KHC Dragons",
+      "full_name": "Koninklijke Hockey Club Dragons",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Brasschaat",
+      "stadium": {
+        "name": "Dragons Hockey",
+        "capacity": 3000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1943,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 500000,
+        "wage_budget": 950000
+      },
+      "academy": 5,
+      "nickname": "Dragons"
+    },
+    {
+      "id": "bel-gantoise",
+      "name": "La Gantoise HC",
+      "full_name": "La Gantoise Hockey Club",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Gante",
+      "stadium": {
+        "name": "La Gantoise",
+        "capacity": 3000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1919,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 480000,
+        "wage_budget": 920000
+      },
+      "academy": 4,
+      "nickname": "Gantoise"
+    },
+    {
+      "id": "bel-herakles",
+      "name": "Royal Herakles HC",
+      "full_name": "Royal Herakles Hockey Club",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Lier",
+      "stadium": {
+        "name": "Herakles Hockey",
+        "capacity": 2000
+      },
+      "colors": [
+        "verde",
+        "blanco"
+      ],
+      "founded": 1919,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 230000,
+        "wage_budget": 600000
+      },
+      "academy": 4,
+      "nickname": "Herakles"
+    },
+    {
+      "id": "bel-leopold",
+      "name": "Royal Léopold Club",
+      "full_name": "Royal Léopold Club",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Uccle",
+      "stadium": {
+        "name": "Léopold Hockey",
+        "capacity": 2500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1893,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 400000,
+        "wage_budget": 850000
+      },
+      "academy": 4,
+      "nickname": "Léopold"
+    },
+    {
+      "id": "bel-namur",
+      "name": "Royal HC Namur",
+      "full_name": "Royal Hockey Club Namur",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Namur",
+      "stadium": {
+        "name": "Hockey Namur",
+        "capacity": 1500
+      },
+      "colors": [
+        "amarillo",
+        "negro"
+      ],
+      "founded": 1922,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 100000,
+        "wage_budget": 350000
+      },
+      "academy": 3,
+      "nickname": "Namur"
+    },
+    {
+      "id": "bel-oree",
+      "name": "Royal Orée THC",
+      "full_name": "Royal Orée Tennis Hockey Club",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Woluwe-Saint-Pierre",
+      "stadium": {
+        "name": "Orée Hockey",
+        "capacity": 2200
+      },
+      "colors": [
+        "verde",
+        "blanco"
+      ],
+      "founded": 1920,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 280000,
+        "wage_budget": 650000
+      },
+      "academy": 4,
+      "nickname": "Orée"
+    },
+    {
+      "id": "bel-racing",
+      "name": "Royal Racing Club Bruxelles",
+      "full_name": "Royal Racing Club de Bruxelles",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Uccle",
+      "stadium": {
+        "name": "Racing Hockey",
+        "capacity": 2500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1891,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 380000,
+        "wage_budget": 820000
+      },
+      "academy": 4,
+      "nickname": "Racing"
+    },
+    {
+      "id": "bel-uccle-sport",
+      "name": "Royal Uccle Sport THC",
+      "full_name": "Royal Uccle Sport Tennis Hockey Club",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Uccle",
+      "stadium": {
+        "name": "Uccle Sport",
+        "capacity": 2000
+      },
+      "colors": [
+        "rojo",
+        "blanco"
+      ],
+      "founded": 1897,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 200000,
+        "wage_budget": 550000
+      },
+      "academy": 4,
+      "nickname": "UccleSport"
+    },
+    {
+      "id": "bel-waterloo-ducks",
+      "name": "Waterloo Ducks HC",
+      "full_name": "Waterloo Ducks Hockey Club",
+      "league": "BEL",
+      "country": "Bélgica",
+      "city": "Waterloo",
+      "stadium": {
+        "name": "Waterloo Ducks",
+        "capacity": 3000
+      },
+      "colors": [
+        "azul",
+        "amarillo"
+      ],
+      "founded": 1929,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 520000,
+        "wage_budget": 980000
+      },
+      "academy": 4,
+      "nickname": "Ducks"
+    },
+    {
+      "id": "ger-hamburger-polo",
+      "name": "Hamburger Polo Club",
+      "full_name": "Hamburger Polo Club",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Hamburgo",
+      "stadium": {
+        "name": "Hamburger Polo Club",
+        "capacity": 2500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1908,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 600000,
+        "wage_budget": 1100000
+      },
+      "academy": 5,
+      "nickname": "Polo"
+    },
+    {
+      "id": "ger-rw-koln",
+      "name": "Rot-Weiss Köln",
+      "full_name": "Rot-Weiss Köln Hockey Club",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Colonia",
+      "stadium": {
+        "name": "Rot-Weiss Köln",
+        "capacity": 2500
+      },
+      "colors": [
+        "rojo",
+        "blanco"
+      ],
+      "founded": 1906,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 700000,
+        "wage_budget": 1200000
+      },
+      "academy": 5,
+      "nickname": "RW Köln"
+    },
+    {
+      "id": "ger-alster",
+      "name": "Der Club an der Alster",
+      "full_name": "Der Club an der Alster",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Hamburgo",
+      "stadium": {
+        "name": "Club an der Alster",
+        "capacity": 2000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1899,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 450000,
+        "wage_budget": 900000
+      },
+      "academy": 4,
+      "nickname": "Alster"
+    },
+    {
+      "id": "ger-tsv-mannheim",
+      "name": "TSV Mannheim Hockey",
+      "full_name": "TSV Mannheim Hockey",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Mannheim",
+      "stadium": {
+        "name": "TSV Mannheim",
+        "capacity": 2000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1846,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 350000,
+        "wage_budget": 750000
+      },
+      "academy": 4,
+      "nickname": "TSV"
+    },
+    {
+      "id": "ger-harvestehude",
+      "name": "Harvestehuder THC",
+      "full_name": "Harvestehuder Tennis- und Hockey-Club",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Hamburgo",
+      "stadium": {
+        "name": "Harvestehuder THC",
+        "capacity": 2500
+      },
+      "colors": [
+        "negro",
+        "amarillo"
+      ],
+      "founded": 1899,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 420000,
+        "wage_budget": 850000
+      },
+      "academy": 4,
+      "nickname": "HTHC"
+    },
+    {
+      "id": "ger-uhlenhorst",
+      "name": "HTC Uhlenhorst Mülheim",
+      "full_name": "HTC Uhlenhorst Mülheim",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Mülheim",
+      "stadium": {
+        "name": "Uhlenhorst Mülheim",
+        "capacity": 3000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1905,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 500000,
+        "wage_budget": 950000
+      },
+      "academy": 5,
+      "nickname": "Uhlenhorst"
+    },
+    {
+      "id": "ger-uhc-hamburg",
+      "name": "UHC Hamburg",
+      "full_name": "Uhlenhorster Hockey-Club",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Hamburgo",
+      "stadium": {
+        "name": "UHC Hamburg",
+        "capacity": 2200
+      },
+      "colors": [
+        "rojo",
+        "blanco"
+      ],
+      "founded": 1901,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 380000,
+        "wage_budget": 800000
+      },
+      "academy": 4,
+      "nickname": "UHC"
+    },
+    {
+      "id": "ger-crefelder",
+      "name": "Crefelder HTC",
+      "full_name": "Crefelder Hockey- und Tennis-Club",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Krefeld",
+      "stadium": {
+        "name": "Crefelder HTC",
+        "capacity": 2500
+      },
+      "colors": [
+        "verde",
+        "blanco"
+      ],
+      "founded": 1898,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 400000,
+        "wage_budget": 850000
+      },
+      "academy": 4,
+      "nickname": "Crefelder"
+    },
+    {
+      "id": "ger-mannheimer-hc",
+      "name": "Mannheimer HC",
+      "full_name": "Mannheimer Hockey Club",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Mannheim",
+      "stadium": {
+        "name": "Mannheimer HC",
+        "capacity": 2500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1901,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 600000,
+        "wage_budget": 1100000
+      },
+      "academy": 5,
+      "nickname": "MHC"
+    },
+    {
+      "id": "ger-munchner-sc",
+      "name": "Münchner SC",
+      "full_name": "Münchner Sport-Club",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Múnich",
+      "stadium": {
+        "name": "Münchner SC",
+        "capacity": 1800
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1900,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 150000,
+        "wage_budget": 450000
+      },
+      "academy": 3,
+      "nickname": "MSC"
+    },
+    {
+      "id": "eng-beeston",
+      "name": "Beeston HC",
+      "full_name": "Beeston Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Beeston",
+      "stadium": {
+        "name": "Nottingham Hockey Centre",
+        "capacity": 2000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1907,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 220000,
+        "wage_budget": 550000
+      },
+      "academy": 4,
+      "nickname": "Beeston"
+    },
+    {
+      "id": "eng-bowdon",
+      "name": "Bowdon HC",
+      "full_name": "Bowdon Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Altrincham",
+      "stadium": {
+        "name": "Bowdon Cricket & Hockey Club",
+        "capacity": 1200
+      },
+      "colors": [
+        "rojo",
+        "negro"
+      ],
+      "founded": 1886,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 130000,
+        "wage_budget": 400000
+      },
+      "academy": 3,
+      "nickname": "Bowdon"
+    },
+    {
+      "id": "eng-exeter",
+      "name": "University of Exeter HC",
+      "full_name": "University of Exeter Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Exeter",
+      "stadium": {
+        "name": "University of Exeter Sports Park",
+        "capacity": 1500
+      },
+      "colors": [
+        "verde",
+        "blanco"
+      ],
+      "founded": 1920,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 120000,
+        "wage_budget": 380000
+      },
+      "academy": 4,
+      "nickname": "Exeter"
+    },
+    {
+      "id": "eng-cardiff-met",
+      "name": "Cardiff & Met HC",
+      "full_name": "Cardiff & Met Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Cardiff",
+      "stadium": {
+        "name": "Sophia Gardens",
+        "capacity": 1800
+      },
+      "colors": [
+        "azul",
+        "amarillo"
+      ],
+      "founded": 1896,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 130000,
+        "wage_budget": 400000
+      },
+      "academy": 3,
+      "nickname": "Cardiff"
+    },
+    {
+      "id": "eng-east-grinstead",
+      "name": "East Grinstead HC",
+      "full_name": "East Grinstead Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "East Grinstead",
+      "stadium": {
+        "name": "East Grinstead Sports Club",
+        "capacity": 2000
+      },
+      "colors": [
+        "rojo",
+        "negro"
+      ],
+      "founded": 1898,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 300000,
+        "wage_budget": 700000
+      },
+      "academy": 4,
+      "nickname": "EG"
+    },
+    {
+      "id": "eng-hampstead",
+      "name": "Hampstead & Westminster HC",
+      "full_name": "Hampstead & Westminster Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Londres",
+      "stadium": {
+        "name": "Paddington Recreation Ground",
+        "capacity": 1200
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1894,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 280000,
+        "wage_budget": 680000
+      },
+      "academy": 4,
+      "nickname": "H&W"
+    },
+    {
+      "id": "eng-holcombe",
+      "name": "Holcombe HC",
+      "full_name": "Holcombe Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Rochester",
+      "stadium": {
+        "name": "Holcombe Park",
+        "capacity": 1800
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1897,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 230000,
+        "wage_budget": 580000
+      },
+      "academy": 3,
+      "nickname": "Holcombe"
+    },
+    {
+      "id": "eng-old-georgians",
+      "name": "Old Georgians HC",
+      "full_name": "Old Georgians Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Addlestone",
+      "stadium": {
+        "name": "St George's College",
+        "capacity": 1800
+      },
+      "colors": [
+        "rojo",
+        "azul"
+      ],
+      "founded": 1995,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 400000,
+        "wage_budget": 850000
+      },
+      "academy": 4,
+      "nickname": "OGs"
+    },
+    {
+      "id": "eng-oxted",
+      "name": "Oxted HC",
+      "full_name": "Oxted Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Oxted",
+      "stadium": {
+        "name": "Caterham School",
+        "capacity": 1200
+      },
+      "colors": [
+        "azul",
+        "amarillo"
+      ],
+      "founded": 1946,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 140000,
+        "wage_budget": 420000
+      },
+      "academy": 3,
+      "nickname": "Oxted"
+    },
+    {
+      "id": "eng-reading",
+      "name": "Reading HC",
+      "full_name": "Reading Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Reading",
+      "stadium": {
+        "name": "Sonning Lane",
+        "capacity": 1500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1900,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 200000,
+        "wage_budget": 520000
+      },
+      "academy": 4,
+      "nickname": "Reading"
+    },
+    {
+      "id": "eng-surbiton",
+      "name": "Surbiton HC",
+      "full_name": "Surbiton Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Long Ditton",
+      "stadium": {
+        "name": "Sugden Road",
+        "capacity": 2500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1874,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 450000,
+        "wage_budget": 900000
+      },
+      "academy": 5,
+      "nickname": "Surbiton"
+    },
+    {
+      "id": "eng-wimbledon",
+      "name": "Wimbledon HC",
+      "full_name": "Wimbledon Hockey Club",
+      "league": "ENG",
+      "country": "Inglaterra",
+      "city": "Londres",
+      "stadium": {
+        "name": "Raynes Park High School",
+        "capacity": 1800
+      },
+      "colors": [
+        "azul",
+        "amarillo"
+      ],
+      "founded": 1883,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 420000,
+        "wage_budget": 880000
+      },
+      "academy": 4,
+      "nickname": "Wimbledon"
+    },
+    {
+      "id": "arg-san-fernando",
+      "name": "Club San Fernando",
+      "full_name": "Club San Fernando",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "San Fernando",
+      "stadium": {
+        "name": "San Fernando Hockey",
+        "capacity": 2000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1904,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 160000,
+        "wage_budget": 420000
+      },
+      "academy": 4,
+      "nickname": "Sanfer"
+    },
+    {
+      "id": "arg-banco-provincia",
+      "name": "Banco Provincia",
+      "full_name": "Club Banco de la Provincia de Buenos Aires",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Buenos Aires",
+      "stadium": {
+        "name": "Banco Provincia Hockey",
+        "capacity": 1500
+      },
+      "colors": [
+        "verde",
+        "blanco"
+      ],
+      "founded": 1915,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 140000,
+        "wage_budget": 380000
+      },
+      "academy": 4,
+      "nickname": "Banco"
+    },
+    {
+      "id": "arg-ciudad",
+      "name": "Club Ciudad de Buenos Aires",
+      "full_name": "Club Ciudad de Buenos Aires",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Buenos Aires",
+      "stadium": {
+        "name": "Ciudad Hockey",
+        "capacity": 1500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1930,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 150000,
+        "wage_budget": 400000
+      },
+      "academy": 4,
+      "nickname": "Ciudad"
+    },
+    {
+      "id": "arg-san-martin",
+      "name": "Club San Martín",
+      "full_name": "Club San Martín de Buenos Aires",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Buenos Aires",
+      "stadium": {
+        "name": "Club San Martín",
+        "capacity": 500
+      },
+      "colors": [
+        "blanco",
+        "negro"
+      ],
+      "founded": null,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 2,
+        "transfer_budget": 70000,
+        "wage_budget": 180000
+      },
+      "academy": 3,
+      "nickname": "San Martín"
+    },
+    {
+      "id": "arg-quilmes",
+      "name": "Quilmes",
+      "full_name": "Quilmes Atlético Club",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Quilmes",
+      "stadium": {
+        "name": "Quilmes",
+        "capacity": 800
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1887,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 90000,
+        "wage_budget": 220000
+      },
+      "academy": 3,
+      "nickname": "Quilmes"
+    },
+    {
+      "id": "arg-hurling",
+      "name": "Hurling",
+      "full_name": "Hurling Club",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Buenos Aires",
+      "stadium": {
+        "name": "Hurling Club",
+        "capacity": 600
+      },
+      "colors": [
+        "rojo",
+        "blanco"
+      ],
+      "founded": 1922,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 2,
+        "transfer_budget": 60000,
+        "wage_budget": 160000
+      },
+      "academy": 2,
+      "nickname": "Hurling"
+    },
+    {
+      "id": "arg-ciudad-b",
+      "name": "Ciudad B",
+      "full_name": "Club Ciudad de Buenos Aires B",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Buenos Aires",
+      "stadium": {
+        "name": "Ciudad de Buenos Aires",
+        "capacity": 500
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": null,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 1,
+        "transfer_budget": 30000,
+        "wage_budget": 90000
+      },
+      "academy": 2,
+      "nickname": "Ciudad B"
+    },
+    {
+      "id": "arg-mitre",
+      "name": "Club Mitre",
+      "full_name": "Club Atlético Mitre",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Olivos",
+      "stadium": {
+        "name": "Mitre Hockey",
+        "capacity": 1200
+      },
+      "colors": [
+        "blanco",
+        "negro"
+      ],
+      "founded": 1905,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 100000,
+        "wage_budget": 300000
+      },
+      "academy": 3,
+      "nickname": "Mitre"
+    },
+    {
+      "id": "arg-geba",
+      "name": "GEBA",
+      "full_name": "Gimnasia y Esgrima de Buenos Aires",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Buenos Aires",
+      "stadium": {
+        "name": "GEBA Hockey",
+        "capacity": 1800
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1880,
+      "expectation": "Ganar la liga",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 170000,
+        "wage_budget": 450000
+      },
+      "academy": 4,
+      "nickname": "GEBA"
+    },
+    {
+      "id": "arg-ducilo",
+      "name": "Ducilo",
+      "full_name": "Club Ducilo",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Berazategui",
+      "stadium": {
+        "name": "Ducilo Hockey",
+        "capacity": 1200
+      },
+      "colors": [
+        "azul",
+        "amarillo"
+      ],
+      "founded": 1910,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 90000,
+        "wage_budget": 280000
+      },
+      "academy": 3,
+      "nickname": "Ducilo"
+    },
+    {
+      "id": "arg-santa-barbara",
+      "name": "Santa Bárbara",
+      "full_name": "Club Santa Bárbara",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Buenos Aires",
+      "stadium": {
+        "name": "Santa Bárbara Hockey",
+        "capacity": 1000
+      },
+      "colors": [
+        "rojo",
+        "blanco"
+      ],
+      "founded": 1921,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 80000,
+        "wage_budget": 260000
+      },
+      "academy": 3,
+      "nickname": "Santa"
+    },
+    {
+      "id": "arg-sag-lomas",
+      "name": "SAG Lomas",
+      "full_name": "Sociedad Alemana de Gimnasia de Lomas",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Lomas de Zamora",
+      "stadium": {
+        "name": "SAG Lomas Hockey",
+        "capacity": 1200
+      },
+      "colors": [
+        "negro",
+        "amarillo"
+      ],
+      "founded": 1925,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 85000,
+        "wage_budget": 270000
+      },
+      "academy": 3,
+      "nickname": "SAG"
+    },
+    {
+      "id": "arg-lomas-athletic",
+      "name": "Lomas Athletic Club",
+      "full_name": "Lomas Athletic Club",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "Lomas de Zamora",
+      "stadium": {
+        "name": "Lomas Hockey",
+        "capacity": 1200
+      },
+      "colors": [
+        "rojo",
+        "blanco"
+      ],
+      "founded": 1891,
+      "expectation": "Top 8",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 80000,
+        "wage_budget": 260000
+      },
+      "academy": 3,
+      "nickname": "Lomas"
+    },
+    {
+      "id": "arg-universitario-la-plata",
+      "name": "Universitario de La Plata",
+      "full_name": "Club Universitario de La Plata",
+      "league": "ARG",
+      "country": "Argentina",
+      "city": "La Plata",
+      "stadium": {
+        "name": "Universitario Hockey",
+        "capacity": 1000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1905,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 60000,
+        "wage_budget": 220000
+      },
+      "academy": 3,
+      "nickname": "Uni"
+    },
+    {
+      "id": "ind-delhi-sg-pipers",
+      "name": "Delhi SG Pipers",
+      "full_name": "Delhi SG Pipers",
+      "league": "IND",
+      "country": "India",
+      "city": "Nueva Delhi",
+      "stadium": {
+        "name": "Major Dhyan Chand Stadium",
+        "capacity": 16000
+      },
+      "colors": [
+        "azul",
+        "rosa"
+      ],
+      "founded": 2024,
+      "expectation": "Ganar la HIL",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 500000,
+        "wage_budget": 1200000
+      },
+      "academy": 4,
+      "nickname": "Pipers"
+    },
+    {
+      "id": "ind-hyderabad-toofans",
+      "name": "Hyderabad Toofans",
+      "full_name": "Hyderabad Toofans",
+      "league": "IND",
+      "country": "India",
+      "city": "Hyderabad",
+      "stadium": {
+        "name": "Hyderabad Hockey Stadium",
+        "capacity": 10000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 2024,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 450000,
+        "wage_budget": 1100000
+      },
+      "academy": 4,
+      "nickname": "Toofans"
+    },
+    {
+      "id": "ind-kalinga-lancers",
+      "name": "Kalinga Lancers",
+      "full_name": "Vedanta Kalinga Lancers",
+      "league": "IND",
+      "country": "India",
+      "city": "Bhubaneswar",
+      "stadium": {
+        "name": "Kalinga Stadium",
+        "capacity": 15000
+      },
+      "colors": [
+        "naranja",
+        "negro"
+      ],
+      "founded": 2013,
+      "expectation": "Ganar la HIL",
+      "finances": {
+        "tier": 5,
+        "transfer_budget": 550000,
+        "wage_budget": 1250000
+      },
+      "academy": 4,
+      "nickname": "Lancers"
+    },
+    {
+      "id": "ind-ranchi-royals",
+      "name": "Ranchi Royals",
+      "full_name": "Ranchi Royals",
+      "league": "IND",
+      "country": "India",
+      "city": "Ranchi",
+      "stadium": {
+        "name": "Birsa Munda Hockey Stadium",
+        "capacity": 20000
+      },
+      "colors": [
+        "azul",
+        "rojo"
+      ],
+      "founded": 2026,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 400000,
+        "wage_budget": 1000000
+      },
+      "academy": 4,
+      "nickname": "Royals"
+    },
+    {
+      "id": "ind-rarh-bengal",
+      "name": "Shrachi Rarh Bengal Tigers",
+      "full_name": "Shrachi Rarh Bengal Tigers",
+      "league": "IND",
+      "country": "India",
+      "city": "Kolkata",
+      "stadium": {
+        "name": "Kolkata Hockey Stadium",
+        "capacity": 10000
+      },
+      "colors": [
+        "amarillo",
+        "negro"
+      ],
+      "founded": 2024,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 420000,
+        "wage_budget": 1050000
+      },
+      "academy": 4,
+      "nickname": "Tigers"
+    },
+    {
+      "id": "ind-soorma",
+      "name": "Soorma Hockey Club",
+      "full_name": "Soorma Hockey Club",
+      "league": "IND",
+      "country": "India",
+      "city": "Mohali",
+      "stadium": {
+        "name": "Soorma Hockey Arena",
+        "capacity": 9000
+      },
+      "colors": [
+        "azul",
+        "amarillo"
+      ],
+      "founded": 2024,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 400000,
+        "wage_budget": 1000000
+      },
+      "academy": 4,
+      "nickname": "Soorma"
+    },
+    {
+      "id": "ind-tamil-nadu-dragons",
+      "name": "Tamil Nadu Dragons",
+      "full_name": "Tamil Nadu Dragons",
+      "league": "IND",
+      "country": "India",
+      "city": "Chennai",
+      "stadium": {
+        "name": "Chennai Hockey Stadium",
+        "capacity": 8000
+      },
+      "colors": [
+        "rojo",
+        "amarillo"
+      ],
+      "founded": 2024,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 360000,
+        "wage_budget": 950000
+      },
+      "academy": 4,
+      "nickname": "Dragons"
+    },
+    {
+      "id": "ind-hil-gc",
+      "name": "HIL GC",
+      "full_name": "HIL Governing Council",
+      "league": "IND",
+      "country": "India",
+      "city": "Nueva Delhi",
+      "stadium": {
+        "name": "Major Dhyan Chand National Stadium",
+        "capacity": 16000
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 2026,
+      "expectation": "Top 4",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 400000,
+        "wage_budget": 1000000
+      },
+      "academy": 4,
+      "nickname": "HIL GC"
+    },
+    {
+      "id": "ger-berliner-hc",
+      "name": "Berliner HC",
+      "full_name": "Berliner Hockey-Club",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Berlín",
+      "stadium": {
+        "name": "Berliner HC",
+        "capacity": 2200
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1905,
+      "expectation": "Top 6",
+      "finances": {
+        "tier": 4,
+        "transfer_budget": 350000,
+        "wage_budget": 750000
+      },
+      "academy": 4,
+      "nickname": "BHC"
+    },
+    {
+      "id": "ger-dsd-duesseldorf",
+      "name": "DSD Düsseldorf",
+      "full_name": "Deutscher Sportklub Düsseldorf",
+      "league": "GER",
+      "country": "Alemania",
+      "city": "Düsseldorf",
+      "stadium": {
+        "name": "DSD Düsseldorf",
+        "capacity": 1800
+      },
+      "colors": [
+        "azul",
+        "blanco"
+      ],
+      "founded": 1898,
+      "expectation": "Permanencia",
+      "finances": {
+        "tier": 3,
+        "transfer_budget": 150000,
+        "wage_budget": 480000
+      },
+      "academy": 3,
+      "nickname": "DSD"
+    }
+  ]
+}

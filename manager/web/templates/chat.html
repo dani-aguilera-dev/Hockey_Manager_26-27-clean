@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Vestuario{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between;align-items:end">
+  <div><h1>Vestuario</h1><p class="muted">Conversaciones con la plantilla. Tus respuestas afectan a la moral, la forma y la cohesión.</p></div>
+  <div class="match-crest">{{ m.crest(team, 'crest-lg') }}<b>{{ team.name }}</b></div>
+</div>
+<div class="actions" style="margin-bottom:14px">
+  <form method="post" action="{{ url_for('chat_new') }}"><button class="btn primary" type="submit">Hablar con un jugador</button></form>
+  <a class="btn" href="{{ url_for('dashboard') }}">Volver al dashboard</a>
+</div>
+{% for message in messages %}
+  {% set player = players_by_id.get(message.player_id) %}
+  <div class="card" style="margin-bottom:10px;border-left:3px solid {{ 'var(--warn)' if not message.answered else 'var(--line)' }}">
+    <div class="row" style="justify-content:space-between;align-items:flex-start">
+      <div class="news-head">
+        {% if player %}{{ m.avatar(player, 'avatar-small') }}{% endif %}
+        <div><div class="cat">Vestuario · {{ message.date|fdate }}</div><h3 style="margin:2px 0">{{ message.player_name }}</h3><span class="small muted">Relación {{ message.relationship }}/100</span></div>
+      </div>
+      {% if message.answered %}<span class="badge ok">Respondida</span>{% else %}<span class="badge warn">Pendiente</span>{% endif %}
+    </div>
+    <p>{{ message.text }}</p>
+    {% if not message.answered %}
+    <form method="post" action="{{ url_for('chat_answer', message_id=message.id) }}">
+      <div class="option-list">
+      {% for option in message.options %}
+        <button class="option-card" type="submit" name="option" value="{{ loop.index0 }}"><span><b>{{ option.label }}</b></span></button>
+      {% endfor %}
+      </div>
+    </form>
+    {% else %}
+      <p class="small muted"><b>Tu respuesta:</b> {{ message.answer }}</p>
+      <p class="small">{{ message.response }}</p>
+    {% endif %}
+  </div>
+{% else %}
+<div class="card"><p>No hay conversaciones todavía. Avanza el calendario o abre una conversación con un jugador.</p></div>
+{% endfor %}
+{% endblock %}

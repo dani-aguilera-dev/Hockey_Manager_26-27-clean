@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Mercado{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between;align-items:end">
+  <div><h1>Mercado y contratos</h1><p><span class="badge">{{ market_status }}</span> · Caja {{ team.budget|money }} · Fichajes {{ team.transfer_budget|money }}</p></div>
+  <div class="actions"><a class="btn" href="{{ url_for('market_offers') }}">Ofertas ({{ offers|length }})</a><a class="btn" href="{{ url_for('market_renew') }}">Renovar</a><a class="btn" href="{{ url_for('staff') }}">Staff</a></div>
+</div>
+{% if window == 'cerrado' %}<div class="card" style="border-color:#6b5a2b"><p><span class="badge warn">Mercado cerrado</span> Puedes consultar y otear jugadores, pero las ofertas se reactivarán en la próxima ventana.</p></div>{% endif %}
+<div class="card"><form method="get" class="row">
+  <div class="field"><label>Buscar</label><input name="q" value="{{ query }}" placeholder="Jugador, club o arquetipo"></div>
+  <div class="field"><label>Club</label><select name="club_id"><option value="">Todos</option>{% for t in all_teams %}<option value="{{ t.id }}" {% if club_id==t.id %}selected{% endif %}>{{ t.name }}</option>{% endfor %}</select></div>
+  <div class="field"><label>Valor máximo</label><input name="max_value" value="{{ max_value if max_value is not none else '' }}" placeholder="Sin límite" inputmode="numeric"></div>
+  <div class="field"><label>Posición</label><select name="position"><option value="">Todas</option>{% for x in ['Portero','Central','Lateral','Medio','Delantero'] %}<option value="{{x}}" {% if position==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></div>
+  <button class="btn primary" type="submit">Buscar</button>
+</form></div>
+<p class="muted small">{{ players|length }} jugadores encontrados{% if query %} para “{{ query }}”{% endif %} · Todos los clubes de la competición y agentes libres.</p>
+{% if players %}<div class="player-grid market-grid" style="margin-top:12px">
+{% for p in players %}
+<div class="player-card market-card">
+  {{ m.avatar(p) }}
+  <div class="pc-body">
+    <div class="pc-name">{{ p.name }}</div>
+    <div class="pc-tags">{{ m.pos(p) }} <span class="arch">{{ p.archetype }}</span></div>
+    <div class="pc-owner">{% set ot = owner_teams.get(p.id) %}{% if ot %}<a href="{{ url_for('team_detail', team_id=ot.id) }}"><img class="crest crest-sm" src="{{ crest_src(ot) }}" alt=""> {{ ot.name }}</a>{% else %}{{ owners.get(p.id,'—') }}{% endif %}</div>
+    <div class="pc-meta"><span>{{ p.age }} años</span><span><b>{{ p.overall|round|int }}</b> OVR</span><span class="star-chip">{{ stars_bar(p.overall, p.league) }} {{ league_label(p.league) }}</span></div>
+    <div class="pc-sub"><div>Ojeado {{ scout_range(p, team.staff_rating('scout')) }} · {{ stars_text(p.overall, p.league) }} en {{ league_label(p.league) }}</div><div>{{ p.apps }} PJ · {{ p.season_goals }} G · {{ p.season_assists }} A · rating {{ '%.2f'|format(p.rating) }}</div><div>Precio {{ asking_price(p)|money }} · Salario {{ p.salary|money }}</div></div>
+    <div class="actions"><a class="btn small primary" href="{{ url_for('market_player', player_id=p.id) }}">{{ 'Ver / ofertar' if window != 'cerrado' else 'Ver ficha' }}</a></div>
+  </div>
+</div>
+{% endfor %}
+</div>{% else %}<div class="card"><p>No hay jugadores que cumplan esos filtros. Prueba a quitar el valor máximo o cambiar la posición.</p></div>{% endif %}
+{% endblock %}

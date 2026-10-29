@@ -1,0 +1,74 @@
+{
+  "_default": {
+    "names": ["Hugo", "Pablo", "Sergio", "Daniel", "Adrián", "Alejandro", "Álvaro", "Javier", "Diego", "Mario", "Rubén", "Fernando", "Alberto", "Iván", "Gonzalo", "Rodrigo"],
+    "surnames": ["García", "Rodríguez", "López", "Sánchez", "Pérez", "Gómez", "Fernández", "Ruiz", "Moreno", "Jiménez", "Romero", "Alonso", "Molina", "Ortega", "Navarro", "Torres"]
+  },
+  "Andalucía": {
+    "names": ["Álvaro", "Antonio", "Manuel", "José", "Francisco", "Javier", "Sergio", "Rafael", "Pablo", "Miguel", "Alejandro", "Daniel", "Adrián", "Hugo", "Mario", "Rubén", "Fernando", "Alberto", "Diego", "Iván"],
+    "surnames": ["García", "Rodríguez", "López", "Sánchez", "Pérez", "Gómez", "Fernández", "Ruiz", "Moreno", "Jiménez", "Romero", "Alonso", "Molina", "Ortiz", "Ramos", "Cano", "Cruz", "Domínguez", "Guerrero", "Vega"]
+  },
+  "Aragón": {
+    "names": ["Álvaro", "Javier", "Sergio", "Pablo", "Adrián", "Diego", "Jorge", "Daniel", "Hugo", "Mario", "Rubén", "Fernando", "Alejandro", "Gonzalo", "Iván", "Rodrigo"],
+    "surnames": ["García", "Martínez", "López", "Sánchez", "Pérez", "Gómez", "Gracia", "Lázaro", "Villanueva", "Abad", "Bielsa", "Casanova", "Fortuño", "Aragüés", "Rivas", "Mur"]
+  },
+  "Asturias": {
+    "names": ["Pelayo", "Íñigo", "Diego", "Pablo", "Sergio", "Álvaro", "Xuan", "Javier", "Daniel", "Hugo", "Mario", "Adrián", "Fernando", "Rubén", "Alejandro", "Gonzalo"],
+    "surnames": ["Fernández", "González", "García", "Rodríguez", "López", "Martínez", "Suárez", "Menéndez", "Álvarez", "Cueto", "Peláez", "Noriega", "Valdés", "Monte", "Riera", "Fanjul"]
+  },
+  "Canarias": {
+    "names": ["Aday", "Airam", "Yeray", "Jonay", "Nauzet", "Iker", "Daniel", "Pablo", "Adrián", "Hugo", "Sergio", "Álvaro", "Alejandro", "Rubén", "Mario", "Domingo"],
+    "surnames": ["Rodríguez", "Pérez", "García", "Hernández", "González", "Santana", "Cabrera", "Padrón", "Betancor", "Medina", "Suárez", "Domínguez", "Melián", "Armas", "Falcón", "Quesada"]
+  },
+  "Cantabria": {
+    "names": ["Diego", "Pablo", "Álvaro", "Sergio", "Mario", "Íñigo", "Gonzalo", "Javier", "Daniel", "Hugo", "Adrián", "Rubén", "Fernando", "Alberto", "Iván", "Rodrigo"],
+    "surnames": ["Fernández", "Gutiérrez", "García", "Martínez", "López", "Ruiz", "Revuelta", "Cobo", "Trueba", "Portilla", "Setién", "Mazorra", "Lavín", "Arce", "Sanemeterio", "Diego"]
+  },
+  "Castilla y León": {
+    "names": ["Álvaro", "Diego", "Sergio", "Javier", "Pablo", "Adrián", "Mario", "Rodrigo", "Daniel", "Hugo", "Alejandro", "Gonzalo", "Rubén", "Fernando", "Alberto", "Iván"],
+    "surnames": ["García", "Martín", "Pérez", "González", "Rodríguez", "Fernández", "Alonso", "Lafuente", "Herrero", "Sanz", "Merino", "Díez", "Blanco", "Carnicero", "Antón", "Muñoz"]
+  },
+  "Castilla-La Mancha": {
+    "names": ["Álvaro", "Javier", "Sergio", "Daniel", "Pablo", "Adrián", "Mario", "José", "Hugo", "Alejandro", "Gonzalo", "Rubén", "Fernando", "Alberto", "Iván", "Rodrigo"],
+    "surnames": ["García", "López", "Martínez", "Sánchez", "Pérez", "Gómez", "Ruiz", "Fernández", "Molina", "Ortega", "Navarro", "Cano", "Moya", "Iniesta", "Alcaide", "Valero"]
+  },
+  "Cataluña": {
+    "names": ["Aleix", "Pau", "Marc", "Nil", "Joan", "Biel", "Arnau", "Jan", "Pol", "Oriol", "Roc", "Guillem", "Ferran", "Gerard", "Èric", "Xavi", "Jordi", "Sergi"],
+    "surnames": ["Serra", "Pujol", "Vidal", "Roca", "Camps", "Ferrer", "Soler", "Mas", "Bosch", "Riera", "Font", "Puig", "Sala", "Vila", "Costa", "Tort", "Plana", "Grau", "Mestre", "Vives"]
+  },
+  "Comunidad Valenciana": {
+    "names": ["Vicent", "Joan", "Pau", "Àlex", "Marc", "Sergi", "Carles", "Andreu", "Borja", "Pablo", "Hugo", "Arnau", "Guillem", "Rafa", "Tono", "Vicent"],
+    "surnames": ["Ferrer", "Pons", "Martínez", "García", "López", "Sanchis", "Blasco", "Giner", "Peris", "Ripoll", "Navarro", "Miralles", "Gimeno", "Benavent", "Tormo", "Soriano"]
+  },
+  "Extremadura": {
+    "names": ["Álvaro", "Javier", "Sergio", "José", "Francisco", "Antonio", "Pablo", "Daniel", "Hugo", "Adrián", "Mario", "Rubén", "Fernando", "Alberto", "Iván", "Gonzalo"],
+    "surnames": ["García", "Rodríguez", "López", "Sánchez", "Pérez", "Gómez", "Fernández", "Ruiz", "Moreno", "Hernández", "Pizarro", "Salguero", "Chamizo", "Barquero", "Tena", "Acedo"]
+  },
+  "Galicia": {
+    "names": ["Iago", "Brais", "Xoán", "Antón", "Uxío", "Martín", "Pablo", "Diego", "Sergio", "Hugo", "Adrián", "Álvaro", "Daniel", "Rubén", "Fernando", "Gonzalo"],
+    "surnames": ["Fernández", "Rodríguez", "González", "López", "Martínez", "Vázquez", "Souto", "Vilas", "Barcia", "Castiñeira", "Pereira", "Nogueira", "Pose", "Seoane", "Ares", "Lago"]
+  },
+  "Islas Baleares": {
+    "names": ["Miquel", "Toni", "Joan", "Pere", "Mateu", "Marc", "Pau", "Biel", "Tomeu", "Xisco", "Lluís", "Antoni", "Hugo", "Pablo", "Sergio", "Adrián"],
+    "surnames": ["Pons", "Ferrer", "Sastre", "Riera", "Vidal", "Bosch", "Amengual", "Oliver", "Coll", "Servera", "Martínez", "García", "López", "Sánchez", "Pérez", "Gómez"]
+  },
+  "La Rioja": {
+    "names": ["Álvaro", "Javier", "Sergio", "Diego", "Pablo", "Mario", "Daniel", "Hugo", "Adrián", "Rubén", "Fernando", "Alberto", "Iván", "Gonzalo", "Alejandro", "Rodrigo"],
+    "surnames": ["García", "Martínez", "López", "Sánchez", "Pérez", "Fernández", "Sáenz", "Ojeda", "Alesanco", "Trevijano", "Sacristán", "Nájera", "Sáenz", "Lumbreras", "Viguera", "Tejada"]
+  },
+  "Comunidad de Madrid": {
+    "names": ["Álvaro", "Javier", "Sergio", "Carlos", "Daniel", "Adrián", "Pablo", "Diego", "Mario", "Alejandro", "Gonzalo", "Jorge", "Hugo", "Rubén", "Fernando", "Alberto"],
+    "surnames": ["García", "Martín", "López", "Sánchez", "Pérez", "Gómez", "Fernández", "Ruiz", "Díaz", "Moreno", "Álvarez", "Romero", "Navarro", "Torres", "Gil", "Serrano", "Ortega", "Castillo"]
+  },
+  "Región de Murcia": {
+    "names": ["José", "Francisco", "Javier", "Antonio", "Sergio", "Pablo", "Álvaro", "Daniel", "Hugo", "Adrián", "Mario", "Rubén", "Fernando", "Alberto", "Iván", "Gonzalo"],
+    "surnames": ["Martínez", "García", "López", "Sánchez", "Pérez", "Gómez", "Ruiz", "Hernández", "Conesa", "Campillo", "Ros", "Abellán", "Meroño", "Miñano", "Riquelme", "Cánovas"]
+  },
+  "Comunidad Foral de Navarra": {
+    "names": ["Iker", "Unai", "Aitor", "Mikel", "Javier", "Sergio", "Pablo", "Álvaro", "Daniel", "Hugo", "Adrián", "Rubén", "Fernando", "Alberto", "Iván", "Gonzalo"],
+    "surnames": ["García", "Martínez", "López", "Sánchez", "Pérez", "Fernández", "Goñi", "Echeverría", "Zabaleta", "Aranguren", "Erviti", "Ariz", "Oroz", "Andueza", "Lizarraga", "Zubiri"]
+  },
+  "País Vasco": {
+    "names": ["Unai", "Iker", "Aitor", "Mikel", "Ander", "Gorka", "Iñigo", "Xabier", "Julen", "Asier", "Oier", "Hugo", "Pablo", "Sergio", "Daniel", "Adrián"],
+    "surnames": ["Etxeberria", "Zubimendi", "Agirre", "Larrea", "Uriarte", "Arrieta", "Goikoetxea", "Mendieta", "Elorza", "Otaegi", "Aramburu", "Azkue", "Bergara", "Garmendia", "Lasa", "Zubiaurre"]
+  }
+}

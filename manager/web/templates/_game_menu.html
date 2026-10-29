@@ -1,0 +1,60 @@
+{% if current_state %}
+<div class="menu-layer" id="game-menu" hidden>
+  <div class="menu-backdrop" data-menu-close></div>
+  <section class="game-menu-panel" role="dialog" aria-modal="true" aria-labelledby="game-menu-title">
+    <header class="menu-head">
+      <div>
+        <div class="menu-kicker">Partida en curso</div>
+        <h2 id="game-menu-title">Menú de juego</h2>
+      </div>
+      <button class="menu-close" type="button" data-menu-close aria-label="Cerrar menú">×</button>
+    </header>
+
+    <div class="menu-current">
+      <img class="crest" src="{{ crest_src(current_team) }}" alt="Escudo {{ current_team.name }}">
+      <div>
+        <b>{{ current_team.name }}</b>
+        <div class="small muted">{{ current_state.competition }} · {{ current_state.season }} · Jornada {{ current_state.round }}</div>
+      </div>
+    </div>
+
+    <div class="menu-actions">
+      <button class="menu-action" type="button" data-menu-close><span>Continuar partida</span><kbd>Esc</kbd></button>
+      <a class="menu-action" href="{{ url_for('chat') }}"><span>Vestuario</span><span>›</span></a>
+      <a class="menu-action" href="{{ url_for('load_page') }}"><span>Cargar partida</span><span>›</span></a>
+      <a class="menu-action" href="{{ url_for('main_menu') }}"><span>Menú principal</span><span>›</span></a>
+      {% if current_state.competition in ('DHA', 'DHB') %}<a class="menu-action" href="{{ url_for('ehl') }}"><span>Europa / EHL</span><span>›</span></a>{% endif %}
+      <a class="menu-action" href="{{ url_for('options') }}"><span>Opciones</span><span>›</span></a>
+      <a class="menu-action" href="{{ url_for('dashboard') }}" data-menu-back><span>Volver</span><kbd>←</kbd></a>
+      <a class="menu-action" href="{{ url_for('new_game_page') }}"><span>Nueva partida</span><span>›</span></a>
+    </div>
+
+    <div class="menu-section">
+      <h3>Guardar partida</h3>
+      <form method="post" action="{{ url_for('save_page') }}" class="menu-form">
+        <label for="menu-save-name">Nombre del guardado</label>
+        <input id="menu-save-name" name="name" value="{{ session.get('save_name','') }}" placeholder="Nombre de la partida">
+        <button class="btn primary" type="submit">Guardar ahora</button>
+      </form>
+      <p class="small muted">Guardado actual: <b>{{ session.get('save_name','sin guardar') }}</b>. El guardado se conserva al salir al menú principal.</p>
+    </div>
+
+    {% if desktop_mode %}
+    <div class="menu-section">
+      <h3>Aplicación</h3>
+      <form method="post" action="{{ url_for('desktop_quit') }}" data-confirm-exit="true">
+        <button class="btn" type="submit">Cerrar Hockey Manager</button>
+      </form>
+    </div>
+    {% endif %}
+    <div class="menu-section menu-danger">
+      <h3>Salir de la partida</h3>
+      <p class="small muted">La partida se guarda automáticamente antes de volver al menú principal.</p>
+      {% if live_active %}<p class="small" style="color:var(--warn)">Hay un partido en directo abierto: si sales ahora, ese partido no se guardará.</p>{% endif %}
+      <form method="post" action="{{ url_for('exit_game') }}" data-confirm-exit="{{ 'true' if ui_prefs.confirm_exit else 'false' }}">
+        <button class="btn danger" type="submit">Salir al menú principal</button>
+      </form>
+    </div>
+  </section>
+</div>
+{% endif %}

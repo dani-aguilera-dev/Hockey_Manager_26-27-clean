@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Entorno
+.venv/
+venv/
+env/
+
+# Partidas y datos locales
+manager/saves/
+*.db
+*.sqlite
+
+# Build del ejecutable de escritorio
+manager/build/
+manager/dist/
+manager/*.spec
+
+# Frontend React
+manager/web/frontend/node_modules/
+manager/web/frontend/tsconfig.tsbuildinfo
+
+# Temporales
+*.log
+.DS_Store
+
+# Bloqueos de LibreOffice
+.~lock.*#

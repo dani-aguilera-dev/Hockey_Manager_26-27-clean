@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Hockey Manager
+Comment=Gestión y simulación de hockey hierba española
+Exec=/home/daniel/hockey_espana/manager/dist/HockeyManager
+Icon=/home/daniel/hockey_espana/manager/assets/logo.png
+Terminal=false
+Categories=Game;SportsGame;
+StartupNotify=true

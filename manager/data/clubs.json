@@ -1,0 +1,1602 @@
+[
+  {
+    "id": "atletic-terrassa",
+    "name": "Atlètic Terrassa HC",
+    "full_name": "Atlètic Terrassa Hockey Club",
+    "league": "DHA",
+    "city": "Terrassa",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": 1952,
+    "colors": [
+      "amarillo",
+      "negro"
+    ],
+    "nickname": "Atlètic",
+    "history": "Fundado en 1952 por un grupo de jóvenes jugadores, el Atlètic es uno de los clubes más laureados del hockey español. Se trasladó a Can Salas en 1969 y ha ganado ligas, Copas del Rey y Copas de Europa. Su cantera ha formado a numerosos internacionales.",
+    "stadium": {
+      "name": "Estadi Josep Marquès (Can Salas)",
+      "address": "Urbanització Can Salas, 8, 08227 Terrassa, Barcelona",
+      "city": "Terrassa",
+      "surface": "water-based",
+      "capacity": 1500,
+      "capacity_confidence": "estimada",
+      "notes": "Sede polideportiva del club; dos campos de hockey."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 5,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 5,
+      "transfer_budget": 350000,
+      "wage_budget": 750000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Final Four y pelear el título",
+      "patience": 4,
+      "pressure": "alta"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Terrassa",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán; desplazamientos cortos en bus."
+    },
+    "rivalries": [
+      "CD Terrassa Hockey",
+      "Club Egara",
+      "Junior FC"
+    ],
+    "data_quality": "alta"
+  },
+  {
+    "id": "cd-terrassa",
+    "name": "CD Terrassa Hockey",
+    "full_name": "Club Deportiu Terrassa Hockey",
+    "league": "DHA",
+    "city": "Matadepera",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": 1910,
+    "colors": [
+      "rojo",
+      "blanco"
+    ],
+    "nickname": "Terrassa",
+    "history": "Fundado en 1910, es el club de hockey más antiguo de España. Tiene su sede en Les Pedritxes (Matadepera) desde 1973 y es una entidad polideportiva con una larga tradición de hockey y cantera.",
+    "stadium": {
+      "name": "Les Pedritxes - Camp C1",
+      "address": "Ctra. Terrassa a Talamanca, km 5,6, 08230 Matadepera, Barcelona",
+      "city": "Matadepera",
+      "surface": "water-based",
+      "capacity": 1200,
+      "capacity_confidence": "estimada",
+      "notes": "Instalaciones en el Parc Natural de Sant Llorenç."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 5,
+      "transfer_budget": 300000,
+      "wage_budget": 650000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Top 6 y consolidar el proyecto",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Terrassa",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán; desplazamientos cortos."
+    },
+    "rivalries": [
+      "Atlètic Terrassa HC",
+      "Club Egara"
+    ],
+    "data_quality": "alta"
+  },
+  {
+    "id": "ch-carpesa",
+    "name": "CH Carpesa",
+    "full_name": "Club Hockey Carpesa",
+    "league": "DHA",
+    "city": "Valencia",
+    "community": "Comunidad Valenciana",
+    "province": "Valencia",
+    "founded": 1971,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "Carpesa",
+    "history": "Fundado en 1971 en la pedanía valenciana de Carpesa. Es un club de barrio con escuela y equipos en todas las categorías; sin campo propio, juega en instalaciones municipales de Valencia.",
+    "stadium": {
+      "name": "Camp de Beteró / Poliesportiu Malva-rosa",
+      "address": "Valencia",
+      "city": "Valencia",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Sin campo propio; usa instalaciones municipales."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": false,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 3,
+      "transfer_budget": 60000,
+      "wage_budget": 180000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 2,
+      "pressure": "alta"
+    },
+    "logistics": {
+      "airport": "VLC",
+      "train": "Valencia",
+      "preferred_mode": "bus",
+      "notes": "Desplazamientos a Madrid/Cataluña en bus o tren."
+    },
+    "rivalries": [
+      "Valencia HC"
+    ],
+    "data_quality": "media"
+  },
+  {
+    "id": "fc-barcelona",
+    "name": "FC Barcelona",
+    "full_name": "Fútbol Club Barcelona - Hockey Hierba",
+    "league": "DHA",
+    "city": "Barcelona",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": 1923,
+    "colors": [
+      "azul",
+      "grana"
+    ],
+    "nickname": "Barça",
+    "history": "Sección de hockey hierba fundada en 1923. Juega en el Pau Negre, en el Anillo Olímpico de Montjuïc; es un club con gran cantera y presencia habitual en la élite.",
+    "stadium": {
+      "name": "Estadi Pau Negre",
+      "address": "Passeig Olímpic, 6, 08038 Barcelona",
+      "city": "Barcelona",
+      "surface": "water-based",
+      "capacity": 1000,
+      "capacity_confidence": "estimada",
+      "notes": "Recinto municipal en Montjuïc."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 4,
+      "transfer_budget": 180000,
+      "wage_budget": 450000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Top 8 y crecimiento",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Barcelona",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán; desplazamientos cortos."
+    },
+    "rivalries": [
+      "RC Polo",
+      "Junior FC"
+    ],
+    "data_quality": "alta"
+  },
+  {
+    "id": "club-egara",
+    "name": "Club Egara",
+    "full_name": "Club Egara",
+    "league": "DHA",
+    "city": "Terrassa",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": 1935,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "Egara",
+    "history": "Fundado en 1935, el Club Egara es una de las entidades históricas de Terrassa. Se trasladó a Pla del Bon Aire en 1961; ha ganado 15 ligas, 18 Copas del Rey y dos Copas de Europa.",
+    "stadium": {
+      "name": "Pla del Bon Aire - Camp C1",
+      "address": "Carrer Jacint Badiella, 5, 08225 Terrassa, Barcelona",
+      "city": "Terrassa",
+      "surface": "water-based",
+      "capacity": 1000,
+      "capacity_confidence": "estimada",
+      "notes": "Sede histórica del club."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 5,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 5,
+      "transfer_budget": 320000,
+      "wage_budget": 700000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Final Four",
+      "patience": 4,
+      "pressure": "alta"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Terrassa",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán; desplazamientos cortos."
+    },
+    "rivalries": [
+      "Atlètic Terrassa HC",
+      "CD Terrassa Hockey"
+    ],
+    "data_quality": "alta"
+  },
+  {
+    "id": "rc-polo",
+    "name": "RC Polo",
+    "full_name": "Real Club de Polo de Barcelona",
+    "league": "DHA",
+    "city": "Barcelona",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": 1897,
+    "colors": [
+      "rojo",
+      "blanco"
+    ],
+    "nickname": "Polo",
+    "history": "Club fundado en 1897; el hockey llegó en 1907. Tiene su sede en Eduardo Dualde, en Barcelona, y es organizador histórico de torneos y club de referencia en Cataluña.",
+    "stadium": {
+      "name": "Campo Eduardo Dualde",
+      "address": "Av. Dr. Marañón, 17, 08028 Barcelona",
+      "city": "Barcelona",
+      "surface": "water-based",
+      "capacity": 800,
+      "capacity_confidence": "estimada",
+      "notes": "Instalaciones del RC Polo."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 5,
+      "transfer_budget": 300000,
+      "wage_budget": 650000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Final Four",
+      "patience": 4,
+      "pressure": "alta"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Barcelona",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán; desplazamientos cortos."
+    },
+    "rivalries": [
+      "FC Barcelona",
+      "Atlètic Terrassa HC"
+    ],
+    "data_quality": "alta"
+  },
+  {
+    "id": "rc-de-campo",
+    "name": "Real Club de Campo Villa de Madrid",
+    "full_name": "Real Club de Campo Villa de Madrid",
+    "league": "DHA",
+    "city": "Madrid",
+    "community": "Comunidad de Madrid",
+    "province": "Madrid",
+    "founded": 1930,
+    "colors": [
+      "verde",
+      "blanco"
+    ],
+    "nickname": "Campo",
+    "history": "Fundado en 1930, el Club de Campo Villa de Madrid es uno de los grandes clubes sociales de Madrid. Su hockey masculino ganó la liga en 2021, 2023 y 2026; juega en el campo de hockey del club, inaugurado en 1989.",
+    "stadium": {
+      "name": "Campo de Hockey Club de Campo - C1",
+      "address": "Ctra. de Castilla, km 2, Moncloa-Aravaca, 28040 Madrid",
+      "city": "Madrid",
+      "surface": "water-based",
+      "capacity": 1200,
+      "capacity_confidence": "estimada",
+      "notes": "Campo de hierba artificial inaugurado en 1989."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 5,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 5,
+      "transfer_budget": 450000,
+      "wage_budget": 900000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Ganar la liga",
+      "patience": 4,
+      "pressure": "muy alta"
+    },
+    "logistics": {
+      "airport": "MAD",
+      "train": "Madrid",
+      "preferred_mode": "bus",
+      "notes": "Cluster madrileño; desplazamientos cortos."
+    },
+    "rivalries": [
+      "RC Polo",
+      "Sanse Complutense"
+    ],
+    "data_quality": "alta"
+  },
+  {
+    "id": "sanse-complutense",
+    "name": "Sanse Complutense",
+    "full_name": "Sanse Complutense Club de Hockey",
+    "league": "DHA",
+    "city": "San Sebastián de los Reyes",
+    "community": "Comunidad de Madrid",
+    "province": "Madrid",
+    "founded": 1965,
+    "colors": [
+      "verde",
+      "blanco"
+    ],
+    "nickname": "Sanse",
+    "history": "Nacido en 1965 en el colegio San Pablo, el Sanse Complutense es un referente del hockey madrileño, especialmente en sala. Se fusionó con el Complutense en 1999 y juega en San Sebastián de los Reyes.",
+    "stadium": {
+      "name": "Campo Municipal de Hockey de San Sebastián de los Reyes",
+      "address": "Av. Euzkadi, 12, 28702 San Sebastián de los Reyes, Madrid",
+      "city": "San Sebastián de los Reyes",
+      "surface": "water-based",
+      "capacity": 500,
+      "capacity_confidence": "estimada",
+      "notes": "Campo municipal."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 4,
+      "transfer_budget": 120000,
+      "wage_budget": 350000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Top 8 / evitar playout",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "MAD",
+      "train": "San Sebastián de los Reyes",
+      "preferred_mode": "bus",
+      "notes": "Cluster madrileño; desplazamientos cortos."
+    },
+    "rivalries": [
+      "RC de Campo",
+      "SPV"
+    ],
+    "data_quality": "media"
+  },
+  {
+    "id": "sardinero",
+    "name": "Sardinero Hockey Club",
+    "full_name": "Sardinero Hockey Club",
+    "league": "DHA",
+    "city": "Santander",
+    "community": "Cantabria",
+    "province": "Cantabria",
+    "founded": 1984,
+    "colors": [
+      "blanco",
+      "azul"
+    ],
+    "nickname": "Sardinero",
+    "history": "Fundado en 1984 en Santander, el Sardinero HC es el club de referencia de Cantabria. Juega en La Albericia y ha combinado formación, hockey hierba y sala.",
+    "stadium": {
+      "name": "Campo Municipal de La Albericia",
+      "address": "Instituto La Albericia, 39011 Santander, Cantabria",
+      "city": "Santander",
+      "surface": "sand-dressed",
+      "capacity": 600,
+      "capacity_confidence": "estimada",
+      "notes": "Campo municipal."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 3,
+      "transfer_budget": 70000,
+      "wage_budget": 220000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "SDR",
+      "train": "Santander",
+      "preferred_mode": "bus",
+      "notes": "Desplazamientos largos a Cataluña/Madrid; bus o tren."
+    },
+    "rivalries": [
+      "RS Tenis"
+    ],
+    "data_quality": "media"
+  },
+  {
+    "id": "rs-tenis",
+    "name": "RS Tenis",
+    "full_name": "Real Sociedad de Tenis de La Magdalena",
+    "league": "DHA",
+    "city": "Santander",
+    "community": "Cantabria",
+    "province": "Cantabria",
+    "founded": 1906,
+    "colors": [
+      "blanco",
+      "verde"
+    ],
+    "nickname": "Tenis",
+    "history": "Club fundado en 1906 en Santander; la sección de hockey se creó en 1945. Tiene su sede social en La Magdalena y juega en La Albericia; es una de las entidades históricas del deporte cántabro.",
+    "stadium": {
+      "name": "Campo Municipal de La Albericia",
+      "address": "Instituto La Albericia, 39011 Santander, Cantabria",
+      "city": "Santander",
+      "surface": "sand-dressed",
+      "capacity": 600,
+      "capacity_confidence": "estimada",
+      "notes": "Comparte campo municipal con el Sardinero."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 3,
+      "transfer_budget": 80000,
+      "wage_budget": 240000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Top 8",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "SDR",
+      "train": "Santander",
+      "preferred_mode": "bus",
+      "notes": "Desplazamientos largos a Cataluña/Madrid."
+    },
+    "rivalries": [
+      "Sardinero Hockey Club"
+    ],
+    "data_quality": "media"
+  },
+  {
+    "id": "ud-taburiente",
+    "name": "UD Taburiente",
+    "full_name": "Unión Deportiva Taburiente",
+    "league": "DHA",
+    "city": "Las Palmas de Gran Canaria",
+    "community": "Canarias",
+    "province": "Las Palmas",
+    "founded": 1980,
+    "colors": [
+      "amarillo",
+      "azul"
+    ],
+    "nickname": "Tabu",
+    "history": "Fundado en mayo de 1980, la UD Taburiente es el referente del hockey en Canarias. Juega en Siete Palmas (Las Palmas) y ha competido en la élite masculina y femenina.",
+    "stadium": {
+      "name": "Campo de Hockey Siete Palmas",
+      "address": "Las Palmas de Gran Canaria",
+      "city": "Las Palmas de Gran Canaria",
+      "surface": "sand-dressed",
+      "capacity": 500,
+      "capacity_confidence": "estimada",
+      "notes": "Campo municipal de Siete Palmas."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 3,
+      "transfer_budget": 90000,
+      "wage_budget": 260000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "alta"
+    },
+    "logistics": {
+      "airport": "LPA",
+      "train": "No",
+      "preferred_mode": "flight",
+      "notes": "Todos los desplazamientos a la península requieren vuelo y traslado; coste y fatiga altos."
+    },
+    "rivalries": [],
+    "data_quality": "media"
+  },
+  {
+    "id": "junior-fc",
+    "name": "Junior FC",
+    "full_name": "Junior Futbol Club",
+    "league": "DHA",
+    "city": "Sant Cugat del Vallès",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": 1917,
+    "colors": [
+      "rojo",
+      "azul"
+    ],
+    "nickname": "Junior",
+    "history": "Fundado en 1917 en Sant Cugat del Vallès, el Junior FC es un club centenario con una sección de hockey consolidada. Dispone de dos campos y una cantera muy activa.",
+    "stadium": {
+      "name": "Camp de Hockey Junior FC",
+      "address": "Sant Cugat del Vallès, Barcelona",
+      "city": "Sant Cugat del Vallès",
+      "surface": "water-based",
+      "capacity": 600,
+      "capacity_confidence": "estimada",
+      "notes": "Dos campos de hockey; dirección por confirmar."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 5,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 5,
+      "transfer_budget": 250000,
+      "wage_budget": 550000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Final Four",
+      "patience": 4,
+      "pressure": "alta"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Sant Cugat",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán; desplazamientos cortos."
+    },
+    "rivalries": [
+      "FC Barcelona",
+      "Atlètic Terrassa HC"
+    ],
+    "data_quality": "media"
+  },
+  {
+    "id": "ad-rimas",
+    "name": "AD Rimas",
+    "full_name": "AD Rimas",
+    "league": "DHB",
+    "city": "Matadepera",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": null,
+    "colors": [
+      "rojo",
+      "blanco"
+    ],
+    "nickname": "Rimas",
+    "history": "Equipo vinculado al CD Terrassa; compite en DHB y utiliza las instalaciones de Les Pedritxes. Proyecto de desarrollo de jugadores.",
+    "stadium": {
+      "name": "Les Pedritxes - Camp C1",
+      "address": "Ctra. Terrassa a Talamanca, km 5,6, 08230 Matadepera, Barcelona",
+      "city": "Matadepera",
+      "surface": "water-based",
+      "capacity": 1200,
+      "capacity_confidence": "estimada",
+      "notes": "Comparte instalaciones con CD Terrassa."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 20000,
+      "wage_budget": 70000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Desarrollo y permanencia",
+      "patience": 3,
+      "pressure": "baja"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Terrassa",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán."
+    },
+    "rivalries": [
+      "Vallès Esportiu"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "aticos-san-fernando",
+    "name": "Aticos Inmobiliaria CH San Fernando",
+    "full_name": "Aticos Inmobiliaria Club Hockey San Fernando",
+    "league": "DHB",
+    "city": "San Fernando",
+    "community": "Andalucía",
+    "province": "Cádiz",
+    "founded": null,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "San Fernando",
+    "history": "Club de hockey de San Fernando (Cádiz), con sede en el IMD Pablo Negre. Representa el hockey andaluz en DHB.",
+    "stadium": {
+      "name": "IMH Pablo Negre",
+      "address": "C. Cartageneras, 38, 11100 San Fernando, Cádiz",
+      "city": "San Fernando",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Instalación municipal."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 25000,
+      "wage_budget": 80000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "XRY",
+      "train": "San Fernando",
+      "preferred_mode": "bus",
+      "notes": "Desplazamientos largos a Cataluña/Madrid; combinar tren y vuelo."
+    },
+    "rivalries": [
+      "Club de Hockey San Fernando"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "castelldefels",
+    "name": "Castelldefels HC",
+    "full_name": "Castelldefels Hockey Club",
+    "league": "DHB",
+    "city": "Castelldefels",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": null,
+    "colors": [
+      "azul",
+      "amarillo"
+    ],
+    "nickname": "Castelldefels",
+    "history": "Club de Castelldefels (Barcelona) con equipos senior y de base; juega en el Camp Municipal de la Via Ferrea.",
+    "stadium": {
+      "name": "Camp Municipal Via Ferrea",
+      "address": "Carrer Antic Camí Ral de València, 8, 08860 Castelldefels, Barcelona",
+      "city": "Castelldefels",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Campo municipal."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 25000,
+      "wage_budget": 85000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Castelldefels",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán."
+    },
+    "rivalries": [
+      "HC Sant Cugat"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "cd-giner",
+    "name": "CD Giner de los Ríos",
+    "full_name": "Club Deportivo Giner de los Ríos",
+    "league": "DHB",
+    "city": "Madrid",
+    "community": "Comunidad de Madrid",
+    "province": "Madrid",
+    "founded": null,
+    "colors": [
+      "verde",
+      "blanco"
+    ],
+    "nickname": "Giner",
+    "history": "Club vinculado al colegio Giner de los Ríos, en Madrid. Proyecto formativo con equipo senior en DHB.",
+    "stadium": {
+      "name": "Instalaciones CD Giner de los Ríos",
+      "address": "Madrid",
+      "city": "Madrid",
+      "surface": "sand-dressed",
+      "capacity": 200,
+      "capacity_confidence": "estimada",
+      "notes": "Dirección por confirmar."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 15000,
+      "wage_budget": 60000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "baja"
+    },
+    "logistics": {
+      "airport": "MAD",
+      "train": "Madrid",
+      "preferred_mode": "bus",
+      "notes": "Cluster madrileño."
+    },
+    "rivalries": [],
+    "data_quality": "baja"
+  },
+  {
+    "id": "ch-madrid-las-rozas",
+    "name": "Club Hockey Madrid - Las Rozas",
+    "full_name": "Club Hockey Madrid - Las Rozas",
+    "league": "DHB",
+    "city": "Las Rozas",
+    "community": "Comunidad de Madrid",
+    "province": "Madrid",
+    "founded": null,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "Las Rozas",
+    "history": "Club de Las Rozas (Madrid) con tradición de hockey base; compite en DHB.",
+    "stadium": {
+      "name": "Campo de Hockey Las Rozas",
+      "address": "Las Rozas, Madrid",
+      "city": "Las Rozas",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Dirección por confirmar."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 25000,
+      "wage_budget": 85000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "MAD",
+      "train": "Las Rozas",
+      "preferred_mode": "bus",
+      "notes": "Cluster madrileño."
+    },
+    "rivalries": [
+      "Pozuelo"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "egara-1935",
+    "name": "Egara 1935",
+    "full_name": "Egara 1935",
+    "league": "DHB",
+    "city": "Terrassa",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": 1935,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "Egara 1935",
+    "history": "Equipo vinculado al Club Egara; compite en DHB y juega en Pla del Bon Aire. Ha sido un equipo competitivo en la categoría de plata y un puente hacia el primer equipo.",
+    "stadium": {
+      "name": "Pla del Bon Aire - Camp C1",
+      "address": "Carrer Jacint Badiella, 5, 08225 Terrassa, Barcelona",
+      "city": "Terrassa",
+      "surface": "water-based",
+      "capacity": 1000,
+      "capacity_confidence": "estimada",
+      "notes": "Comparte instalaciones con Club Egara."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 5,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 3,
+      "transfer_budget": 60000,
+      "wage_budget": 180000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Ascenso / play-off",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Terrassa",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán."
+    },
+    "rivalries": [
+      "Vallès Esportiu",
+      "AD Rimas"
+    ],
+    "data_quality": "media"
+  },
+  {
+    "id": "hc-sant-cugat",
+    "name": "HC Sant Cugat",
+    "full_name": "Hockey Club Sant Cugat",
+    "league": "DHB",
+    "city": "Sant Cugat del Vallès",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": null,
+    "colors": [
+      "rojo",
+      "negro"
+    ],
+    "nickname": "Sant Cugat",
+    "history": "Club de Sant Cugat del Vallès; juega en el campo de Paseo Sant Mamet y compite en DHB.",
+    "stadium": {
+      "name": "Camp de Hockey Sant Cugat",
+      "address": "Passeig Sant Mamet, 5, 08195 Sant Cugat del Vallès, Barcelona",
+      "city": "Sant Cugat del Vallès",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Campo municipal."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 25000,
+      "wage_budget": 85000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Sant Cugat",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán."
+    },
+    "rivalries": [
+      "Junior FC",
+      "Castelldefels HC"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "iluro",
+    "name": "Iluro HC",
+    "full_name": "Iluro Hockey Club",
+    "league": "DHB",
+    "city": "Mataró",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": null,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "Iluro",
+    "history": "Club de Mataró (Barcelona); juega en el Camp Municipal de Mataró y compite en DHB.",
+    "stadium": {
+      "name": "Camp de Hoquei Municipal de Mataró",
+      "address": "Carrer Galícia, 180, 08303 Mataró, Barcelona",
+      "city": "Mataró",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Campo municipal."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 20000,
+      "wage_budget": 75000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Mataró",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán."
+    },
+    "rivalries": [],
+    "data_quality": "baja"
+  },
+  {
+    "id": "linia-22",
+    "name": "Línia 22 Stern Motor",
+    "full_name": "Línia 22 Stern Motor",
+    "league": "DHB",
+    "city": "Terrassa",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": null,
+    "colors": [
+      "negro",
+      "amarillo"
+    ],
+    "nickname": "Línia 22",
+    "history": "Club de Terrassa; juega en el Camp Federatiu Martí Colomer y compite en DHB.",
+    "stadium": {
+      "name": "Camp Federatiu Martí Colomer",
+      "address": "Carrer dels Voluntaris, 10, 08225 Terrassa, Barcelona",
+      "city": "Terrassa",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Campo federativo."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 25000,
+      "wage_budget": 85000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Terrassa",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán."
+    },
+    "rivalries": [
+      "AD Rimas",
+      "Vallès Esportiu"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "pedralbes",
+    "name": "Pedralbes HC",
+    "full_name": "Pedralbes Hockey Club",
+    "league": "DHB",
+    "city": "Barcelona",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": null,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "Pedralbes",
+    "history": "Equipo vinculado al RC Polo; compite en DHB y juega en Eduardo Dualde.",
+    "stadium": {
+      "name": "Campo Eduardo Dualde",
+      "address": "Av. Dr. Marañón, 17, 08028 Barcelona",
+      "city": "Barcelona",
+      "surface": "water-based",
+      "capacity": 800,
+      "capacity_confidence": "estimada",
+      "notes": "Comparte instalaciones con RC Polo."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 30000,
+      "wage_budget": 100000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia / desarrollo",
+      "patience": 3,
+      "pressure": "baja"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Barcelona",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán."
+    },
+    "rivalries": [
+      "RC Polo"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "rc-jolaseta",
+    "name": "RC Jolaseta",
+    "full_name": "Real Club Jolaseta",
+    "league": "DHB",
+    "city": "Getxo",
+    "community": "País Vasco",
+    "province": "Bizkaia",
+    "founded": null,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "Jolaseta",
+    "history": "Club histórico de Getxo (Bizkaia); sede en el Campo Julio Solaun y una de las entidades veteranas del hockey vasco.",
+    "stadium": {
+      "name": "Campo Julio Solaun",
+      "address": "Los Chopos, Etorbidea, 18008 Getxo, Bizkaia",
+      "city": "Getxo",
+      "surface": "sand-dressed",
+      "capacity": 400,
+      "capacity_confidence": "estimada",
+      "notes": "Instalaciones del RC Jolaseta."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 3,
+      "transfer_budget": 50000,
+      "wage_budget": 150000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Top 8 / play-off",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "BIO",
+      "train": "Getxo",
+      "preferred_mode": "bus",
+      "notes": "Desplazamientos a Madrid/Cataluña en bus o vuelo."
+    },
+    "rivalries": [
+      "Real Sociedad 1927"
+    ],
+    "data_quality": "media"
+  },
+  {
+    "id": "pozuelo",
+    "name": "Pozuelo",
+    "full_name": "Club Hockey Pozuelo",
+    "league": "DHB",
+    "city": "Pozuelo de Alarcón",
+    "community": "Comunidad de Madrid",
+    "province": "Madrid",
+    "founded": null,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "Pozuelo",
+    "history": "Club de Pozuelo de Alarcón (Madrid); juega en el CD Valle de las Cañas y compite en DHB.",
+    "stadium": {
+      "name": "CD Valle de las Cañas - C1",
+      "address": "Centro Deportivo Valle de las Cañas, 28223 Madrid",
+      "city": "Pozuelo de Alarcón",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Campo municipal."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 30000,
+      "wage_budget": 100000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "MAD",
+      "train": "Pozuelo",
+      "preferred_mode": "bus",
+      "notes": "Cluster madrileño."
+    },
+    "rivalries": [
+      "CH Madrid - Las Rozas"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "real-sociedad-1927",
+    "name": "Real Sociedad 1927",
+    "full_name": "Real Sociedad 1927",
+    "league": "DHB",
+    "city": "Madrid",
+    "community": "Comunidad de Madrid",
+    "province": "Madrid",
+    "founded": 1927,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "Real Sociedad",
+    "history": "Equipo vinculado al RC de Campo; compite en DHB y juega en el campo del club madrileño.",
+    "stadium": {
+      "name": "Campo de Hockey Club de Campo - C1",
+      "address": "Ctra. de Castilla, km 2, Moncloa-Aravaca, 28040 Madrid",
+      "city": "Madrid",
+      "surface": "water-based",
+      "capacity": 1200,
+      "capacity_confidence": "estimada",
+      "notes": "Comparte instalaciones con RC de Campo."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 5,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 30000,
+      "wage_budget": 100000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Desarrollo y permanencia",
+      "patience": 3,
+      "pressure": "baja"
+    },
+    "logistics": {
+      "airport": "MAD",
+      "train": "Madrid",
+      "preferred_mode": "bus",
+      "notes": "Cluster madrileño."
+    },
+    "rivalries": [
+      "RC Jolaseta"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "spv",
+    "name": "SPV",
+    "full_name": "SPV Complutense",
+    "league": "DHB",
+    "city": "San Sebastián de los Reyes",
+    "community": "Comunidad de Madrid",
+    "province": "Madrid",
+    "founded": null,
+    "colors": [
+      "verde",
+      "blanco"
+    ],
+    "nickname": "SPV",
+    "history": "Equipo vinculado al Sanse Complutense; compite en DHB y juega en el campo municipal de San Sebastián de los Reyes.",
+    "stadium": {
+      "name": "Campo Municipal de Hockey de San Sebastián de los Reyes",
+      "address": "Av. Euzkadi, 12, 28702 San Sebastián de los Reyes, Madrid",
+      "city": "San Sebastián de los Reyes",
+      "surface": "water-based",
+      "capacity": 500,
+      "capacity_confidence": "estimada",
+      "notes": "Campo municipal."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 4,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 25000,
+      "wage_budget": 90000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia / desarrollo",
+      "patience": 3,
+      "pressure": "baja"
+    },
+    "logistics": {
+      "airport": "MAD",
+      "train": "San Sebastián de los Reyes",
+      "preferred_mode": "bus",
+      "notes": "Cluster madrileño."
+    },
+    "rivalries": [
+      "Sanse Complutense"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "universitat-alacant",
+    "name": "Universitat d'Alacant - San Vicente",
+    "full_name": "Universitat d'Alacant - San Vicente",
+    "league": "DHB",
+    "city": "San Vicente del Raspeig",
+    "community": "Comunidad Valenciana",
+    "province": "Alicante",
+    "founded": null,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "UA",
+    "history": "Club universitario de San Vicente del Raspeig (Alicante); juega en el campo de la Universidad de Alicante y compite en DHB.",
+    "stadium": {
+      "name": "Campo de Hockey de la Universidad de Alicante",
+      "address": "C. del Aeroplano, 4A, 03690 San Vicente del Raspeig, Alicante",
+      "city": "San Vicente del Raspeig",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Instalación universitaria."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 3,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 20000,
+      "wage_budget": 70000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Permanencia",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "ALC",
+      "train": "Alicante",
+      "preferred_mode": "bus",
+      "notes": "Desplazamientos a Madrid/Cataluña en tren o bus."
+    },
+    "rivalries": [],
+    "data_quality": "baja"
+  },
+  {
+    "id": "valles-esportiu",
+    "name": "Vallès Esportiu",
+    "full_name": "Vallès Esportiu",
+    "league": "DHB",
+    "city": "Terrassa",
+    "community": "Cataluña",
+    "province": "Barcelona",
+    "founded": null,
+    "colors": [
+      "amarillo",
+      "negro"
+    ],
+    "nickname": "Vallès",
+    "history": "Equipo vinculado al Atlètic Terrassa; compite en DHB y juega en Can Salas.",
+    "stadium": {
+      "name": "Estadi Josep Marquès (Can Salas)",
+      "address": "Urbanització Can Salas, 8, 08227 Terrassa, Barcelona",
+      "city": "Terrassa",
+      "surface": "water-based",
+      "capacity": 1500,
+      "capacity_confidence": "estimada",
+      "notes": "Comparte instalaciones con Atlètic Terrassa."
+    },
+    "facilities": {
+      "pitches": 2,
+      "gym": true,
+      "medical": true,
+      "video": true,
+      "academy": 5,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 2,
+      "transfer_budget": 30000,
+      "wage_budget": 100000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Ascenso / play-off",
+      "patience": 3,
+      "pressure": "media"
+    },
+    "logistics": {
+      "airport": "BCN",
+      "train": "Terrassa",
+      "preferred_mode": "bus",
+      "notes": "Cluster catalán."
+    },
+    "rivalries": [
+      "Egara 1935",
+      "Línia 22"
+    ],
+    "data_quality": "baja"
+  },
+  {
+    "id": "san-fernando-andaluza",
+    "name": "Club de Hockey San Fernando",
+    "full_name": "Club de Hockey San Fernando",
+    "league": "1A",
+    "city": "San Fernando",
+    "community": "Andalucía",
+    "province": "Cádiz",
+    "founded": null,
+    "colors": [
+      "azul",
+      "blanco"
+    ],
+    "nickname": "San Fernando",
+    "history": "Equipo de San Fernando (Cádiz) que compite en la Primera Andaluza; juega en el IMD Pablo Negre.",
+    "stadium": {
+      "name": "IMH Pablo Negre",
+      "address": "C. Cartageneras, 38, 11100 San Fernando, Cádiz",
+      "city": "San Fernando",
+      "surface": "sand-dressed",
+      "capacity": 300,
+      "capacity_confidence": "estimada",
+      "notes": "Instalación municipal."
+    },
+    "facilities": {
+      "pitches": 1,
+      "gym": true,
+      "medical": true,
+      "video": false,
+      "academy": 2,
+      "confidence": "modelo"
+    },
+    "finances": {
+      "tier": 1,
+      "transfer_budget": 5000,
+      "wage_budget": 25000,
+      "currency": "EUR",
+      "confidence": "modelo"
+    },
+    "board": {
+      "expectation": "Competir y formar",
+      "patience": 4,
+      "pressure": "baja"
+    },
+    "logistics": {
+      "airport": "XRY",
+      "train": "San Fernando",
+      "preferred_mode": "bus",
+      "notes": "Liga autonómica; desplazamientos por Andalucía."
+    },
+    "rivalries": [
+      "Aticos Inmobiliaria CH San Fernando"
+    ],
+    "data_quality": "baja"
+  }
+]

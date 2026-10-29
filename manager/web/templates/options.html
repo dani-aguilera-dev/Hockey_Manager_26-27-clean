@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Opciones{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between;align-items:end">
+  <div><h1>Opciones</h1><p class="muted">Ajustes de lectura y comportamiento del menú.</p></div>
+  {% if current_state %}<a class="btn" href="{{ url_for('match_live') if live_active else url_for('dashboard') }}">Continuar partida</a>{% endif %}
+</div>
+<form method="post" class="card" style="max-width:760px">
+  <div class="option-block">
+    <h3>Tamaño del texto</h3>
+    <p class="small muted">Aumenta el tamaño base de toda la interfaz.</p>
+    <label class="option-card"><input type="radio" name="text_size" value="normal" {% if ui_prefs.text_size != 'large' %}checked{% endif %}> <span><b>Normal</b><br><span class="muted small">15 px</span></span></label>
+    <label class="option-card"><input type="radio" name="text_size" value="large" {% if ui_prefs.text_size == 'large' %}checked{% endif %}> <span><b>Grande</b><br><span class="muted small">17 px, más cómodo en pantallas grandes</span></span></label>
+  </div>
+  <div class="option-block">
+    <h3>Densidad</h3>
+    <label class="option-card"><input type="checkbox" name="compact" {% if ui_prefs.compact %}checked{% endif %}> <span><b>Modo compacto</b><br><span class="muted small">Reduce el espacio de tarjetas y fichas.</span></span></label>
+  </div>
+  <div class="option-block">
+    <h3>Seguridad</h3>
+    <label class="option-card"><input type="checkbox" name="confirm_exit" {% if ui_prefs.confirm_exit %}checked{% endif %}> <span><b>Confirmar al salir de una partida</b><br><span class="muted small">Pide confirmación antes de cerrar la sesión actual.</span></span></label>
+  </div>
+  <div class="actions">
+    <button class="btn primary" type="submit">Guardar opciones</button>
+    <button class="btn" type="submit" name="reset" value="1">Restablecer</button>
+  </div>
+</form>
+<div class="actions" style="margin-top:14px">
+  <a class="btn" href="{{ url_for('main_menu') }}">Volver al menú principal</a>
+</div>
+{% endblock %}

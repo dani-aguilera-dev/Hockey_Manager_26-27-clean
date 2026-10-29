@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Fin de temporada{% endblock %}
+{% block content %}
+<h1>Fin de temporada {{ state.season }}</h1>
+<p>Campeón de {{ summary.competition }}: <b>{{ summary.champion or '—' }}</b> · Tu posición: <b>{{ summary.user_position }}º/{{ summary.table|length }}</b></p>
+{% if summary.cup_winner %}<p>Campeón de Copa: <b>{{ summary.cup_winner }}</b>{% if summary.cup_third %} · Tercero: {{ summary.cup_third }}{% endif %}</p>{% endif %}
+{% if summary.ehl_winner %}<p>Campeón de EHL: <b>{{ summary.ehl_winner }}</b></p>{% endif %}
+<div class="grid grid-2">
+<div class="card"><h3>Clasificación final</h3><table><thead><tr><th>#</th><th>Equipo</th><th class="num">PTS</th><th class="num">DG</th></tr></thead><tbody>
+{% for r in summary.table %}<tr><td>{{r.position}}</td><td>{% for t in state.teams.values() %}{% if t.name == r.team %}<img class="crest crest-sm" src="{{ crest_src(t) }}" alt="">{% endif %}{% endfor %} {{r.team}}</td><td class="num">{{r.points}}</td><td class="num">{{r.gd}}</td></tr>{% endfor %}
+</tbody></table></div>
+<div class="card"><h3>Junta y movimientos</h3>
+{% if summary.board_review %}<p>Objetivo {{summary.board_review.target}}º · Posición {{summary.board_review.position}}º · {{ 'Cumplido' if summary.board_review.met else 'No cumplido' }}</p><p>Confianza {{summary.board_review.confidence_before}} → {{summary.board_review.confidence_after}}/100</p><p class="muted">{{summary.board_review.message}}</p>{% endif %}
+<p><b>Ascienden:</b> {{ summary.promoted|join(', ') or '—' }}</p>
+<p><b>Descienden:</b> {{ summary.relegated|join(', ') or '—' }}</p>
+{% if summary.retirements %}<p><b>Retiros:</b> {{ summary.retirements|length }} jugadores</p>{% for r in summary.retirements[:6] %}<p class="small">{{r.player}} · {{r.club}} · {{r.age}} años</p>{% endfor %}{% endif %}
+</div>
+</div>
+<div class="actions">
+<form method="post" action="{{ url_for('season_continue') }}"><button class="btn primary" type="submit">Continuar siguiente temporada</button></form>
+<a class="btn" href="{{ url_for('load_page') }}">Cargar otra partida</a>
+</div>
+{% endblock %}

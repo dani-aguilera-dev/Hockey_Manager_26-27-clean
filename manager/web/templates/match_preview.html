@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Previa{% endblock %}
+{% block content %}
+<div class="card" style="margin-bottom:14px">
+  <div class="scoreboard">
+    <div class="team">{{ m.crest(home, 'crest-lg') }}<div><h1>{{ home.name }}</h1><span class="muted">{{ positions.get(home.id, '—') }}º · {{ home.points }} pts · moral {{ home.morale }}/20</span></div></div>
+    <div class="vs">VS</div>
+    <div class="team right"><div><h1>{{ away.name }}</h1><span class="muted">{{ positions.get(away.id, '—') }}º · {{ away.points }} pts · moral {{ away.morale }}/20</span></div>{{ m.crest(away, 'crest-lg') }}</div>
+  </div>
+  <p class="match-meta">{{ fixture_label(fixture) }} · {{ fixture.date|fdate }} · {{ home.stadium_name }}</p>
+</div>
+
+<div class="grid grid-2">
+  <div class="card">
+    <h3>Claves del partido</h3>
+    <p><b>Forma</b><br>{{ home.name }}: {{ home_form }}<br>{{ away.name }}: {{ away_form }}</p>
+    <p><b>Peligro</b><br>{{ home_top.name if home_top else '—' }} ({{ home_top.season_goals if home_top else 0 }} goles) · {{ away_top.name if away_top else '—' }} ({{ away_top.season_goals if away_top else 0 }} goles)</p>
+    <p><b>Bajas</b><br>{{ home.name }}: {% for p in home_absences %}{{ p.name }}{% if not loop.last %}, {% endif %}{% else %}sin bajas{% endfor %}<br>{{ away.name }}: {% for p in away_absences %}{{ p.name }}{% if not loop.last %}, {% endif %}{% else %}sin bajas{% endfor %}</p>
+    <p class="muted">Aforo: {{ home.stadium_capacity }} · {{ home.stadium_name }}</p>
+  </div>
+  <div class="card">
+    <h3>Jugar</h3>
+    <form method="post">
+      {% if fixture.away_id == team.id and travel %}
+        <h3>Viaje</h3>
+        {% for o in travel %}<p><label><input type="radio" name="travel" value="{{o.id}}" {% if o.id=='equilibrado' %}checked{% endif %}> <b>{{ o.label }}</b> · {{ o.cost|money }} · fatiga +{{ (o.fatigue*100)|round|int }}%</label></p>{% endfor %}
+      {% endif %}
+      <div class="actions">
+        <button class="btn primary" type="submit" formaction="{{ url_for('match_quick') }}">Simulación rápida</button>
+        {% if not is_cup %}<button class="btn blue" type="submit" formaction="{{ url_for('match_live_start') }}">Jugar en directo</button>{% endif %}
+      </div>
+      {% if is_cup %}<p class="small muted">La Copa se juega por ahora en simulación rápida.</p>{% endif %}
+    </form>
+    <p class="small muted">Si no has planificado la semana, el segundo entrenador aplicará el plan automático.</p>
+  </div>
+</div>
+
+<div class="card" style="margin-top:14px">
+  <div class="cat">La previa del rival</div>
+  <h3>{{ press_context.coach if press_context else 'El rival' }}</h3>
+  <p class="muted">«{{ press_context.quote if press_context else 'Será un partido competido.' }}»</p>
+  <a class="btn small" href="{{ url_for('press') }}">Ir a la rueda de prensa</a>
+</div>
+
+<div class="card" style="margin-top:14px">
+  <div class="row" style="justify-content:space-between;align-items:center">
+    <h3 style="margin:0">Once inicial</h3>
+    <a class="btn small" href="{{ url_for('tactics') }}">Editar once</a>
+  </div>
+  <div class="lineup-pitch" style="margin-top:10px">
+    {% for row in slot_rows %}
+    <div class="pitch-row {{ 'single' if row.slots|length == 1 else '' }}">
+      <div class="row-label">{{ row.label }}</div>
+      <div class="pitch-slots">
+        {% for slot in row.slots %}{% set p = slot.player %}
+        <div class="slot-card preview {{ 'mismatch' if slot.mismatch else '' }}">
+          <div class="row" style="justify-content:space-between"><span class="slot-code">{{ slot.code }}</span>{% if p %}<span class="badge">{{ '%.1f'|format(p.overall) }}</span>{% endif %}</div>
+          {% if p %}{{ m.avatar(p) }}<div class="slot-name">{{ p.name }}</div><div class="pc-tags">{{ m.pos(p) }} <span class="arch">{{ p.archetype }}</span></div><div class="pc-meta">Fatiga {{ '%.0f'|format(p.fatigue) }}% · <span class="star-chip">{{ stars_text(p.overall, p.league) }}</span></div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="card" style="margin-top:14px">
+  <h3>Banquillo</h3>
+  <div class="player-grid">{% for p in bench %}{{ m.player_card(p, compact=true) }}{% endfor %}</div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Menú principal{% endblock %}
+{% block content %}
+{% if current_state %}
+<div class="card main-menu-hero">
+  <div class="hero-player">
+    <img class="crest" style="width:92px;height:92px;flex-basis:92px" src="{{ crest_src(current_team) }}" alt="Escudo {{ current_team.name }}">
+    <div style="flex:1;min-width:0">
+      <div class="menu-kicker">Partida en curso</div>
+      <h1>{{ current_team.name }}</h1>
+      <p class="muted">{{ current_state.competition }} · {{ current_state.season }} · Jornada {{ current_state.round }} · {{ current_state.date|fdate }}</p>
+      <p class="small muted">Guardado: <b>{{ session.get('save_name','sin guardar') }}</b>{% if live_active %} · <span class="badge warn">Partido en directo</span>{% endif %}</p>
+    </div>
+  </div>
+  <div class="actions" style="margin-top:14px">
+    <a class="btn primary" href="{{ url_for('match_live') if live_active else url_for('dashboard') }}">{{ 'Continuar partido' if live_active else 'Continuar partida' }}</a>
+    <a class="btn" href="{{ url_for('load_page') }}">Cargar otra partida</a>
+    <a class="btn" href="{{ url_for('new_game_page') }}">Nueva partida</a>
+    <a class="btn" href="{{ url_for('options') }}">Opciones</a>
+  </div>
+</div>
+<div class="grid grid-2" style="margin-top:14px">
+  <div class="card">
+    <h3>Guardar ahora</h3>
+    <form method="post" action="{{ url_for('save_page') }}" class="menu-form">
+      <label for="main-save-name">Nombre del guardado</label>
+      <input id="main-save-name" name="name" value="{{ session.get('save_name','') }}" placeholder="Nombre de la partida">
+      <button class="btn primary" type="submit">Guardar partida</button>
+    </form>
+    <p class="small muted">También puedes guardar desde el menú de cualquier pantalla.</p>
+  </div>
+  <div class="card">
+    <h3>Salir de la partida</h3>
+    <p class="small muted">La partida se guarda automáticamente antes de cerrar la sesión actual.</p>
+    <form method="post" action="{{ url_for('exit_game') }}" data-confirm-exit="{{ 'true' if ui_prefs.confirm_exit else 'false' }}">
+      <button class="btn danger" type="submit">Cerrar partida y volver al inicio</button>
+    </form>
+    {% if desktop_mode %}
+    <form method="post" action="{{ url_for('desktop_quit') }}" style="margin-top:14px" data-confirm-exit="true">
+      <button class="btn" type="submit">Cerrar Hockey Manager</button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% else %}
+<div class="hero">
+  <span class="badge ok">Alpha web local</span>
+  <h1>Hockey Manager</h1>
+  <p>Dirige un club de DHA o DHB. Partido en directo, táctica, mercado, cantera y multi-temporada.</p>
+  <div class="actions">
+    <a class="btn primary" href="{{ url_for('new_game_page') }}">Nueva partida</a>
+    <a class="btn" href="{{ url_for('load_page') }}">Cargar partida</a>
+    <a class="btn" href="{{ url_for('options') }}">Opciones</a>
+  </div>
+  {% if desktop_mode %}<form method="post" action="{{ url_for('desktop_quit') }}" data-confirm-exit="true" style="margin-top:14px"><button class="btn" type="submit">Cerrar Hockey Manager</button></form>{% endif %}
+</div>
+{% endif %}
+
+{% if saves %}
+<div class="card" style="margin-top:14px">
+  <h3>Partidas recientes</h3>
+  <table>
+    <thead><tr><th>Nombre</th><th>Club</th><th>Temporada</th><th>Jornada</th><th></th></tr></thead>
+    <tbody>
+    {% for s in saves %}
+      <tr>
+        <td>{{ s.name }}</td><td>{{ s.club_id }}</td><td>{{ s.season }}</td><td>{{ s.round }}</td>
+        <td><form method="post" action="{{ url_for('load_page') }}"><input type="hidden" name="name" value="{{ s.name }}"><button class="btn small" type="submit">Cargar</button></form></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <a class="small" href="{{ url_for('load_page') }}">Ver todas las partidas guardadas</a>
+</div>
+{% endif %}
+{% endblock %}

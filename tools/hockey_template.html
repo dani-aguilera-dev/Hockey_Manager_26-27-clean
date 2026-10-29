@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hockey Manager 2026-27 · Simulador DHA / DHB</title>
+<style>
+:root{
+  --bg:#07111f;
+  --bg2:#0b1a2d;
+  --panel:#0f2238;
+  --panel2:#132b45;
+  --panel3:#17344f;
+  --text:#eef6ff;
+  --muted:#93a9c0;
+  --line:#23405d;
+  --accent:#31d0aa;
+  --accent2:#5aa9ff;
+  --gold:#ffc857;
+  --red:#ff6b6b;
+  --green:#38d996;
+  --orange:#ff9f43;
+  --blue:#5aa9ff;
+  --shadow:0 18px 50px rgba(0,0,0,.28);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1100px 600px at 8% -10%, rgba(49,208,170,.14), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(90,169,255,.16), transparent 55%),
+    linear-gradient(180deg, #07111f 0%, #081524 45%, #07111f 100%);
+  min-height:100vh;
+}
+a{color:inherit}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.wrap{max-width:1420px;margin:0 auto;padding:0 22px}
+.topbar{
+  position:sticky;top:0;z-index:40;
+  backdrop-filter:blur(16px);
+  background:rgba(7,17,31,.82);
+  border-bottom:1px solid rgba(35,64,93,.7);
+}
+.topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;height:74px}
+.brand{display:flex;align-items:center;gap:12px;min-width:240px}
+.brand-mark{
+  width:44px;height:44px;border-radius:14px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#04121d;font-weight:900;font-size:20px;
+  box-shadow:0 8px 24px rgba(49,208,170,.25);
+}
+.brand h1{font-size:16px;margin:0;letter-spacing:.2px}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1.4px}
+.nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.nav button{
+  border:1px solid transparent;background:transparent;color:var(--muted);
+  padding:9px 14px;border-radius:999px;font-weight:600;font-size:13px;
+  transition:.18s ease;
+}
+.nav button:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.nav button.active{color:#04121d;background:linear-gradient(135deg,var(--accent),#8de8cf);box-shadow:0 6px 18px rgba(49,208,170,.18)}
+main{padding:34px 0 70px}
+.hero{
+  position:relative;overflow:hidden;
+  border:1px solid var(--line);border-radius:26px;
+  background:
+    linear-gradient(120deg, rgba(19,43,69,.95), rgba(11,26,45,.7)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 110px);
+  box-shadow:var(--shadow);
+  padding:34px;
+  display:grid;grid-template-columns:1.25fr .75fr;gap:28px;
+}
+.hero:before{
+  content:"";position:absolute;inset:auto -120px -180px auto;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle, rgba(49,208,170,.2), transparent 65%);
+}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(49,208,170,.12)}
+.hero h2{font-size:clamp(30px,4vw,54px);line-height:1.02;margin:0 0 14px;letter-spacing:-1.6px}
+.hero h2 span{color:var(--accent)}
+.hero p{color:var(--muted);line-height:1.65;max-width:680px;margin:0 0 22px;font-size:14px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  border:1px solid var(--line);background:var(--panel2);color:var(--text);
+  padding:11px 16px;border-radius:12px;font-weight:700;font-size:13px;
+  transition:.18s ease;display:inline-flex;align-items:center;gap:8px;
+}
+.btn:hover{transform:translateY(-1px);border-color:#35658f;background:var(--panel3)}
+.btn.primary{background:linear-gradient(135deg,var(--accent),#8de8cf);color:#04121d;border-color:transparent;box-shadow:0 10px 26px rgba(49,208,170,.18)}
+.btn.secondary{background:rgba(90,169,255,.12);border-color:rgba(90,169,255,.35);color:#cde7ff}
+.btn.ghost{background:transparent}
+.btn.small{padding:7px 11px;border-radius:10px;font-size:12px}
+.btn.danger{background:rgba(255,107,107,.12);border-color:rgba(255,107,107,.35);color:#ffd1d1}
+.hero-side{display:grid;gap:12px;align-content:center}
+.hero-stat{
+  border:1px solid var(--line);background:rgba(7,17,31,.38);border-radius:16px;padding:16px 18px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.hero-stat strong{font-size:26px;letter-spacing:-1px}
+.hero-stat span{color:var(--muted);font-size:12px;font-weight:600}
+.section{margin-top:30px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px}
+.section-head h3{margin:0;font-size:20px;letter-spacing:-.4px}
+.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.grid{display:grid;gap:14px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid-auto{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.card{
+  border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,var(--panel),rgba(15,34,56,.78));
+  box-shadow:var(--shadow);padding:18px;min-width:0;
+}
+.card.hover{cursor:pointer;transition:.18s ease}
+.card.hover:hover{transform:translateY(-3px);border-color:#3d6d95;box-shadow:0 24px 60px rgba(0,0,0,.38)}
+.kpi{padding:18px}
+.kpi .label{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}
+.kpi .value{font-size:32px;font-weight:900;letter-spacing:-1.4px;margin-top:6px;line-height:1.1;overflow-wrap:anywhere;white-space:normal}
+.kpi .sub{color:var(--muted);font-size:12px;margin-top:4px}
+.team-card{display:flex;flex-direction:column;gap:13px;min-height:260px}
+.team-top{display:flex;align-items:center;gap:12px}
+.badge{
+  width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  font-weight:900;font-size:15px;letter-spacing:-.5px;flex:0 0 auto;
+  background:linear-gradient(135deg,rgba(90,169,255,.28),rgba(49,208,170,.2));
+  border:1px solid rgba(255,255,255,.1);
+}
+.badge.dha{background:linear-gradient(135deg,rgba(49,208,170,.28),rgba(49,208,170,.08))}
+.badge.dhb{background:linear-gradient(135deg,rgba(90,169,255,.28),rgba(90,169,255,.08))}
+.badge.onea{background:linear-gradient(135deg,rgba(255,200,87,.26),rgba(255,159,67,.08))}
+.team-name{font-weight:800;font-size:14px;line-height:1.25}
+.team-sub{color:var(--muted);font-size:11px;margin-top:3px}
+.team-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.stars{color:var(--gold);letter-spacing:1px;font-size:14px;white-space:nowrap}
+.stars .off{color:#38526b}
+.stars .half{background:linear-gradient(90deg,var(--gold) 50%,#38526b 50%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rating{font-size:28px;font-weight:900;letter-spacing:-1.5px}
+.rating small{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:0}
+.bars{display:grid;gap:8px}
+.bar-row{display:grid;grid-template-columns:58px 1fr 34px;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+.bar{height:8px;border-radius:999px;background:#0a1929;overflow:hidden;border:1px solid rgba(255,255,255,.04)}
+.bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent2),var(--accent))}
+.bar.attack > i{background:linear-gradient(90deg,#ff9f43,#ffc857)}
+.bar.defense > i{background:linear-gradient(90deg,#5aa9ff,#31d0aa)}
+.bar.potential > i{background:linear-gradient(90deg,#a78bfa,#5aa9ff)}
+.bar.goals > i{background:linear-gradient(90deg,#31d0aa,#8de8cf)}
+.team-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;margin-top:auto}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);padding:4px 9px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.pill.green{color:#9af3cf;border-color:rgba(56,217,150,.3);background:rgba(56,217,150,.08)}
+.pill.blue{color:#c3e4ff;border-color:rgba(90,169,255,.3);background:rgba(90,169,255,.08)}
+.pill.gold{color:#ffe0a0;border-color:rgba(255,200,87,.3);background:rgba(255,200,87,.08)}
+.pill.red{color:#ffc1c1;border-color:rgba(255,107,107,.3);background:rgba(255,107,107,.08)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{
+  border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);
+  padding:9px 14px;border-radius:999px;font-weight:800;font-size:12px;transition:.18s ease;
+}
+.tab:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.tab.active{background:linear-gradient(135deg,var(--accent),#8de8cf);color:#04121d;border-color:transparent}
+.filterbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:1px;text-transform:uppercase}
+input,select{
+  background:#0a1929;border:1px solid var(--line);color:var(--text);border-radius:10px;
+  padding:9px 11px;outline:none;font-size:12px;min-height:38px;
+}
+input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(49,208,170,.12)}
+input::placeholder{color:#67819a}
+.table-wrap{border:1px solid var(--line);border-radius:var(--radius);overflow:auto;background:rgba(10,25,41,.55);box-shadow:var(--shadow)}
+.data-table{width:100%;border-collapse:collapse;min-width:900px}
+.data-table th{
+  position:sticky;top:0;z-index:2;background:#10263e;color:#a9c2da;
+  font-size:10px;letter-spacing:1px;text-transform:uppercase;text-align:left;
+  padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap;
+}
+.data-table td{padding:10px 12px;border-bottom:1px solid rgba(35,64,93,.45);font-size:12px;vertical-align:middle}
+.data-table tr:hover td{background:rgba(90,169,255,.055)}
+.data-table tr:last-child td{border-bottom:0}
+.data-table .num{text-align:right;font-variant-numeric:tabular-nums}
+.data-table .center{text-align:center}
+.player-cell{display:flex;align-items:center;gap:9px;min-width:210px}
+.avatar{
+  width:32px;height:32px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;
+  background:linear-gradient(135deg,rgba(90,169,255,.25),rgba(49,208,170,.15));
+  border:1px solid rgba(255,255,255,.08);font-size:10px;font-weight:900;color:#d9efff;
+  overflow:hidden;
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.player-name{font-weight:800;line-height:1.2}
+.player-sub{color:var(--muted);font-size:10px;margin-top:2px}
+.tag{font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.jugador{color:#9af3cf;border-color:rgba(56,217,150,.25);background:rgba(56,217,150,.06)}
+.tag.invitado{color:#c3e4ff;border-color:rgba(90,169,255,.25);background:rgba(90,169,255,.06)}
+.tag.baja{color:#ffc1c1;border-color:rgba(255,107,107,.25);background:rgba(255,107,107,.06)}
+.tag.pos-portero{color:#ffd1d1;border-color:rgba(255,107,107,.3);background:rgba(255,107,107,.08)}
+.tag.pos-defensa{color:#c3e4ff;border-color:rgba(90,169,255,.3);background:rgba(90,169,255,.08)}
+.tag.pos-medio{color:#9af3cf;border-color:rgba(56,217,150,.3);background:rgba(56,217,150,.08)}
+.tag.pos-delantero{color:#ffe0a0;border-color:rgba(255,200,87,.3);background:rgba(255,200,87,.08)}
+.tag.pos-mixto{color:#e9d5ff;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.08)}
+.value{font-weight:800;color:#c9f7e8;white-space:nowrap}
+.muted{color:var(--muted)}
+.small{font-size:11px}
+.right{text-align:right}
+.center{text-align:center}
+.sim-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;align-items:start}
+.sim-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.match-list{display:grid;gap:8px}
+.match{
+  display:grid;grid-template-columns:1fr 54px 1fr;gap:10px;align-items:center;
+  border:1px solid var(--line);border-radius:12px;background:rgba(10,25,41,.5);padding:10px 12px;font-size:12px;
+}
+.match .home{text-align:right;font-weight:700}
+.match .away{text-align:left;font-weight:700}
+.match .score{text-align:center;font-weight:900;color:var(--accent);background:#07111f;border:1px solid var(--line);border-radius:8px;padding:5px 4px}
+.match .scorers{grid-column:1/-1;color:var(--muted);font-size:10px;line-height:1.45;border-top:1px dashed rgba(35,64,93,.7);padding-top:6px;display:none}
+.match.expanded .scorers{display:block}
+.standings{width:100%;border-collapse:collapse;font-size:12px}
+.standings th{color:#a9c2da;font-size:10px;text-transform:uppercase;letter-spacing:1px;text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.standings td{padding:8px;border-bottom:1px solid rgba(35,64,93,.4)}
+.standings tr:last-child td{border-bottom:0}
+.standings .pos{color:var(--muted);font-weight:800;width:26px}
+.standings .team{font-weight:800}
+.standings .pts{font-weight:900;color:var(--accent);text-align:right}
+.standings tr.champion td{background:rgba(255,200,87,.08)}
+.standings tr.top4 td{background:rgba(49,208,170,.045)}
+.standings tr.promotion td{background:rgba(56,217,150,.065)}
+.standings tr.relegation td{background:rgba(255,107,107,.07)}
+.quick{
+  border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,var(--panel2),rgba(15,34,56,.75));padding:16px;
+}
+.quick h4{margin:0 0 10px;font-size:14px}
+.quick .row{display:grid;gap:8px;margin-bottom:10px}
+.result-box{border:1px solid var(--line);border-radius:12px;background:#07111f;padding:14px;text-align:center;margin-top:10px}
+.result-box .scoreline{font-size:30px;font-weight:900;letter-spacing:-1px;color:var(--text)}
+.result-box .teamsline{color:var(--muted);font-size:11px;margin-top:4px}
+.result-box .scorersline{color:var(--muted);font-size:10px;margin-top:8px;line-height:1.5}
+.insight-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.list{display:grid;gap:8px}
+.list-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px;border:1px solid rgba(35,64,93,.65);border-radius:11px;background:rgba(10,25,41,.42);font-size:12px}
+.list-item .left{display:flex;align-items:center;gap:9px;min-width:0}
+.list-item .name{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-item .sub{color:var(--muted);font-size:10px;margin-top:2px}
+.list-item .metric{font-weight:900;color:var(--accent);white-space:nowrap}
+.callout{
+  border:1px solid rgba(49,208,170,.22);background:linear-gradient(135deg,rgba(49,208,170,.09),rgba(90,169,255,.06));
+  border-radius:16px;padding:16px;line-height:1.6;color:#d7f8ef;font-size:13px;
+}
+.callout strong{color:#fff}
+.note{border:1px solid rgba(255,200,87,.2);background:rgba(255,200,87,.05);border-radius:14px;padding:13px 15px;color:#ffe6b3;font-size:12px;line-height:1.55}
+.modal{
+  position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;
+  background:rgba(2,8,15,.78);backdrop-filter:blur(8px);padding:22px;
+}
+.modal.open{display:flex}
+.modal-panel{
+  width:min(980px,100%);max-height:90vh;overflow:auto;border:1px solid var(--line);border-radius:22px;
+  background:linear-gradient(180deg,#10263e,#0b1a2d);box-shadow:0 40px 100px rgba(0,0,0,.55);position:relative;
+}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 22px 0}
+.modal-body{padding:18px 22px 24px}
+.modal-close{
+  border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);
+  width:36px;height:36px;border-radius:11px;font-size:18px;line-height:1;
+}
+.modal-close:hover{background:rgba(255,255,255,.1)}
+.profile{display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:start}
+.profile-img{
+  width:160px;height:160px;border-radius:20px;overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(135deg,rgba(90,169,255,.25),rgba(49,208,170,.15));display:grid;place-items:center;
+}
+.profile-img img{width:100%;height:100%;object-fit:cover}
+.profile-img .initials{font-size:42px;font-weight:900;color:#d9efff}
+.profile h3{margin:0;font-size:24px;letter-spacing:-.6px}
+.profile .meta{color:var(--muted);font-size:12px;margin-top:6px;line-height:1.6}
+.stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.stat{
+  border:1px solid var(--line);border-radius:12px;background:rgba(10,25,41,.5);padding:10px 12px;
+}
+.stat .k{color:var(--muted);font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.stat .v{font-size:20px;font-weight:900;margin-top:4px;letter-spacing:-.5px}
+.profile-bars{display:grid;gap:10px;margin-top:16px}
+.profile-bars .bar-row{grid-template-columns:90px 1fr 40px}
+.roster{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.roster th{color:#a9c2da;font-size:9px;text-transform:uppercase;letter-spacing:1px;text-align:left;padding:8px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+.roster td{padding:7px;border-bottom:1px solid rgba(35,64,93,.4)}
+.roster tr:last-child td{border-bottom:0}
+.roster tr:hover td{background:rgba(90,169,255,.05)}
+.roster .avatar{width:26px;height:26px;border-radius:8px;font-size:8px}
+.roster .player-cell{min-width:170px;gap:7px}
+.roster .player-name{font-size:11px}
+.roster .player-sub{font-size:9px}
+.attr-bars .bar-row{grid-template-columns:145px 1fr 34px}
+.attr-bars .bar-row span:first-child{font-size:10px;line-height:1.2}
+.edit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.edit-grid .field label{font-size:9px;letter-spacing:.4px}
+.edit-grid input{min-height:32px;padding:6px 8px}
+@media (max-width:720px){.edit-grid{grid-template-columns:1fr}}
+@media (max-width:1100px){.attr-bars .bar-row{grid-template-columns:120px 1fr 34px}}
+.footer{border-top:1px solid rgba(35,64,93,.7);padding:24px 0;color:var(--muted);font-size:11px;line-height:1.6}
+.footer strong{color:var(--text)}
+.fade{animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.empty{padding:36px;text-align:center;color:var(--muted);font-size:13px}
+@media (max-width:1100px){
+  .hero{grid-template-columns:1fr}
+  .grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim-grid{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .topbar-inner{height:auto;padding:12px 0;flex-direction:column;align-items:flex-start}
+  .nav{justify-content:flex-start}
+  .hero{padding:22px}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .profile{grid-template-columns:1fr}
+  .profile-img{width:120px;height:120px}
+  .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .match{grid-template-columns:1fr 48px 1fr;font-size:11px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">H</div>
+      <div>
+        <h1>Hockey Manager <span style="color:var(--accent)">2026-27</span></h1>
+        <p>DHA · DHB · Simulador de temporada</p>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <button data-view="home" class="active">Inicio</button>
+      <button data-view="teams">Equipos</button>
+      <button data-view="players">Jugadores</button>
+      <button data-view="sim">Simulador</button>
+      <button data-view="insights">Conclusiones</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="app"></main>
+
+<footer class="footer">
+  <div class="wrap">
+    <strong>Hockey Manager 2026-27</strong> · Base de proyecto para un juego de hockey.
+    Datos de plantillas, edades y goles: iSquad / RFEH (consulta 19/10/2026).
+    Las valoraciones son un modelo aproximado de scouting, no una verdad oficial.
+    No se usan posiciones reales porque iSquad no las publica en la plantilla.
+  </div>
+</footer>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-panel" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <div id="modal-title"></div>
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">×</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const DATA = __DATA_JSON__;
+
+/* =========================================================
+   Utilidades
+   ========================================================= */
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const mean = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0;
+const sum = arr => arr.reduce((a,b)=>a+b,0);
+const fmt = n => new Intl.NumberFormat('es-ES').format(Math.round(n));
+const fmt1 = n => new Intl.NumberFormat('es-ES',{maximumFractionDigits:1,minimumFractionDigits:1}).format(n);
+const euro = n => n >= 1000000 ? (n/1000000).toFixed(2).replace('.',',')+' M€' : fmt(n/1000)+' mil €';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const initials = name => String(name||'').trim().split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+const slug = s => String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+function starsHtml(stars){
+  const full = Math.floor(stars);
+  const half = stars - full >= .5;
+  let out = '';
+  for(let i=0;i<5;i++){
+    if(i<full) out += '<span>★</span>';
+    else if(i===full && half) out += '<span class="half">★</span>';
+    else out += '<span class="off">★</span>';
+  }
+  return `<span class="stars" title="${stars} de 5">${out}</span>`;
+}
+function hashJitter(str){
+  let h=0; for(let i=0;i<str.length;i++) h = (h*31 + str.charCodeAt(i)) | 0;
+  return ((Math.abs(h)%1000)/1000 - .5) * 1.4;
+}
+function ageCurve(age){
+  if(age<=20) return clamp(.55 + (age-16)*.06,.5,1);
+  if(age<=24) return clamp(.80 + (age-21)*.05,.8,1);
+  if(age<=29) return 1;
+  if(age<=32) return .92;
+  return .78;
+}
+function percentileRank(value, arr){
+  if(!arr.length) return .5;
+  let below=0, equal=0;
+  for(const x of arr){ if(x<value) below++; else if(x===value) equal++; }
+  return (below + .5*equal)/arr.length;
+}
+function norm40_95(value, values){
+  return 40 + 55*percentileRank(value, values);
+}
+function starsFor(overall){
+  if(overall>=88) return 5;
+  if(overall>=80) return 4.5;
+  if(overall>=72) return 4;
+  if(overall>=64) return 3.5;
+  if(overall>=56) return 3;
+  if(overall>=48) return 2.5;
+  return 2;
+}
+function qualityFor(overall){
+  if(overall>=88) return 'Élite';
+  if(overall>=80) return 'Muy bueno';
+  if(overall>=72) return 'Bueno';
+  if(overall>=64) return 'Correcto';
+  if(overall>=56) return 'Rotación';
+  return 'Proyecto';
+}
+function roleFor(goals){
+  if(goals>=80) return 'Goleador';
+  if(goals>=40) return 'Atacante';
+  if(goals>=15) return 'Medio';
+  if(goals>=3) return 'Defensa';
+  return 'Portero / Defensa';
+}
+function ageMultiplier(age){
+  if(age<=21) return 1.4;
+  if(age<=24) return 1.3;
+  if(age<=27) return 1.0;
+  if(age<=30) return .6;
+  return .3;
+}
+function mulberry32(seed){
+  let a = seed >>> 0;
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function poisson(lambda, rng){
+  const L = Math.exp(-lambda);
+  let k=0, p=1;
+  do { k++; p *= rng(); } while(p>L);
+  return k-1;
+}
+function weightedPick(items, weights, rng){
+  const total = sum(weights);
+  if(!items.length || total<=0) return null;
+  let r = rng()*total;
+  for(let i=0;i<items.length;i++){
+    r -= weights[i];
+    if(r<=0) return items[i];
+  }
+  return items[items.length-1];
+}
+
+/* =========================================================
+   Modelo de valoración
+   ========================================================= */
+const LEAGUE_LABEL = {DHA:'División de Honor A', DHB:'División de Honor B', '1A':'1ª Andaluza'};
+const LEAGUE_SHORT = {DHA:'DHA', DHB:'DHB', '1A':'1ª And.'};
+const TIER = {DHA:1.0, DHB:.93, '1A':.86};
+const TIER_OFFSET = {DHA:6, DHB:0, '1A':-5};
+const LEAGUE_FACTOR = {DHA:1.0, DHB:.93, '1A':.86};
+
+const ATTRS = ['control','pase','conduccion','golpeo','flick','regate_3d','definicion',
+  'aerial','pc_injection','pc_trap','pc_flick','pc_deflection','pc_first_runner','pc_gk_save','stroke_shot','stroke_save','free_hit',
+  'posicionamiento','pressing','cobertura','transicion','desmarque',
+  'velocidad','resistencia','fuerza','agilidad','coordinacion',
+  'decisiones','concentracion','competitividad','liderazgo',
+  'reflejos','blocaje','distribucion','uno_vs_uno','alto','rebote_gk'];
+const ATTR_GROUPS = [
+  {name:'Técnica', attrs:['control','pase','conduccion','golpeo','flick','regate_3d','definicion']},
+  {name:'3D y set pieces', attrs:['aerial','pc_injection','pc_trap','pc_flick','pc_deflection','pc_first_runner','pc_gk_save','stroke_shot','stroke_save','free_hit']},
+  {name:'Táctica', attrs:['posicionamiento','pressing','cobertura','transicion','desmarque']},
+  {name:'Física', attrs:['velocidad','resistencia','fuerza','agilidad','coordinacion']},
+  {name:'Mental', attrs:['decisiones','concentracion','competitividad','liderazgo']},
+  {name:'Portero', attrs:['reflejos','blocaje','distribucion','uno_vs_uno','alto','rebote_gk']},
+];
+const ATTR_LABELS = {
+  control:'Control',pase:'Pase',conduccion:'Conducción',golpeo:'Golpeo (hit/slap/sweep)',flick:'Flick / scoop',regate_3d:'Regate 3D',definicion:'Definición',
+  aerial:'Aerial / scoop',pc_injection:'Saque de PC (inyección)',pc_trap:'Parada de PC (stopper)',pc_flick:'Tiro de PC / drag flick',pc_deflection:'Desvío en PC',
+  pc_first_runner:'Primer runner / defensa PC',pc_gk_save:'Parada de PC (portero)',stroke_shot:'Tiro de stroke',stroke_save:'Parada de stroke',free_hit:'Faltas, 16 yardas y córners',
+  posicionamiento:'Posicionamiento',pressing:'Pressing',cobertura:'Cobertura',transicion:'Transición',desmarque:'Desmarque',
+  velocidad:'Velocidad',resistencia:'Resistencia',fuerza:'Fuerza',agilidad:'Agilidad',coordinacion:'Coordinación',
+  decisiones:'Decisiones',concentracion:'Concentración',competitividad:'Competitividad',liderazgo:'Liderazgo',
+  reflejos:'Reflejos',blocaje:'Blocaje',distribucion:'Distribución',uno_vs_uno:'1 contra 1',alto:'Paradas altas',rebote_gk:'Control de rebotes'
+};
+const SPECIALIST_LABELS = {
+  pc_flicker:'Drag flicker / tiro de PC',pc_injector:'Inyector de PC',pc_stopper:'Stopper de PC',pc_deflector:'Desviador de PC',
+  pc_first_runner:'Primer runner',pc_goalkeeper:'Portero de PC',stroke_taker:'Tirador de stroke',stroke_goalkeeper:'Portero de stroke',
+  aerial_specialist:'Especialista aéreo',free_hit_taker:'Especialista en faltas'
+};
+const SPECIALIST_ATTR = {
+  pc_flicker:'pc_flick', pc_injector:'pc_injection', pc_stopper:'pc_trap', pc_deflector:'pc_deflection',
+  pc_first_runner:'pc_first_runner', pc_goalkeeper:'pc_gk_save', stroke_taker:'stroke_shot',
+  stroke_goalkeeper:'stroke_save', aerial_specialist:'aerial', free_hit_taker:'free_hit'
+};
+function recomputeSpecialists(teams){
+  for(const t of teams){
+    const pool=t.players.filter(p=>p.perfil==='Jugador');
+    const base=pool.length?pool:t.players;
+    const spec={};
+    for(const [role,attr] of Object.entries(SPECIALIST_ATTR)){
+      let candidates=base;
+      if(role==='pc_goalkeeper'||role==='stroke_goalkeeper'){
+        const gks=base.filter(p=>p.subposicion==='Portero');
+        if(gks.length) candidates=gks;
+      }
+      let best=null, bestVal=-1;
+      for(const p of candidates){
+        const v=Number(p.attributes[attr])||0;
+        if(v>bestVal){ bestVal=v; best=p; }
+      }
+      spec[role]=best?best.name:'';
+    }
+    t.specialists=spec;
+    for(const p of t.players) p.specialistRoles=[];
+    for(const [role,name] of Object.entries(spec)){
+      const p=t.players.find(x=>x.name===name);
+      if(p) p.specialistRoles.push(role);
+    }
+  }
+}
+function setPieceProfile(t){
+  const pool=t.players.filter(p=>p.perfil==='Jugador');
+  const base=pool.length?pool:t.players;
+  const topAvg=(attr,n=3)=>{
+    const vals=[...base].sort((a,b)=>(Number(b.attributes[attr])||0)-(Number(a.attributes[attr])||0)).slice(0,n).map(p=>Number(p.attributes[attr])||0);
+    return vals.length?mean(vals):0;
+  };
+  t.pcAttack=round1(mean([topAvg('pc_injection'),topAvg('pc_trap'),topAvg('pc_flick'),topAvg('pc_deflection')]));
+  t.pcDefense=round1(mean([topAvg('pc_first_runner'),topAvg('pc_gk_save'),topAvg('blocaje'),topAvg('cobertura')]));
+  t.stroke=round1(topAvg('stroke_shot',1));
+  t.strokeSave=round1(topAvg('stroke_save',1));
+  t.aerial=round1(topAvg('aerial',3));
+}
+const POS_WEIGHTS = {
+  Portero:{reflejos:.22,blocaje:.20,distribucion:.12,pc_gk_save:.12,stroke_save:.10,uno_vs_uno:.08,alto:.06,posicionamiento:.05,liderazgo:.05},
+  Central:{cobertura:.18,posicionamiento:.12,pc_first_runner:.10,pc_trap:.08,fuerza:.10,pase:.08,decisiones:.08,agilidad:.06,velocidad:.05,liderazgo:.05,transicion:.05,control:.05},
+  Lateral:{velocidad:.16,cobertura:.14,resistencia:.12,pase:.10,conduccion:.08,transicion:.08,posicionamiento:.07,pressing:.07,agilidad:.06,decisiones:.06,pc_first_runner:.06},
+  Medio:{pase:.16,posicionamiento:.12,resistencia:.12,pressing:.08,transicion:.08,cobertura:.07,conduccion:.07,decisiones:.07,pc_injection:.06,free_hit:.05,control:.05,desmarque:.04,pc_trap:.03},
+  Delantero:{definicion:.20,velocidad:.13,regate_3d:.12,posicionamiento:.08,conduccion:.08,aerial:.06,pc_flick:.06,pc_deflection:.06,decisiones:.06,resistencia:.05,desmarque:.05,flick:.05}
+};
+function round1(x){ return Math.round(x*10)/10; }
+function computeOveralls(attrs){
+  const out={};
+  for(const [pos,w] of Object.entries(POS_WEIGHTS)){
+    let s=0, total=0;
+    for(const [a,wt] of Object.entries(w)){ s+=(Number(attrs[a])||50)*wt; total+=wt; }
+    out[pos]=total?round1(s/total):50;
+  }
+  return out;
+}
+function archetypeFor(sub, attrs){
+  const A=attrs;
+  if(sub==='Central') return (A.cobertura>=80&&A.fuerza>=75)?'Muro':(A.pase>=75?'Central constructor':'Central sólido');
+  if(sub==='Lateral') return (A.velocidad>=80&&A.pase>=70)?'Lateral ofensivo':'Lateral defensivo';
+  if(sub==='Medio') return (A.pase>=80&&A.posicionamiento>=75)?'Medio creativo':(A.resistencia>=80?'Medio box-to-box':'Medio de equilibrio');
+  if(sub==='Delantero') return (A.definicion>=82)?'Finalizador':(A.velocidad>=80?'Delantero de espacio':'Delantero de área');
+  if(sub==='Portero') return A.distribucion>=75?'Portero moderno':'Portero clásico';
+  return 'Jugador polivalente';
+}
+function computePotential(overall, age){
+  const bonus=age<=23?((24-age)*1.5+2):(age<=27?2:-(age-27)*1.0);
+  return Math.max(40,Math.min(99,round1(overall+bonus)));
+}
+function computeValue(overall, age, group){
+  const ageMult=age<=21?1.4:age<=24?1.3:age<=27?1.0:age<=30?.6:.3;
+  const posMult=group==='Portero'?.9:group==='Defensa'?.95:group==='Delantero'?1.1:group==='Polivalente'?1.05:1.0;
+  return Math.round((Math.pow(overall/100,4)*2000000*ageMult*posMult)/10000)*10000;
+}
+function computePolivalence(overalls, sub){
+  const nat=overalls[sub]||Math.max(...Object.values(overalls));
+  const alts=Object.entries(overalls).filter(([k])=>k!==sub).map(([,v])=>Number(v)||0);
+  const bestAlt=alts.length?Math.max(...alts):nat;
+  return Math.max(0,Math.min(20,round1(bestAlt-nat)));
+}
+function loadOverrides(){ try{ return JSON.parse(localStorage.getItem('hockey_overrides_v1')||'{}'); }catch(e){ return {}; } }
+function saveOverride(p, data){ const all=loadOverrides(); all[p.teamName+'||'+p.name]=data; localStorage.setItem('hockey_overrides_v1',JSON.stringify(all)); }
+
+function buildModel(){
+  const players = [];
+  const teams = [];
+  const teamById = {};
+
+  for(const t of DATA.teams){
+    const team = {
+      id:t.id, name:t.name, club:t.club, league:t.league, linkedTo:t.linkedTo || '',
+      specialists:t.specialists || {},
+      players:[], squad:[], guests:[]
+    };
+    teams.push(team);
+    teamById[team.id] = team;
+  }
+
+  let pid = 0;
+  for(const raw of DATA.players){
+    const p = {
+      id:'p'+(pid++),
+      teamId:raw.teamId,
+      teamName:raw.teamName,
+      club:raw.club,
+      league:raw.league,
+      name:raw.name,
+      age:raw.age,
+      goals:raw.goals,
+      perfil:raw.perfil,
+      estado:raw.estado || 'En plantilla',
+      img:raw.img || '',
+      position:raw.subposicion || raw.posicion || '',
+      positionSource:raw.posicion_fuente || 'Estimada',
+      positionConfidence:raw.posicion_confianza || 'Baja',
+      positionUrl:raw.posicion_url || '',
+      positionDate:raw.posicion_fecha || '',
+      positionGroup:raw.position_group || '',
+      subposicion:raw.subposicion || '',
+      subEstimada:!!raw.sub_estimada,
+      archetype:raw.archetype || '',
+      attributes:raw.attributes || {},
+      overalls:raw.overalls || {},
+      overall:Number(raw.overall)||0,
+      potential:Number(raw.potential)||0,
+      value:Number(raw.value)||0,
+      polivalencia:Number(raw.polivalencia)||0,
+      manualOverride:false,
+      specialistRoles:[],
+      seasonGoals:0,
+      seasonAssists:0,
+      seasonMvp:0
+    };
+    players.push(p);
+    const t = teamById[p.teamId];
+    if(t){ t.players.push(p); }
+  }
+
+  // Aplicar overrides del editor (localStorage)
+  const overrides = loadOverrides();
+  for(const p of players){
+    const o = overrides[p.teamName+'||'+p.name];
+    if(!o) continue;
+    p.manualOverride = true;
+    if(o.subposicion) p.subposicion = o.subposicion;
+    if(o.positionGroup) p.positionGroup = o.positionGroup;
+    if(o.attributes){ for(const [k,v] of Object.entries(o.attributes)) p.attributes[k]=Number(v); }
+    p.overalls = computeOveralls(p.attributes);
+    p.position = p.subposicion || p.position;
+    p.overall = p.subposicion==='Polivalente' ? Math.max(...Object.values(p.overalls)) : (p.overalls[p.subposicion] || p.overall);
+    p.potential = computePotential(p.overall, p.age);
+    p.value = computeValue(p.overall, p.age, p.positionGroup);
+    p.archetype = archetypeFor(p.subposicion, p.attributes);
+    p.polivalencia = computePolivalence(p.overalls, p.subposicion);
+  }
+
+  // Percentiles de goles por liga (para scouting y contexto)
+  const goalsByLeague = {};
+  for(const p of players){ (goalsByLeague[p.league] ||= []).push(p.goals); }
+  const maxGoals = Math.max(1, ...players.map(p=>p.goals));
+  for(const p of players){
+    p.goalPct = percentileRank(p.goals, goalsByLeague[p.league] || [p.goals]);
+    p.ageScore = ageCurve(p.age);
+    p.logGoals = Math.log1p(p.goals) / Math.log1p(maxGoals);
+    p.profileScore = p.perfil === 'Jugador' ? 1 : .85;
+    p.raw = .45*p.goalPct + .25*p.logGoals + .15*p.ageScore + .10*p.profileScore + .05*(TIER[p.league]||.9);
+  }
+  const rawValues = players.map(p=>p.raw);
+  for(const p of players){
+    if(!p.overall){
+      const norm = norm40_95(p.raw, rawValues);
+      const factor = LEAGUE_FACTOR[p.league] || .9;
+      p.overall = clamp(40 + (norm-40)*factor + hashJitter(p.name), 40, 95);
+    }
+    if(!p.overalls || !Object.keys(p.overalls).length) p.overalls = computeOveralls(p.attributes);
+    if(!p.potential) p.potential = computePotential(p.overall, p.age);
+    if(!p.value) p.value = computeValue(p.overall, p.age, p.positionGroup);
+    if(!p.archetype) p.archetype = archetypeFor(p.subposicion, p.attributes);
+    if(!p.polivalencia) p.polivalencia = computePolivalence(p.overalls, p.subposicion);
+    p.stars = starsFor(p.overall);
+    p.role = p.archetype || p.subposicion || p.position;
+    p.quality = qualityFor(p.overall);
+    const A=p.attributes;
+    p.attackScore = mean([A.definicion,A.flick,A.regate_3d,A.pase,A.pc_flick,A.pc_deflection,A.velocidad].map(Number));
+    const defAttrs=[A.cobertura,A.posicionamiento,A.pc_first_runner,A.pressing,A.transicion,A.fuerza];
+    if(p.subposicion==='Portero') defAttrs.push(A.reflejos,A.blocaje,A.pc_gk_save,A.stroke_save,A.uno_vs_uno,A.alto);
+    p.defenseScore = mean(defAttrs.map(Number));
+    p.attackWeight = Math.max(.05, (Number(A.definicion)||50)/40 + (Number(A.pc_flick)||50)/80 + (Number(A.regate_3d)||50)/80 + (Number(A.flick)||50)/100) * (p.perfil==='Jugador'?1:.35);
+    p.scout = scoutText(p);
+  }
+
+  // Roles de especialista
+  for(const t of teams){
+    t.specialists = t.specialists || {};
+    for(const [role,name] of Object.entries(t.specialists)){
+      const p = t.players.find(x=>x.name===name);
+      if(p) p.specialistRoles.push(role);
+    }
+  }
+
+  // Equipos
+  for(const t of teams){
+    t.squad = t.players.filter(p=>p.perfil==='Jugador');
+    t.guests = t.players.filter(p=>p.perfil==='Invitado');
+    const base = t.squad.length ? t.squad : t.players;
+    t.squadCount = t.squad.length;
+    t.guestCount = t.guests.length;
+    t.avgAge = mean(base.map(p=>p.age));
+    t.goalsTotal = sum(t.squad.map(p=>p.goals));
+    t.topScorer = [...base].sort((a,b)=>b.goals-a.goals)[0] || null;
+    const topAttack = [...base].sort((a,b)=>b.attackScore-a.attackScore).slice(0,5);
+    const topDefense = [...base].sort((a,b)=>b.defenseScore-a.defenseScore).slice(0,5);
+    const avgAttack = mean(base.map(p=>p.attackScore));
+    const avgDefense = mean(base.map(p=>p.defenseScore));
+    t.avgOverall = mean(base.map(p=>p.overall));
+    t.depth = Math.min(20, base.length*1.2);
+    t.experience = Math.min(10, Math.max(0, t.avgAge-20)*1.2);
+    t.attackRaw = .55*mean(topAttack.map(p=>p.attackScore)) + .25*avgAttack + .10*(10+Math.min(10,base.length)) + .10*(t.avgAge*2);
+    t.defenseRaw = .55*mean(topDefense.map(p=>p.defenseScore)) + .25*avgDefense + .10*t.depth + .10*t.experience;
+    t.attackAdj = t.attackRaw + (TIER_OFFSET[t.league]||0);
+    t.defenseAdj = t.defenseRaw + (TIER_OFFSET[t.league]||0);
+  }
+  const attackValues = teams.map(t=>t.attackAdj);
+  const defenseValues = teams.map(t=>t.defenseAdj);
+  for(const t of teams){
+    t.attack = norm40_95(t.attackAdj, attackValues);
+    t.defense = norm40_95(t.defenseAdj, defenseValues);
+    t.overall = .6*t.attack + .4*t.defense;
+    t.stars = starsFor(t.overall);
+    t.conclusion = teamConclusion(t);
+    t.titleProb = 0;
+    t.avgPos = 0;
+  }
+
+  for(const t of teams) setPieceProfile(t);
+
+  // Rankings por liga
+  for(const league of ['DHA','DHB','1A']){
+    const ts = teams.filter(t=>t.league===league).sort((a,b)=>b.overall-a.overall);
+    ts.forEach((t,i)=> t.rank = i+1);
+  }
+
+  recomputeSpecialists(teams);
+  return {players, teams, teamById};
+}
+
+function scoutText(p){
+  const bits = [];
+  if(p.overall>=88) bits.push('Perfil de élite: marca diferencias y sería titular en cualquier proyecto de la categoría.');
+  else if(p.overall>=80) bits.push('Jugador de primer nivel, con impacto directo en el resultado.');
+  else if(p.overall>=72) bits.push('Titular solvente: aporta rendimiento y estabilidad.');
+  else if(p.overall>=64) bits.push('Jugador de rotación útil, con margen para crecer.');
+  else bits.push('Perfil de desarrollo o complemento de plantilla.');
+  if(p.age<=21 && p.potential>=85) bits.push('Su gran valor está en la proyección: todavía tiene recorrido de mejora.');
+  else if(p.age>=31) bits.push('Su valor actual es alto, pero el valor de mercado baja por la edad.');
+  if(p.perfil==='Invitado') bits.push('Aparece como invitado en iSquad: su peso en la plantilla es menor.');
+  bits.push(`Posición: ${p.position}${p.subEstimada?' (subposición estimada)':''} · ${p.archetype}.`);
+  if(p.specialistRoles && p.specialistRoles.length) bits.push('Especialista: '+p.specialistRoles.map(r=>SPECIALIST_LABELS[r]||r).join(', ')+'.');
+  if(p.positionSource==='Estimada') bits.push('La posición base es estimada por su rol y peso goleador; puedes corregirla en el editor.');
+  else bits.push(`Fuente de la posición base: ${p.positionSource}.`);
+  if(p.subEstimada && p.positionSource!=='Estimada') bits.push('La subposición Central/Lateral es estimada a partir de la posición base.');
+  if(p.positionGroup==='Delantero' && p.goals>=40) bits.push('Los goles de iSquad refuerzan su perfil de finalizador.');
+  else if(p.positionGroup==='Defensa') bits.push('Su valor se mide por atributos defensivos, tácticos y de set pieces, no solo por goles.');
+  return bits.join(' ');
+}
+
+function teamConclusion(t){
+  const bits=[];
+  if(t.overall>=88) bits.push('Candidato claro al título');
+  else if(t.overall>=80) bits.push('Equipo de zona alta');
+  else if(t.overall>=70) bits.push('Competitivo, con opciones de acercarse arriba');
+  else if(t.overall>=60) bits.push('Proyecto de mitad de tabla');
+  else bits.push('Equipo en construcción');
+  if(t.attack > t.defense + 4) bits.push('su punto fuerte es el ataque');
+  else if(t.defense > t.attack + 4) bits.push('se sostiene desde la defensa');
+  else bits.push('equilibrio entre ataque y defensa');
+  if(t.squadCount>=20) bits.push('plantilla amplia');
+  else if(t.squadCount<=14) bits.push('plantilla corta');
+  if(t.avgAge<=21) bits.push('muy joven');
+  else if(t.avgAge>=28) bits.push('experimentada');
+  return bits.join('. ') + '.';
+}
+
+const MODEL = buildModel();
+const PLAYERS = MODEL.players;
+const TEAMS = MODEL.teams;
+const TEAM_BY_ID = MODEL.teamById;
+
+
+/* =========================================================
+   Simulación · formato oficial 2026-27
+   ========================================================= */
+function generateFixtures(teams){
+  const arr = teams.map(t=>t.id);
+  if(arr.length % 2 !== 0) arr.push(null);
+  const n = arr.length;
+  const rounds = [];
+  const fixed = arr[0];
+  let rotating = arr.slice(1);
+  for(let r=0;r<n-1;r++){
+    const pairs=[];
+    if(fixed && rotating[0]) pairs.push([fixed, rotating[0]]);
+    for(let i=1;i<n/2;i++){
+      const a=rotating[i], b=rotating[rotating.length-i];
+      if(a && b) pairs.push(i%2 ? [b,a] : [a,b]);
+    }
+    rounds.push(pairs);
+    rotating.unshift(rotating.pop());
+  }
+  const second = rounds.map(rd=>rd.map(([a,b])=>[b,a]));
+  return [...rounds, ...second];
+}
+
+function initStandings(teams){
+  const s = {};
+  for(const t of teams){
+    s[t.id] = {id:t.id, name:t.name, league:t.league, pj:0,pg:0,pe:0,pp:0,gf:0,gc:0,dg:0,pts:0};
+  }
+  return s;
+}
+
+function sortStandings(s){
+  return Object.values(s).sort((a,b)=> b.pts-a.pts || b.dg-a.dg || b.gf-a.gf || a.name.localeCompare(b.name));
+}
+
+function addMatchToStandings(standings, m){
+  const h = standings[m.homeId], a = standings[m.awayId];
+  if(!h || !a) return;
+  h.pj++; a.pj++;
+  h.gf += m.hg; h.gc += m.ag; a.gf += m.ag; a.gc += m.hg;
+  h.dg = h.gf-h.gc; a.dg = a.gf-a.gc;
+  if(m.hg>m.ag){ h.pg++; a.pp++; h.pts+=3; }
+  else if(m.hg<m.ag){ a.pg++; h.pp++; a.pts+=3; }
+  else { h.pe++; a.pe++; h.pts++; a.pts++; }
+}
+
+function expectedGoals(home, away, neutral=false){
+  const homeBoost = neutral ? 0 : 4;
+  const awayBoost = neutral ? 0 : -4;
+  const homeExp = clamp(1.55 + (home.attack + homeBoost - away.defense)*.055 + (home.overall-away.overall)*.02, .2, 5.5);
+  const awayExp = clamp(1.25 + (away.attack + awayBoost - home.defense)*.055 + (away.overall-home.overall)*.02, .2, 5.5);
+  return {homeExp, awayExp};
+}
+
+function pickScorer(team, rng, exclude=null){
+  const candidates = team.players.filter(p=> p!==exclude && (!p.estado || !String(p.estado).startsWith('Baja')));
+  const weights = candidates.map(p=>p.attackWeight);
+  return weightedPick(candidates, weights, rng);
+}
+
+function shootout(home, away, rng){
+  const ph = clamp(.55 + (home.overall-70)*.004, .35, .8);
+  const pa = clamp(.55 + (away.overall-70)*.004, .35, .8);
+  let h=0, a=0;
+  for(let i=0;i<5;i++){ if(rng()<ph) h++; if(rng()<pa) a++; }
+  while(h===a){ if(rng()<ph) h++; if(rng()<pa) a++; }
+  return {home:h, away:a};
+}
+
+function simulateMatch(home, away, rng, opts={}){
+  const {record=false, standings=null, knockout=false, neutral=false} = opts;
+  const {homeExp, awayExp} = expectedGoals(home, away, neutral);
+  const hg = poisson(homeExp, rng);
+  const ag = poisson(awayExp, rng);
+  const homeScorers = [], awayScorers = [];
+  const homeAssists = [], awayAssists = [];
+
+  for(let i=0;i<hg;i++){
+    const s = pickScorer(home, rng);
+    if(s){ homeScorers.push(s.name); if(record) s.seasonGoals++; }
+    const a = pickScorer(home, rng, s);
+    if(a){ homeAssists.push(a.name); if(record) a.seasonAssists++; }
+  }
+  for(let i=0;i<ag;i++){
+    const s = pickScorer(away, rng);
+    if(s){ awayScorers.push(s.name); if(record) s.seasonGoals++; }
+    const a = pickScorer(away, rng, s);
+    if(a){ awayAssists.push(a.name); if(record) a.seasonAssists++; }
+  }
+
+  if(standings){
+    addMatchToStandings(standings, {homeId:home.id, awayId:away.id, hg, ag});
+  }
+
+  let so = null, winnerId = null, loserId = null;
+  if(knockout && hg===ag){
+    so = shootout(home, away, rng);
+    if(so.home>so.away){ winnerId=home.id; loserId=away.id; }
+    else { winnerId=away.id; loserId=home.id; }
+  } else if(hg>ag){ winnerId=home.id; loserId=away.id; }
+  else if(hg<ag){ winnerId=away.id; loserId=home.id; }
+
+  return {
+    homeId:home.id, awayId:away.id,
+    homeName:home.name, awayName:away.name,
+    hg, ag, so, winnerId, loserId,
+    homeScorers, awayScorers,
+    homeAssists, awayAssists
+  };
+}
+
+function resetPlayerStats(){
+  for(const p of PLAYERS){ p.seasonGoals=0; p.seasonAssists=0; p.seasonMvp=0; }
+}
+
+/* ---------- DHA ---------- */
+function createDhaSeason(seed){
+  const teams = TEAMS.filter(t=>t.league==='DHA');
+  return {
+    league:'DHA', phase:'regular', teams,
+    fixtures: generateFixtures(teams),
+    standings: initStandings(teams),
+    round:0, results:[], seed,
+    rng: mulberry32(seed),
+    final4:null, champion:null, runnerUp:null
+  };
+}
+
+function simulateDhaRound(season){
+  if(season.phase==='regular'){
+    if(season.round >= season.fixtures.length){ season.phase='final4'; return []; }
+    const round = season.fixtures[season.round];
+    const results = round.map(([h,a])=>simulateMatch(TEAM_BY_ID[h], TEAM_BY_ID[a], season.rng, {record:true, standings:season.standings}));
+    season.results.push(results);
+    season.round++;
+    if(season.round>=season.fixtures.length) season.phase='final4';
+    return results;
+  }
+  if(season.phase==='final4' && !season.final4){ simulateDhaFinalFour(season); return []; }
+  return [];
+}
+
+function simulateDhaFinalFour(season){
+  const top4 = sortStandings(season.standings).slice(0,4).map(s=>TEAM_BY_ID[s.id]);
+  if(top4.length<4) return;
+  const semis = [
+    simulateMatch(top4[0], top4[3], season.rng, {record:true, knockout:true, neutral:true}),
+    simulateMatch(top4[1], top4[2], season.rng, {record:true, knockout:true, neutral:true})
+  ];
+  const winners = semis.map(m=>TEAM_BY_ID[m.winnerId]);
+  const final = simulateMatch(winners[0], winners[1], season.rng, {record:true, knockout:true, neutral:true});
+  season.final4 = {semis, final};
+  season.champion = TEAM_BY_ID[final.winnerId];
+  season.runnerUp = TEAM_BY_ID[final.loserId];
+  season.phase='done';
+}
+
+function simulateDhaAll(season){
+  while(season.phase==='regular' && season.round < season.fixtures.length) simulateDhaRound(season);
+  if(season.phase==='final4' && !season.final4) simulateDhaFinalFour(season);
+}
+
+/* ---------- DHB ---------- */
+const DHB_GROUP_1 = ["RC JOLASETA","VALLES ESPORTIU","PEDRALBES HC","REAL SOCIEDAD 1927","SPV","UNIVERSITAT D'ALACANT - SAN VICENTE","ILURO HC","ATICOS INMOBILIARIA CH SAN FERNANDO"];
+const DHB_GROUP_2 = ["HC SANT CUGAT","POZUELO","CLUB HOCKEY MADRID - LAS ROZAS","EGARA 1935","CASTELLDEFELS HC","AD RIMAS","CD GINER DE LOS RÍOS","LÍNIA 22 STERN MOTOR"];
+
+function createDhbSeason(seed){
+  const teams = TEAMS.filter(t=>t.league==='DHB');
+  const group1 = teams.filter(t=>DHB_GROUP_1.includes(t.name));
+  const group2 = teams.filter(t=>DHB_GROUP_2.includes(t.name));
+  return {
+    league:'DHB', phase:'first', teams, group1, group2,
+    fixtures1: generateFixtures(group1),
+    fixtures2: generateFixtures(group2),
+    standings1: initStandings(group1),
+    standings2: initStandings(group2),
+    round1:0, results1:[], results2:[],
+    groupA:null, groupB:null,
+    fixturesA:null, fixturesB:null,
+    standingsA:null, standingsB:null,
+    round2:0, resultsA:[], resultsB:[],
+    final4:null, champion:null, runnerUp:null,
+    directPromoted:null, playoffTeam:null, relegated:[],
+    finalStandingsA:null, finalStandingsB:null,
+    seed, rng:mulberry32(seed)
+  };
+}
+
+function carryOver(season, group, standings){
+  const ids = new Set(group.map(t=>t.id));
+  for(const round of [...season.results1, ...season.results2]){
+    for(const m of round){
+      if(ids.has(m.homeId) && ids.has(m.awayId)) addMatchToStandings(standings, m);
+    }
+  }
+}
+
+function crossFixtures(groupX, groupY){
+  const rounds=[];
+  for(let r=0;r<4;r++){
+    const pairs=[];
+    for(let i=0;i<4;i++) pairs.push([groupX[i].id, groupY[(i+r)%4].id]);
+    rounds.push(pairs);
+  }
+  for(let r=0;r<4;r++){
+    const pairs=[];
+    for(let i=0;i<4;i++) pairs.push([groupY[(i+r)%4].id, groupX[i].id]);
+    rounds.push(pairs);
+  }
+  return rounds;
+}
+
+function buildDhbSecondPhase(season){
+  const top1 = sortStandings(season.standings1).slice(0,4).map(s=>TEAM_BY_ID[s.id]);
+  const top2 = sortStandings(season.standings2).slice(0,4).map(s=>TEAM_BY_ID[s.id]);
+  const bottom1 = sortStandings(season.standings1).slice(-4).map(s=>TEAM_BY_ID[s.id]);
+  const bottom2 = sortStandings(season.standings2).slice(-4).map(s=>TEAM_BY_ID[s.id]);
+  season.groupA = [...top1, ...top2];
+  season.groupB = [...bottom1, ...bottom2];
+  season.standingsA = initStandings(season.groupA);
+  season.standingsB = initStandings(season.groupB);
+  carryOver(season, season.groupA, season.standingsA);
+  carryOver(season, season.groupB, season.standingsB);
+  season.fixturesA = crossFixtures(top1, top2);
+  season.fixturesB = crossFixtures(bottom1, bottom2);
+  season.phase='second';
+  season.round2=0;
+}
+
+function canTeamPromote(team){
+  if(!team.linkedTo) return true;
+  const parent = TEAMS.find(t=>t.league==='DHA' && t.name===team.linkedTo);
+  if(!parent) return true;
+  const dha = state.seasons.DHA;
+  if(!dha || dha.phase!=='done') return false;
+  const pos = sortStandings(dha.standings).findIndex(s=>s.id===parent.id)+1;
+  return pos === 12;
+}
+
+function determineDhbOutcome(season){
+  if(!season.standingsA || !season.standingsB) return;
+  const ga = sortStandings(season.standingsA);
+  const gb = sortStandings(season.standingsB);
+  season.finalStandingsA = ga;
+  season.finalStandingsB = gb;
+  const eligible = ga.filter(s=>canTeamPromote(TEAM_BY_ID[s.id]));
+  season.directPromoted = eligible[0] ? TEAM_BY_ID[eligible[0].id] : null;
+  season.playoffTeam = eligible[1] ? TEAM_BY_ID[eligible[1].id] : null;
+  season.relegated = gb.slice(-2).map(s=>TEAM_BY_ID[s.id]);
+}
+
+function finishDhbSecondPhase(season){
+  season.phase='final4';
+  determineDhbOutcome(season);
+}
+
+function simulateDhbRound(season){
+  if(season.phase==='first'){
+    if(season.round1 >= season.fixtures1.length){ buildDhbSecondPhase(season); return []; }
+    const r1 = season.fixtures1[season.round1].map(([h,a])=>simulateMatch(TEAM_BY_ID[h], TEAM_BY_ID[a], season.rng, {record:true, standings:season.standings1}));
+    const r2 = season.fixtures2[season.round1].map(([h,a])=>simulateMatch(TEAM_BY_ID[h], TEAM_BY_ID[a], season.rng, {record:true, standings:season.standings2}));
+    season.results1.push(r1);
+    season.results2.push(r2);
+    season.round1++;
+    if(season.round1>=season.fixtures1.length) buildDhbSecondPhase(season);
+    return [...r1, ...r2];
+  }
+  if(season.phase==='second'){
+    if(season.round2 >= season.fixturesA.length){ finishDhbSecondPhase(season); return []; }
+    const ra = season.fixturesA[season.round2].map(([h,a])=>simulateMatch(TEAM_BY_ID[h], TEAM_BY_ID[a], season.rng, {record:true, standings:season.standingsA}));
+    const rb = season.fixturesB[season.round2].map(([h,a])=>simulateMatch(TEAM_BY_ID[h], TEAM_BY_ID[a], season.rng, {record:true, standings:season.standingsB}));
+    season.resultsA.push(ra);
+    season.resultsB.push(rb);
+    season.round2++;
+    if(season.round2>=season.fixturesA.length) finishDhbSecondPhase(season);
+    return [...ra, ...rb];
+  }
+  if(season.phase==='final4' && !season.final4){ simulateDhbFinalFour(season); return []; }
+  return [];
+}
+
+function simulateDhbFinalFour(season){
+  const top4 = sortStandings(season.standingsA).slice(0,4).map(s=>TEAM_BY_ID[s.id]);
+  if(top4.length<4) return;
+  const semis = [
+    simulateMatch(top4[0], top4[3], season.rng, {record:true, knockout:true, neutral:true}),
+    simulateMatch(top4[1], top4[2], season.rng, {record:true, knockout:true, neutral:true})
+  ];
+  const winners = semis.map(m=>TEAM_BY_ID[m.winnerId]);
+  const final = simulateMatch(winners[0], winners[1], season.rng, {record:true, knockout:true, neutral:true});
+  season.final4 = {semis, final};
+  season.champion = TEAM_BY_ID[final.winnerId];
+  season.runnerUp = TEAM_BY_ID[final.loserId];
+  season.phase='done';
+}
+
+function simulateDhbAll(season){
+  while(season.phase==='first' && season.round1 < season.fixtures1.length) simulateDhbRound(season);
+  if(season.phase==='first') buildDhbSecondPhase(season);
+  while(season.phase==='second' && season.round2 < season.fixturesA.length) simulateDhbRound(season);
+  if(season.phase==='second') finishDhbSecondPhase(season);
+  if(season.phase==='final4' && !season.final4) simulateDhbFinalFour(season);
+}
+
+/* ---------- Playout ---------- */
+function resolvePlayout(){
+  const dha = state.seasons.DHA, dhb = state.seasons.DHB;
+  if(!dha || !dhb || dha.phase!=='done' || dhb.phase!=='done') return null;
+  determineDhbOutcome(dhb);
+  const dhaRows = sortStandings(dha.standings);
+  const dha11 = TEAM_BY_ID[dhaRows[10].id];
+  const dhb2 = dhb.playoffTeam;
+  if(!dha11 || !dhb2) return null;
+  const rng = mulberry32((state.seasonSeed||20261019) + 777);
+  const games = [];
+  let dhaWins=0, dhbWins=0;
+  for(let g=0; g<3 && dhaWins<2 && dhbWins<2; g++){
+    const dhaHome = g===0;
+    const h = dhaHome ? dha11 : dhb2;
+    const a = dhaHome ? dhb2 : dha11;
+    const r = simulateMatch(h, a, rng, {record:true, knockout:true, neutral:false});
+    if(r.winnerId===dha11.id) dhaWins++; else dhbWins++;
+    games.push({...r, game:g+1, dhaHome});
+  }
+  const winner = dhaWins>dhbWins ? dha11 : dhb2;
+  const loser = dhaWins>dhbWins ? dhb2 : dha11;
+  state.playout = {dha11, dhb2, games, winner, loser, dhaWins, dhbWins};
+  return state.playout;
+}
+
+function ensureSeasons(){
+  if(!state.seasons.DHA || !state.seasons.DHB){
+    resetPlayerStats();
+    state.seasonSeed = 20261019;
+    state.seasons.DHA = createDhaSeason(state.seasonSeed);
+    state.seasons.DHB = createDhbSeason(state.seasonSeed+1);
+    state.playout = null;
+  }
+}
+
+function simulateEverything(){
+  ensureSeasons();
+  simulateDhaAll(state.seasons.DHA);
+  simulateDhbAll(state.seasons.DHB);
+}
+
+/* Modelo simple para las tarjetas de equipo (no es el formato oficial). */
+function monteCarlo(league, runs=300){
+  const teams = TEAMS.filter(t=>t.league===league);
+  const rng = mulberry32(9000 + league.length*131 + teams.length);
+  const titleCounts = {};
+  const posSums = {};
+  for(let r=0;r<runs;r++){
+    const fixtures = generateFixtures(teams);
+    const standings = initStandings(teams);
+    for(const round of fixtures){
+      for(const [h,a] of round){
+        simulateMatch(TEAM_BY_ID[h], TEAM_BY_ID[a], rng, {standings});
+      }
+    }
+    const sorted = sortStandings(standings);
+    const champ = sorted[0];
+    if(champ) titleCounts[champ.id] = (titleCounts[champ.id]||0)+1;
+    sorted.forEach((row,i)=> posSums[row.id]=(posSums[row.id]||0)+i+1);
+  }
+  for(const t of teams){
+    t.titleProb = ((titleCounts[t.id]||0)/runs)*100;
+    t.avgPos = (posSums[t.id]||0)/runs;
+  }
+}
+monteCarlo('DHA', 350);
+monteCarlo('DHB', 350);
+
+/* =========================================================
+   Estado y render
+   ========================================================= */
+const state = {
+  view:'home',
+  league:'DHA',
+  teamFilter:'all',
+  playerLeague:'all',
+  playerTeam:'all',
+  playerPerfil:'all',
+  playerPosition:'all',
+  playerSearch:'',
+  playerSort:'overall',
+  seasons:{DHA:null, DHB:null},
+  playout:null,
+  seasonSeed:20261019
+};
+
+const app = $('#app');
+const nav = $('#nav');
+const modal = $('#modal');
+const modalTitle = $('#modal-title');
+const modalBody = $('#modal-body');
+
+function setView(view){
+  state.view = view;
+  $$('#nav button').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
+  render();
+}
+nav.addEventListener('click', e=>{
+  const btn = e.target.closest('button[data-view]');
+  if(btn) setView(btn.dataset.view);
+});
+
+function render(){
+  if(state.view==='home') renderHome();
+  else if(state.view==='teams') renderTeams();
+  else if(state.view==='players') renderPlayers();
+  else if(state.view==='sim') renderSim();
+  else if(state.view==='insights') renderInsights();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- Inicio ---------- */
+function renderHome(){
+  const dha = TEAMS.filter(t=>t.league==='DHA').sort((a,b)=>b.overall-a.overall);
+  const dhb = TEAMS.filter(t=>t.league==='DHB').sort((a,b)=>b.overall-a.overall);
+  const topPlayers = [...PLAYERS].sort((a,b)=>b.overall-a.overall).slice(0,8);
+  const totalPlayers = PLAYERS.filter(p=>p.perfil==='Jugador').length;
+  const totalGuests = PLAYERS.filter(p=>p.perfil==='Invitado').length;
+  const bestTeam = [...TEAMS].sort((a,b)=>b.overall-a.overall)[0];
+  const bestPlayer = topPlayers[0];
+
+  app.innerHTML = `
+  <section class="hero fade">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Base de proyecto · Temporada 2026-27</div>
+      <h2>Simula la temporada.<br><span>Descubre el talento.</span></h2>
+      <p>
+        Un juego HTML de gestión y scouting construido con las plantillas reales de <strong>DHA</strong> y <strong>DHB</strong>.
+        Cada jugador recibe 37 atributos, cinco overalls posicionales, un potencial y un valor de mercado a partir de su posición, edad y contexto.
+        Simula jornadas, consulta clasificaciones y genera conclusiones automáticas.
+      </p>
+      <div class="hero-actions">
+        <button class="btn primary" data-go="sim">Simular temporada</button>
+        <button class="btn secondary" data-go="teams">Ver equipos</button>
+        <button class="btn ghost" data-go="players">Explorar jugadores</button>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="hero-stat"><span>Equipos</span><strong>${TEAMS.length}</strong></div>
+      <div class="hero-stat"><span>Jugadores</span><strong>${totalPlayers}</strong></div>
+      <div class="hero-stat"><span>Invitados</span><strong>${totalGuests}</strong></div>
+      <div class="hero-stat"><span>Mejor valorado</span><strong style="font-size:18px">${esc(bestPlayer?.name||'—')}</strong></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid grid-4">
+      <div class="card kpi"><div class="label">Favorito DHA</div><div class="value" style="font-size:22px">${esc(dha[0]?.name||'—')}</div><div class="sub">${dha[0]?fmt1(dha[0].overall)+' · '+fmt1(dha[0].titleProb)+'% título (modelo)':''}</div></div>
+      <div class="card kpi"><div class="label">Favorito DHB</div><div class="value" style="font-size:22px">${esc(dhb[0]?.name||'—')}</div><div class="sub">${dhb[0]?fmt1(dhb[0].overall)+' · '+fmt1(dhb[0].titleProb)+'% título (modelo)':''}</div></div>
+      <div class="card kpi"><div class="label">Jugador top</div><div class="value" style="font-size:22px">${esc(bestPlayer?.name||'—')}</div><div class="sub">${bestPlayer?fmt1(bestPlayer.overall)+' · '+esc(bestPlayer.teamName):''}</div></div>
+      <div class="card kpi"><div class="label">Equipo más valioso</div><div class="value" style="font-size:22px">${esc(bestTeam?.name||'—')}</div><div class="sub">${bestTeam?fmt1(bestTeam.overall)+' · '+esc(LEAGUE_SHORT[bestTeam.league]):''}</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><h3>Favoritos DHA</h3><p>Valoración global y probabilidad de título tras 350 simulaciones.</p></div><button class="btn small ghost" data-go="teams">Ver todos</button></div>
+    <div class="grid grid-auto">${dha.slice(0,5).map(teamCard).join('')}</div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><h3>Favoritos DHB</h3><p>Los proyectos con mejor pinta para pelear por el ascenso.</p></div></div>
+    <div class="grid grid-auto">${dhb.slice(0,5).map(teamCard).join('')}</div>
+  </section>
+
+  <section class="section">
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="section-head"><div><h3>Top jugadores</h3><p>Por valoración global del modelo.</p></div></div>
+        <div class="list">${topPlayers.map(listPlayer).join('')}</div>
+      </div>
+      <div class="card">
+        <div class="section-head"><div><h3>Cómo funciona</h3><p>Un modelo simple, transparente y editable.</p></div></div>
+        <div class="list">
+          <div class="list-item"><div class="left"><div class="badge">1</div><div><div class="name">Datos reales</div><div class="sub">Plantillas, edad, goles e imágenes de iSquad.</div></div></div></div>
+          <div class="list-item"><div class="left"><div class="badge">2</div><div><div class="name">Valoración</div><div class="sub">Goles, edad, perfil y nivel de liga → overall, potencial y valor.</div></div></div></div>
+          <div class="list-item"><div class="left"><div class="badge">3</div><div><div class="name">Simulación</div><div class="sub">Fuerza de ataque/defensa + Poisson + factor local.</div></div></div></div>
+          <div class="list-item"><div class="left"><div class="badge">4</div><div><div class="name">Conclusiones</div><div class="sub">Favoritos, gangas, jóvenes promesas y avisos metodológicos.</div></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="note">
+      <strong>Nota de alcance:</strong> iSquad no publica posición ni minutos. El modelo usa los goles acumulados que muestra la ficha como proxy ofensivo.
+      Por eso porteros y defensas con pocos goles pueden quedar infravalorados. Es una base de juego, no un informe profesional.
+    </div>
+  </section>
+  `;
+  app.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.go)));
+  bindTeamCards();
+  bindPlayerRows();
+}
+
+function teamCard(t){
+  return `
+  <article class="card hover team-card" data-team="${t.id}">
+    <div class="team-top">
+      <div class="badge ${t.league==='DHA'?'dha':t.league==='DHB'?'dhb':'onea'}">${initials(t.name)}</div>
+      <div style="min-width:0">
+        <div class="team-name">${esc(t.name)}</div>
+        <div class="team-sub">${esc(t.club)} · ${esc(LEAGUE_SHORT[t.league])}</div>
+      </div>
+    </div>
+    <div class="team-meta">
+      <div><div class="rating">${fmt1(t.overall)} <small>/100</small></div><div class="small muted">${t.rank}º de ${TEAMS.filter(x=>x.league===t.league).length} · ${fmt1(t.titleProb)}% título (modelo)</div></div>
+      ${starsHtml(t.stars)}
+    </div>
+    <div class="bars">
+      <div class="bar-row"><span>Ataque</span><div class="bar attack"><i style="width:${t.attack}%"></i></div><span>${fmt1(t.attack)}</span></div>
+      <div class="bar-row"><span>Defensa</span><div class="bar defense"><i style="width:${t.defense}%"></i></div><span>${fmt1(t.defense)}</span></div>
+    </div>
+    <div class="team-foot">
+      <span>${t.squadCount} jugadores · ${t.guestCount} invitados</span>
+      <span class="pill ${t.league==='DHA'?'green':t.league==='DHB'?'blue':'gold'}">${esc(LEAGUE_SHORT[t.league])}</span>
+    </div>
+  </article>`;
+}
+
+function listPlayer(p){
+  return `<div class="list-item" data-player="${p.id}">
+    <div class="left"><div class="avatar">${avatarInner(p)}</div><div style="min-width:0"><div class="name">${esc(p.name)}</div><div class="sub">${esc(p.teamName)} · ${esc(p.position)} · ${p.age} años</div></div></div>
+    <div class="right"><div class="metric">${fmt1(p.overall)}</div><div class="small muted">${starsHtml(p.stars)}</div></div>
+  </div>`;
+}
+
+function avatarInner(p){
+  return p.img ? `<img loading="lazy" src="${esc(p.img)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='${initials(p.name)}'">` : initials(p.name);
+}
+
+function posClass(pos){
+  const p=String(pos||'').toLowerCase();
+  if(p.includes('portero')) return 'pos-portero';
+  if(p.includes('central') || p.includes('lateral') || p.includes('defensa')) return 'pos-defensa';
+  if(p.includes('polivalente')) return 'pos-mixto';
+  if(p.includes('medio')) return 'pos-medio';
+  if(p.includes('delantero')) return 'pos-delantero';
+  return '';
+}
+function posBadge(p){
+  return `<span class="tag ${posClass(p.position)}">${esc(p.position||'—')}</span>${p.positionSource==='Estimada'?' <span class="small muted">est.</span>':''}`;
+}
+
+/* ---------- Equipos ---------- */
+function renderTeams(){
+  const leagues = ['DHA','DHB','1A'];
+  const teams = TEAMS.filter(t=>state.teamFilter==='all' || t.league===state.teamFilter).sort((a,b)=>b.overall-a.overall);
+  app.innerHTML = `
+  <section class="section" style="margin-top:0">
+    <div class="section-head"><div><h3>Equipos</h3><p>Valoración global, ataque, defensa, profundidad y probabilidad de título.</p></div></div>
+    <div class="tabs">
+      <button class="tab ${state.teamFilter==='all'?'active':''}" data-filter="all">Todos (${TEAMS.length})</button>
+      ${leagues.map(l=>`<button class="tab ${state.teamFilter===l?'active':''}" data-filter="${l}">${esc(LEAGUE_LABEL[l])} (${TEAMS.filter(t=>t.league===l).length})</button>`).join('')}
+    </div>
+    <div class="grid grid-auto">${teams.map(teamCard).join('')}</div>
+  </section>`;
+  app.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{state.teamFilter=b.dataset.filter;renderTeams();}));
+  bindTeamCards();
+}
+
+/* ---------- Jugadores ---------- */
+function renderPlayers(){
+  const leagues = ['all','DHA','DHB','1A'];
+  const teams = ['all', ...Array.from(new Set(PLAYERS.map(p=>p.teamName))).sort()];
+  let list = PLAYERS.filter(p=>{
+    if(state.playerLeague!=='all' && p.league!==state.playerLeague) return false;
+    if(state.playerTeam!=='all' && p.teamName!==state.playerTeam) return false;
+    if(state.playerPerfil!=='all' && p.perfil!==state.playerPerfil) return false;
+    if(state.playerPosition!=='all' && p.subposicion!==state.playerPosition) return false;
+    if(state.playerSearch){ const q=state.playerSearch.toLowerCase(); if(!`${p.name} ${p.teamName}`.toLowerCase().includes(q)) return false; }
+    return true;
+  });
+  const sorters = {
+    overall:(a,b)=>b.overall-a.overall,
+    goals:(a,b)=>b.goals-a.goals,
+    age:(a,b)=>a.age-b.age,
+    potential:(a,b)=>b.potential-a.potential,
+    value:(a,b)=>b.value-a.value,
+    name:(a,b)=>a.name.localeCompare(b.name)
+  };
+  list.sort(sorters[state.playerSort]||sorters.overall);
+
+  app.innerHTML = `
+  <section class="section" style="margin-top:0">
+    <div class="section-head"><div><h3>Jugadores</h3><p>${fmt(list.length)} perfiles · ${fmt(PLAYERS.filter(p=>p.positionSource!=='Estimada').length)} posiciones oficiales · ${fmt(PLAYERS.filter(p=>p.positionSource==='Estimada').length)} estimadas por rol y goles.</p></div></div>
+    <div class="filterbar">
+      <div class="field"><label>Liga</label><select id="f-league">${leagues.map(l=>`<option value="${l}" ${state.playerLeague===l?'selected':''}>${l==='all'?'Todas':esc(LEAGUE_LABEL[l])}</option>`).join('')}</select></div>
+      <div class="field"><label>Equipo</label><select id="f-team">${teams.map(t=>`<option value="${esc(t)}" ${state.playerTeam===t?'selected':''}>${t==='all'?'Todos':esc(t)}</option>`).join('')}</select></div>
+      <div class="field"><label>Perfil</label><select id="f-perfil"><option value="all" ${state.playerPerfil==='all'?'selected':''}>Todos</option><option value="Jugador" ${state.playerPerfil==='Jugador'?'selected':''}>Jugador</option><option value="Invitado" ${state.playerPerfil==='Invitado'?'selected':''}>Invitado</option></select></div>
+      <div class="field"><label>Posición</label><select id="f-position">${['all','Portero','Central','Lateral','Medio','Delantero','Polivalente'].map(v=>`<option value="${v}" ${state.playerPosition===v?'selected':''}>${v==='all'?'Todas':v}</option>`).join('')}</select></div>
+      <div class="field"><label>Ordenar</label><select id="f-sort">
+        <option value="overall" ${state.playerSort==='overall'?'selected':''}>Overall</option>
+        <option value="goals" ${state.playerSort==='goals'?'selected':''}>Goles iSquad</option>
+        <option value="potential" ${state.playerSort==='potential'?'selected':''}>Potencial</option>
+        <option value="value" ${state.playerSort==='value'?'selected':''}>Valor</option>
+        <option value="age" ${state.playerSort==='age'?'selected':''}>Edad</option>
+        <option value="name" ${state.playerSort==='name'?'selected':''}>Nombre</option>
+      </select></div>
+      <div class="field" style="flex:1;min-width:220px"><label>Buscar</label><input id="f-search" placeholder="Nombre o equipo..." value="${esc(state.playerSearch)}"></div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Jugador</th><th>Pos.</th><th>Equipo</th><th>Liga</th><th class="num">Edad</th><th class="num">Goles</th><th class="num">Overall</th><th class="num">Potencial</th><th class="num">Valor</th><th>Estrellas</th></tr></thead>
+        <tbody>${list.map((p,i)=>playerRow(p,i+1)).join('')}</tbody>
+      </table>
+    </div>
+  </section>`;
+
+  const bind = (id,key)=>$('#'+id).addEventListener('change',e=>{state[key]=e.target.value;renderPlayers();});
+  bind('f-league','playerLeague'); bind('f-team','playerTeam'); bind('f-perfil','playerPerfil'); bind('f-position','playerPosition'); bind('f-sort','playerSort');
+  let searchTimer;
+  $('#f-search').addEventListener('input',e=>{
+    state.playerSearch=e.target.value;
+    clearTimeout(searchTimer);
+    searchTimer=setTimeout(()=>{
+      renderPlayers();
+      const inp=$('#f-search');
+      if(inp){ inp.focus(); inp.setSelectionRange(inp.value.length,inp.value.length); }
+    },220);
+  });
+  bindPlayerRows();
+}
+
+function playerRow(p, i){
+  const baja = String(p.estado).startsWith('Baja');
+  return `<tr data-player="${p.id}" style="cursor:pointer">
+    <td class="muted">${i}</td>
+    <td><div class="player-cell"><div class="avatar">${avatarInner(p)}</div><div><div class="player-name">${esc(p.name)}</div><div class="player-sub">${esc(p.archetype||p.position)} · ${esc(p.quality)}</div></div></div></td>
+    <td>${posBadge(p)}</td>
+    <td>${esc(p.teamName)}</td>
+    <td><span class="pill ${p.league==='DHA'?'green':p.league==='DHB'?'blue':'gold'}">${esc(LEAGUE_SHORT[p.league])}</span></td>
+    <td class="num">${p.age}</td>
+    <td class="num">${fmt(p.goals)}</td>
+    <td class="num"><strong>${fmt1(p.overall)}</strong></td>
+    <td class="num">${fmt1(p.potential)}</td>
+    <td class="num value">${euro(p.value)}</td>
+    <td>${starsHtml(p.stars)} ${baja?'<span class="tag baja">Baja</span>':''} ${p.perfil==='Invitado'?'<span class="tag invitado">Inv.</span>':''}</td>
+  </tr>`;
+}
+
+/* ---------- Simulador ---------- */
+function renderSim(){
+  ensureSeasons();
+  if(state.league==='RESUMEN'){ renderSummaryTab(); return; }
+  const season = state.seasons[state.league];
+  app.innerHTML = state.league==='DHA' ? renderDhaTab(season) : renderDhbTab(season);
+  bindSimEvents(season);
+}
+
+function simTabs(){
+  return `<div class="tabs">
+    <button class="tab ${state.league==='DHA'?'active':''}" data-sim-league="DHA">DHA · 12 equipos</button>
+    <button class="tab ${state.league==='DHB'?'active':''}" data-sim-league="DHB">DHB · 16 equipos</button>
+    <button class="tab ${state.league==='RESUMEN'?'active':''}" data-sim-league="RESUMEN">Resumen temporada</button>
+  </div>`;
+}
+
+function phaseLabel(season){
+  if(season.league==='DHA'){
+    if(season.phase==='regular') return `Liga regular · Jornada ${season.round}/22`;
+    if(season.phase==='final4') return 'Final Four pendiente';
+    return 'Temporada finalizada';
+  }
+  if(season.phase==='first') return `Primera fase · Jornada ${season.round1}/14`;
+  if(season.phase==='second') return `Segunda fase · Jornada ${season.round2}/8`;
+  if(season.phase==='final4') return 'Final Four pendiente';
+  return 'Temporada finalizada';
+}
+
+function standingsTable(rows, opts={}){
+  return `<div style="overflow:auto"><table class="standings">
+    <thead><tr><th>#</th><th>Equipo</th><th class="right">PJ</th><th class="right">PG</th><th class="right">PE</th><th class="right">PP</th><th class="right">GF</th><th class="right">GC</th><th class="right">DG</th><th class="right">PTS</th></tr></thead>
+    <tbody>${rows.map((r,i)=>{
+      const cls=[];
+      if(opts.champion && i===0) cls.push('champion');
+      if(opts.promotion && i<4) cls.push('promotion');
+      if(opts.relegation && i>=rows.length-2) cls.push('relegation');
+      return `<tr class="${cls.join(' ')}"><td class="pos">${i+1}</td><td class="team">${esc(r.name)}</td><td class="right">${r.pj}</td><td class="right">${r.pg}</td><td class="right">${r.pe}</td><td class="right">${r.pp}</td><td class="right">${r.gf}</td><td class="right">${r.gc}</td><td class="right">${r.dg>0?'+':''}${r.dg}</td><td class="pts">${r.pts}</td></tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
+function lastRoundDhb(season){
+  const a=season.results1[season.results1.length-1]||[];
+  const b=season.results2[season.results2.length-1]||[];
+  return [...a,...b];
+}
+function lastRoundDhb2(season){
+  const a=season.resultsA[season.resultsA.length-1]||[];
+  const b=season.resultsB[season.resultsB.length-1]||[];
+  return [...a,...b];
+}
+
+function quickMatchCard(season){
+  return `<div class="quick">
+    <h4>Partido rápido</h4>
+    <div class="row">
+      <select id="quick-home">${season.teams.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('')}</select>
+      <select id="quick-away">${season.teams.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('')}</select>
+      <button class="btn primary small" id="quick-play">Jugar partido</button>
+    </div>
+    <div id="quick-result"></div>
+  </div>`;
+}
+
+function topScorersCard(league){
+  const list = [...PLAYERS].filter(p=>p.league===league).sort((a,b)=>b.seasonGoals-a.seasonGoals || b.seasonAssists-a.seasonAssists).slice(0,10);
+  return `<div class="card" style="margin-top:14px">
+    <div class="section-head" style="margin-bottom:8px"><div><h4 style="margin:0;font-size:14px">Máximos goleadores simulados</h4><p class="small muted" style="margin:3px 0 0">Goles y asistencias generados en la temporada.</p></div></div>
+    <div class="list">${list.map(p=>`<div class="list-item"><div class="left"><div class="avatar">${avatarInner(p)}</div><div><div class="name">${esc(p.name)}</div><div class="sub">${esc(p.teamName)}</div></div></div><div class="metric">${p.seasonGoals} G · ${p.seasonAssists} A</div></div>`).join('')}</div>
+  </div>`;
+}
+
+function renderDhaTab(season){
+  const rows = sortStandings(season.standings);
+  const top4 = rows.slice(0,4);
+  const current = season.results[season.results.length-1] || [];
+  const canRound = season.phase==='regular';
+  const canFinal4 = season.phase==='final4' && !season.final4;
+  const champion = season.champion;
+  return `
+  <section class="section" style="margin-top:0">
+    <div class="section-head"><div><h3>Simulador DHA</h3><p>12 equipos · 22 jornadas · Final Four · playout</p></div></div>
+    ${simTabs()}
+    <div class="sim-actions">
+      <button class="btn primary" id="sim-round" ${canRound?'':'disabled'}>Simular jornada</button>
+      <button class="btn secondary" id="sim-all" ${season.phase==='done'?'disabled':''}>Simular toda la temporada</button>
+      ${canFinal4?'<button class="btn primary" id="sim-final4">Jugar Final Four</button>':''}
+      <button class="btn ghost" id="sim-reset">Nueva temporada</button>
+      <span class="pill ${season.phase==='done'?'gold':'green'}">${phaseLabel(season)}</span>
+      ${champion?`<span class="pill gold">Campeón: ${esc(champion.name)}</span>`:''}
+    </div>
+    <div class="sim-grid">
+      <div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <div style="padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center"><strong>Clasificación DHA</strong><span class="small muted">Liga regular</span></div>
+          ${standingsTable(rows,{promotion:true,relegation:true})}
+        </div>
+        <div class="note" style="margin-top:10px"><strong>Formato:</strong> top 4 → Final Four; 11º → playout; 12º → descenso directo.</div>
+        ${season.final4?final4Block(season.final4,'Final Four DHA'):''}
+        ${season.phase==='final4' && !season.final4?`<div class="note" style="margin-top:12px">La liga regular ha terminado. Juega la Final Four para decidir el campeón. Los cuatro primeros son: ${top4.map(r=>esc(r.name)).join(', ')}.</div>`:''}
+      </div>
+      <div>
+        ${quickMatchCard(season)}
+        ${topScorersCard('DHA')}
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head"><div><h3>${season.phase==='regular'?`Jornada ${season.round}`:'Última jornada'}</h3><p>Resultados y goleadores del último bloque simulado.</p></div></div>
+      ${current.length?`<div class="match-list">${current.map(matchCard).join('')}</div>`:'<div class="card empty">Todavía no se ha simulado ninguna jornada.</div>'}
+    </div>
+  </section>`;
+}
+
+function renderDhbTab(season){
+  const first = season.phase==='first';
+  const second = season.phase==='second';
+  const done = season.phase==='done';
+  const current = first ? lastRoundDhb(season) : second ? lastRoundDhb2(season) : [];
+  const rowsA = season.standingsA ? sortStandings(season.standingsA) : [];
+  const rowsB = season.standingsB ? sortStandings(season.standingsB) : [];
+  const canRound = first || second;
+  const canFinal4 = season.phase==='final4' && !season.final4;
+  return `
+  <section class="section" style="margin-top:0">
+    <div class="section-head"><div><h3>Simulador DHB</h3><p>16 equipos · dos grupos · segunda fase A/B · Final Four</p></div></div>
+    ${simTabs()}
+    <div class="sim-actions">
+      <button class="btn primary" id="sim-round" ${canRound?'':'disabled'}>Simular jornada</button>
+      <button class="btn secondary" id="sim-all" ${done?'disabled':''}>Simular toda la temporada</button>
+      ${canFinal4?'<button class="btn primary" id="sim-final4">Jugar Final Four</button>':''}
+      <button class="btn ghost" id="sim-reset">Nueva temporada</button>
+      <span class="pill ${done?'gold':'green'}">${phaseLabel(season)}</span>
+      ${season.champion?`<span class="pill gold">Campeón: ${esc(season.champion.name)}</span>`:''}
+    </div>
+    ${first?`
+      <div class="grid grid-2">
+        <div class="card" style="padding:0;overflow:hidden"><div style="padding:14px 16px;border-bottom:1px solid var(--line)"><strong>Grupo 1</strong><span class="small muted" style="margin-left:8px">Primera fase</span></div>${standingsTable(sortStandings(season.standings1))}</div>
+        <div class="card" style="padding:0;overflow:hidden"><div style="padding:14px 16px;border-bottom:1px solid var(--line)"><strong>Grupo 2</strong><span class="small muted" style="margin-left:8px">Primera fase</span></div>${standingsTable(sortStandings(season.standings2))}</div>
+      </div>
+    `:`
+      <div class="grid grid-2">
+        <div class="card" style="padding:0;overflow:hidden"><div style="padding:14px 16px;border-bottom:1px solid var(--line)"><strong>Grupo A</strong><span class="small muted" style="margin-left:8px">Ascenso</span></div>${standingsTable(rowsA,{promotion:true})}</div>
+        <div class="card" style="padding:0;overflow:hidden"><div style="padding:14px 16px;border-bottom:1px solid var(--line)"><strong>Grupo B</strong><span class="small muted" style="margin-left:8px">Permanencia</span></div>${standingsTable(rowsB,{relegation:true})}</div>
+      </div>
+    `}
+    <div class="note" style="margin-top:10px"><strong>Formato:</strong> Grupo A → ascenso y título; Grupo B → permanencia. Los dos últimos del Grupo B descienden a Primera.</div>
+    ${season.final4?final4Block(season.final4,'Final Four DHB'):''}
+    ${done?dhbOutcomeBlock(season):''}
+    <div class="sim-grid" style="margin-top:14px">
+      <div>
+        <div class="section-head"><div><h3>${first?'Primera fase':second?'Segunda fase':'Final Four'}</h3><p>Resultados del último bloque.</p></div></div>
+        ${current.length?`<div class="match-list">${current.map(matchCard).join('')}</div>`:'<div class="card empty">Todavía no se ha simulado ninguna jornada.</div>'}
+      </div>
+      <div>
+        ${quickMatchCard(season)}
+        ${topScorersCard('DHB')}
+      </div>
+    </div>
+  </section>`;
+}
+
+function final4Block(final4, title='Final Four'){
+  if(!final4) return '';
+  return `<div class="card" style="margin-top:14px">
+    <div class="section-head"><div><h4 style="margin:0;font-size:14px">${title}</h4><p class="small muted" style="margin:3px 0 0">Semifinales y final a partido único. Si hay empate, shoot-outs.</p></div></div>
+    <div class="match-list">
+      ${final4.semis.map((m,i)=>`<div class="small muted" style="margin:6px 0 2px">Semifinal ${i+1}</div>${matchCard(m)}`).join('')}
+      <div class="small muted" style="margin:6px 0 2px">Final</div>
+      ${matchCard(final4.final)}
+    </div>
+    <div class="callout" style="margin-top:10px"><strong>Campeón:</strong> ${esc(TEAM_BY_ID[final4.final.winnerId].name)}</div>
+  </div>`;
+}
+
+function dhbOutcomeBlock(season){
+  if(!season.finalStandingsA) return '';
+  const direct = season.directPromoted?.name || 'Pendiente';
+  const playoff = season.playoffTeam?.name || 'Pendiente';
+  const relegated = season.relegated.map(t=>t.name).join(', ') || 'Pendiente';
+  return `<div class="card" style="margin-top:14px">
+    <div class="section-head"><div><h4 style="margin:0;font-size:14px">Ascenso y descenso DHB</h4><p class="small muted" style="margin:3px 0 0">El ascenso se decide por la clasificación final del Grupo A, no por la Final Four.</p></div></div>
+    <div class="list">
+      <div class="list-item"><div class="left"><div><div class="name">Ascenso directo a DHA</div><div class="sub">1º con opción de ascender</div></div></div><div class="metric">${esc(direct)}</div></div>
+      <div class="list-item"><div class="left"><div><div class="name">Playout contra el 11º de DHA</div><div class="sub">2º con opción de ascender</div></div></div><div class="metric">${esc(playoff)}</div></div>
+      <div class="list-item"><div class="left"><div><div class="name">Descienden a Primera</div><div class="sub">15º y 16º de la DHB</div></div></div><div class="metric">${esc(relegated)}</div></div>
+    </div>
+    <div class="note" style="margin-top:10px">Los equipos vinculados a clubes de DHA no pueden ascender si su club matriz sigue en DHA. Por eso la Final Four puede tener un campeón distinto del equipo que asciende.</div>
+  </div>`;
+}
+
+function playoutBlock(){
+  const dha = state.seasons.DHA, dhb = state.seasons.DHB;
+  if(!dha || !dhb || dha.phase!=='done' || dhb.phase!=='done') return '';
+  const p = state.playout;
+  if(!p) return `<div class="card" style="margin-top:14px"><div class="section-head"><div><h4 style="margin:0;font-size:14px">Playout de permanencia</h4><p class="small muted" style="margin:3px 0 0">11º DHA vs 2º DHB con opción de ascender. Al mejor de 3.</p></div></div><button class="btn primary" id="play-playout">Jugar playout</button></div>`;
+  return `<div class="card" style="margin-top:14px">
+    <div class="section-head"><div><h4 style="margin:0;font-size:14px">Playout de permanencia</h4><p class="small muted" style="margin:3px 0 0">${esc(p.dha11.name)} (DHA) vs ${esc(p.dhb2.name)} (DHB)</p></div></div>
+    <div class="match-list">${p.games.map(g=>`<div class="small muted" style="margin:6px 0 2px">Partido ${g.game} · ${g.dhaHome?'Campo del equipo de DHA':'Campo del equipo de DHB'}</div>${matchCard(g)}`).join('')}</div>
+    <div class="callout" style="margin-top:10px"><strong>Ganador:</strong> ${esc(p.winner.name)} · jugará en DHA 2027-28.<br><strong>Perdedor:</strong> ${esc(p.loser.name)} · jugará en DHB 2027-28.</div>
+  </div>`;
+}
+
+function nextSeasonBlock(){
+  const dha = state.seasons.DHA, dhb = state.seasons.DHB, p = state.playout;
+  if(!dha || !dhb || dha.phase!=='done' || dhb.phase!=='done' || !p) return '';
+  const rows = sortStandings(dha.standings);
+  const relegated = TEAM_BY_ID[rows[11].id];
+  const eleventh = TEAM_BY_ID[rows[10].id];
+  const direct = dhb.directPromoted;
+  const next = new Map();
+  for(const t of dha.teams){
+    if(t.id===relegated.id || t.id===eleventh.id) continue;
+    next.set(t.id,t);
+  }
+  if(direct) next.set(direct.id,direct);
+  next.set(p.winner.id,p.winner);
+  const list = Array.from(next.values()).sort((a,b)=>a.name.localeCompare(b.name));
+  return `<div class="card" style="margin-top:14px"><div class="section-head"><div><h4 style="margin:0;font-size:14px">DHA 2027-28 (proyección)</h4><p class="small muted" style="margin:3px 0 0">Movimientos DHA-DHB. Faltan los dos ascensos de Primera a DHB, que no se simulan.</p></div></div><div class="list">${list.map(t=>`<div class="list-item"><div class="left"><div><div class="name">${esc(t.name)}</div><div class="sub">${esc(t.club)}</div></div></div><div class="metric">${t.id===direct?.id?'Asciende DHB':t.id===p.winner.id?'Gana playout':''}</div></div>`).join('')}</div></div>`;
+}
+
+function renderSummaryTab(){
+  ensureSeasons();
+  const dha=state.seasons.DHA, dhb=state.seasons.DHB;
+  const bothDone=dha.phase==='done' && dhb.phase==='done';
+  const tabs=simTabs();
+  if(!bothDone){
+    app.innerHTML = `<section class="section" style="margin-top:0">
+      <div class="section-head"><div><h3>Resumen de temporada</h3><p>Para resolver el ascenso y el descenso necesitas completar la DHA y la DHB.</p></div></div>
+      ${tabs}
+      <div class="callout">Completa las dos ligas para jugar el playout y ver la composición de la DHA 2027-28.</div>
+      <div class="sim-actions" style="margin-top:14px">
+        <button class="btn primary" id="sim-everything">Simular temporada completa (DHA + DHB)</button>
+        <button class="btn ghost" id="sim-reset">Nueva temporada</button>
+      </div>
+      <div class="grid grid-2" style="margin-top:14px">
+        <div class="card"><div class="section-head"><div><h4 style="margin:0;font-size:14px">DHA</h4><p class="small muted" style="margin:3px 0 0">${phaseLabel(dha)}</p></div></div>${standingsTable(sortStandings(dha.standings))}</div>
+        <div class="card"><div class="section-head"><div><h4 style="margin:0;font-size:14px">DHB</h4><p class="small muted" style="margin:3px 0 0">${phaseLabel(dhb)}</p></div></div>${dhb.standingsA?standingsTable(sortStandings(dhb.standingsA),{promotion:true}):`<div class="grid grid-2"><div>${standingsTable(sortStandings(dhb.standings1))}</div><div>${standingsTable(sortStandings(dhb.standings2))}</div></div>`}</div>
+      </div>
+    </section>`;
+    bindSimEvents(null);
+    return;
+  }
+  const dhaRows=sortStandings(dha.standings);
+  const dhaChampion=dha.champion;
+  const dhbChampion=dhb.champion;
+  const dha11=TEAM_BY_ID[dhaRows[10].id], dha12=TEAM_BY_ID[dhaRows[11].id];
+  app.innerHTML = `<section class="section" style="margin-top:0">
+    <div class="section-head"><div><h3>Resumen de temporada</h3><p>Campeones, ascensos, descensos y playout.</p></div></div>
+    ${tabs}
+    <div class="sim-actions"><button class="btn ghost" id="sim-reset">Nueva temporada</button></div>
+    <div class="grid grid-2">
+      <div class="card"><div class="kpi"><div class="label">Campeón DHA</div><div class="value" style="font-size:22px">${esc(dhaChampion?.name||'—')}</div><div class="sub">Final Four · ${dhaChampion?fmt1(dhaChampion.overall):''}</div></div></div>
+      <div class="card"><div class="kpi"><div class="label">Campeón DHB</div><div class="value" style="font-size:22px">${esc(dhbChampion?.name||'—')}</div><div class="sub">Final Four · ${dhbChampion?fmt1(dhbChampion.overall):''}</div></div></div>
+    </div>
+    <div class="grid grid-2" style="margin-top:14px">
+      <div class="card"><div class="section-head"><div><h4 style="margin:0;font-size:14px">DHA</h4><p class="small muted" style="margin:3px 0 0">Liga regular</p></div></div>${standingsTable(dhaRows,{promotion:true,relegation:true})}</div>
+      <div class="card"><div class="section-head"><div><h4 style="margin:0;font-size:14px">DHB · Grupo A</h4><p class="small muted" style="margin:3px 0 0">Ascenso</p></div></div>${standingsTable(dhb.finalStandingsA,{promotion:true})}</div>
+    </div>
+    <div class="grid grid-2" style="margin-top:14px">
+      <div class="card"><div class="section-head"><div><h4 style="margin:0;font-size:14px">DHB · Grupo B</h4><p class="small muted" style="margin:3px 0 0">Permanencia</p></div></div>${standingsTable(dhb.finalStandingsB,{relegation:true})}</div>
+      <div class="card"><div class="section-head"><div><h4 style="margin:0;font-size:14px">Movimientos</h4><p class="small muted" style="margin:3px 0 0">DHA / DHB</p></div></div>
+        <div class="list">
+          <div class="list-item"><div class="left"><div><div class="name">Desciende de DHA</div><div class="sub">12º</div></div></div><div class="metric">${esc(dha12.name)}</div></div>
+          <div class="list-item"><div class="left"><div><div class="name">Juega playout</div><div class="sub">11º DHA</div></div></div><div class="metric">${esc(dha11.name)}</div></div>
+          <div class="list-item"><div class="left"><div><div class="name">Asciende directo</div><div class="sub">1º DHB con opción</div></div></div><div class="metric">${esc(dhb.directPromoted?.name||'—')}</div></div>
+          <div class="list-item"><div class="left"><div><div class="name">Playout DHB</div><div class="sub">2º con opción</div></div></div><div class="metric">${esc(dhb.playoffTeam?.name||'—')}</div></div>
+          <div class="list-item"><div class="left"><div><div class="name">Descienden a Primera</div><div class="sub">15º y 16º</div></div></div><div class="metric">${dhb.relegated.map(t=>esc(t.name)).join(', ')}</div></div>
+        </div>
+      </div>
+    </div>
+    ${dha.final4?final4Block(dha.final4,'Final Four DHA'):''}
+    ${dhb.final4?final4Block(dhb.final4,'Final Four DHB'):''}
+    ${dhbOutcomeBlock(dhb)}
+    ${playoutBlock()}
+    ${nextSeasonBlock()}
+  </section>`;
+  bindSimEvents(null);
+}
+
+function matchCard(m){
+  return `<div class="match">
+    <div class="home">${esc(m.homeName)}</div>
+    <div class="score">${m.hg} - ${m.ag}${m.so?`<br><span class="small muted">(${m.so.home}-${m.so.away} SO)</span>`:''}</div>
+    <div class="away">${esc(m.awayName)}</div>
+    <div class="scorers">${m.homeScorers.length?`<strong>${esc(m.homeName)}:</strong> ${m.homeScorers.map(esc).join(', ')}`:''}${m.homeScorers.length&&m.awayScorers.length?' · ':''}${m.awayScorers.length?`<strong>${esc(m.awayName)}:</strong> ${m.awayScorers.map(esc).join(', ')}`:''}</div>
+  </div>`;
+}
+
+function bindSimEvents(season){
+  $$('[data-sim-league]').forEach(b=>b.addEventListener('click',()=>{state.league=b.dataset.simLeague;renderSim();}));
+  const roundBtn=$('#sim-round');
+  if(roundBtn) roundBtn.addEventListener('click',()=>{ if(state.league==='DHA') simulateDhaRound(state.seasons.DHA); else if(state.league==='DHB') simulateDhbRound(state.seasons.DHB); renderSim(); });
+  const allBtn=$('#sim-all');
+  if(allBtn) allBtn.addEventListener('click',()=>{ if(state.league==='DHA') simulateDhaAll(state.seasons.DHA); else if(state.league==='DHB') simulateDhbAll(state.seasons.DHB); renderSim(); });
+  const final4Btn=$('#sim-final4');
+  if(final4Btn) final4Btn.addEventListener('click',()=>{ if(state.league==='DHA') simulateDhaFinalFour(state.seasons.DHA); else if(state.league==='DHB') simulateDhbFinalFour(state.seasons.DHB); renderSim(); });
+  const resetBtn=$('#sim-reset');
+  if(resetBtn) resetBtn.addEventListener('click',()=>{ state.seasons={DHA:null,DHB:null}; state.playout=null; state.league='DHA'; resetPlayerStats(); renderSim(); });
+  const everythingBtn=$('#sim-everything');
+  if(everythingBtn) everythingBtn.addEventListener('click',()=>{ simulateEverything(); state.league='RESUMEN'; renderSim(); });
+  const playoutBtn=$('#play-playout');
+  if(playoutBtn) playoutBtn.addEventListener('click',()=>{ resolvePlayout(); renderSim(); });
+  const quickPlay=$('#quick-play');
+  if(quickPlay) quickPlay.addEventListener('click',()=>{
+    const h=TEAM_BY_ID[$('#quick-home').value], a=TEAM_BY_ID[$('#quick-away').value];
+    if(!h||!a||h.id===a.id){ $('#quick-result').innerHTML='<div class="note">Elige dos equipos distintos.</div>'; return; }
+    const rng=mulberry32(Date.now()%100000);
+    const r=simulateMatch(h,a,rng,{knockout:false,neutral:false});
+    $('#quick-result').innerHTML=`<div class="result-box"><div class="scoreline">${r.hg} - ${r.ag}</div><div class="teamsline">${esc(h.name)} vs ${esc(a.name)}</div><div class="scorersline">${r.homeScorers.length?esc(h.name)+': '+r.homeScorers.map(esc).join(', '):''}${r.homeScorers.length&&r.awayScorers.length?'<br>':''}${r.awayScorers.length?esc(a.name)+': '+r.awayScorers.map(esc).join(', '):''}</div></div>`;
+  });
+  const awaySelect=$('#quick-away');
+  if(awaySelect && awaySelect.options.length>1) awaySelect.value=awaySelect.options[1].value;
+  $$('.match').forEach(m=>m.addEventListener('click',()=>m.classList.toggle('expanded')));
+}
+
+
+/* ---------- Conclusiones ---------- */
+function renderInsights(){
+  const allTeams = [...TEAMS].sort((a,b)=>b.overall-a.overall);
+  const dha = TEAMS.filter(t=>t.league==='DHA').sort((a,b)=>b.overall-a.overall);
+  const dhb = TEAMS.filter(t=>t.league==='DHB').sort((a,b)=>b.overall-a.overall);
+  const topPlayers = [...PLAYERS].sort((a,b)=>b.overall-a.overall);
+  const topDhb = [...PLAYERS].filter(p=>p.league==='DHB').sort((a,b)=>b.overall-a.overall).slice(0,10);
+  const topYoung = [...PLAYERS].filter(p=>p.age<=21).sort((a,b)=>b.potential-a.potential).slice(0,10);
+  const bestValue = [...PLAYERS].sort((a,b)=> (b.overall/Math.log10(b.value+10)) - (a.overall/Math.log10(a.value+10)) ).slice(0,10);
+  const topGoals = [...PLAYERS].sort((a,b)=>b.goals-a.goals).slice(0,10);
+  const bestAttack = [...TEAMS].sort((a,b)=>b.attack-a.attack)[0];
+  const bestDefense = [...TEAMS].sort((a,b)=>b.defense-a.defense)[0];
+  const mostDepth = [...TEAMS].sort((a,b)=>b.squadCount-a.squadCount)[0];
+  const youngest = [...TEAMS].filter(t=>t.squadCount>=10).sort((a,b)=>a.avgAge-b.avgAge)[0];
+  const oldest = [...TEAMS].filter(t=>t.squadCount>=10).sort((a,b)=>b.avgAge-a.avgAge)[0];
+  const topPlayer = topPlayers[0];
+  const topYoungPlayer = topYoung[0];
+
+  app.innerHTML = `
+  <section class="section" style="margin-top:0">
+    <div class="section-head"><div><h3>Conclusiones y scouting</h3><p>Lectura automática del modelo: favoritos, talento, valor y limitaciones.</p></div></div>
+    <div class="callout">
+      <strong>Resumen ejecutivo.</strong> El modelo sitúa a <strong>${esc(dha[0].name)}</strong> como favorito de la DHA
+      (${fmt1(dha[0].overall)}/100, ${fmt1(dha[0].titleProb)}% de título en 350 simulaciones) y a
+      <strong>${esc(dhb[0].name)}</strong> como referencia de la DHB (${fmt1(dhb[0].overall)}/100).
+      El jugador mejor valorado es <strong>${esc(topPlayer.name)}</strong> (${esc(topPlayer.teamName)}, ${fmt1(topPlayer.overall)}/100),
+      el mejor de la DHB es <strong>${esc(topDhb[0].name)}</strong> (${esc(topDhb[0].teamName)}, ${fmt1(topDhb[0].overall)}/100),
+      y la mayor promesa es <strong>${esc(topYoungPlayer.name)}</strong> (${topYoungPlayer.age} años, potencial ${fmt1(topYoungPlayer.potential)}).
+      El equipo más ofensivo es <strong>${esc(bestAttack.name)}</strong> y el más sólido atrás, <strong>${esc(bestDefense.name)}</strong>.
+    </div>
+
+    <div class="insight-grid" style="margin-top:14px">
+      <div class="card">
+        <div class="section-head"><div><h3>Favoritos DHA</h3><p>Overall y probabilidad de título.</p></div></div>
+        <div class="list">${dha.slice(0,8).map(t=>insightTeam(t)).join('')}</div>
+      </div>
+      <div class="card">
+        <div class="section-head"><div><h3>Favoritos DHB</h3><p>El ascenso, en el punto de mira.</p></div></div>
+        <div class="list">${dhb.slice(0,8).map(t=>insightTeam(t)).join('')}</div>
+      </div>
+      <div class="card">
+        <div class="section-head"><div><h3>Top 10 jugadores</h3><p>Valoración global del modelo.</p></div></div>
+        <div class="list">${topPlayers.slice(0,10).map(p=>insightPlayer(p,'overall')).join('')}</div>
+      </div>
+      <div class="card">
+        <div class="section-head"><div><h3>Top DHB</h3><p>Los jugadores con más valor de la segunda categoría.</p></div></div>
+        <div class="list">${topDhb.map(p=>insightPlayer(p,'overall')).join('')}</div>
+      </div>
+      <div class="card">
+        <div class="section-head"><div><h3>Mejores jóvenes (≤21)</h3><p>Potencial de futuro.</p></div></div>
+        <div class="list">${topYoung.map(p=>insightPlayer(p,'potential')).join('')}</div>
+      </div>
+      <div class="card">
+        <div class="section-head"><div><h3>Mejor relación calidad/precio</h3><p>Overall alto con valor de mercado contenido.</p></div></div>
+        <div class="list">${bestValue.map(p=>insightPlayer(p,'value')).join('')}</div>
+      </div>
+      <div class="card">
+        <div class="section-head"><div><h3>Goleadores iSquad</h3><p>Goles acumulados que muestra la ficha.</p></div></div>
+        <div class="list">${topGoals.map(p=>insightPlayer(p,'goals')).join('')}</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="section-head"><div><h3>Lectura por equipos</h3><p>Quién tiene la mejor base y quién necesita más.</p></div></div>
+          <div class="list">
+            <div class="list-item"><div class="left"><div><div class="name">Más ofensivo</div><div class="sub">${esc(bestAttack.name)} · ${esc(LEAGUE_SHORT[bestAttack.league])}</div></div></div><div class="metric">${fmt1(bestAttack.attack)}</div></div>
+            <div class="list-item"><div class="left"><div><div class="name">Más sólido atrás</div><div class="sub">${esc(bestDefense.name)} · ${esc(LEAGUE_SHORT[bestDefense.league])}</div></div></div><div class="metric">${fmt1(bestDefense.defense)}</div></div>
+            <div class="list-item"><div class="left"><div><div class="name">Plantilla más amplia</div><div class="sub">${esc(mostDepth.name)}</div></div></div><div class="metric">${mostDepth.squadCount}</div></div>
+            <div class="list-item"><div class="left"><div><div class="name">Proyecto más joven</div><div class="sub">${esc(youngest.name)}</div></div></div><div class="metric">${fmt1(youngest.avgAge)} años</div></div>
+            <div class="list-item"><div class="left"><div><div class="name">Plantilla más veterana</div><div class="sub">${esc(oldest.name)}</div></div></div><div class="metric">${fmt1(oldest.avgAge)} años</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-head"><div><h3>Qué mirar en cada equipo</h3><p>Pistas para convertir los datos en decisiones.</p></div></div>
+          <div class="list">
+            <div class="list-item"><div class="left"><div><div class="name">DHA</div><div class="sub">La diferencia entre el 1º y el 12º es de ${fmt1(dha[0].overall-dha[dha.length-1].overall)} puntos. La profundidad y la edad media explican buena parte del gap.</div></div></div></div>
+            <div class="list-item"><div class="left"><div><div class="name">DHB</div><div class="sub">El rango es de ${fmt1(dhb[0].overall-dhb[dhb.length-1].overall)} puntos. Los equipos con más invitados suelen tener plantillas menos definidas.</div></div></div></div>
+            <div class="list-item"><div class="left"><div><div class="name">Jóvenes</div><div class="sub">Un potencial alto con overall medio es la señal de compra: jugadores de 18-21 años con minutos y goles.</div></div></div></div>
+            <div class="list-item"><div class="left"><div><div class="name">Valor</div><div class="sub">El valor de mercado del modelo premia overall y juventud; un veterano con gran overall puede ser una oportunidad puntual.</div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="note">
+        <strong>Metodología y límites.</strong> Overall = 45% percentil de goles + 25% goles normalizados + 15% curva de edad + 10% perfil (jugador/invitado) + 5% nivel de liga.
+        Se normaliza a 40-95 y se aplica un factor de liga. El potencial añade recorrido a los jóvenes y resta a los veteranos. El valor se calcula con overall, edad y una curva de mercado.
+        No hay posición, minutos ni goles encajados: el modelo no distingue portero de defensa y usa los goles acumulados de iSquad como proxy ofensivo.
+        La simulación interactiva usa el formato oficial 2026-27: DHA con Final Four y playout; DHB con primera fase de dos grupos, segunda fase A/B con arrastre, Final Four y reglas de clubes vinculados.
+        Las probabilidades de las tarjetas de equipo son una estimación simplificada del modelo, no el resultado del formato oficial.
+        Es una base de juego y scouting, no una evaluación profesional.
+      </div>
+    </div>
+  </section>`;
+  bindTeamCards();
+  bindPlayerRows();
+}
+
+function insightTeam(t){
+  return `<div class="list-item" data-team="${t.id}" style="cursor:pointer"><div class="left"><div class="badge ${t.league==='DHA'?'dha':t.league==='DHB'?'dhb':'onea'}">${initials(t.name)}</div><div><div class="name">${esc(t.name)}</div><div class="sub">${esc(LEAGUE_SHORT[t.league])} · ${t.rank}º · ${fmt1(t.titleProb)}% título (modelo)</div></div></div><div class="metric">${fmt1(t.overall)}</div></div>`;
+}
+function insightPlayer(p, metric){
+  let value = '';
+  if(metric==='overall') value = fmt1(p.overall);
+  else if(metric==='potential') value = fmt1(p.potential);
+  else if(metric==='value') value = euro(p.value);
+  else if(metric==='goals') value = fmt(p.goals)+' G';
+  return `<div class="list-item" data-player="${p.id}" style="cursor:pointer"><div class="left"><div class="avatar">${avatarInner(p)}</div><div><div class="name">${esc(p.name)}</div><div class="sub">${esc(p.teamName)} · ${esc(p.position)} · ${p.age} años</div></div></div><div class="metric">${value}</div></div>`;
+}
+
+/* =========================================================
+   Modales
+   ========================================================= */
+function openModal(title, body){
+  modalTitle.innerHTML = title;
+  modalBody.innerHTML = body;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+$('#modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+function bindTeamCards(){
+  $$('[data-team]').forEach(el=>{
+    if(el.dataset.bound) return;
+    el.dataset.bound='1';
+    el.addEventListener('click',()=>openTeam(el.dataset.team));
+  });
+}
+function bindPlayerRows(){
+  $$('[data-player]').forEach(el=>{
+    if(el.dataset.bound) return;
+    el.dataset.bound='1';
+    el.addEventListener('click',()=>openPlayer(el.dataset.player));
+  });
+}
+
+function openTeam(id){
+  const t = TEAM_BY_ID[id];
+  if(!t) return;
+  const roster = [...t.players].sort((a,b)=> (a.perfil===b.perfil? b.overall-a.overall : a.perfil==='Jugador'?-1:1));
+  const body = `
+    <div class="profile">
+      <div class="profile-img"><div class="initials">${initials(t.name)}</div></div>
+      <div>
+        <h3>${esc(t.name)}</h3>
+        <div class="meta">${esc(t.club)} · ${esc(LEAGUE_LABEL[t.league])}<br>${t.rank}º de ${TEAMS.filter(x=>x.league===t.league).length} en el ranking del modelo · ${t.squadCount} jugadores + ${t.guestCount} invitados</div>
+        <div class="stat-grid">
+          <div class="stat"><div class="k">Overall</div><div class="v">${fmt1(t.overall)}</div></div>
+          <div class="stat"><div class="k">Ataque</div><div class="v">${fmt1(t.attack)}</div></div>
+          <div class="stat"><div class="k">Defensa</div><div class="v">${fmt1(t.defense)}</div></div>
+          <div class="stat"><div class="k">Título</div><div class="v">${fmt1(t.titleProb)}%</div></div>
+        </div>
+        <div class="profile-bars">
+          <div class="bar-row"><span>Overall</span><div class="bar"><i style="width:${t.overall}%"></i></div><span>${fmt1(t.overall)}</span></div>
+          <div class="bar-row"><span>Ataque</span><div class="bar attack"><i style="width:${t.attack}%"></i></div><span>${fmt1(t.attack)}</span></div>
+          <div class="bar-row"><span>Defensa</span><div class="bar defense"><i style="width:${t.defense}%"></i></div><span>${fmt1(t.defense)}</span></div>
+        </div>
+        <p class="small muted" style="margin:12px 0 0;line-height:1.55">${esc(t.conclusion)}</p>
+      </div>
+    </div>
+    <div class="section" style="margin-top:16px">
+      <div class="section-head"><div><h4 style="margin:0;font-size:15px">Especialistas</h4><p class="small muted" style="margin:3px 0 0">Roles de set pieces y acciones específicas del equipo.</p></div></div>
+      <div class="card"><div class="list">
+        ${Object.keys(t.specialists||{}).length?Object.entries(t.specialists).map(([role,name])=>`<div class="list-item"><div class="left"><div><div class="name">${SPECIALIST_LABELS[role]||role}</div><div class="sub">${esc(name)}</div></div></div><div class="metric">${role.includes('goalkeeper')?'GK':role.includes('flicker')?'PC':'★'}</div></div>`).join(''):'<div class="empty">Sin especialistas definidos.</div>'}
+      </div></div>
+    </div>
+    <div class="section" style="margin-top:16px">
+      <div class="section-head"><div><h4 style="margin:0;font-size:15px">Set pieces</h4><p class="small muted" style="margin:3px 0 0">Perfil agregado de penalty corner, stroke y juego aéreo.</p></div></div>
+      <div class="card"><div class="profile-bars">
+        <div class="bar-row"><span>PC ataque</span><div class="bar"><i style="width:${t.pcAttack||0}%"></i></div><span>${fmt1(t.pcAttack||0)}</span></div>
+        <div class="bar-row"><span>PC defensa</span><div class="bar"><i style="width:${t.pcDefense||0}%"></i></div><span>${fmt1(t.pcDefense||0)}</span></div>
+        <div class="bar-row"><span>Stroke</span><div class="bar"><i style="width:${t.stroke||0}%"></i></div><span>${fmt1(t.stroke||0)}</span></div>
+        <div class="bar-row"><span>Parada stroke</span><div class="bar"><i style="width:${t.strokeSave||0}%"></i></div><span>${fmt1(t.strokeSave||0)}</span></div>
+        <div class="bar-row"><span>Aerial</span><div class="bar"><i style="width:${t.aerial||0}%"></i></div><span>${fmt1(t.aerial||0)}</span></div>
+      </div></div>
+    </div>
+    <div class="section" style="margin-top:16px">
+      <div class="section-head"><div><h3 style="font-size:16px">Plantilla</h3><p>Jugadores e invitados ordenados por valoración.</p></div></div>
+      <div class="table-wrap" style="box-shadow:none">
+        <table class="roster">
+          <thead><tr><th>Jugador</th><th>Pos.</th><th>Perfil</th><th class="center">Edad</th><th class="center">Goles</th><th class="center">Overall</th><th class="center">Potencial</th><th class="right">Valor</th></tr></thead>
+          <tbody>${roster.map(p=>`<tr data-player="${p.id}" style="cursor:pointer"><td><div class="player-cell"><div class="avatar">${avatarInner(p)}</div><div><div class="player-name">${esc(p.name)}</div><div class="player-sub">${esc(p.role)}</div></div></div></td><td>${posBadge(p)}</td><td><span class="tag ${p.perfil==='Jugador'?'jugador':'invitado'}">${esc(p.perfil)}</span></td><td class="center">${p.age}</td><td class="center">${fmt(p.goals)}</td><td class="center"><strong>${fmt1(p.overall)}</strong></td><td class="center">${fmt1(p.potential)}</td><td class="right value">${euro(p.value)}</td></tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>`;
+  openModal(`<span class="pill ${t.league==='DHA'?'green':t.league==='DHB'?'blue':'gold'}">${esc(LEAGUE_SHORT[t.league])}</span>`, body);
+  bindPlayerRows();
+}
+
+function attrBars(attrs, list){
+  return `<div class="profile-bars attr-bars">${list.map(a=>`<div class="bar-row"><span>${ATTR_LABELS[a]||a}</span><div class="bar"><i style="width:${attrs[a]||0}%"></i></div><span>${attrs[a]||0}</span></div>`).join('')}</div>`;
+}
+
+function openPlayer(id){
+  const p = PLAYERS.find(x=>x.id===id);
+  if(!p) return;
+  const specTags=(p.specialistRoles||[]).map(r=>`<span class="pill gold">${SPECIALIST_LABELS[r]||r}</span>`).join(' ');
+  const posNames=['Portero','Central','Lateral','Medio','Delantero'];
+  const body = `
+    <div class="profile">
+      <div class="profile-img">${p.img?`<img src="${esc(p.img)}" alt="${esc(p.name)}" onerror="this.style.display='none';this.parentElement.textContent='${initials(p.name)}'">`:`<div class="initials">${initials(p.name)}</div>`}</div>
+      <div>
+        <h3>${esc(p.name)}</h3>
+        <div class="meta">${esc(p.teamName)} · ${esc(LEAGUE_LABEL[p.league])}<br>${esc(p.position)} · ${p.age} años · ${esc(p.perfil)} · ${esc(p.estado)}</div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">${specTags||'<span class="pill">Sin rol especialista destacado</span>'}</div>
+        <div class="stat-grid">
+          <div class="stat"><div class="k">Overall ${esc(p.subposicion)}</div><div class="v">${fmt1(p.overall)}</div></div>
+          <div class="stat"><div class="k">Potencial</div><div class="v">${fmt1(p.potential)}</div></div>
+          <div class="stat"><div class="k">Goles iSquad</div><div class="v">${fmt(p.goals)}</div></div>
+          <div class="stat"><div class="k">Valor</div><div class="v" style="font-size:15px">${euro(p.value)}</div></div>
+        </div>
+        <div class="profile-bars">
+          <div class="bar-row"><span>Overall</span><div class="bar"><i style="width:${p.overall}%"></i></div><span>${fmt1(p.overall)}</span></div>
+          <div class="bar-row"><span>Potencial</span><div class="bar potential"><i style="width:${p.potential}%"></i></div><span>${fmt1(p.potential)}</span></div>
+          <div class="bar-row"><span>Percentil goles</span><div class="bar goals"><i style="width:${(p.goalPct*100).toFixed(1)}%"></i></div><span>${(p.goalPct*100).toFixed(0)}%</span></div>
+        </div>
+        <p class="small muted" style="margin:12px 0 0;line-height:1.55">${esc(p.scout)}</p>
+        <p class="small muted" style="margin:6px 0 0;line-height:1.55"><strong>Posición:</strong> ${esc(p.position)} · Fuente de la posición base: ${esc(p.positionSource)} · Confianza: ${esc(p.positionConfidence)} ${p.positionDate?`· ${esc(p.positionDate)}`:''} ${p.positionUrl?`· <a href="${esc(p.positionUrl)}" target="_blank" rel="noopener">Ver fuente</a>`:''} ${p.manualOverride?'<span class="pill gold">Ajuste manual</span>':''}</p>
+        ${p.subEstimada?`<p class="small muted" style="margin:2px 0 0;line-height:1.55">Subposición estimada a partir de la posición base.</p>`:''}
+        ${p.manualOverride?`<p class="small muted" style="margin:2px 0 0;line-height:1.55">Posición y atributos ajustados manualmente en este navegador.</p>`:''}
+        <button class="btn secondary small" id="edit-player" data-player="${p.id}" style="margin-top:10px">Editar posición / atributos</button>
+      </div>
+    </div>
+    <div class="section" style="margin-top:16px">
+      <div class="grid grid-2">
+        <div class="card"><div class="kpi"><div class="label">Arquetipo</div><div class="value" style="font-size:22px">${esc(p.archetype)}</div><div class="sub">${esc(p.positionGroup)} · Polivalencia ${fmt1(p.polivalencia)}</div></div></div>
+        <div class="card"><div class="kpi"><div class="label">Estrellas</div><div class="value" style="font-size:22px">${starsHtml(p.stars)}</div><div class="sub">${esc(p.quality)} · ${p.stars} de 5</div></div></div>
+      </div>
+    </div>
+    <div class="section" style="margin-top:16px">
+      <div class="section-head"><div><h4 style="margin:0;font-size:15px">Valoración por posición</h4><p class="small muted" style="margin:3px 0 0">Overall calculado con los pesos de cada demarcación.</p></div></div>
+      <div class="card">
+        <div class="profile-bars">
+          ${posNames.map(pos=>`<div class="bar-row"><span>${pos}</span><div class="bar"><i style="width:${p.overalls[pos]||0}%"></i></div><span>${fmt1(p.overalls[pos]||0)}</span></div>`).join('')}
+        </div>
+        <p class="small muted" style="margin:8px 0 0">Polivalencia: ${fmt1(p.polivalencia)} · posición natural: ${esc(p.subposicion)}.</p>
+      </div>
+    </div>
+    <div class="section" style="margin-top:16px">
+      <div class="section-head"><div><h4 style="margin:0;font-size:15px">Atributos</h4><p class="small muted" style="margin:3px 0 0">37 características agrupadas por área. Son estimaciones del modelo; puedes corregirlas en el editor.</p></div></div>
+      <div class="grid grid-2">
+        ${ATTR_GROUPS.map(g=>`<div class="card"><div class="section-head" style="margin-bottom:6px"><div><h4 style="margin:0;font-size:13px">${g.name}</h4></div></div>${attrBars(p.attributes,g.attrs)}</div>`).join('')}
+      </div>
+    </div>`;
+  openModal(`<span class="pill ${p.league==='DHA'?'green':p.league==='DHB'?'blue':'gold'}">${esc(LEAGUE_SHORT[p.league])}</span>`, body);
+  const edit=$('#edit-player');
+  if(edit) edit.addEventListener('click',()=>openEditPlayer(p.id));
+}
+
+function recomputeTeams(){
+  recomputeSpecialists(TEAMS);
+  for(const t of TEAMS){
+    t.squad = t.players.filter(p=>p.perfil==='Jugador');
+    t.guests = t.players.filter(p=>p.perfil==='Invitado');
+    const base = t.squad.length ? t.squad : t.players;
+    t.squadCount=t.squad.length; t.guestCount=t.guests.length;
+    t.avgAge=mean(base.map(p=>p.age));
+    t.goalsTotal=sum(t.squad.map(p=>p.goals));
+    t.topScorer=[...base].sort((a,b)=>b.goals-a.goals)[0]||null;
+    const topAttack=[...base].sort((a,b)=>b.attackScore-a.attackScore).slice(0,5);
+    const topDefense=[...base].sort((a,b)=>b.defenseScore-a.defenseScore).slice(0,5);
+    t.avgOverall=mean(base.map(p=>p.overall));
+    t.depth=Math.min(20,base.length*1.2);
+    t.experience=Math.min(10,Math.max(0,t.avgAge-20)*1.2);
+    t.attackRaw=.55*mean(topAttack.map(p=>p.attackScore))+.25*mean(base.map(p=>p.attackScore))+.10*(10+Math.min(10,base.length))+.10*(t.avgAge*2);
+    t.defenseRaw=.55*mean(topDefense.map(p=>p.defenseScore))+.25*mean(base.map(p=>p.defenseScore))+.10*t.depth+.10*t.experience;
+    t.attackAdj=t.attackRaw+(TIER_OFFSET[t.league]||0);
+    t.defenseAdj=t.defenseRaw+(TIER_OFFSET[t.league]||0);
+  }
+  const av=TEAMS.map(t=>t.attackAdj), dv=TEAMS.map(t=>t.defenseAdj);
+  for(const t of TEAMS){
+    t.attack=norm40_95(t.attackAdj,av);
+    t.defense=norm40_95(t.defenseAdj,dv);
+    t.overall=.6*t.attack+.4*t.defense;
+    t.stars=starsFor(t.overall);
+    t.conclusion=teamConclusion(t);
+  }
+  for(const t of TEAMS) setPieceProfile(t);
+  for(const league of ['DHA','DHB','1A']){
+    const ts=TEAMS.filter(t=>t.league===league).sort((a,b)=>b.overall-a.overall);
+    ts.forEach((t,i)=>t.rank=i+1);
+  }
+  monteCarlo('DHA',350);
+  monteCarlo('DHB',350);
+}
+
+function applyPlayerEdit(p, sub, attrs){
+  const groupMap={Portero:'Portero',Central:'Defensa',Lateral:'Defensa',Medio:'Medio',Delantero:'Delantero',Polivalente:'Polivalente'};
+  p.manualOverride=true;
+  p.subposicion=sub;
+  p.positionGroup=groupMap[sub]||p.positionGroup;
+  p.position=sub;
+  p.attributes={...p.attributes,...attrs};
+  p.overalls=computeOveralls(p.attributes);
+  p.overall=sub==='Polivalente'?Math.max(...Object.values(p.overalls)):(p.overalls[sub]||p.overall);
+  p.potential=computePotential(p.overall,p.age);
+  p.value=computeValue(p.overall,p.age,p.positionGroup);
+  p.archetype=archetypeFor(sub,p.attributes);
+  p.polivalencia=computePolivalence(p.overalls,sub);
+  p.stars=starsFor(p.overall);
+  p.quality=qualityFor(p.overall);
+  p.role=p.archetype;
+  const A=p.attributes;
+  p.attackScore=mean([A.definicion,A.flick,A.regate_3d,A.pase,A.pc_flick,A.pc_deflection,A.velocidad].map(Number));
+  const defAttrs=[A.cobertura,A.posicionamiento,A.pc_first_runner,A.pressing,A.transicion,A.fuerza];
+  if(sub==='Portero') defAttrs.push(A.reflejos,A.blocaje,A.pc_gk_save,A.stroke_save,A.uno_vs_uno,A.alto);
+  p.defenseScore=mean(defAttrs.map(Number));
+  p.attackWeight=Math.max(.05,(Number(A.definicion)||50)/40+(Number(A.pc_flick)||50)/80+(Number(A.regate_3d)||50)/80+(Number(A.flick)||50)/100)*(p.perfil==='Jugador'?1:.35);
+  p.scout=scoutText(p);
+  saveOverride(p,{subposicion:sub,positionGroup:p.positionGroup,attributes:attrs});
+}
+
+function openEditPlayer(id){
+  const p=PLAYERS.find(x=>x.id===id); if(!p) return;
+  const subOpts=['Portero','Central','Lateral','Medio','Delantero','Polivalente'];
+  const body=`
+    <div class="note" style="margin-bottom:12px">Corrige la posición y los atributos de <strong>${esc(p.name)}</strong>. Los cambios se guardan en este navegador (localStorage) y no modifican el CSV original. El resto de atributos se mantiene.</div>
+    <div class="field" style="max-width:320px;margin-bottom:14px"><label>Posición natural</label><select id="edit-position">${subOpts.map(s=>`<option value="${s}" ${p.subposicion===s?'selected':''}>${s}</option>`).join('')}</select></div>
+    <div class="edit-grid">
+      ${ATTR_GROUPS.map(g=>`<div class="card" style="padding:12px"><div class="section-head" style="margin-bottom:6px"><div><h4 style="margin:0;font-size:12px">${g.name}</h4></div></div>${g.attrs.map(a=>`<div class="field"><label>${ATTR_LABELS[a]||a}</label><input type="number" min="25" max="99" value="${p.attributes[a]||50}" data-attr="${a}"></div>`).join('')}</div>`).join('')}
+    </div>
+    <div class="sim-actions" style="margin-top:14px">
+      <button class="btn primary" id="edit-save">Guardar cambios</button>
+      <button class="btn ghost" id="edit-cancel">Cancelar</button>
+      <button class="btn danger" id="edit-reset">Quitar ajuste manual</button>
+    </div>`;
+  openModal(`<span class="pill gold">Editor de jugador</span>`, body);
+  $('#edit-cancel').addEventListener('click',()=>openPlayer(p.id));
+  $('#edit-save').addEventListener('click',()=>{
+    const sub=$('#edit-position').value;
+    const attrs={};
+    $$('input[data-attr]').forEach(inp=>{ attrs[inp.dataset.attr]=clamp(Number(inp.value)||50,25,99); });
+    applyPlayerEdit(p,sub,attrs);
+    recomputeTeams();
+    closeModal();
+    render();
+  });
+  $('#edit-reset').addEventListener('click',()=>{
+    const all=loadOverrides(); delete all[p.teamName+'||'+p.name]; localStorage.setItem('hockey_overrides_v1',JSON.stringify(all));
+    location.reload();
+  });
+}
+
+/* =========================================================
+   Arranque
+   ========================================================= */
+render();
+</script>
+</body>
+</html>

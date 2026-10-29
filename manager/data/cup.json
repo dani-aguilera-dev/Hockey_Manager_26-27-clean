@@ -1,0 +1,7 @@
+{
+  "offsets_days": [73, 74, 75],
+  "round_names": {"1": "Cuartos", "2": "Semifinal", "3": "Final y 3º puesto"},
+  "round_phases": {"1": "cup_qf", "2": "cup_sf", "3": "cup_final"},
+  "teams": 8,
+  "activation_round": 12
+}

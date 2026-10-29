@@ -1,0 +1,568 @@
+{
+  "events": [
+    {
+      "id": "medical_hamstring_warning",
+      "category": "Enfermería",
+      "kind": "medical",
+      "priority": 9,
+      "weight": 10,
+      "cooldown_days": 21,
+      "expires_days": 4,
+      "context": "player",
+      "conditions": {
+        "team": {"available_min": 12},
+        "player": {"min_age": 23, "min_fatigue": 60}
+      },
+      "title": "{player} nota una molestia en el isquiotibial",
+      "body": "El fisioterapeuta detecta una sobrecarga en el isquiotibial de {player}. No hay rotura, pero el jugador lleva varias semanas con mucha carga y el próximo partido está cerca. Hay que decidir cómo gestionarlo.",
+      "choices": [
+        {
+          "id": "rest",
+          "label": "Darle descanso y recuperación",
+          "description": "Se pierde trabajo con el grupo, pero baja la fatiga y el riesgo de rotura.",
+          "tone": "ok",
+          "effects": {
+            "player": {"fatigue": -12, "relationship": 2, "morale": 1},
+            "team": {"prep_bonus": -0.05}
+          },
+          "response": "{player} agradece la prudencia. El fisio respira: mejor perder una sesión que perder al jugador un mes."
+        },
+        {
+          "id": "manage",
+          "label": "Sesión específica y carga controlada",
+          "description": "Trabajo individual con el fisio y minutos limitados en el partido.",
+          "tone": "neutral",
+          "effects": {
+            "player": {"fatigue": -7, "relationship": 1, "form": 0.1},
+            "team": {"prep_bonus": 0.05}
+          },
+          "response": "El jugador completa una sesión individual. Llega al partido, pero no está al cien por cien."
+        },
+        {
+          "id": "push",
+          "label": "Apurar para el próximo partido",
+          "description": "Puede jugar, pero el riesgo de rotura aumenta.",
+          "tone": "danger",
+          "effects": {
+            "player": {"fatigue": -2, "form": 0.2, "relationship": -1}
+          },
+          "follow_up": {
+            "event_id": "medical_hamstring_tear",
+            "chance": 0.35,
+            "delay_days": 2
+          },
+          "response": "El jugador aprieta los dientes. El fisio no oculta su preocupación."
+        }
+      ]
+    },
+    {
+      "id": "medical_hamstring_tear",
+      "category": "Enfermería",
+      "kind": "medical",
+      "priority": 10,
+      "weight": 0,
+      "cooldown_days": 0,
+      "expires_days": 3,
+      "context": "player",
+      "conditions": {},
+      "title": "{player} sufre una rotura muscular",
+      "body": "La sobrecarga del isquiotibial ha terminado en rotura. El cuerpo médico habla de varias semanas de baja y el jugador está afectado.",
+      "choices": [
+        {
+          "id": "accept",
+          "label": "Aceptar el parte médico",
+          "description": "Recuperación completa sin arriesgar una recaída.",
+          "tone": "ok",
+          "effects": {
+            "player": {"injury": 4, "injury_type": "muscular", "injury_severity": "grave", "relationship": 1, "morale": -1},
+            "team": {"cohesion": -1}
+          },
+          "response": "El jugador inicia la rehabilitación. El vestuario acusa la baja, pero el club no fuerza una recaída."
+        },
+        {
+          "id": "specialist",
+          "label": "Enviarlo a un especialista",
+          "description": "Cuesta dinero, pero reduce el tiempo de baja y el riesgo de recaída.",
+          "tone": "neutral",
+          "effects": {
+            "player": {"injury": 3, "injury_type": "muscular", "injury_severity": "grave", "relationship": 2},
+            "team": {"budget": -18000}
+          },
+          "response": "El especialista confirma la rotura y diseña un plan más agresivo. La junta paga la factura."
+        }
+      ]
+    },
+    {
+      "id": "medical_knock",
+      "category": "Enfermería",
+      "kind": "medical",
+      "priority": 7,
+      "weight": 8,
+      "cooldown_days": 14,
+      "expires_days": 3,
+      "context": "player",
+      "conditions": {
+        "player": {"min_fatigue": 45}
+      },
+      "title": "{player} recibe un golpe en el entrenamiento",
+      "body": "{player} termina la sesión con molestias tras un choque. El fisio no ve una lesión grave, pero recomienda prudencia antes del próximo partido.",
+      "choices": [
+        {
+          "id": "rest",
+          "label": "Dejarle fuera del partido",
+          "description": "Se pierde un partido, pero evita que el golpe vaya a más.",
+          "tone": "ok",
+          "effects": {
+            "player": {"injury": 1, "injury_type": "golpe", "injury_severity": "leve", "relationship": 2, "fatigue": -5}
+          },
+          "response": "El jugador acepta la decisión. El fisio prefiere no arriesgar."
+        },
+        {
+          "id": "play",
+          "label": "Que juegue con protección",
+          "description": "Puede jugar, pero con molestias y riesgo de empeorar.",
+          "tone": "warn",
+          "effects": {
+            "player": {"fatigue": 4, "form": -0.1, "relationship": -1}
+          },
+          "follow_up": {
+            "event_id": "medical_knock_aggravated",
+            "chance": 0.25,
+            "delay_days": 1
+          },
+          "response": "El jugador sale al campo con protección. Cada choque será una moneda al aire."
+        }
+      ]
+    },
+    {
+      "id": "medical_knock_aggravated",
+      "category": "Enfermería",
+      "kind": "medical",
+      "priority": 9,
+      "weight": 0,
+      "cooldown_days": 0,
+      "expires_days": 2,
+      "context": "player",
+      "conditions": {},
+      "title": "{player} empeora del golpe",
+      "body": "El golpe ha derivado en una lesión más seria. El jugador necesita parar y el cuerpo médico pide calma.",
+      "choices": [
+        {
+          "id": "stop",
+          "label": "Parar y recuperar",
+          "description": "Asumir la baja y no seguir forzando.",
+          "tone": "ok",
+          "effects": {
+            "player": {"injury": 3, "injury_type": "golpe", "injury_severity": "moderada", "relationship": 1}
+          },
+          "response": "El jugador acepta la baja. El club prioriza su recuperación."
+        },
+        {
+          "id": "inject",
+          "label": "Infiltrar para el próximo partido",
+          "description": "Riesgo alto de recaída y de perderle más tiempo.",
+          "tone": "danger",
+          "effects": {
+            "player": {"injury": 1, "injury_type": "golpe", "injury_severity": "leve", "relationship": -3, "morale": -1},
+            "team": {"board": -1}
+          },
+          "follow_up": {
+            "event_id": "medical_knock_aggravated",
+            "chance": 0.40,
+            "delay_days": 2
+          },
+          "response": "El jugador sale infiltrado. El fisio deja claro que esto puede acabar peor."
+        }
+      ]
+    },
+    {
+      "id": "discipline_late_training",
+      "category": "Vestuario",
+      "kind": "discipline",
+      "priority": 6,
+      "weight": 7,
+      "cooldown_days": 30,
+      "expires_days": 5,
+      "context": "player",
+      "conditions": {
+        "player": {"max_relationship": 60}
+      },
+      "title": "{player} llega tarde al entrenamiento",
+      "body": "{player} ha llegado 25 minutos tarde sin avisar. El grupo lo ha visto y el cuerpo técnico necesita marcar una línea sin romper la relación.",
+      "choices": [
+        {
+          "id": "fine",
+          "label": "Multa económica",
+          "description": "Marca disciplina y recauda una pequeña cantidad, pero el jugador se siente señalado.",
+          "tone": "warn",
+          "effects": {
+            "player": {"relationship": -4, "morale": -1},
+            "team": {"budget": 1200, "board": 1}
+          },
+          "response": "La multa queda registrada. El grupo entiende la norma, pero el jugador no lo encaja del todo."
+        },
+        {
+          "id": "talk",
+          "label": "Hablar en privado",
+          "description": "Entiendes el motivo y buscas una solución sin humillarle.",
+          "tone": "ok",
+          "effects": {
+            "player": {"relationship": 3, "morale": 1},
+            "team": {"cohesion": 1}
+          },
+          "response": "El jugador explica el problema. La conversación termina con un compromiso claro."
+        },
+        {
+          "id": "bench",
+          "label": "Dejarle fuera del próximo partido",
+          "description": "Mensaje contundente para todo el vestuario.",
+          "tone": "danger",
+          "effects": {
+            "player": {"relationship": -6, "morale": -2, "suspension": 1, "absence_note": "Decisión disciplinaria"},
+            "team": {"cohesion": -1, "board": 2}
+          },
+          "response": "El jugador se queda fuera por decisión técnica. El mensaje llega al grupo, pero también la tensión."
+        }
+      ]
+    },
+    {
+      "id": "dressing_minutes",
+      "category": "Vestuario",
+      "kind": "squad",
+      "priority": 7,
+      "weight": 8,
+      "cooldown_days": 21,
+      "expires_days": 6,
+      "context": "player",
+      "conditions": {
+        "player": {"max_apps": 4, "min_overall": 64}
+      },
+      "title": "{player} pide explicaciones por su falta de minutos",
+      "body": "{player} ha jugado muy poco y quiere saber cuál es su papel. Su entorno ha empezado a mover la idea de buscar una salida.",
+      "choices": [
+        {
+          "id": "promise",
+          "label": "Prometerle minutos",
+          "description": "Mejora la relación y la moral, pero crea una promesa que habrá que cumplir.",
+          "tone": "ok",
+          "effects": {
+            "player": {"relationship": 4, "morale": 2},
+            "team": {"cohesion": 1},
+            "flags": {"promise_minutes": "{player_id}"}
+          },
+          "response": "El jugador se marcha más tranquilo. Ahora la promesa está en tu tejado."
+        },
+        {
+          "id": "compete",
+          "label": "Explicar que debe ganarse el puesto",
+          "description": "Mensaje profesional, sin prometer nada.",
+          "tone": "neutral",
+          "effects": {
+            "player": {"relationship": 1, "form": 0.3},
+            "team": {"manager_rating": 1}
+          },
+          "response": "El jugador acepta la competencia, aunque no le gusta quedarse en el banquillo."
+        },
+        {
+          "id": "listen",
+          "label": "Escuchar ofertas por él",
+          "description": "La junta lo ve bien; el jugador empieza a sentirse en el escaparate.",
+          "tone": "warn",
+          "effects": {
+            "player": {"relationship": -2, "morale": -1},
+            "team": {"board": 2}
+          },
+          "response": "El club abre la puerta a una salida. El vestuario toma nota."
+        }
+      ]
+    },
+    {
+      "id": "board_budget_request",
+      "category": "Junta",
+      "kind": "board",
+      "priority": 7,
+      "weight": 6,
+      "cooldown_days": 35,
+      "expires_days": 7,
+      "context": "team",
+      "conditions": {
+        "team": {"transfer_budget_max": 300000, "board_confidence_min": 45}
+      },
+      "title": "La junta estudia una petición de presupuesto",
+      "body": "El club tiene margen justo para competir. Puedes pedir un esfuerzo económico a la junta, apostar por la cantera o aceptar la situación actual.",
+      "choices": [
+        {
+          "id": "request",
+          "label": "Pedir más presupuesto",
+          "description": "Aumenta el presupuesto de fichajes, pero la junta exigirá resultados.",
+          "tone": "warn",
+          "effects": {
+            "team": {"transfer_budget": 90000, "board": -2}
+          },
+          "response": "La junta aprueba una partida extra con condiciones. El margen de error se reduce."
+        },
+        {
+          "id": "academy",
+          "label": "Apostar por la cantera",
+          "description": "Menos dinero inmediato, más futuro y confianza institucional.",
+          "tone": "ok",
+          "effects": {
+            "team": {"academy": 2, "board": 1, "fan": 1}
+          },
+          "response": "La junta valora la apuesta por la cantera. El club mira a medio plazo."
+        },
+        {
+          "id": "accept",
+          "label": "Aceptar el presupuesto actual",
+          "description": "Estabilidad y confianza, pero menos margen para reforzar.",
+          "tone": "neutral",
+          "effects": {
+            "team": {"board": 2, "cohesion": 1}
+          },
+          "response": "La junta respira. El club competirá con lo que tiene."
+        }
+      ]
+    },
+    {
+      "id": "market_offer_interest",
+      "category": "Mercado",
+      "kind": "market",
+      "priority": 8,
+      "weight": 10,
+      "cooldown_days": 10,
+      "expires_days": 5,
+      "context": "transfer_offer",
+      "conditions": {},
+      "title": "{player} está en la agenda de {buyer}",
+      "body": "{buyer} ha preguntado por {player}. Todavía no hay una oferta formal, pero el interés es real y el jugador ya lo sabe.",
+      "choices": [
+        {
+          "id": "reject",
+          "label": "Cerrar la puerta",
+          "description": "El jugador siente el respaldo del club; la junta pierde una posible venta.",
+          "tone": "ok",
+          "effects": {
+            "player": {"relationship": 5, "morale": 2},
+            "team": {"board": -1}
+          },
+          "response": "{player} agradece el respaldo. El club deja claro que no está en venta."
+        },
+        {
+          "id": "listen",
+          "label": "Escuchar la propuesta",
+          "description": "La junta gana margen económico, pero el jugador se siente en el escaparate.",
+          "tone": "warn",
+          "effects": {
+            "player": {"relationship": -2, "morale": -1},
+            "team": {"board": 2}
+          },
+          "response": "El club pide una propuesta concreta. El jugador evita hablar del tema."
+        },
+        {
+          "id": "renew",
+          "label": "Abrir una renovación",
+          "description": "Blindaje a cambio de mejorar su contrato.",
+          "tone": "neutral",
+          "effects": {
+            "player": {"relationship": 3, "morale": 1},
+            "team": {"board": -1, "budget": -12000}
+          },
+          "response": "El jugador se sienta a hablar de renovación. La junta pide prudencia con el salario."
+        }
+      ]
+    },
+    {
+      "id": "media_crisis",
+      "category": "Prensa",
+      "kind": "media",
+      "priority": 7,
+      "weight": 8,
+      "cooldown_days": 21,
+      "expires_days": 4,
+      "context": "team",
+      "conditions": {
+        "team": {"losses_last_min": 3}
+      },
+      "title": "La prensa cuestiona el proyecto",
+      "body": "La racha de derrotas ha abierto un debate público sobre el equipo y sobre tu gestión. El vestuario lee los titulares y la junta espera una respuesta.",
+      "choices": [
+        {
+          "id": "defend",
+          "label": "Defender al grupo",
+          "description": "Proteges a los jugadores y afición; la junta preferiría más autocrítica.",
+          "tone": "ok",
+          "effects": {
+            "team": {"fan": 2, "cohesion": 2, "board": -1}
+          },
+          "response": "El vestuario agradece que pongas la cara. La junta no comparte del todo el mensaje."
+        },
+        {
+          "id": "pressure",
+          "label": "Asumir la presión",
+          "description": "Mensaje exigente con el grupo y con la junta.",
+          "tone": "warn",
+          "effects": {
+            "team": {"board": 1, "fan": -1, "cohesion": -1}
+          },
+          "response": "La prensa recoge tu exigencia. El grupo acusa la presión."
+        },
+        {
+          "id": "players",
+          "label": "Señalar a los jugadores",
+          "description": "Descargas la responsabilidad en la plantilla.",
+          "tone": "danger",
+          "effects": {
+            "team": {"board": 2, "cohesion": -3, "morale": -1}
+          },
+          "response": "La junta respira, pero el vestuario cierra filas contra el mensaje."
+        }
+      ]
+    },
+    {
+      "id": "travel_delay",
+      "category": "Club",
+      "kind": "logistics",
+      "priority": 6,
+      "weight": 8,
+      "cooldown_days": 14,
+      "expires_days": 2,
+      "context": "next_fixture",
+      "conditions": {
+        "team": {"next_fixture_away": true, "days_to_match_max": 2}
+      },
+      "title": "Retraso en el viaje a {rival}",
+      "body": "El transporte previsto ha sufrido un retraso. Si mantenéis el plan, el equipo llegará justo; si cambiáis, habrá que asumir un coste extra.",
+      "choices": [
+        {
+          "id": "pay",
+          "label": "Pagar un transporte alternativo",
+          "description": "Más gasto, menos fatiga.",
+          "tone": "ok",
+          "effects": {
+            "team": {"budget": -8000},
+            "all_players": {"fatigue": -5}
+          },
+          "response": "El club paga el cambio. El equipo llega con margen y el cuerpo técnico respira."
+        },
+        {
+          "id": "accept",
+          "label": "Mantener el plan y asumir la fatiga",
+          "description": "Ahorras dinero, pero el equipo llega más cargado.",
+          "tone": "warn",
+          "effects": {
+            "all_players": {"fatigue": 6},
+            "team": {"cohesion": 1}
+          },
+          "response": "El equipo llega justo. El staff intenta compensar la fatiga con una sesión de recuperación."
+        },
+        {
+          "id": "rotate",
+          "label": "Rotar y reservar jugadores",
+          "description": "Menos carga para los titulares, pero el once pierde calidad.",
+          "tone": "neutral",
+          "effects": {
+            "team": {"prep_bonus": -0.15, "cohesion": 1}
+          },
+          "response": "Decides reservar efectivos. El once será menos reconocible, pero llega más fresco."
+        }
+      ]
+    },
+    {
+      "id": "derby_week",
+      "category": "Club",
+      "kind": "match",
+      "priority": 7,
+      "weight": 7,
+      "cooldown_days": 30,
+      "expires_days": 4,
+      "context": "next_fixture",
+      "conditions": {
+        "team": {"rival_big": true, "days_to_match_max": 5}
+      },
+      "title": "Semana de derbi contra {rival}",
+      "body": "El próximo rival es uno de los grandes del hockey español. La afición está revolucionada y el club quiere convertir la semana en un impulso, no en una presión extra.",
+      "choices": [
+        {
+          "id": "motivate",
+          "label": "Arengar al grupo",
+          "description": "Sube moral y ambiente, pero puede pesar en un equipo joven.",
+          "tone": "ok",
+          "effects": {
+            "team": {"morale": 1, "fan": 1, "cohesion": 1}
+          },
+          "response": "El grupo se contagia del ambiente. La semana se convierte en una pequeña final."
+        },
+        {
+          "id": "focus",
+          "label": "Bajar el ruido y preparar el partido",
+          "description": "Menos épica, más preparación.",
+          "tone": "neutral",
+          "effects": {
+            "team": {"prep_bonus": 0.25, "board": 1}
+          },
+          "response": "El staff encierra al grupo en el vídeo. La semana se convierte en trabajo."
+        },
+        {
+          "id": "protect",
+          "label": "Proteger a los más jóvenes",
+          "description": "Mensaje de calma y cohesión.",
+          "tone": "ok",
+          "effects": {
+            "team": {"cohesion": 2, "relationship": 1}
+          },
+          "response": "Los jóvenes agradecen el apoyo. El vestuario se siente protegido."
+        }
+      ]
+    },
+    {
+      "id": "training_overload",
+      "category": "Entrenamiento",
+      "kind": "training",
+      "priority": 6,
+      "weight": 8,
+      "cooldown_days": 14,
+      "expires_days": 3,
+      "context": "team",
+      "conditions": {
+        "team": {"avg_fatigue_min": 55}
+      },
+      "title": "El grupo acumula demasiada carga",
+      "body": "El preparador físico advierte de que la plantilla está acumulando fatiga. Puedes bajar la carga, mantener el plan o hacer un trabajo individual.",
+      "choices": [
+        {
+          "id": "reduce",
+          "label": "Bajar la carga",
+          "description": "Menos fatiga y menos riesgo, pero se pierde algo de preparación.",
+          "tone": "ok",
+          "effects": {
+            "all_players": {"fatigue": -8},
+            "team": {"prep_bonus": -0.1}
+          },
+          "response": "La semana baja de revoluciones. El grupo recupera piernas."
+        },
+        {
+          "id": "maintain",
+          "label": "Mantener el plan",
+          "description": "El equipo sigue el trabajo previsto y asume el desgaste.",
+          "tone": "warn",
+          "effects": {
+            "all_players": {"fatigue": 3},
+            "team": {"prep_bonus": 0.2}
+          },
+          "response": "El plan sigue intacto. El staff confía en que el equipo aguante."
+        },
+        {
+          "id": "individual",
+          "label": "Plan individual para los más cargados",
+          "description": "Trabajo específico y mejor relación con el grupo.",
+          "tone": "ok",
+          "effects": {
+            "all_players": {"fatigue": -4},
+            "team": {"cohesion": 1, "prep_bonus": 0.1}
+          },
+          "response": "El fisio y el preparador diseñan planes individuales. El grupo lo agradece."
+        }
+      ]
+    }
+  ]
+}

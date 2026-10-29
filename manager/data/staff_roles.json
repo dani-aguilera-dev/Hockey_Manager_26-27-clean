@@ -1,0 +1,15 @@
+[
+  {"id":"head_coach","name":"Entrenador principal","effects":["tactics","training","morale","match_decisions"],"key_attributes":["liderazgo","decisiones","conocimiento_tactico","motivacion"]},
+  {"id":"assistant","name":"Segundo entrenador","effects":["training","opposition_analysis","morale"],"key_attributes":["conocimiento_tactico","liderazgo","analisis"]},
+  {"id":"first_team_coach","name":"Entrenador del primer equipo","effects":["training","technical_development"],"key_attributes":["tecnica","motivacion","disciplina"]},
+  {"id":"gk_coach","name":"Entrenador de porteros","effects":["gk_training","pc_defense","stroke_save"],"key_attributes":["tecnica_portero","analisis","motivacion"]},
+  {"id":"fitness_coach","name":"Preparador físico","effects":["fitness","injury_prevention","recovery"],"key_attributes":["fisiologia","planificacion","prevencion"]},
+  {"id":"head_of_youth","name":"Jefe de cantera","effects":["youth_intake","youth_development"],"key_attributes":["desarrollo_juvenil","scouting","liderazgo"]},
+  {"id":"scout","name":"Ojeador","effects":["scouting","player_knowledge"],"key_attributes":["evaluacion","conocimiento_mercado","red"]},
+  {"id":"physio","name":"Fisioterapeuta","effects":["injury_recovery","injury_prevention"],"key_attributes":["diagnostico","rehabilitacion"]},
+  {"id":"sports_scientist","name":"Científico del deporte","effects":["load_management","recovery","injury_prevention"],"key_attributes":["datos","fisiologia"]},
+  {"id":"performance_analyst","name":"Analista de rendimiento","effects":["match_analysis","opposition_analysis","data"],"key_attributes":["analisis","datos","hockey"]},
+  {"id":"recruitment_analyst","name":"Analista de captación","effects":["scouting","transfer_market"],"key_attributes":["datos","evaluacion","mercado"]},
+  {"id":"team_manager","name":"Team manager","effects":["logistics","travel","discipline"],"key_attributes":["organizacion","logistica","liderazgo"]},
+  {"id":"technical_director","name":"Director deportivo","effects":["transfers","contracts","club_vision"],"key_attributes":["negociacion","vision","red"]}
+]

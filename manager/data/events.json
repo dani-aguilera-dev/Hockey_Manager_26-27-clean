@@ -1,0 +1,31 @@
+{
+  "match_events": [
+    {"id":"goal_open","type":"goal","text":"{player} define dentro del área y bate a {gk}. Gol de {team}.","weight":1.0},
+    {"id":"goal_pc","type":"goal","text":"{player} transforma el penalty corner con un drag flick ajustado. Gol de {team}.","weight":1.0},
+    {"id":"goal_stroke","type":"goal","text":"{player} no falla desde el punto de stroke. Gol de {team}.","weight":1.0},
+    {"id":"goal_deflection","type":"goal","text":"{player} desvía el disparo de {assistant} en el primer palo. Gol de {team}.","weight":1.0},
+    {"id":"goal_rebound","type":"goal","text":"{player} aprovecha el rebote y empuja la bola al fondo. Gol de {team}.","weight":1.0},
+    {"id":"save","type":"save","text":"{gk} responde con una parada firme al disparo de {player}.","weight":1.0},
+    {"id":"pc_awarded","type":"set_piece","text":"Penalty corner para {team}. {injector} se prepara para el saque.","weight":1.0},
+    {"id":"stroke_awarded","type":"set_piece","text":"Penalty stroke para {team}. {taker} toma la bola.","weight":1.0},
+    {"id":"green_card","type":"card","text":"Tarjeta verde para {player} ({team}).","weight":0.6},
+    {"id":"yellow_card","type":"card","text":"Tarjeta amarilla para {player} ({team}); suspensión temporal.","weight":0.4},
+    {"id":"injury","type":"injury","text":"{player} se duele tras un choque y pide atención médica.","weight":0.3},
+    {"id":"substitution","type":"substitution","text":"Cambio en {team}: entra {in} por {out}.","weight":1.0},
+    {"id":"chance","type":"chance","text":"{player} prueba suerte desde el borde del círculo, pero la bola se marcha alta.","weight":1.2},
+    {"id":"circle_entry","type":"attack","text":"{team} entra al círculo con peligro; la defensa despeja como puede.","weight":1.4},
+    {"id":"aerial","type":"attack","text":"{player} lanza un aerial que supera la primera línea de presión.","weight":0.8},
+    {"id":"three_d","type":"attack","text":"{player} levanta la bola sobre el stick del defensor y sigue la jugada.","weight":0.7},
+    {"id":"tackle","type":"defense","text":"{player} roba con un tackle limpio y reinicia el ataque.","weight":1.0},
+    {"id":"interception","type":"defense","text":"{player} anticipa el pase y corta la progresión rival.","weight":1.1}
+  ],
+  "world_events": [
+    {"id":"board_expectation","type":"board","text":"La junta directiva espera {expectation}. El margen de error es {pressure}."},
+    {"id":"media_pressure","type":"media","text":"La prensa local pregunta por la falta de resultados. La afición pide una reacción."},
+    {"id":"travel_issue","type":"logistics","text":"Retraso en el viaje a {city}. El equipo llega con menos descanso del previsto."},
+    {"id":"weather","type":"logistics","text":"Previsión de {weather} para el partido. El estado del campo puede condicionar el juego."},
+    {"id":"transfer_offer","type":"transfer","text":"{club} presenta una oferta por {player}. La dirección deportiva debe decidir."},
+    {"id":"player_unhappy","type":"morale","text":"{player} está molesto por su falta de minutos y pide una reunión."},
+    {"id":"youth_intake","type":"youth","text":"La cantera presenta una nueva generación de jugadores. El club debe decidir a quién promociona."}
+  ]
+}

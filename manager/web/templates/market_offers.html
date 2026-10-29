@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Ofertas{% endblock %}
+{% block content %}
+<h1>Ofertas recibidas</h1>
+{% if offers %}
+<div class="card"><table><thead><tr><th>Jugador</th><th>Club</th><th class="num">Traspaso</th><th class="num">Salario</th><th class="num">Años</th><th></th></tr></thead><tbody>
+{% for o in offers %}<tr><td>{{ o.player_name }}</td><td>{{ o.from_club_name }}</td><td class="num">{{ o.fee|money }}</td><td class="num">{{ o.salary|money }}</td><td class="num">{{ o.years }}</td><td>
+<form method="post" class="inline"><input type="hidden" name="offer_id" value="{{o.id}}"><input type="hidden" name="action" value="accept"><button class="btn primary small">Aceptar</button></form>
+<form method="post" class="inline"><input type="hidden" name="offer_id" value="{{o.id}}"><input type="hidden" name="action" value="reject"><button class="btn danger small">Rechazar</button></form>
+</td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<div class="card"><p>No hay ofertas pendientes.</p></div>{% endif %}
+{% endblock %}

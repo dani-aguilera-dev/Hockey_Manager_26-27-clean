@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}{{ player.name }}{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="hero-player">
+    {{ m.avatar(player, 'hero-avatar') }}
+    <div style="min-width:0">
+      <h1>{{ player.name }}</h1>
+      <div class="pc-tags" style="font-size:13px">{{ m.pos(player) }} <span class="arch">{{ player.archetype }}</span> <span class="badge">{{ player.perfil }}</span></div>
+      <p class="muted">{{ player.age }} años · {% if owner_team %}<a href="{{ url_for('team_detail', team_id=owner_team.id) }}">{{ owner_name }}</a>{% else %}Agente libre{% endif %} · valor {{ player.value|money }} · salario {{ player.salary|money }} · contrato {{ player.contract_until }}</p>
+      {% if player.photo %}<p class="small muted">Foto: iSquad · datos RFEH/iSquad y modelo propio</p>{% endif %}
+      <div class="row" style="gap:18px">
+        <div><span class="muted small">OVR absoluto</span><div class="big-kpi">{{ '%.1f'|format(player.overall) }}</div></div>
+        <div><span class="muted small">Nivel en {{ league_label(player.league) }}</span><div class="big-kpi" style="color:var(--accent)">{{ stars_bar(player.overall, player.league) }}</div><span class="small muted">{{ player_tier(player.overall, player.league) }}</span></div>
+        <div><span class="muted small">Potencial</span><div class="big-kpi">{{ '%.1f'|format(player.potential) }}</div><span class="small muted">{{ stars_text(player.potential, player.league) }} en su categoría</span></div>
+        <div><span class="muted small">Forma</span><div class="big-kpi">{{ '%.1f'|format(player.form) }}</div></div>
+        <div><span class="muted small">Fatiga</span><div class="big-kpi">{{ '%.0f'|format(player.fatigue) }}%</div></div>
+        <div><span class="muted small">Rating</span><div class="big-kpi">{{ '%.2f'|format(player.rating) }}</div></div>
+        <div><span class="muted small">Relación</span><div class="big-kpi">{{ player.relationship }}/100</div><span class="small muted">{{ player.relationship_label }}</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="actions" style="margin-top:10px"><a class="btn small" href="{{ back_url }}">Volver</a></div>
+<div class="grid grid-3" style="margin-top:14px">
+  <div class="card"><h3>Rendimiento</h3><p>{{ player.apps }} PJ · {{ player.season_goals }} goles · {{ player.season_assists }} asistencias</p><p class="muted">Moral {{ player.morale }}/20 · Polivalencia {{ player.polivalencia }}</p><p class="small">Categoría: <b>{{ league_label(player.league) }}</b> · {{ player_tier(player.overall, player.league) }}</p></div>
+  <div class="card"><h3>Relación con el entrenador</h3><div class="rel-bar"><span style="width:{{ player.relationship }}%"></span></div><p class="muted">{{ player.relationship_label }} · {{ player.relationship }}/100</p><p class="small muted">Las conversaciones, la confianza y las decisiones del club modulan esta relación.</p></div>
+<div class="card"><h3>Estado</h3><p>{% if player.injury %}<span class="badge danger">{{ player.absence_label }} · {{ player.injury }} partidos</span>{% elif player.suspension %}<span class="badge warn">{{ player.absence_label }} · {{ player.suspension }} partidos</span>{% else %}<span class="badge ok">Disponible</span>{% endif %}</p><p class="muted">Contrato hasta {{ player.contract_until }}</p></div>
+  <div class="card"><h3>Overalls</h3>{% for k,v in player.overalls.items() %}<p class="small">{{ k }}: <b>{{ '%.1f'|format(v) }}</b></p>{% endfor %}</div>
+</div>
+<div class="card" style="margin-top:14px"><h3>Atributos</h3><div class="attr-grid">
+{% for group, keys in [('Técnica',['control','pase','conduccion','golpeo','flick','regate_3d','definicion']),('Set pieces',['aerial','pc_injection','pc_trap','pc_flick','pc_deflection','pc_first_runner','pc_gk_save','stroke_shot','stroke_save','free_hit']),('Táctica',['posicionamiento','pressing','cobertura','transicion','desmarque']),('Física',['velocidad','resistencia','fuerza','agilidad','coordinacion']),('Mental',['decisiones','concentracion','competitividad','liderazgo']),('Portero',['reflejos','blocaje','distribucion','uno_vs_uno','alto','rebote_gk'])] %}
+<div><h3>{{ group }}</h3>{% for k in keys %}{% if k in player.attributes %}<div class="attr-row"><span>{{ k.replace('_',' ')|title }}</span><div class="attr-bar"><span style="width:{{ player.attributes[k] }}%"></span></div><b>{{ player.attributes[k] }}</b></div>{% endif %}{% endfor %}</div>
+{% endfor %}
+</div>
+</div>
+<div class="card" style="margin-top:14px"><h3>Histórico por temporada</h3>
+<table><thead><tr><th>Temporada</th><th>Club</th><th>Liga</th><th class="num">PJ</th><th class="num">Goles</th><th class="num">Asist.</th><th class="num">Rating</th><th class="num">OVR</th></tr></thead><tbody>
+{% if player.apps %}<tr><td>{{ state.season }} <span class="muted small">(actual)</span></td><td>{{ owner_name }}</td><td>{{ owner_team.league if owner_team else state.competition }}</td><td class="num">{{ player.apps }}</td><td class="num">{{ player.season_goals }}</td><td class="num">{{ player.season_assists }}</td><td class="num">{{ '%.2f'|format(player.rating) }}</td><td class="num">{{ '%.1f'|format(player.overall) }}</td></tr>{% endif %}
+{% for row in player.career %}<tr><td>{{ row.season }}</td><td>{{ row.club }}</td><td>{{ row.league }}</td><td class="num">{{ row.apps }}</td><td class="num">{{ row.goals }}</td><td class="num">{{ row.assists }}</td><td class="num">{{ '%.2f'|format(row.rating) }}</td><td class="num">{{ '%.1f'|format(row.overall) }}</td></tr>{% else %}<tr><td colspan="8" class="muted">Sin histórico anterior. La temporada actual se guardará al terminar.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

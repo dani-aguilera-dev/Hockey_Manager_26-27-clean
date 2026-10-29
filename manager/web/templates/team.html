@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}{{ selected_team.name }}{% endblock %}
+{% block content %}
+<div class="card team-hero">
+  <div class="hero-player">
+    <img class="crest" style="width:88px;height:88px;flex-basis:88px" src="{{ crest_src(selected_team) }}" alt="Escudo {{ selected_team.name }}">
+    <div style="flex:1;min-width:0">
+      <div class="menu-kicker">{{ selected_team.league }}{% if team_group %} · Grupo {{ team_group }}{% endif %}</div>
+      <h1>{{ selected_team.name }}</h1>
+      <p class="muted">{{ selected_team.city }} · {{ selected_team.stadium_name }} · {{ selected_team.stadium_capacity }} localidades</p>
+      <p class="small muted">Objetivo: {{ selected_team.board_expectation }} · Academia {{ selected_team.academy_rating }}/100 · Moral {{ selected_team.morale }}/20</p>
+    </div>
+    <div class="actions"><a class="btn" href="{{ url_for('market', club_id=selected_team.id) }}">Ver mercado del club</a><a class="btn" href="{{ url_for('table') }}">Volver a la tabla</a></div>
+  </div>
+</div>
+<div class="grid grid-3" style="margin-top:14px">
+  <div class="card"><h3>Clasificación</h3><div class="big-kpi">{% if selected_team.played %}{{ team_position }}º{% else %}Pretemporada{% endif %}</div><p class="muted">{{ selected_team.points }} puntos · {{ selected_team.played }} partidos · {{ selected_team.won }}V {{ selected_team.drawn }}E {{ selected_team.lost }}D</p><p class="small muted">GF {{ selected_team.goals_for }} · GC {{ selected_team.goals_against }} · DG {{ selected_team.goals_for - selected_team.goals_against }}</p></div>
+  <div class="card"><h3>Club</h3><p>{{ club.get('history', 'Sin historia registrada.') }}</p><p class="small muted">Fundado en {{ club.get('founded', '—') }} · {{ club.get('full_name', selected_team.name) }}</p></div>
+  <div class="card"><h3>Instalaciones</h3><p>{{ selected_team.stadium_name }}</p><p class="small muted">{{ club.get('stadium', {}).get('address', '') }}</p><p class="small muted">Colores: {{ (club.get('colors', [])|join(' · ')) or '—' }}</p><p class="small muted">Campos: {{ club.get('facilities', {}).get('pitches', '—') }} · Gimnasio: {{ 'sí' if club.get('facilities', {}).get('gym') else 'no' }} · Academia: {{ selected_team.academy_rating }}/100</p></div>
+</div>
+<div class="card" style="margin-top:14px">
+  <div class="row" style="justify-content:space-between;align-items:center">
+    <div><h3 style="margin:0">Once probable</h3><p class="small muted">Alineación estimada · {{ probable_formation }}</p></div>
+    <span class="badge">{{ selected_team.name }}</span>
+  </div>
+  <div class="lineup-pitch" style="margin-top:10px">
+    {% for row in probable_rows %}
+    <div class="pitch-row {{ 'single' if row.slots|length == 1 else '' }}">
+      <div class="row-label">{{ row.label }}</div>
+      <div class="pitch-slots">
+        {% for slot in row.slots %}{% set p = slot.player %}
+        <div class="slot-card preview {{ 'mismatch' if slot.mismatch else '' }}">
+          <div class="row" style="justify-content:space-between"><span class="slot-code">{{ slot.code }}</span>{% if p %}<span class="badge">{{ '%.1f'|format(p.overall) }}</span>{% endif %}</div>
+          {% if p %}{{ m.avatar(p) }}<div class="slot-name">{{ p.name }}</div><div class="pc-tags">{{ m.pos(p) }} <span class="arch">{{ p.archetype }}</span></div><div class="pc-meta">Fatiga {{ '%.0f'|format(p.fatigue) }}% · <span class="star-chip">{{ stars_text(p.overall, p.league) }}</span></div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <h3 style="margin-top:16px">Banquillo probable</h3>
+  <div class="player-grid">{% for p in probable_bench %}{{ m.player_card(p, url_for('player_detail', player_id=p.id), compact=true) }}{% endfor %}</div>
+</div>
+
+<div class="card" style="margin-top:14px">
+  <h3>Cuerpo técnico</h3>
+  <div class="staff-list">
+    {% if is_user_team %}
+    <div class="staff-row"><div class="board-icon">T</div><div class="pc-body"><div class="pc-name">Tú</div><div class="pc-tags"><span class="badge">Entrenador</span><span class="arch">Mánager del club</span></div></div></div>
+    {% elif team_coach %}
+    <div class="staff-row"><div class="board-icon">{{ team_coach.name[:1] }}</div><div class="pc-body"><div class="pc-name">{{ team_coach.name }}</div><div class="pc-tags"><span class="badge">Entrenador</span><span class="arch">{{ team_coach.source }} · {{ team_coach.confidence }}</span></div></div><div class="rating-badge"><b>{{ team_coach.rating }}</b><span>/100</span></div></div>
+    {% endif %}
+    {% for member in team_staff %}
+    <div class="staff-row"><div class="board-icon">{{ member.name[:1] }}</div><div class="pc-body"><div class="pc-name">{{ member.name }}</div><div class="pc-tags"><span class="badge">{{ staff_labels.get(member.role, member.role) }}</span><span class="arch">{{ member.source }} · {{ member.confidence }}</span></div></div><div class="rating-badge"><b>{{ member.rating }}</b><span>/100</span></div></div>
+    {% else %}{% if not team_coach and not is_user_team %}<p class="muted">Sin cuerpo técnico registrado.</p>{% endif %}{% endfor %}
+  </div>
+</div>
+
+<div class="card" style="margin-top:14px">
+  <div class="row" style="justify-content:space-between"><h3 style="margin:0">Plantilla</h3><span class="badge">{{ team_players|length }} jugadores</span></div>
+  <table><thead><tr><th></th><th>Jugador</th><th>Pos</th><th>Nivel</th><th class="num">Edad</th><th class="num">OVR</th><th class="num">PJ</th><th class="num">G</th><th class="num">A</th><th class="num">Rating</th></tr></thead><tbody>
+  {% for p in team_players %}<tr>
+    <td>{{ m.avatar(p, 'avatar-table') }}</td>
+    <td><a href="{{ url_for('player_detail', player_id=p.id) }}">{{ p.name }}</a>{% if p.injury %} <span class="badge danger">{{ p.absence_label }}</span>{% elif p.suspension %} <span class="badge warn">{{ p.absence_label }}</span>{% endif %}</td>
+    <td>{{ p.subposition }}</td><td><span class="star-chip" title="{{ player_tier(p.overall, p.league) }}">{{ stars_text(p.overall, p.league) }}</span></td><td class="num">{{ p.age }}</td><td class="num"><b>{{ '%.1f'|format(p.overall) }}</b></td>
+    <td class="num">{{ p.apps }}</td><td class="num">{{ p.season_goals }}</td><td class="num">{{ p.season_assists }}</td><td class="num">{{ '%.2f'|format(p.rating) }}</td>
+  </tr>{% endfor %}
+  </tbody></table>
+</div>
+<div class="grid grid-2" style="margin-top:14px">
+  <div class="card"><h3>Últimos resultados</h3>
+    {% for f in team_played %}<p class="small">J{{ f.round }} · {{ state.teams[f.home_id].name }} {{ f.home_goals }}-{{ f.away_goals }} {{ state.teams[f.away_id].name }}</p>{% else %}<p class="muted">Sin resultados todavía.</p>{% endfor %}
+  </div>
+  <div class="card"><h3>Próximos partidos</h3>
+    {% for f in team_upcoming %}<p class="small">J{{ f.round }} · {{ f.date|fdate }} · {{ state.teams[f.home_id].name }} vs {{ state.teams[f.away_id].name }}</p>{% else %}<p class="muted">Sin partidos pendientes.</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

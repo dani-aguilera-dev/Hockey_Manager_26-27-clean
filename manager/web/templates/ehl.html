@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}EHL{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between;align-items:end">
+  <div><h1>EHL</h1><p class="muted">Torneo europeo de final a ocho. Se resuelve en las fechas del calendario: {{ ehl_status }}.</p></div>
+  <div class="match-crest">{{ m.crest(team, 'crest-lg') }}<b>{{ team.name }}</b></div>
+</div>
+{% if ehl and ehl.active %}
+<div class="card" style="margin-bottom:14px">
+  <div class="row" style="justify-content:space-between;align-items:center">
+    <p class="muted">Ronda {{ ehl.round }} · {{ ehl_next|fdate }} · Participantes: {{ ehl.participants|join(', ') }}</p>
+    <form method="post" action="{{ url_for('ehl') }}"><input type="hidden" name="action" value="round"><button class="btn primary" type="submit">Simular ronda ahora</button></form>
+  </div>
+</div>
+<div class="grid grid-2">
+{% for fx in ehl.fixtures %}
+  <div class="card">
+    <div class="cat">Ronda {{ ehl.round }}</div>
+    <div class="scoreboard compact">
+      <div class="team"><b>{{ fx.home.name }}</b></div>
+      <div class="score">{% if fx.played %}{{ fx.home_goals }}-{{ fx.away_goals }}{% else %}VS{% endif %}</div>
+      <div class="team right"><b>{{ fx.away.name }}</b></div>
+    </div>
+    {% if fx.played %}<p class="match-meta">Pasa {{ fx.home.name if fx.winner_id == fx.home.id else fx.away.name }}</p>{% else %}<p class="match-meta">Pendiente</p>{% endif %}
+  </div>
+{% endfor %}
+</div>
+{% elif ehl and ehl.winner_name %}
+<div class="card"><div class="hero-player"><div class="board-icon">E</div><div><h1>{{ ehl.winner_name }}</h1><p class="muted">Campeón de la EHL</p></div></div></div>
+{% else %}
+<div class="card"><h3>La EHL todavía no ha comenzado</h3><p>Se activa después de la primera vuelta, con los mejores clubes de DHA y clubes europeos invitados.</p></div>
+{% endif %}
+{% if ehl and ehl.results %}
+<div class="card" style="margin-top:14px"><h3>Resultados</h3>
+{% for r in ehl.results %}<div class="news-card"><div class="cat">{{ r.label }}</div>{% for f in r.fixtures %}<p class="small">{{ f.home }} {{ f.home_goals }}-{{ f.away_goals }} {{ f.away }}</p>{% endfor %}</div>{% endfor %}
+</div>
+{% endif %}
+{% endblock %}

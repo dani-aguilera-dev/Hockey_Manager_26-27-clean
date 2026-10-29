@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><title>informe_posiciones_DHA_DHB_2026_27</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--ink:#0b1a2d;--muted:#5d7085;--accent:#0f766e;--accent2:#1d4ed8;--line:#d8e1ea;--gold:#b45309;}
+*{box-sizing:border-box}
+body{font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.55;font-size:10.5pt;margin:0;background:#fff}
+main{max-width:980px;margin:0 auto;padding:32px 28px 60px}
+h1{font-size:26pt;line-height:1.1;letter-spacing:-.8px;margin:0 0 6px}
+h2{font-size:16pt;letter-spacing:-.3px;margin:26px 0 10px;padding-top:8px;border-top:2px solid var(--accent);page-break-after:avoid}
+h3{font-size:12.5pt;margin:18px 0 8px;color:var(--accent);page-break-after:avoid}
+p{margin:7px 0}
+a{color:var(--accent2);text-decoration:none;word-break:break-word}
+strong{color:#0b1a2d}
+blockquote{margin:12px 0;padding:10px 14px;border-left:4px solid var(--gold);background:#fffbeb;color:#5b4a1e;border-radius:0 8px 8px 0}
+table{width:100%;border-collapse:collapse;margin:10px 0 14px;font-size:9pt;page-break-inside:avoid}
+th{background:#0f2238;color:#fff;text-align:left;padding:7px 8px;font-size:8.4pt;letter-spacing:.4px;text-transform:uppercase}
+td{border-bottom:1px solid var(--line);padding:6px 8px;vertical-align:top}
+tr:nth-child(even) td{background:#f7fafc}
+ul,ol{margin:6px 0 10px 20px;padding:0}
+li{margin:3px 0}
+hr{border:0;border-top:1px solid var(--line);margin:22px 0}
+code{background:#eef2f7;padding:1px 5px;border-radius:4px;font-size:9pt}
+pre{background:#f4f7fa;border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto}
+pre code{background:none;padding:0}
+@media print{main{max-width:none;padding:0}body{font-size:10pt}}
+</style></head><body><main><h1 id="posiciones-de-los-jugadores-de-dha-y-dhb-2026-27">Posiciones de los jugadores de DHA y DHB 2026-27</h1>
+<h2 id="investigacion-fuentes-y-cobertura">Investigación, fuentes y cobertura</h2>
+<p><strong>Fecha de cierre:</strong> 19/10/2026<br />
+<strong>Alcance:</strong> 976 perfiles de DHA, DHB y 1ª Andaluza (Club Hockey San Fernando)<br />
+<strong>Objetivo:</strong> asignar una posición a todos los jugadores y distinguir claramente entre posición oficial y posición estimada.</p>
+<hr />
+<blockquote>
+<p><strong>Actualización 19/10/2026:</strong> el proyecto incorpora un modelo de <strong>37 atributos</strong> y <strong>cinco overalls posicionales</strong>. La posición base sigue siendo la de este informe, pero la valoración del jugador ya no depende de los goles: un central con muchos goles sigue siendo central. La subposición Central/Lateral se estima cuando la fuente solo indica "Defensa". Ver <a href="docs/02_MODELO_ATRIBUTOS.md"><code>docs/02_MODELO_ATRIBUTOS.md</code></a>.</p>
+<p><strong>Actualización de cobertura (19/10/2026):</strong> se han añadido posiciones desde Diari de Terrassa, Mundo Deportivo, EuroHockey, Global Sports Archive, CAH, 8SPORTS.es, Canarias7 y University of Pretoria. La cobertura oficial pasa a <strong>175 perfiles</strong> (17,9%) y los estimados bajan a <strong>801</strong> (82,1%). Cambios destacados: Jan Clapés (Club Egara) a defensa, Bruno Font (Junior FC) a medio, Ricardo Sánchez (RC de Campo) a defensa pese a sus 30 goles y Joaquín Kruger (Sanse) a medio. Las tablas de este informe ya reflejan estas cifras.</p>
+</blockquote>
+<h2 id="resumen-ejecutivo">Resumen ejecutivo</h2>
+<ul>
+<li><strong>976 perfiles</strong> con posición asignada.</li>
+<li><strong>175 posiciones oficiales</strong> (17,9%): proceden de webs de clubes, actas de la RFEH y prensa.</li>
+<li><strong>801 posiciones estimadas</strong> (82,1%): calculadas por rol y peso goleador de cada jugador dentro de su equipo.</li>
+<li><strong>72 porteros</strong> identificados, en su mayoría a partir de las actas oficiales de la RFEH.</li>
+<li>Distribución: <strong>400 defensas, 242 medios, 253 delanteros, 75 porteros y 6 mixtos</strong>.</li>
+</ul>
+<p>La conclusión principal es que <strong>no existe una fuente pública completa de posiciones para todos los jugadores de DHA y DHB</strong>. La RFEH publica plantillas, edades y goles, pero no la posición. Por eso el proyecto combina tres capas: datos oficiales de clubes, porteros oficiales de las actas y estimación por rol y goles para el resto.</p>
+<hr />
+<h2 id="1-fuentes-utilizadas">1. Fuentes utilizadas</h2>
+<h3 id="11-webs-oficiales-de-clubes">1.1. Webs oficiales de clubes</h3>
+<table>
+<thead>
+<tr>
+<th>Club</th>
+<th style="text-align: right;">Jugadores con posición</th>
+<th>Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atlètic Terrassa HC</td>
+<td style="text-align: right;">18</td>
+<td>https://athc.cat/divisio-dhonor-masculi/</td>
+</tr>
+<tr>
+<td>Club Egara (DHA)</td>
+<td style="text-align: right;">18</td>
+<td>https://egara.es/divisio-dhonor-masculi-3/</td>
+</tr>
+<tr>
+<td>Egara 1935 (DHB)</td>
+<td style="text-align: right;">15</td>
+<td>https://egara.es/divisio-dhonor-masculi-b/</td>
+</tr>
+<tr>
+<td>RC Polo (DHA)</td>
+<td style="text-align: right;">17</td>
+<td>https://hockeyteams.rcpolo.com/teams/dhma</td>
+</tr>
+<tr>
+<td>CD Terrassa</td>
+<td style="text-align: right;">3</td>
+<td>Prensa: Diari de Terrassa (Pere Jufresa, Iain McFadden, Víctor Guerra, Carlos Bultà)</td>
+</tr>
+</tbody>
+</table>
+<p>Las webs de Atlètic Terrassa y Club Egara publican la plantilla con posiciones en catalán: <strong>Porter, Defensa, Migcampista, Davanter</strong>. Se han traducido a <strong>Portero, Defensa, Medio, Delantero</strong>. La web de RC Polo usa una API pública con posiciones en español y también aporta dorsales, año de nacimiento y biografía.</p>
+<h3 id="12-actas-oficiales-de-la-rfeh">1.2. Actas oficiales de la RFEH</h3>
+<p>Se han descargado y procesado <strong>562 actas oficiales</strong> de partidos de DHA y DHB de las temporadas 2025-26 y 2026-27. En el PDF del acta, la columna <strong>P</strong> identifica al portero y la columna <strong>J</strong> al jugador de campo. Se han extraído <strong>75 nombres de porteros</strong>, de los que 72 se han podido cruzar con los perfiles actuales.</p>
+<p>Esta es la fuente más fiable para la posición de portero, porque procede del acta oficial del partido. No distingue defensa, medio o delantero.</p>
+<h3 id="13-prensa-y-cronicas">1.3. Prensa y crónicas</h3>
+<p>La crónica de Diari de Terrassa sobre el CD Terrassa 2026-27 identifica a:<br />
+- <strong>Pere Jufresa</strong> como portero.<br />
+- <strong>Iain McFadden</strong> como defensor.<br />
+- <strong>Víctor Guerra</strong> como defensor.<br />
+- <strong>Carlos Bultà</strong> como migcampista.</p>
+<p>Se han incorporado como posiciones oficiales de prensa.</p>
+<h3 id="14-estimacion-por-rol-y-goles">1.4. Estimación por rol y goles</h3>
+<p>Para los jugadores sin fuente oficial se usa un modelo transparente:<br />
+1. Se toman los goles de iSquad como proxy de participación ofensiva.<br />
+2. Dentro de cada equipo, se calcula el percentil de goles de cada jugador.<br />
+3. Se asigna:<br />
+   - <strong>Delantero</strong> al 30% con más goles.<br />
+   - <strong>Medio</strong> al 35% intermedio.<br />
+   - <strong>Defensa</strong> al 35% con menos goles.<br />
+4. Los porteros oficiales se excluyen de esta distribución.<br />
+5. La confianza es <strong>Media</strong> si el percentil es extremo (≥0,80 o ≤0,20) y <strong>Baja</strong> en el resto. Los invitados siempre tienen confianza Baja.</p>
+<p><strong>Limitación:</strong> es una estimación, no una posición real. Un defensa con mucho gol puede aparecer como delantero, y un medio con pocos goles puede aparecer como defensa. Sirve para que el juego tenga una distribución coherente, no para un informe profesional. El modelo de atributos posterior separa la posición de los goles y evita que un central goleador se valore como delantero.</p>
+<hr />
+<h2 id="2-cobertura">2. Cobertura</h2>
+<h3 id="21-por-fuente">2.1. Por fuente</h3>
+<table>
+<thead>
+<tr>
+<th>Fuente</th>
+<th style="text-align: right;">Perfiles</th>
+<th style="text-align: right;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estimada por rol y goles</td>
+<td style="text-align: right;">801</td>
+<td style="text-align: right;">82,1%</td>
+</tr>
+<tr>
+<td>Acta oficial RFEH (porteros)</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">6,6%</td>
+</tr>
+<tr>
+<td>Web oficial Club Egara</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">3,4%</td>
+</tr>
+<tr>
+<td>Web oficial Atlètic Terrassa</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">1,8%</td>
+</tr>
+<tr>
+<td>Web oficial RC Polo</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">1,7%</td>
+</tr>
+<tr>
+<td>Prensa (Diari de Terrassa)</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0,6%</td>
+</tr>
+<tr>
+<td>Mundo Deportivo (selección 2025)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0,4%</td>
+</tr>
+<tr>
+<td>EuroHockey (selección sub-21)</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0,3%</td>
+</tr>
+<tr>
+<td>Global Sports Archive</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0,2%</td>
+</tr>
+<tr>
+<td>Diari de Terrassa</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0,2%</td>
+</tr>
+<tr>
+<td>Canarias7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0,1%</td>
+</tr>
+<tr>
+<td>Confederación Argentina de Hockey</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0,1%</td>
+</tr>
+<tr>
+<td>8SPORTS.es</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0,1%</td>
+</tr>
+<tr>
+<td>University of Pretoria</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0,1%</td>
+</tr>
+<tr>
+<td>Deporte de la Isla</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">1,9%</td>
+</tr>
+<tr>
+<td>Deporte Alicante</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0,1%</td>
+</tr>
+<tr>
+<td>El Castillo de San Fernando</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0,1%</td>
+</tr>
+<tr>
+<td>Web oficial CD Giner de los Ríos</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0,1%</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong>976</strong></td>
+<td style="text-align: right;"><strong>100%</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-por-liga">2.2. Por liga</h3>
+<table>
+<thead>
+<tr>
+<th>Liga</th>
+<th style="text-align: right;">Oficiales</th>
+<th style="text-align: right;">Estimadas</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DHA</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">309</td>
+<td style="text-align: right;">412</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">468</td>
+<td style="text-align: right;">536</td>
+</tr>
+<tr>
+<td>1ª Andaluza</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong>175</strong></td>
+<td style="text-align: right;"><strong>801</strong></td>
+<td style="text-align: right;"><strong>976</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="23-distribucion-de-posiciones">2.3. Distribución de posiciones</h3>
+<table>
+<thead>
+<tr>
+<th>Posición</th>
+<th style="text-align: right;">Perfiles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Defensa</td>
+<td style="text-align: right;">400</td>
+</tr>
+<tr>
+<td>Delantero</td>
+<td style="text-align: right;">253</td>
+</tr>
+<tr>
+<td>Medio</td>
+<td style="text-align: right;">242</td>
+</tr>
+<tr>
+<td>Portero</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr>
+<td>Medio/Delantero</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>Defensa/Medio</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="24-cobertura-por-equipo">2.4. Cobertura por equipo</h3>
+<table>
+<thead>
+<tr>
+<th>Liga</th>
+<th>Equipo</th>
+<th style="text-align: right;">Total</th>
+<th style="text-align: right;">Oficiales</th>
+<th style="text-align: right;">Estimadas</th>
+<th style="text-align: right;">Porteros</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DHA</td>
+<td>Atlètic Terrassa HC</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>CD Terrassa Hockey</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>CH Carpesa</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>Club Egara</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>FC Barcelona</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>Junior FC</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>RC Polo</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>Real Club de Campo</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>RS Tenis</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>Sanse Complutense</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>Sardinero HC</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>DHA</td>
+<td>UD Taburiente</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>AD Rimas</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>Aticos CH San Fernando</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>Castelldefels HC</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>CD Giner de los Ríos</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>CHM Las Rozas</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>Egara 1935</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>HC Sant Cugat</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>Iluro HC</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>Línia 22</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>Pedralbes HC</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>Pozuelo</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>RC Jolaseta</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>Real Sociedad 1927</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>SPV</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>UA-San Vicente</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>DHB</td>
+<td>Vallès Esportiu</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>1ª And.</td>
+<td>San Fernando</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura:</strong> la cobertura oficial es alta en Atlètic Terrassa, Club Egara, Egara 1935 y RC Polo. CD Terrassa, Junior FC, RC de Campo, Sanse y Taburiente han mejorado gracias a la prensa local, la selección y bases de datos especializadas. En el resto, la posición oficial se limita al portero identificado en actas. En la 1ª Andaluza no hay fuente oficial y todas las posiciones son estimadas.</p>
+<hr />
+<h2 id="3-integracion-en-el-juego">3. Integración en el juego</h2>
+<p>El juego HTML incorpora:</p>
+<ul>
+<li><strong>Columna “Pos.”</strong> en la tabla de jugadores.</li>
+<li><strong>Filtro de posición</strong>: Portero, Defensa, Medio, Delantero y Mixtos.</li>
+<li><strong>Etiqueta “est.”</strong> en las posiciones estimadas.</li>
+<li><strong>Ficha del jugador</strong> con posición, fuente y confianza.</li>
+<li><strong>Plantilla del equipo</strong> con columna de posición.</li>
+<li><strong>Nota de cobertura</strong> en la vista de jugadores: “175 posiciones oficiales · 801 estimadas por rol y goles”.</li>
+</ul>
+<p>Las posiciones oficiales se muestran sin “est.”; las estimadas llevan “est.” y confianza Baja o Media.</p>
+<hr />
+<h2 id="4-limitaciones">4. Limitaciones</h2>
+<ol>
+<li><strong>No hay una fuente pública completa.</strong> La RFEH no publica la posición en la plantilla de iSquad.</li>
+<li><strong>La estimación por goles no distingue posiciones reales.</strong> Un defensa ofensivo o un medio goleador pueden quedar clasificados como delanteros.</li>
+<li><strong>Las actas identifican porteros, no defensas/medios/delanteros.</strong></li>
+<li><strong>Las plantillas de los clubes pueden estar desactualizadas.</strong> Algunos jugadores han cambiado de equipo o han dejado la liga; se han descartado las coincidencias débiles.</li>
+<li><strong>Los nombres pueden variar</strong> (Quim/Joaquim, Xavi/Xavier, Pepe/Josep, Ton/Anton). Se ha usado normalización y un diccionario de apodos.</li>
+<li><strong>La 1ª Andaluza no tiene fuente oficial</strong> y sus 28 perfiles son estimados.</li>
+<li><strong>La posición es una foto fija a 19/10/2026.</strong> Puede cambiar con fichajes, lesiones o cambios tácticos.</li>
+</ol>
+<hr />
+<h2 id="5-recomendaciones">5. Recomendaciones</h2>
+<ol>
+<li><strong>Ampliar las webs de clubes</strong> con plantillas y posiciones: FC Barcelona, Real Club de Campo, Junior FC, Sanse Complutense, RS Tenis, Sardinero HC, UD Taburiente, CH Carpesa y los clubes de DHB.</li>
+<li><strong>Usar las actas de todos los partidos</strong> para confirmar porteros y detectar cambios.</li>
+<li><strong>Añadir una posición secundaria</strong> para jugadores polivalentes (Defensa/Medio, Medio/Delantero).</li>
+<li><strong>Cruzar con FIH/EHL</strong> para internacionales.</li>
+<li><strong>Revisar manualmente</strong> los jugadores con más goles y posición estimada de defensa, y los defensas con muchos goles.</li>
+<li><strong>Actualizar la posición</strong> al inicio de cada temporada.</li>
+</ol>
+<hr />
+<h2 id="6-archivos-generados">6. Archivos generados</h2>
+<ul>
+<li><strong>Juego HTML actualizado:</strong> <code>/home/daniel/hockey_espana/juego_hockey/index.html</code></li>
+<li><strong>Excel con posiciones:</strong> <code>/home/daniel/hockey_espana/equipos_hockey_hierba_espana_masculino_2026_27_con_posiciones.xlsx</code></li>
+<li><strong>CSV de posiciones:</strong> <code>/home/daniel/hockey_espana/jugadores_posiciones_2026_27.csv</code></li>
+<li><strong>Este informe:</strong> <code>/home/daniel/hockey_espana/informe_posiciones_DHA_DHB_2026_27.md</code></li>
+</ul>
+<hr />
+<h2 id="7-fuentes">7. Fuentes</h2>
+<ul>
+<li>Atlètic Terrassa HC – plantilla DHA masculina: https://athc.cat/divisio-dhonor-masculi/</li>
+<li>Club Egara – plantilla DHA masculina: https://egara.es/divisio-dhonor-masculi-3/</li>
+<li>Club Egara – plantilla DHB masculina (Egara 1935): https://egara.es/divisio-dhonor-masculi-b/</li>
+<li>RC Polo – equipo DHA masculino: https://hockeyteams.rcpolo.com/teams/dhma</li>
+<li>RFEH – actas oficiales: https://resultadoshockey.isquad.es/</li>
+<li>RFEH – plantillas iSquad: https://resultadoshockey.isquad.es/equipo.php</li>
+<li>Diari de Terrassa – crónica del CD Terrassa 2026-27: https://www.diarideterrassa.com/esports/comenca-la-lliga-de-hockey-el-cd-terrassa-masculi-vol-creixer-sense-oblidar-don-ve.html</li>
+</ul></main></body></html>

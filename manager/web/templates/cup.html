@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Copa del Rey{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between;align-items:end">
+  <div><h1>Copa del Rey</h1><p><span class="badge">{{ cup_status }}</span> · 8 mejores de DHA tras la jornada 11 · sin equipos DHB · fechas del calendario diario</p></div>
+  <div class="match-crest">{{ m.crest(team, 'crest-lg') }}<b>{{ team.name }}</b></div>
+</div>
+{% if state.cup_active %}
+<div class="grid grid-2">
+{% for f in fixtures %}
+  <div class="card">
+    <div class="cat">Eliminatoria a partido único · {{ f.date|fdate }}</div>
+    <div class="scoreboard compact">
+      <div class="team">{{ m.crest(state.teams[f.home_id]) }}<b>{{ state.teams[f.home_id].name }}</b></div>
+      <div class="score">{% if f.played %}{{ f.home_goals }}-{{ f.away_goals }}{% else %}VS{% endif %}</div>
+      <div class="team right"><b>{{ state.teams[f.away_id].name }}</b>{{ m.crest(state.teams[f.away_id]) }}</div>
+    </div>
+    {% if f.played %}<p class="match-meta">Pasa {{ state.teams[f.home_id].name if f.home_goals > f.away_goals else state.teams[f.away_id].name }}</p>{% else %}<p class="match-meta">Pendiente de jugar{% if next_cup and f.id == next_cup.id %} · <a href="{{ url_for('match_page') }}">Jugar este partido</a>{% endif %}</p>{% endif %}
+  </div>
+{% endfor %}
+</div>
+<div class="actions" style="margin-top:14px">
+  <form method="post"><input type="hidden" name="action" value="round"><button class="btn primary">Simular ronda</button></form>
+  <form method="post"><input type="hidden" name="action" value="all"><button class="btn">Simular Copa entera</button></form>
+</div>
+{% elif state.cup_winner_id %}
+<div class="card">
+  <div class="hero-player">
+    {{ m.crest(state.teams[state.cup_winner_id], 'crest-lg') }}
+    <div><h1>{{ state.teams[state.cup_winner_id].name }}</h1><p class="muted">Campeón de la Copa del Rey{% if state.cup_third_id %} · Tercero: {{ state.teams[state.cup_third_id].name }}{% endif %}</p></div>
+  </div>
+</div>
+{% else %}
+<div class="card"><h3>La Copa espera</h3><p>Se sortea al terminar la primera vuelta. Participan los 8 mejores de DHA, con eliminatorias a partido único.</p></div>
+{% endif %}
+{% endblock %}

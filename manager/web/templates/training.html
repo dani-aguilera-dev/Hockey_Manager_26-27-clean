@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Entrenamiento{% endblock %}
+{% block content %}
+<h1>Entrenamiento semanal</h1>
+{% if state.week_trained %}
+<div class="card">
+  <h3>Semana planificada</h3>
+  <p>{{ state.training_report.message }}</p>
+  <p class="muted">Plan: {{ plan_name(state.weekly_plan) }} · {{ state.weekly_plan|join(' · ') }}</p>
+  <div class="kpi">
+    <div><span class="muted">Fatiga</span><strong>{{ state.training_report.fatigue_before }}% → {{ state.training_report.fatigue_after }}%</strong></div>
+    <div><span class="muted">Moral</span><strong>{{ state.training_report.morale_before }} → {{ state.training_report.morale_after }}</strong></div>
+    <div><span class="muted">Preparación rival</span><strong>+{{ state.training_report.prep_bonus }}</strong></div>
+  </div>
+  {% if state.training_report.gains %}<p>Progresos: {% for g in state.training_report.gains[:8] %}{{ g.player }} {{ g.attr.replace('_',' ') }} +1{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+  {% if state.training_report.injuries %}<p class="muted">Lesiones: {% for i in state.training_report.injuries %}{{ i.player }} ({{ i.matches }}){% if not loop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+</div>
+{% else %}
+<div class="grid grid-2">
+  <div class="card">
+    <h3>Plan automático</h3>
+    <p class="muted">El segundo entrenador decide según rival, fatiga, moral y academia. Su rating es {{ team.assistant_rating }}/100.</p>
+    <form method="post"><input type="hidden" name="action" value="auto"><button class="btn primary" type="submit">Aplicar plan automático</button></form>
+    <form method="post" style="margin-top:10px"><input type="hidden" name="action" value="recovery"><button class="btn" type="submit">Semana de recuperación</button></form>
+  </div>
+  <div class="card">
+    <h3>Editar plan</h3>
+    <form method="post">
+      <input type="hidden" name="action" value="edit">
+      {% for i in range(5) %}
+      <div class="field" style="margin-bottom:8px"><label>{{ days[i] }}</label>
+        <select name="session{{i}}">
+          {% for key in session_order %}<option value="{{key}}" {% if default_plan[i]==key %}selected{% endif %}>{{ sessions[key].label }}</option>{% endfor %}
+        </select>
+      </div>
+      {% endfor %}
+      <button class="btn blue" type="submit">Aplicar plan editado</button>
+    </form>
+  </div>
+</div>
+<div class="card"><h3>Referencia rápida</h3><table><thead><tr><th>Sesión</th><th>Fatiga</th><th>Efecto</th></tr></thead><tbody>
+{% for key in session_order %}<tr><td>{{ sessions[key].label }}</td><td>{{ '%+.0f'|format(sessions[key].fatigue) }}%</td><td class="muted">{{ sessions[key].attrs|join(', ')|replace('_',' ') }}</td></tr>{% endfor %}
+</tbody></table></div>
+{% endif %}
+{% endblock %}

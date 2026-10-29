@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Nueva partida{% endblock %}
+{% block content %}
+<script>document.documentElement.classList.add('newgame-js');</script>
+<div class="newgame-head">
+  <div>
+    <h1>Nueva partida</h1>
+    <p class="muted">Elige país, competición y club. Los clubes españoles conservan sus datos de iSquad; Países Bajos y Bélgica usan plantillas reales de la temporada actual.</p>
+  </div>
+  <div class="newgame-level"><span class="badge ok">8 competiciones</span><span class="badge">68 clubes</span></div>
+</div>
+
+<div class="card newgame-card">
+  <div class="league-toolbar">
+    <div class="league-tabs" role="tablist" aria-label="Competiciones">
+      {% for group in league_groups %}
+      <button type="button" class="league-tab{% if group.meta.code == 'DHA' %} active{% endif %}" data-league="{{ group.meta.code }}" role="tab" aria-selected="{{ 'true' if group.meta.code == 'DHA' else 'false' }}" aria-controls="league-{{ group.meta.code }}">
+        <span class="league-tab-country">{{ group.meta.country }}</span>
+        <span class="league-tab-name">{{ group.meta.short_name }}</span>
+        <span class="league-tab-count">{{ group.teams|length }} clubes</span>
+      </button>
+      {% endfor %}
+    </div>
+    <label class="league-search">
+      <span class="sr-only">Buscar club</span>
+      <input id="team-search" type="search" placeholder="Buscar club o ciudad…" autocomplete="off">
+    </label>
+  </div>
+
+  <form method="post" id="new-game-form">
+    <div class="row newgame-fields">
+      <div class="field"><label>Entrenador</label><input name="manager" value="Entrenador" required></div>
+      <div class="field"><label>Semilla (opcional)</label><input name="seed" inputmode="numeric" placeholder="aleatoria"></div>
+    </div>
+
+    {% for group in league_groups %}
+    <section class="league-section{% if group.meta.code == 'DHA' %} is-active{% endif %}" id="league-{{ group.meta.code }}" data-league="{{ group.meta.code }}" aria-labelledby="league-title-{{ group.meta.code }}">
+      <div class="league-head">
+        <div>
+          <div class="cat">{{ group.meta.country }} · {{ group.meta.confederation }}</div>
+          <h2 id="league-title-{{ group.meta.code }}">{{ group.meta.name }}</h2>
+          <p class="muted small">{{ group.meta.short_name }} · {{ group.teams|length }} clubes · {{ group.meta.format|replace('_', ' ') }}</p>
+        </div>
+        <div class="league-facts">
+          <span class="badge">Nivel {{ group.meta.standard|int }}</span>
+          {% if group.meta.playoffs %}<span class="badge">{{ group.meta.playoffs }} play-offs</span>{% endif %}
+        </div>
+      </div>
+      <div class="player-grid club-grid">
+        {% for c in club_cards if c.team.league == group.meta.code %}
+        <label class="player-card club-card" data-search="{{ (c.team.name ~ ' ' ~ c.team.city ~ ' ' ~ c.stadium)|lower }}">
+          <input type="radio" name="club_id" value="{{ c.team.id }}" {% if loop.first and group.meta.code == 'DHA' %}checked{% endif %} required>
+          {{ m.crest(c.team, 'crest-lg') }}
+          <div class="pc-body">
+            <div class="pc-name">{{ c.team.name }}</div>
+            <div class="pc-tags"><span class="badge">{{ group.meta.short_name }}</span><span class="arch">{{ c.team.city }}</span></div>
+            <div class="pc-sub">{{ c.stadium }} · {{ c.expectation }}</div>
+            <div class="pc-meta"><span>Exigencia: <b>{{ c.difficulty }}</b></span><span>Academia {{ c.team.academy_rating }}/100</span></div>
+          </div>
+        </label>
+        {% endfor %}
+      </div>
+      <p class="league-empty" hidden>No hay clubes que coincidan con la búsqueda.</p>
+    </section>
+    {% endfor %}
+
+    <div class="selection-bar">
+      <div>
+        <div class="cat">Club seleccionado</div>
+        <strong id="selection-summary">—</strong>
+      </div>
+      <button class="btn primary" type="submit">Empezar partida</button>
+    </div>
+  </form>
+</div>
+<p class="small muted">DHA y DHB usan datos de iSquad. Países Bajos y Bélgica usan plantillas, fotos y escudos reales de la temporada actual; Alemania, Inglaterra, Argentina e India siguen con plantillas generadas.</p>
+
+<script>
+(function () {
+  const tabs = Array.from(document.querySelectorAll('.league-tab'));
+  const sections = Array.from(document.querySelectorAll('.league-section'));
+  const radios = Array.from(document.querySelectorAll('input[name="club_id"]'));
+  const search = document.getElementById('team-search');
+  const summary = document.getElementById('selection-summary');
+  let active = 'DHA';
+
+  function updateSummary() {
+    const checked = radios.find((r) => r.checked);
+    if (!checked) { summary.textContent = '—'; return; }
+    const card = checked.closest('.club-card');
+    const name = card?.querySelector('.pc-name')?.textContent || checked.value;
+    const league = card?.closest('.league-section')?.dataset.league || '';
+    summary.textContent = name + (league ? ' · ' + league : '');
+  }
+
+  function setActive(code) {
+    active = code;
+    sections.forEach((section) => {
+      const on = section.dataset.league === code;
+      section.classList.toggle('is-active', on);
+      section.hidden = !on;
+    });
+    tabs.forEach((tab) => {
+      const on = tab.dataset.league === code;
+      tab.classList.toggle('active', on);
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    if (search.value.trim()) return;
+    const section = sections.find((s) => s.dataset.league === code);
+    const checked = section?.querySelector('input[name="club_id"]:checked');
+    if (!checked) section?.querySelector('input[name="club_id"]')?.click();
+    updateSummary();
+  }
+
+  tabs.forEach((tab) => tab.addEventListener('click', () => {
+    if (search.value.trim()) {
+      search.value = '';
+      sections.forEach((section) => {
+        section.querySelectorAll('.club-card').forEach((card) => { card.hidden = false; });
+        const empty = section.querySelector('.league-empty');
+        if (empty) empty.hidden = true;
+      });
+    }
+    setActive(tab.dataset.league);
+  }));
+  radios.forEach((radio) => radio.addEventListener('change', updateSummary));
+
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    sections.forEach((section) => {
+      const cards = Array.from(section.querySelectorAll('.club-card'));
+      let visible = 0;
+      cards.forEach((card) => {
+        const match = !q || (card.dataset.search || '').includes(q);
+        card.hidden = !match;
+        if (match) visible += 1;
+      });
+      const empty = section.querySelector('.league-empty');
+      if (empty) empty.hidden = visible !== 0;
+      section.hidden = q ? visible === 0 : section.dataset.league !== active;
+      if (q) section.classList.toggle('is-active', visible > 0);
+    });
+    if (!q) setActive(active);
+  });
+
+  const initial = document.querySelector('input[name="club_id"]:checked') || radios[0];
+  if (initial) initial.checked = true;
+  setActive('DHA');
+})();
+</script>
+{% endblock %}

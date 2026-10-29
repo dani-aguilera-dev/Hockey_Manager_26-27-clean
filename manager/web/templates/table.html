@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Clasificación{% endblock %}
+{% block content %}
+<h1>Clasificación y calendario</h1>
+<div class="card"><h3>{{ competition_name }}{% if competition == 'DHB' %} · Grupo {{ state.dhb_group }}{% endif %}</h3><table><thead><tr><th>#</th><th>Equipo</th><th class="num">PJ</th><th class="num">G</th><th class="num">E</th><th class="num">P</th><th class="num">GF</th><th class="num">GC</th><th class="num">DG</th><th class="num">PTS</th></tr></thead><tbody>
+{% for t in table %}<tr class="clickable-row" onclick="window.location='{{ url_for('team_detail', team_id=t.id) }}'"><td>{{ loop.index }}</td><td><a href="{{ url_for('team_detail', team_id=t.id) }}"><img class="crest crest-sm" src="{{ crest_src(t) }}" alt=""> {{ t.name }}</a></td><td class="num">{{t.played}}</td><td class="num">{{t.won}}</td><td class="num">{{t.drawn}}</td><td class="num">{{t.lost}}</td><td class="num">{{t.goals_for}}</td><td class="num">{{t.goals_against}}</td><td class="num">{{ t.goals_for - t.goals_against }}</td><td class="num"><b>{{t.points}}</b></td></tr>{% endfor %}
+</tbody></table></div>
+<div class="card"><h3>Calendario</h3><table><thead><tr><th>J</th><th>Fecha</th><th>Partido</th><th>Resultado</th></tr></thead><tbody>
+{% for f in fixtures %}<tr><td>{{f.round}}</td><td>{{f.date|fdate}}</td><td><img class="crest crest-sm" src="{{ crest_src(state.teams[f.home_id]) }}" alt=""> {{ state.teams[f.home_id].name }} vs <img class="crest crest-sm" src="{{ crest_src(state.teams[f.away_id]) }}" alt=""> {{ state.teams[f.away_id].name }}</td><td>{% if f.played %}{{f.home_goals}}-{{f.away_goals}}{% else %}—{% endif %}</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

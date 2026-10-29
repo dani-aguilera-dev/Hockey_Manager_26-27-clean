@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Plantilla{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between;align-items:end">
+  <div><h1>Plantilla</h1><p class="muted">{{ team.squad|length }} jugadores con ficha · {{ team.players|length }} fichas (incluye invitados) · Gestión {{ '%.0f'|format(team.management_score()) }}/100</p></div>
+  <a class="btn" href="{{ url_for('tactics') }}">Editar once</a>
+</div>
+{% for group, members in groups %}
+<div class="section-title"><h2>{{ group }}</h2><span class="badge">{{ members|length }}</span></div>
+<div class="player-grid squad-grid">
+  {% for p in members %}
+  <div class="player-card">
+    <a href="{{ url_for('player_detail', player_id=p.id) }}" style="display:flex;gap:11px;align-items:center;min-width:0;flex:1">
+      {{ m.avatar(p) }}
+      <div class="pc-body">
+        <div class="pc-name">{{ p.name }}</div>
+        <div class="pc-tags">{{ m.pos(p) }} <span class="arch">{{ p.archetype }}</span></div>
+        <div class="pc-meta"><span><b>{{ '%.1f'|format(p.overall) }}</b> OVR</span><span class="star-chip" title="{{ player_tier(p.overall, p.league) }}">{{ stars_bar(p.overall, p.league) }}</span><span>{{ p.age }} años</span><span>Fatiga {{ '%.0f'|format(p.fatigue) }}%</span><span>Rel {{ p.relationship }}</span></div>
+        <div class="pc-sub">{% if p.perfil != 'Jugador' %}<span class="badge">Invitado</span> {% endif %}{{ p.contract_until }} · {{ p.salary|money }}{% if p.injury %} · <span class="badge danger">{{ p.absence_label }} · {{ p.injury }}</span>{% elif p.suspension %} · <span class="badge warn">{{ p.absence_label }} · {{ p.suspension }}</span>{% endif %}</div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

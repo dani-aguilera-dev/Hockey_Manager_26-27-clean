@@ -1,0 +1,29 @@
+{% macro avatar(p, extra='') %}
+<div class="avatar {{ extra }}">
+  <span class="avatar-initials">{{ initials(p.name) }}</span>
+  {% if p.photo or p.photo_remote %}<img src="{{ photo_src(p) }}" alt="{{ p.name }}" loading="lazy" onerror="this.remove()">{% endif %}
+</div>
+{% endmacro %}
+
+{% macro crest(team, extra='') %}<img class="crest {{ extra }}" src="{{ crest_src(team) }}" alt="Escudo {{ team.name }}" loading="lazy">{% endmacro %}
+
+{% macro pos(p) %}<span class="pos pos-{{ p.subposition|lower }}">{{ p.subposition }}</span>{% endmacro %}
+
+{% macro player_card(p, href='', compact=false) %}
+<div class="player-card {{ 'compact' if compact else '' }}">
+  {% if href %}<a href="{{ href }}">{% endif %}
+  {{ avatar(p) }}
+  <div class="pc-body">
+    <div class="pc-name">{{ p.name }}</div>
+    <div class="pc-tags">{{ pos(p) }} <span class="arch">{{ p.archetype }}</span></div>
+    <div class="pc-meta">
+      <span><b>{{ '%.1f'|format(p.overall) }}</b> OVR</span>
+      <span class="star-chip" title="{{ player_tier(p.overall, p.league) }}">{{ stars_bar(p.overall, p.league) }} {{ league_label(p.league) }}</span>
+      <span>{{ p.age }} años</span>
+      {% if not compact %}<span>Fatiga {{ '%.0f'|format(p.fatigue) }}%</span><span>Forma {{ '%.1f'|format(p.form) }}</span>{% endif %}
+    </div>
+    {% if not compact %}<div class="pc-sub">{{ p.perfil }} · {{ p.contract_until }}{% if p.injury %} · <span class="badge danger">{{ p.absence_label }} · {{ p.injury }}</span>{% elif p.suspension %} · <span class="badge warn">{{ p.absence_label }} · {{ p.suspension }}</span>{% endif %}</div>{% endif %}
+  </div>
+  {% if href %}</a>{% endif %}
+</div>
+{% endmacro %}

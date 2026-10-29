@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}{{ player.name }}{% endblock %}
+{% block content %}
+<div class="card">
+<div class="hero-player">
+  {{ m.avatar(player, 'hero-avatar') }}
+  <div style="flex:1;min-width:0">
+    <h1>{{ player.name }}</h1>
+    <div class="pc-tags">{{ m.pos(player) }} <span class="arch">{{ player.archetype }}</span> <span class="badge">{% if owner_team %}<a href="{{ url_for('team_detail', team_id=owner_team.id) }}"><img class="crest crest-sm" src="{{ crest_src(owner_team) }}" alt=""> {{ owner }}</a>{% else %}{{ owner }}{% endif %}</span></div>
+    <p class="muted">{{ player.age }} años · Overall estimado {{ scout }} · {{ scout_star_range }} en {{ league_label(player.league) }} · Valor {{ player.value|money }}</p>
+    {% if player.photo %}<p class="small muted">Foto: iSquad</p>{% endif %}
+  </div>
+</div>
+</div>
+<div class="actions" style="margin-top:10px"><a class="btn small" href="{{ url_for('player_detail', player_id=player.id) }}">Ficha completa e histórico</a>{% if owner_team %}<a class="btn small" href="{{ url_for('team_detail', team_id=owner_team.id) }}">Ver equipo</a>{% endif %}</div>
+<div class="grid grid-2" style="margin-top:14px">
+<div class="card"><h3>Temporada actual</h3><p>{{ player.apps }} PJ · {{ player.season_goals }} goles · {{ player.season_assists }} asistencias · rating {{ '%.2f'|format(player.rating) }}</p><p class="star-line">{{ stars_bar(player.overall, player.league) }} {{ player_tier(player.overall, player.league) }} en {{ league_label(player.league) }}</p><p class="muted">Histórico de todas sus temporadas en la ficha completa.</p></div>
+<div class="card"><h3>Informe de ojeador</h3><p>Ojeador: {{ team.staff_rating('scout') }}/100</p><p>Nivel estimado: <b>{{ scout_star_range }}</b> en {{ league_label(player.league) }}</p><p>Precio de salida: <b>{{ asking|money }}</b></p><p>Salario actual: {{ player.salary|money }} · Contrato {{ player.contract_until }}</p><p class="muted">La horquilla de overall mejora con un ojeador de más nivel.</p></div>
+<div class="card"><h3>Oferta</h3>{% if window == 'cerrado' %}<p class="muted">El mercado está cerrado. Puedes consultar la ficha, pero las ofertas se reactivarán en la próxima ventana.</p>{% else %}<form method="post">
+  <div class="field"><label>Traspaso</label><input name="fee" value="{{ [asking, team.transfer_budget]|min }}" inputmode="numeric"></div>
+  <div class="field"><label>Salario anual</label><input name="salary" value="{{ [player.salary * 1.3, player.salary + 3000]|max|int }}" inputmode="numeric"></div>
+  <div class="field"><label>Años</label><input name="years" value="3" inputmode="numeric"></div>
+  <button class="btn primary" type="submit">Hacer oferta</button>
+</form>{% endif %}</div>
+</div>
+<div class="card" style="margin-top:14px"><h3>Atributos clave</h3><div class="attr-grid">
+{% for group, keys in [('Técnica',['control','pase','conduccion','golpeo','definicion']),('Set pieces',['pc_injection','pc_trap','pc_flick','pc_deflection']),('Táctica',['posicionamiento','pressing','cobertura']),('Física',['velocidad','resistencia','fuerza'])] %}
+<div><h3>{{group}}</h3>{% for k in keys %}{% if k in player.attributes %}<div class="attr-row"><span>{{k.replace('_',' ')|title}}</span><div class="attr-bar"><span style="width:{{player.attributes[k]}}%"></span></div><b>{{player.attributes[k]}}</b></div>{% endif %}{% endfor %}</div>
+{% endfor %}
+</div></div>
+<div class="card" style="margin-top:14px"><h3>Histórico por temporada</h3><table><thead><tr><th>Temporada</th><th>Club</th><th>Liga</th><th class="num">PJ</th><th class="num">Goles</th><th class="num">Asist.</th><th class="num">Rating</th></tr></thead><tbody>
+{% if player.apps %}<tr><td>{{ state.season }} (actual)</td><td>{{ owner }}</td><td>{{ owner_team.league if owner_team else state.competition }}</td><td class="num">{{ player.apps }}</td><td class="num">{{ player.season_goals }}</td><td class="num">{{ player.season_assists }}</td><td class="num">{{ '%.2f'|format(player.rating) }}</td></tr>{% endif %}
+{% for row in player.career %}<tr><td>{{ row.season }}</td><td>{{ row.club }}</td><td>{{ row.league }}</td><td class="num">{{ row.apps }}</td><td class="num">{{ row.goals }}</td><td class="num">{{ row.assists }}</td><td class="num">{{ '%.2f'|format(row.rating) }}</td></tr>{% else %}<tr><td colspan="7" class="muted">Sin histórico anterior.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

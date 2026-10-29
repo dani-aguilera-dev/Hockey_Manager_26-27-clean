@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Renovar{% endblock %}
+{% block content %}
+<h1>Renovar contratos</h1>
+<div class="card"><table><thead><tr><th>Jugador</th><th>Pos</th><th class="num">OVR</th><th class="num">Salario</th><th>Contrato</th><th>Nuevo contrato</th></tr></thead><tbody>
+{% for p in players %}<tr><td>{{ p.name }}</td><td>{{ p.subposition }}</td><td class="num">{{ '%.1f'|format(p.overall) }}</td><td class="num">{{ p.salary|money }}</td><td>{{ p.contract_until }}</td><td>
+<form method="post" action="{{ url_for('market_renew_player', player_id=p.id) }}" class="row">
+<input name="salary" value="{{ [p.salary * 1.2, p.salary + 3000]|max|int }}" size="9" inputmode="numeric">
+<input name="years" value="3" size="3" inputmode="numeric">
+<button class="btn small primary">Renovar</button>
+</form>
+</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

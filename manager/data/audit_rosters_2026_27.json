@@ -1,0 +1,747 @@
+{
+ "season": "2026-27",
+ "generated": "2026-10-28",
+ "leagues": {
+  "DHA": {
+   "name": "Liga IATI Hockey - División de Honor A Masculina",
+   "expected_teams": 12,
+   "actual_teams": 12,
+   "players": 492,
+   "teams": [
+    {
+     "team": "ATLÈTIC TERRASSA HC",
+     "players": 35,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CD TERRASSA HOCKEY",
+     "players": 46,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CH CARPESA",
+     "players": 36,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CLUB EGARA",
+     "players": 59,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "FC BARCELONA",
+     "players": 33,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "JUNIOR FC",
+     "players": 47,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "RC POLO",
+     "players": 47,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "REAL CLUB DE CAMPO VILLA DE MADRID",
+     "players": 38,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "RS TENIS",
+     "players": 38,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "SANSE COMPLUTENSE",
+     "players": 49,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "SARDINERO HOCKEY CLUB",
+     "players": 37,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "UD TABURIENTE",
+     "players": 27,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    }
+   ],
+   "sources": [
+    "https://resultadoshockey.isquad.es/",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx"
+   ]
+  },
+  "DHB": {
+   "name": "División de Honor B Masculina",
+   "expected_teams": 16,
+   "actual_teams": 16,
+   "players": 429,
+   "teams": [
+    {
+     "team": "AD RIMAS",
+     "players": 18,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "ATICOS INMOBILIARIA CH SAN FERNANDO",
+     "players": 15,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CASTELLDEFELS HC",
+     "players": 31,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CD GINER DE LOS RÍOS",
+     "players": 31,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CLUB HOCKEY MADRID - LAS ROZAS",
+     "players": 38,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "EGARA 1935",
+     "players": 19,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "HC SANT CUGAT",
+     "players": 12,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "ILURO HC",
+     "players": 31,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "LÍNIA 22 STERN MOTOR",
+     "players": 32,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "PEDRALBES HC",
+     "players": 15,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "POZUELO",
+     "players": 42,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "RC JOLASETA",
+     "players": 39,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "REAL SOCIEDAD 1927",
+     "players": 25,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "SPV",
+     "players": 11,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "UNIVERSITAT D'ALACANT - SAN VICENTE",
+     "players": 44,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "VALLES ESPORTIU",
+     "players": 26,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    }
+   ],
+   "sources": [
+    "https://resultadoshockey.isquad.es/",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx"
+   ]
+  },
+  "1N": {
+   "name": "Primera División Masculina - Liga Norte",
+   "expected_teams": 10,
+   "actual_teams": 10,
+   "players": 250,
+   "teams": [
+    {
+     "team": "ATLÉTICO SAN SEBASTIÁN",
+     "players": 38,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CLUB HOCKEY STICK GETXO",
+     "players": 26,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CODEMA",
+     "players": 31,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "GANBEGI HT",
+     "players": 24,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "KALE LAGUNAK",
+     "players": 26,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "PASAIA KO TRINTXER",
+     "players": 26,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "REAL CLUB JOLASETA B",
+     "players": 21,
+     "second_team": true,
+     "parent_club": "RC Jolaseta",
+     "source": "iSquad"
+    },
+    {
+     "team": "REAL GRUPO DE CULTURA COVADONGA",
+     "players": 31,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "RST MAGDALENA",
+     "players": 16,
+     "second_team": true,
+     "parent_club": "RS Tenis",
+     "source": "iSquad"
+    },
+    {
+     "team": "SARDINERO HC B",
+     "players": 11,
+     "second_team": true,
+     "parent_club": "Sardinero HC",
+     "source": "iSquad"
+    }
+   ],
+   "sources": [
+    "https://resultadoshockey.isquad.es/",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx",
+    "https://www.fmhockey.es/calendarios/1_masc_liga_2627.pdf"
+   ]
+  },
+  "1A": {
+   "name": "Campeonato de Andalucía - Primera División Masculina",
+   "expected_teams": 8,
+   "actual_teams": 8,
+   "players": 232,
+   "teams": [
+    {
+     "team": "C.D. MÁLAGA 91",
+     "players": 37,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CARRANQUE ARCHIDONA CANDELARIA",
+     "players": 32,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CH ALCALÁ",
+     "players": 26,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CHP BENALMÁDENA B",
+     "players": 25,
+     "second_team": true,
+     "parent_club": "RH Privé Benalmádena",
+     "source": "iSquad"
+    },
+    {
+     "team": "CLUB DE HOCKEY SAN FERNANDO B",
+     "players": 27,
+     "second_team": true,
+     "parent_club": "Aticos Inmobiliaria CH San Fernando",
+     "source": "iSquad"
+    },
+    {
+     "team": "ESTUDIANTES 87 PGS ILUMINACIÓN CODIMAR CLIDECEM",
+     "players": 23,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "RH PRIVÉ BENALMÁDENA",
+     "players": 24,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "UNIVERSIDAD DE SEVILLA",
+     "players": 38,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    }
+   ],
+   "sources": [
+    "https://resultadoshockey.isquad.es/",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx"
+   ]
+  },
+  "1M": {
+   "name": "Primera División Masculina Hierba - Liga Madrid",
+   "expected_teams": 9,
+   "actual_teams": 9,
+   "players": 222,
+   "teams": [
+    {
+     "team": "CLUB HOCKEY MADRID-LAS ROZAS AZUL",
+     "players": 12,
+     "second_team": true,
+     "parent_club": "CH Madrid-Las Rozas",
+     "source": "iSquad"
+    },
+    {
+     "team": "CLUB HOCKEY MADRID-LAS ROZAS BLANCO",
+     "players": 26,
+     "second_team": true,
+     "parent_club": "CH Madrid-Las Rozas",
+     "source": "iSquad"
+    },
+    {
+     "team": "DXT SUR",
+     "players": 22,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "HOCQUET",
+     "players": 30,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "POZUELO B",
+     "players": 13,
+     "second_team": true,
+     "parent_club": "Pozuelo",
+     "source": "iSquad"
+    },
+    {
+     "team": "RACE SANSE",
+     "players": 27,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "REAL SOCIEDAD 1927 A",
+     "players": 29,
+     "second_team": true,
+     "parent_club": "Real Club de Campo",
+     "source": "iSquad"
+    },
+    {
+     "team": "REAL SOCIEDAD 1927 B",
+     "players": 25,
+     "second_team": true,
+     "parent_club": "Real Club de Campo",
+     "source": "iSquad"
+    },
+    {
+     "team": "SANSE COMPLUTENSE B",
+     "players": 38,
+     "second_team": true,
+     "parent_club": "Sanse Complutense",
+     "source": "iSquad"
+    }
+   ],
+   "sources": [
+    "https://resultadoshockey.isquad.es/",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx",
+    "https://www.fmhockey.es/calendarios/1_masc_liga_2627.pdf"
+   ]
+  },
+  "1G": {
+   "name": "Liga 1ª División Masculina (Galicia)",
+   "expected_teams": 6,
+   "actual_teams": 6,
+   "players": 164,
+   "teams": [
+    {
+     "team": "ATHLETIC CORUÑA",
+     "players": 27,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CH BARROCAS",
+     "players": 29,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CIDADE DE OURENSE",
+     "players": 32,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CLUB HOCKEY ALBOR",
+     "players": 30,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "HÉRCULES HC",
+     "players": 23,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "OURENSTICKS",
+     "players": 23,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    }
+   ],
+   "sources": [
+    "https://resultadoshockey.isquad.es/",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx"
+   ]
+  },
+  "1C": {
+   "name": "Campeonato de Canarias - 1ª División Masculina",
+   "expected_teams": 3,
+   "actual_teams": 3,
+   "players": 65,
+   "teams": [
+    {
+     "team": "ARIDAMAN CH",
+     "players": 19,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "CH AGONEK",
+     "players": 22,
+     "second_team": false,
+     "parent_club": "",
+     "source": "iSquad/Excel"
+    },
+    {
+     "team": "UD TABURIENTE B",
+     "players": 24,
+     "second_team": true,
+     "parent_club": "UD Taburiente",
+     "source": "iSquad"
+    }
+   ],
+   "sources": [
+    "https://resultadoshockey.isquad.es/",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx"
+   ]
+  },
+  "1V": {
+   "name": "1ª División Masculina Hockey Hierba (FHCV)",
+   "expected_teams": 7,
+   "actual_teams": 7,
+   "players": 155,
+   "teams": [
+    {
+     "team": "CH CARPESA B",
+     "players": 19,
+     "second_team": true,
+     "parent_club": "CH Carpesa",
+     "source": "FHCV"
+    },
+    {
+     "team": "CH XALOC",
+     "players": 26,
+     "second_team": false,
+     "parent_club": "",
+     "source": "FHCV"
+    },
+    {
+     "team": "HOCKEY SALDUIE '78",
+     "players": 18,
+     "second_team": false,
+     "parent_club": "",
+     "source": "FHCV"
+    },
+    {
+     "team": "HONIGVÖGEL HH'79",
+     "players": 27,
+     "second_team": false,
+     "parent_club": "",
+     "source": "FHCV"
+    },
+    {
+     "team": "SANTOMERA HC",
+     "players": 23,
+     "second_team": false,
+     "parent_club": "",
+     "source": "FHCV"
+    },
+    {
+     "team": "VALENCIA CH",
+     "players": 24,
+     "second_team": false,
+     "parent_club": "",
+     "source": "FHCV"
+    },
+    {
+     "team": "VALENCIA CH 1924",
+     "players": 18,
+     "second_team": true,
+     "parent_club": "Valencia CH",
+     "source": "FHCV"
+    }
+   ],
+   "sources": [
+    "https://fhcv.es/competiciones/1a-division-masculina-hockey-hierba-2026-2027/",
+    "https://appweb.rfeh.es/descargar_acta_fhcv.php",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx"
+   ]
+  },
+  "SUP": {
+   "name": "Superlliga Catalana Masculina",
+   "expected_teams": 8,
+   "actual_teams": 8,
+   "players": 231,
+   "teams": [
+    {
+     "team": "ATLÈTIC TERRASSA B",
+     "players": 41,
+     "second_team": true,
+     "parent_club": "Atlètic Terrassa",
+     "source": "FCH"
+    },
+    {
+     "team": "CD TERRASSA B",
+     "players": 24,
+     "second_team": true,
+     "parent_club": "CD Terrassa",
+     "source": "FCH"
+    },
+    {
+     "team": "CE PEDRALBES 1991",
+     "players": 28,
+     "second_team": false,
+     "parent_club": "",
+     "source": "FCH"
+    },
+    {
+     "team": "DIAGONAL HC",
+     "players": 37,
+     "second_team": true,
+     "parent_club": "RC Polo",
+     "source": "FCH"
+    },
+    {
+     "team": "EGARA 1935 B",
+     "players": 19,
+     "second_team": true,
+     "parent_club": "Club Egara",
+     "source": "FCH"
+    },
+    {
+     "team": "EHC",
+     "players": 37,
+     "second_team": true,
+     "parent_club": "Club Egara",
+     "source": "FCH"
+    },
+    {
+     "team": "FC BARCELONA B",
+     "players": 29,
+     "second_team": true,
+     "parent_club": "FC Barcelona",
+     "source": "FCH"
+    },
+    {
+     "team": "VALLÈS ESPORTIU B",
+     "players": 16,
+     "second_team": true,
+     "parent_club": "Atlètic Terrassa",
+     "source": "FCH"
+    }
+   ],
+   "sources": [
+    "https://www.fchockey.cat/temporada/10/competicio/1356/grup/2992/resultats",
+    "https://www.fchockey.cat/partit/65609",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx"
+   ]
+  },
+  "CAT1": {
+   "name": "Campionat de Catalunya 1ª Masculina (Primera Catalana)",
+   "expected_teams": 8,
+   "actual_teams": 8,
+   "players": 169,
+   "teams": [
+    {
+     "team": "ATLETIC 1952",
+     "players": 22,
+     "second_team": true,
+     "parent_club": "Atlètic Terrassa",
+     "source": "FCH"
+    },
+    {
+     "team": "BARCELONA HOCKEY CLUB",
+     "players": 21,
+     "second_team": false,
+     "parent_club": "",
+     "source": "FCH"
+    },
+    {
+     "team": "CAN SALAS",
+     "players": 21,
+     "second_team": true,
+     "parent_club": "Atlètic Terrassa",
+     "source": "FCH"
+    },
+    {
+     "team": "CHC",
+     "players": 20,
+     "second_team": false,
+     "parent_club": "",
+     "source": "FCH"
+    },
+    {
+     "team": "CLUB EGARA B",
+     "players": 20,
+     "second_team": true,
+     "parent_club": "Club Egara",
+     "source": "FCH"
+    },
+    {
+     "team": "HC SANT CUGAT B",
+     "players": 22,
+     "second_team": true,
+     "parent_club": "HC Sant Cugat",
+     "source": "FCH"
+    },
+    {
+     "team": "MATADEPERA 88 HOQUEI",
+     "players": 18,
+     "second_team": false,
+     "parent_club": "",
+     "source": "FCH"
+    },
+    {
+     "team": "RC POLO B",
+     "players": 25,
+     "second_team": true,
+     "parent_club": "RC Polo",
+     "source": "FCH"
+    }
+   ],
+   "sources": [
+    "https://www.fchockey.cat/temporada/10/competicio/1359/grup/2994/resultats",
+    "https://www.fchockey.cat/partit/66489",
+    "equipos_hockey_hierba_espana_masculino_2026_27.xlsx"
+   ]
+  }
+ },
+ "duplicates": [],
+ "warnings": [],
+ "totals": {
+  "teams": 87,
+  "players": 2409,
+  "duplicates": 0
+ }
+}

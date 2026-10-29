@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Hockey Manager · Inicio{% endblock %}
+{% block content %}
+<div class="hero">
+  <span class="badge ok">Alpha web local</span>
+  <h1>Dirige tu club.<br>Juega la temporada.</h1>
+  <p>DHA, DHB y seis ligas internacionales: Países Bajos, Bélgica, Alemania, Inglaterra, Argentina e India. Partido en directo, entrenamiento, mercado, contratos, Copa del Rey, EHL, cantera, prensa y multi-temporada.</p>
+  <div class="actions">
+    <a class="btn primary" href="{{ url_for('new_game_page') }}">Nueva partida</a>
+    <a class="btn" href="{{ url_for('load_page') }}">Cargar partida</a>
+    <a class="btn" href="{{ url_for('options') }}">Opciones</a>
+  </div>
+</div>
+<div class="grid grid-3">
+  <div class="card"><h3>Partido en directo</h3><p class="muted">Avanza por cuartos o minuto a minuto, cambia táctica y haz sustituciones.</p></div>
+  <div class="card"><h3>Gestión completa</h3><p class="muted">Moral, fatiga, cohesión, staff, finanzas, junta, cantera y prensa.</p></div>
+  <div class="card"><h3>DHA, DHB e internacional</h3><p class="muted">Elige club español, neerlandés, belga, alemán, inglés, argentino o indio. Cada liga tiene su calendario y su nivel.</p></div>
+</div>
+{% endblock %}

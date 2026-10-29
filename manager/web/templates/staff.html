@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Staff{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between;align-items:end">
+  <div><h1>Staff y junta</h1><p class="muted">Cuerpo técnico, banquillo y confianza institucional.</p></div>
+  <div class="match-crest">{{ m.crest(team, 'crest-lg') }}<b>{{ team.name }}</b></div>
+</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3>Staff técnico</h3>
+    <div class="staff-list">
+    <div class="staff-row"><div class="board-icon">T</div><div class="pc-body"><div class="pc-name">Tú</div><div class="pc-tags"><span class="badge">Entrenador</span><span class="arch">Mánager del club</span></div></div></div>
+    {% for member in team.staff %}{% if member.role != 'head_coach' %}
+      <div class="staff-row">
+        {{ m.avatar(member, 'avatar-small') }}
+        <div class="pc-body">
+          <div class="pc-name">{{ member.name }}</div>
+          <div class="pc-tags"><span class="badge">{{ staff_labels.get(member.role, member.role) }}</span><span class="arch">{{ member.source }} · {{ member.confidence }}</span></div>
+        </div>
+        <div class="rating-badge"><b>{{ member.rating }}</b><span>/100</span></div>
+        <form method="post" action="{{ url_for('staff_fire', role=member.role) }}"><button class="btn danger small">Despedir</button></form>
+      </div>
+    {% endif %}{% endfor %}
+    </div>
+    <h3 style="margin-top:18px">Contratar</h3>
+    <div class="actions">{% for r in free_roles %}<a class="btn small" href="{{ url_for('staff_hire', role=r) }}">{{ staff_labels[r] }}</a>{% else %}<p class="muted small">No hay candidatos disponibles ahora mismo.</p>{% endfor %}</div>
+  </div>
+  <div class="card">
+    <h3>Junta directiva</h3>
+    <div class="staff-list">
+    {% for member in team.board %}
+      <div class="staff-row">
+        <div class="board-icon">{{ member.role[:1]|upper }}</div>
+        <div class="pc-body"><div class="pc-name">{{ member.name }}</div><div class="pc-tags"><span class="badge">{{ member.role.replace('_',' ')|title }}</span><span class="arch">{{ member.source }} · {{ member.confidence }}</span></div></div>
+      </div>
+    {% endfor %}
+    </div>
+    <div class="kpi" style="margin-top:14px">
+      <div><span class="muted">Confianza</span><strong>{{ team.board_confidence }}/100</strong></div>
+      <div><span class="muted">Presión</span><strong>{{ team.board_pressure }}</strong></div>
+      <div><span class="muted">Paciencia</span><strong>{{ team.board_patience }}/5</strong></div>
+    </div>
+    <p class="muted">Objetivo: {{ team.board_expectation }}</p>
+  </div>
+</div>
+<div class="card" style="margin-top:14px">
+  <h3>Efectos del staff</h3>
+  <div class="attr-grid">
+    {% for label, role in [('Segundo entrenador','assistant'),('Preparador físico','fitness_coach'),('Fisioterapeuta','physio'),('Analista','performance_analyst'),('Entrenador de porteros','gk_coach')] %}
+    <div><div class="attr-row"><span>{{ label }}</span><div class="attr-bar"><span style="width:{{ team.staff_rating(role) }}%"></span></div><b>{{ team.staff_rating(role) }}</b></div></div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

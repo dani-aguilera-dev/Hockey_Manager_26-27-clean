@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Táctica{% endblock %}
+{% block content %}
+<h1>Táctica y once</h1>
+<p class="muted">Elige formación e instrucciones y ajusta cada posición desde su ficha. Los jugadores están ordenados por encaje y nivel.</p>
+<form method="post">
+<div class="grid grid-2">
+  <div class="card">
+    <h3>Planteamiento</h3>
+    <div class="row">
+      <div class="field"><label>Formación</label><select name="formation">{% for x in formations %}<option value="{{x}}" {% if team.tactics.formation==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></div>
+      <div class="field"><label>Mentalidad</label><select name="mentality">{% for x in ['muy_defensiva','defensiva','equilibrada','ofensiva','muy_ofensiva'] %}<option value="{{x}}" {% if team.tactics.mentality==x %}selected{% endif %}>{{x|replace('_',' ')}}</option>{% endfor %}</select></div>
+      <div class="field"><label>Presión</label><select name="press">{% for x in ['baja','media','alta','muy_alta'] %}<option value="{{x}}" {% if team.tactics.press==x %}selected{% endif %}>{{x|replace('_',' ')}}</option>{% endfor %}</select></div>
+      <div class="field"><label>Bloque</label><select name="block">{% for x in ['bajo','medio','alto'] %}<option value="{{x}}" {% if team.tactics.block==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <div class="field"><label>Anchura</label><select name="width">{% for x in ['estrecha','normal','ancha'] %}<option value="{{x}}" {% if team.tactics.width==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></div>
+      <div class="field"><label>Tempo</label><select name="tempo">{% for x in ['lento','normal','rapido'] %}<option value="{{x}}" {% if team.tactics.tempo==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></div>
+      <div class="field"><label>Pase</label><select name="passing">{% for x in ['corto','mixto','directo'] %}<option value="{{x}}" {% if team.tactics.passing==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></div>
+      <div class="field"><label>Rutina PC</label><select name="pc_routine">{% for x in ['directa','slip_izquierda','slip_derecha','desvio','rebote'] %}<option value="{{x}}" {% if team.tactics.pc_routine==x %}selected{% endif %}>{{x|replace('_',' ')}}</option>{% endfor %}</select></div>
+    </div>
+    <div class="actions"><button class="btn primary" type="submit">Guardar once y táctica</button><button class="btn" type="submit" name="auto" value="1">Autoalineación</button></div>
+  </div>
+  <div class="card">
+    <h3>Once actual</h3>
+    <div class="lineup-pitch">
+      {% for row in slot_rows %}
+      <div class="pitch-row {{ 'single' if row.slots|length == 1 else '' }}">
+        <div class="row-label">{{ row.label }}</div>
+        <div class="pitch-slots">
+          {% for slot in row.slots %}{% set p = slot.player %}
+          <div class="slot-card {{ 'mismatch' if slot.mismatch else '' }}">
+            <div class="row" style="justify-content:space-between"><span class="slot-code">{{ slot.code }}</span>{% if p %}<span class="badge">{{ '%.1f'|format(p.overall) }}</span>{% endif %}</div>
+            {% if p %}{{ m.avatar(p) }}<div class="slot-name">{{ p.name }}</div><div class="pc-tags">{{ m.pos(p) }} <span class="arch">{{ p.archetype }}</span></div>{% endif %}
+            {% if slot.mismatch %}<div class="mismatch-badge">Fuera de posición · encaje {{ '%.1f'|format(p.slot_fit(slot.code)) if p else '—' }}</div>{% endif %}
+            <label class="sr-only" for="slot-{{ slot.index }}">Cambiar {{ slot.code }}</label>
+            <select id="slot-{{ slot.index }}" name="slot_{{ slot.index }}" aria-label="Jugador para {{ slot.code }}">
+              {% for x in slot_options[slot.index] %}
+              <option value="{{ x.id }}" {% if p and x.id==p.id %}selected{% endif %}>{{ x.name }} · {{ x.subposition }} · {{ '%.1f'|format(x.overall) }} · {{ x.archetype }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</form>
+<div class="section-title"><h2>Banquillo</h2></div>
+<div class="player-grid">{% for p in bench %}{{ m.player_card(p, compact=true) }}{% endfor %}</div>
+<div class="section-title"><h2>Jugadores disponibles</h2><span class="muted small">Haz clic en una ficha para ver el detalle</span></div>
+<div class="pool-grid">{% for p in available %}{{ m.player_card(p, url_for('player_detail', player_id=p.id), compact=true) }}{% endfor %}</div>
+{% endblock %}

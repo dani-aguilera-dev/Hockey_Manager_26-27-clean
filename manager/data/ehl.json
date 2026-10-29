@@ -1,0 +1,46 @@
+{
+  "offsets_days": [
+    109,
+    110,
+    111
+  ],
+  "round_labels": {
+    "1": "Cuartos",
+    "2": "Semifinal",
+    "3": "Final"
+  },
+  "european_teams": [
+    {
+      "name": "HC Bloemendaal",
+      "country": "Países Bajos",
+      "strength": 86.0
+    },
+    {
+      "name": "THC Hurley",
+      "country": "Países Bajos",
+      "strength": 83.0
+    },
+    {
+      "name": "SV Kampong",
+      "country": "Países Bajos",
+      "strength": 82.0
+    },
+    {
+      "name": "Rot-Weiss Köln",
+      "country": "Alemania",
+      "strength": 84.0
+    },
+    {
+      "name": "Royal Léopold",
+      "country": "Bélgica",
+      "strength": 80.0
+    },
+    {
+      "name": "Racing Club de France",
+      "country": "Francia",
+      "strength": 78.0
+    }
+  ],
+  "spanish_slots": 3,
+  "foreign_slots": 5
+}

@@ -1,0 +1,11 @@
+{
+  "promotion_group_start": "2027-05-28",
+  "promotion_final_start": "2027-06-17",
+  "promotion_spots": 2,
+  "min_roster_size": 18,
+  "default_regional_league": "1A",
+  "min_matchday_squad": 11,
+  "market_source_systems": [
+    "regional"
+  ]
+}

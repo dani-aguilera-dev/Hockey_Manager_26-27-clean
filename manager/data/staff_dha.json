@@ -1,0 +1,1262 @@
+{
+ "atletic-terrassa": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Jordi Soler Puig",
+    "rating": 78,
+    "salary": 48000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Xavier Ferrer Mas",
+    "rating": 74,
+    "salary": 32000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Toni Garcia López",
+    "rating": 69,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Marc Vilà",
+    "rating": 72,
+    "salary": 26000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Pere Vidal",
+    "rating": 66,
+    "salary": 19000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "physio",
+    "name": "Núria Puig",
+    "rating": 73,
+    "salary": 28000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Albert Biosca",
+    "rating": 77,
+    "salary": 48000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Josep Maria Biosca Bertran",
+    "source": "Fundació Damm",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Jordi Amat",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "secretario",
+    "name": "Montserrat Sala",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "tesorero",
+    "name": "Pere Ferrer",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Carles Ventura",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Anna Riera",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ]
+ },
+ "cd-terrassa": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Jordi Fitó",
+    "rating": 72,
+    "salary": 36000,
+    "contract_until": "2027-06-30",
+    "source": "monterrassa.cat",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Marc Solà",
+    "rating": 70,
+    "salary": 26000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Oriol Camps",
+    "rating": 67,
+    "salary": 20000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Laia Ferrer",
+    "rating": 68,
+    "salary": 21000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Pere Mas",
+    "rating": 63,
+    "salary": 16000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "physio",
+    "name": "Marta Puig",
+    "rating": 70,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Ramon Rius i Sanllehí",
+    "rating": 74,
+    "salary": 38000,
+    "contract_until": "2027-06-30",
+    "source": "cdterrassa.cat",
+    "confidence": "media"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Gabriel Pirla Teixidó",
+    "source": "cdterrassa.cat",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Jordi Serrat",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "secretario",
+    "name": "Laia Bosch",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "tesorero",
+    "name": "Pere Camps",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Marta Vives",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Anna Soler",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ]
+ },
+ "ch-carpesa": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Vicent Barber",
+    "rating": 64,
+    "salary": 20000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Raúl Sanz",
+    "rating": 62,
+    "salary": 16000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Pau Ferrer",
+    "rating": 58,
+    "salary": 12000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "María Campos",
+    "rating": 60,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Josep Alcañiz",
+    "rating": 58,
+    "salary": 11000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "physio",
+    "name": "Carla Ribes",
+    "rating": 63,
+    "salary": 15000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Vicent Noguera",
+    "rating": 65,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Andrés Vallés",
+    "source": "yosoynoticia.es",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Josep Martínez",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "secretario",
+    "name": "Vicent Ferrer",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "tesorero",
+    "name": "Rafa Beltrán",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Pau Giner",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_social",
+    "name": "María José Pons",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ]
+ },
+ "fc-barcelona": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Sergi Gómez",
+    "rating": 75,
+    "salary": 44000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Albert Ruiz",
+    "rating": 72,
+    "salary": 30000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Toni Romero",
+    "rating": 70,
+    "salary": 26000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Nil Serra",
+    "rating": 72,
+    "salary": 28000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Pau Bosch",
+    "rating": 68,
+    "salary": 22000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "physio",
+    "name": "Laia Costa",
+    "rating": 74,
+    "salary": 30000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "David Ferrer",
+    "rating": 76,
+    "salary": 45000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Joan Laporta i Estruch",
+    "source": "fcbarcelona.es",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Rafael Yuste",
+    "source": "fcbarcelona.es",
+    "confidence": "media"
+   },
+   {
+    "role": "secretario",
+    "name": "Josep Cubells",
+    "source": "fcbarcelona.es",
+    "confidence": "media"
+   },
+   {
+    "role": "tesorero",
+    "name": "Ferran Olivé",
+    "source": "fcbarcelona.es",
+    "confidence": "media"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Jordi Roig",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Elena Fort",
+    "source": "fcbarcelona.es",
+    "confidence": "media"
+   }
+  ]
+ },
+ "club-egara": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Pere Soler",
+    "rating": 76,
+    "salary": 44000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Jordi Mas",
+    "rating": 72,
+    "salary": 28000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Toni Vidal",
+    "rating": 68,
+    "salary": 22000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Marc Puig",
+    "rating": 70,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Pere Roca",
+    "rating": 64,
+    "salary": 18000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "physio",
+    "name": "Anna Ferrer",
+    "rating": 72,
+    "salary": 26000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Josep M. Soler",
+    "rating": 76,
+    "salary": 44000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Josep Ejarque Guillamat",
+    "source": "isquad/rfeh",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Pere Marcet",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "secretario",
+    "name": "Jordi Ventura",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "tesorero",
+    "name": "Carles Bosch",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Oriol Serra",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Marta Roca",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ]
+ },
+ "rc-polo": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Xavier Mas",
+    "rating": 77,
+    "salary": 48000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Jordi Solé",
+    "rating": 73,
+    "salary": 30000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Pau Ferrer",
+    "rating": 69,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Marc Elias",
+    "rating": 71,
+    "salary": 26000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Pere Bosch",
+    "rating": 66,
+    "salary": 20000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "physio",
+    "name": "Núria Soler",
+    "rating": 73,
+    "salary": 28000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Jordi Puig",
+    "rating": 77,
+    "salary": 46000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Pablo Sánchez Marquiegui",
+    "source": "rcpolo.com",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Eduardo Pedrosa Negrete",
+    "source": "rcpolo.com",
+    "confidence": "alta"
+   },
+   {
+    "role": "secretario",
+    "name": "José Mª Batista Mur",
+    "source": "rcpolo.com",
+    "confidence": "alta"
+   },
+   {
+    "role": "tesorero",
+    "name": "Borja Malet Faura",
+    "source": "rcpolo.com",
+    "confidence": "alta"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Leandro Martínez-Zurita",
+    "source": "rcpolo.com",
+    "confidence": "alta"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Paloma Sánchez-Rodilla de Castro",
+    "source": "rcpolo.com",
+    "confidence": "alta"
+   }
+  ]
+ },
+ "rc-de-campo": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Eduardo Aguilar",
+    "rating": 76,
+    "salary": 46000,
+    "contract_until": "2027-06-30",
+    "source": "ccvm.es",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Jesús Barrera Correal",
+    "rating": 74,
+    "salary": 32000,
+    "contract_until": "2027-06-30",
+    "source": "ccvm.es",
+    "confidence": "media"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Toni García",
+    "rating": 68,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Marcos Gil",
+    "rating": 72,
+    "salary": 28000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Pablo Torres",
+    "rating": 66,
+    "salary": 20000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "physio",
+    "name": "Marta Sánchez",
+    "rating": 74,
+    "salary": 30000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Javier Ruiz",
+    "rating": 76,
+    "salary": 46000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "José Luis Martínez-Almeida Navasqüés",
+    "source": "ccvm.es",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Jaime González Taboada",
+    "source": "ccvm.es",
+    "confidence": "alta"
+   },
+   {
+    "role": "secretario",
+    "name": "Antonio Hernando Vera",
+    "source": "ccvm.es",
+    "confidence": "media"
+   },
+   {
+    "role": "tesorero",
+    "name": "Luis Díaz Redondo",
+    "source": "ccvm.es",
+    "confidence": "media"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Eduardo Aguilar",
+    "source": "ccvm.es",
+    "confidence": "media"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Sonia Cea Quintana",
+    "source": "ccvm.es",
+    "confidence": "media"
+   }
+  ]
+ },
+ "sanse-complutense": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Jorge Donoso",
+    "rating": 66,
+    "salary": 22000,
+    "contract_until": "2027-06-30",
+    "source": "Cadena SER",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Javier Muñoz",
+    "rating": 64,
+    "salary": 18000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Pablo Mondo",
+    "rating": 60,
+    "salary": 14000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Ana López",
+    "rating": 62,
+    "salary": 15000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Andrés Mondo",
+    "rating": 60,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "isquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "Marta Gil",
+    "rating": 64,
+    "salary": 17000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Andrés Manuel Mondo",
+    "rating": 66,
+    "salary": 26000,
+    "contract_until": "2027-06-30",
+    "source": "isquad",
+    "confidence": "media"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Jorge Romero",
+    "source": "MARCA",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Javier Muñoz",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "secretario",
+    "name": "Pablo Mondo",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "tesorero",
+    "name": "Ana López",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Jorge Donoso",
+    "source": "Cadena SER",
+    "confidence": "media"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Marta Gil",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ]
+ },
+ "sardinero": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Ángel Laso",
+    "rating": 66,
+    "salary": 22000,
+    "contract_until": "2027-06-30",
+    "source": "cantabria.es",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Manuel González",
+    "rating": 64,
+    "salary": 18000,
+    "contract_until": "2027-06-30",
+    "source": "cantabria.es",
+    "confidence": "media"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Pablo Ruiz",
+    "rating": 60,
+    "salary": 14000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Óscar Barrena",
+    "rating": 62,
+    "salary": 15000,
+    "contract_until": "2027-06-30",
+    "source": "sardinerohc.es",
+    "confidence": "media"
+   },
+   {
+    "role": "scout",
+    "name": "Alejandro Siri",
+    "rating": 62,
+    "salary": 14000,
+    "contract_until": "2027-06-30",
+    "source": "sardinerohc.es",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "María Fernández",
+    "rating": 64,
+    "salary": 17000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Pablo Galán Fernández",
+    "rating": 67,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "isquad",
+    "confidence": "media"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Pablo Galán Fernández",
+    "source": "isquad",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Ángel Laso",
+    "source": "cantabria.es",
+    "confidence": "media"
+   },
+   {
+    "role": "secretario",
+    "name": "Manuel González",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "tesorero",
+    "name": "Pablo Ruiz",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Alejandro Siri",
+    "source": "sardinerohc.es",
+    "confidence": "media"
+   },
+   {
+    "role": "vocal_social",
+    "name": "María Fernández",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ]
+ },
+ "rs-tenis": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Eduardo Mora",
+    "rating": 64,
+    "salary": 22000,
+    "contract_until": "2027-06-30",
+    "source": "rstenis.com",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Javier Gómez",
+    "rating": 62,
+    "salary": 17000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Pablo Santander",
+    "rating": 58,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "María José Ruiz",
+    "rating": 60,
+    "salary": 14000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Carlos Revilla",
+    "rating": 58,
+    "salary": 12000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "physio",
+    "name": "Ana Fernández",
+    "rating": 62,
+    "salary": 16000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Eduardo Mora Monte",
+    "rating": 64,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "rstenis.com",
+    "confidence": "media"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Eduardo Mora Monte",
+    "source": "rstenis.com",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Javier Gómez",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "secretario",
+    "name": "María José Ruiz",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "tesorero",
+    "name": "Carlos Revilla",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Pablo Santander",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Ana Fernández",
+    "source": "modelo",
+    "confidence": "baja"
+   }
+  ]
+ },
+ "ud-taburiente": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Suso Martín",
+    "rating": 68,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "La Provincia",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "David Quintana",
+    "rating": 66,
+    "salary": 20000,
+    "contract_until": "2027-06-30",
+    "source": "La Provincia",
+    "confidence": "media"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Pablo Naranjo",
+    "rating": 60,
+    "salary": 14000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Carlos Betancor",
+    "rating": 62,
+    "salary": 15000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Gora Neria",
+    "rating": 60,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "La Provincia",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "Marta Santana",
+    "rating": 64,
+    "salary": 18000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Suso Martín",
+    "rating": 68,
+    "salary": 26000,
+    "contract_until": "2027-06-30",
+    "source": "La Provincia",
+    "confidence": "media"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Juan Carlos Hernández",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Pablo Naranjo",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "secretario",
+    "name": "Carlos Betancor",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "tesorero",
+    "name": "Marta Santana",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Suso Martín",
+    "source": "La Provincia",
+    "confidence": "media"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Gora Neria",
+    "source": "La Provincia",
+    "confidence": "media"
+   }
+  ]
+ },
+ "junior-fc": {
+  "staff": [
+   {
+    "role": "assistant",
+    "name": "Jordi Puig",
+    "rating": 76,
+    "salary": 44000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "Marc Soler",
+    "rating": 72,
+    "salary": 28000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "gk_coach",
+    "name": "Pau Vidal",
+    "rating": 68,
+    "salary": 22000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "performance_analyst",
+    "name": "Laia Serra",
+    "rating": 70,
+    "salary": 24000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "scout",
+    "name": "Pere Guarro",
+    "rating": 66,
+    "salary": 20000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "physio",
+    "name": "Núria Ferrer",
+    "rating": 72,
+    "salary": 26000,
+    "contract_until": "2027-06-30",
+    "source": "modelo",
+    "confidence": "baja"
+   },
+   {
+    "role": "technical_director",
+    "name": "Lluc Guarro",
+    "rating": 74,
+    "salary": 42000,
+    "contract_until": "2027-06-30",
+    "source": "junior.cat",
+    "confidence": "media"
+   }
+  ],
+  "board": [
+   {
+    "role": "presidente",
+    "name": "Jorge Castro Thiem",
+    "source": "junior.cat",
+    "confidence": "alta"
+   },
+   {
+    "role": "vicepresidente",
+    "name": "Jordi Muñoz Martín",
+    "source": "junior.cat",
+    "confidence": "alta"
+   },
+   {
+    "role": "secretario",
+    "name": "David Clavero Manrique",
+    "source": "junior.cat",
+    "confidence": "alta"
+   },
+   {
+    "role": "tesorero",
+    "name": "Jordi Sallés Sen",
+    "source": "junior.cat",
+    "confidence": "alta"
+   },
+   {
+    "role": "vocal_hockey",
+    "name": "Lluc Guarro Serrahima",
+    "source": "junior.cat",
+    "confidence": "alta"
+   },
+   {
+    "role": "vocal_social",
+    "name": "Marc Martínez Pujol-Xicoy",
+    "source": "junior.cat",
+    "confidence": "alta"
+   }
+  ]
+ }
+}

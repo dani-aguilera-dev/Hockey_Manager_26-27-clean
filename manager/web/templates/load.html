@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Cargar partida{% endblock %}
+{% block content %}
+<h1>Cargar partida</h1>
+{% if saves %}
+<div class="card">
+<table>
+  <thead><tr><th>Nombre</th><th>Club</th><th>Temporada</th><th>Jornada</th><th>Actualizado</th><th></th></tr></thead>
+  <tbody>
+  {% for s in saves %}
+    <tr>
+      <td>{{ s.name }}</td><td>{{ s.club_id }}</td><td>{{ s.season }}</td><td>{{ s.round }}</td><td class="small muted">{{ s.updated_at }}</td>
+      <td><form method="post"><input type="hidden" name="name" value="{{ s.name }}"><button class="btn primary small" type="submit">Cargar</button></form></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+<div class="card"><p>No hay partidas guardadas en la web.</p><a class="btn primary" href="{{ url_for('new_game_page') }}">Crear una nueva</a></div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,1983 @@
+{
+ "atletic-terrassa": {
+  "staff": [
+   {
+    "role": "fitness_coach",
+    "name": "CRISTIAN PEÑALBA GOMEZ",
+    "rating": 66,
+    "salary": 31266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "CRISTIAN PEÑALBA GOMEZ",
+    "rating": 75,
+    "salary": 29166,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JUAN RUIZ COLOMA",
+    "rating": 57,
+    "salary": 12800,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "MARC CASTELLVI LEDESMA",
+    "rating": 75,
+    "salary": 29166,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "PAU CARBO PASCUAL",
+    "rating": 55,
+    "salary": 12666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "ALBERT LIS PASARELL",
+    "rating": 81,
+    "salary": 72000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "JOAN SEGURA TRIAS",
+    "rating": 76,
+    "salary": 44544,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "JORDI CARRERA OLIVA",
+    "rating": 76,
+    "salary": 44544,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3896&id=9359"
+ },
+ "cd-terrassa": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "FERRAN NAVARRETE HOCES",
+    "rating": 58,
+    "salary": 12866,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "LAUTARO MARCIAL TEJEDA NICOTERA",
+    "rating": 65,
+    "salary": 13333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "LUIS MARTIN ESQUINAS",
+    "rating": 56,
+    "salary": 12733,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "MARC CALVO BADIA",
+    "rating": 67,
+    "salary": 28055,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "ORIOL VILLORO OLLE",
+    "rating": 66,
+    "salary": 13400,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "XAVIER AVILA MOLERO",
+    "rating": 66,
+    "salary": 31266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "XAVIER LLEONART BLANCO",
+    "rating": 58,
+    "salary": 12866,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "IGNASI TORRAS PUIG",
+    "rating": 70,
+    "salary": 68333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "LAUTARO MARCIAL TEJEDA NICOTERA",
+    "rating": 80,
+    "salary": 45388,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=60&id=9359"
+ },
+ "ch-carpesa": {
+  "staff": [
+   {
+    "role": "physio",
+    "name": "EMILIANO DAMIAN PERI",
+    "rating": 75,
+    "salary": 29166,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "psychologist",
+    "name": "MARC BOLUFER GIL",
+    "rating": 67,
+    "salary": 26933,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "MARCO JOEL SALVIOLI",
+    "rating": 56,
+    "salary": 12733,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "CARLOS ROIG BURGAL",
+    "rating": 72,
+    "salary": 69000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "SEBASTIAN ZOCCHI",
+    "rating": 75,
+    "salary": 44333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3926&id=9359"
+ },
+ "fc-barcelona": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "FERNANDO DIAZ ALPUENTE",
+    "rating": 55,
+    "salary": 12666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "GERARD FLORIACH BIGORRA",
+    "rating": 78,
+    "salary": 33133,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JOHANNES VAN DEN BRANDE",
+    "rating": 64,
+    "salary": 13266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JOSEP TORRENS POCH",
+    "rating": 59,
+    "salary": 12933,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "VINCE PEDRO MARINO VAN DEN ELSEN",
+    "rating": 63,
+    "salary": 27500,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "MANUEL CARLOS ALCONCHEL ROMERO",
+    "rating": 84,
+    "salary": 73000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "ROGER PABLO GARRIGA",
+    "rating": 77,
+    "salary": 44755,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=1901&id=9359"
+ },
+ "club-egara": {
+  "staff": [
+   {
+    "role": "fitness_coach",
+    "name": "DAVID PINO ALBAREDA",
+    "rating": 69,
+    "salary": 31733,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JOAQUIN CARRERA SERRA",
+    "rating": 59,
+    "salary": 12933,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "JORDI BORRAS CIMA",
+    "rating": 74,
+    "salary": 29027,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "ROGER MATALONGA RIBERA",
+    "rating": 66,
+    "salary": 13400,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "ALBERT MASSAGUER TRENCHS",
+    "rating": 82,
+    "salary": 72333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "ORIOL TORRAS PUIG",
+    "rating": 72,
+    "salary": 43700,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "doctor",
+    "name": "ERIC HERRERO FONOLLOSA",
+    "rating": 68,
+    "salary": 29322,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "ALEX SANCHEZ MIGUEL",
+    "rating": 68,
+    "salary": 16916,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=49&id=9359"
+ },
+ "rc-polo": {
+  "staff": [
+   {
+    "role": "physio",
+    "name": "ARTURO BROS MENENDEZ",
+    "rating": 69,
+    "salary": 28333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "FRANCESC XAVIER BOSCH MESTRE",
+    "rating": 73,
+    "salary": 28888,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "GERARDO FORTUÑO COMPANY",
+    "rating": 62,
+    "salary": 13133,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "GUILLERMO BERBEL COMAS",
+    "rating": 78,
+    "salary": 33133,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "GUILLERMO BERBEL COMAS",
+    "rating": 60,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "ALBERTO RUIZ CASTILLO",
+    "rating": 77,
+    "salary": 70666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "FABRIZIO ALBERTO DEMARCHI",
+    "rating": 80,
+    "salary": 45388,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "RAMON SALA VALLHONRAT",
+    "rating": 79,
+    "salary": 45177,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=2952&id=9359"
+ },
+ "rc-de-campo": {
+  "staff": [
+   {
+    "role": "physio",
+    "name": "JOSE BUGEDA BECERRIL",
+    "rating": 72,
+    "salary": 28749,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "ROBERTO GOMEZ CASTRO",
+    "rating": 56,
+    "salary": 12733,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "VICTOR CUADRADO PEÑAFIEL",
+    "rating": 57,
+    "salary": 12800,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "EDUARDO AGUILAR ESTRADA",
+    "rating": 74,
+    "salary": 69666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "ROBERTO GOMEZ CASTRO",
+    "rating": 75,
+    "salary": 44333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "doctor",
+    "name": "ERIC ALBERTO GALLEGO EDELFELT",
+    "rating": 74,
+    "salary": 30188,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3920&id=9359"
+ },
+ "sanse-complutense": {
+  "staff": [
+   {
+    "role": "physio",
+    "name": "ADRIAN DEL CURA RUIZ",
+    "rating": 62,
+    "salary": 27361,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "ANA MARIA TORRES RUBIO",
+    "rating": 64,
+    "salary": 27638,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "CARLOS ERNESTO LOUGHLIN",
+    "rating": 57,
+    "salary": 12800,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "IGNACIO USOZ CAZENAVE",
+    "rating": 58,
+    "salary": 12866,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "MAXIMILIANO BRAVO ALMONACID",
+    "rating": 63,
+    "salary": 13200,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "CRISTIAN ESTEBAN GONZALEZ",
+    "rating": 75,
+    "salary": 70000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "GINEBRA SANCHEZ BENET",
+    "rating": 63,
+    "salary": 16500,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=235&id=9359"
+ },
+ "sardinero": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "BORJA BREA IBAÑEZ DE GAUNA",
+    "rating": 55,
+    "salary": 12666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "FRANCISCO JAVIER GOMEZ CORTE",
+    "rating": 65,
+    "salary": 13333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "MATIAS SEBASTIAN BUSTOS PARRA",
+    "rating": 57,
+    "salary": 12800,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "DIEGO RODRIGUEZ RODRIGUEZ",
+    "rating": 74,
+    "salary": 69666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3916&id=9359"
+ },
+ "rs-tenis": {
+  "staff": [
+   {
+    "role": "physio",
+    "name": "ANDRES REPISO PEÑA",
+    "rating": 66,
+    "salary": 27916,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "DIEGO ESTRADA LUMBRERAS",
+    "rating": 73,
+    "salary": 32355,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "FELIPE MORENO POMBO",
+    "rating": 62,
+    "salary": 13133,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "GERARDO PELLON CUETO",
+    "rating": 59,
+    "salary": 12933,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "BORJA MOVELLAN DE LA MAZA",
+    "rating": 78,
+    "salary": 71000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "FELIPE MORENO POMBO",
+    "rating": 64,
+    "salary": 42011,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3924&id=9359"
+ },
+ "ud-taburiente": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "CARLOS MANGAS DEVORA",
+    "rating": 58,
+    "salary": 12866,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "CARLOS MANGAS DEVORA",
+    "rating": 74,
+    "salary": 29027,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "CARLOS TOSHIO AOKI IGLESIAS",
+    "rating": 63,
+    "salary": 13200,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "DAVID QUINTANA ARENCIBIA",
+    "rating": 63,
+    "salary": 13200,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "SARA BETANCOR GOMEZ",
+    "rating": 67,
+    "salary": 28055,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "DAVID QUINTANA ARENCIBIA",
+    "rating": 82,
+    "salary": 72333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "EUGENIO PAULON",
+    "rating": 77,
+    "salary": 44755,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "ALEJANDRO HERNANDEZ BLANCO",
+    "rating": 58,
+    "salary": 16083,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "MAURICIO JAVIER BLANPAIN",
+    "rating": 62,
+    "salary": 16416,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=27&id=9359"
+ },
+ "junior-fc": {
+  "staff": [
+   {
+    "role": "physio",
+    "name": "ADRIAN DEL CURA RUIZ",
+    "rating": 72,
+    "salary": 28749,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "ALBERT CASORRAN BARO",
+    "rating": 55,
+    "salary": 12666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "ALEJANDRO GIMENEZ ACEVEDO",
+    "rating": 68,
+    "salary": 28194,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "FERRAN GUILLEM GONZALEZ MAÑE",
+    "rating": 57,
+    "salary": 12800,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "GERARD DALET SAYRACH",
+    "rating": 65,
+    "salary": 13333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "GERARD DALET SAYRACH",
+    "rating": 64,
+    "salary": 30955,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "LORENZO VIZCAINO PASTOR",
+    "rating": 80,
+    "salary": 29861,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "CARLOS ULLES SEGUES",
+    "rating": 74,
+    "salary": 69666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "GUILLERMO CARNICER MARTINEZ",
+    "rating": 75,
+    "salary": 44333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "MARCEL MALGOSA FORRELLAT",
+    "rating": 66,
+    "salary": 16750,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "NELIDA GARCIA MARTINEZ",
+    "rating": 59,
+    "salary": 16166,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "NURIA ALVAREZ PASCUAL",
+    "rating": 64,
+    "salary": 16583,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "PABLO RECASENS FERRE",
+    "rating": 55,
+    "salary": 15833,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=22&id=9359"
+ },
+ "ad-rimas": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "ANTONI DEVANT BOHILS",
+    "rating": 55,
+    "salary": 12666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "DANIEL CARLOS SARTO",
+    "rating": 57,
+    "salary": 12800,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "JOAN VALLDEPERAS GENIS",
+    "rating": 84,
+    "salary": 73000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "MARC CALVO BADIA",
+    "rating": 63,
+    "salary": 16500,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=339&id=9368"
+ },
+ "aticos-san-fernando": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "AGUSTIN FERNANDEZ FLORES",
+    "rating": 64,
+    "salary": 13266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "ISRAEL GARCIA RODRIGUEZ",
+    "rating": 80,
+    "salary": 29861,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "MARTIN GUTIERREZ SIERRA",
+    "rating": 70,
+    "salary": 31888,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "MIGUEL AMBITE LOBATO",
+    "rating": 80,
+    "salary": 33444,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "JAIME FERRANDIZ GUTIERREZ",
+    "rating": 73,
+    "salary": 69333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "ISRAEL GARCIA RODRIGUEZ",
+    "rating": 66,
+    "salary": 16750,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "MIGUEL AMBITE LOBATO",
+    "rating": 57,
+    "salary": 16000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3891&id=9368"
+ },
+ "castelldefels": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "JOAN CARLES BERCERO MARGALEF",
+    "rating": 59,
+    "salary": 12933,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "PAUL ANDREW GREGSON",
+    "rating": 64,
+    "salary": 13266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "ANTONIO DELAS DE ANDRES",
+    "rating": 84,
+    "salary": 73000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "JOAN VERDAGUER BOVER",
+    "rating": 79,
+    "salary": 45177,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "MIGUEL DELAS, DE ANDRES",
+    "rating": 74,
+    "salary": 44122,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=2934&id=9368"
+ },
+ "cd-giner": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "GREGORIO JOSE MIGUEL PUIG",
+    "rating": 57,
+    "salary": 12800,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JUAN RAMON MARTINEZ INIESTA",
+    "rating": 59,
+    "salary": 12933,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "DIEGO EZEQUIEL BRANQUER",
+    "rating": 82,
+    "salary": 72333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "GUSTAVO DANIEL REPRESAS LOBETO",
+    "rating": 68,
+    "salary": 16916,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "PABLO MONTORO JIMENEZ",
+    "rating": 58,
+    "salary": 16083,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=55&id=9368"
+ },
+ "ch-madrid-las-rozas": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "PEDRO GARCIA VAZQUEZ",
+    "rating": 60,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "RAFAEL GARRIDO OLIVA",
+    "rating": 60,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "SEBASTIAN EMILIANO BARATTA",
+    "rating": 82,
+    "salary": 72333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=2943&id=9368"
+ },
+ "egara-1935": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "ALEIX MARGARIT AMATE",
+    "rating": 60,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "ERIC HERRERO FONOLLOSA",
+    "rating": 67,
+    "salary": 28055,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "RAMON CLAPES TORRENS",
+    "rating": 56,
+    "salary": 12733,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "ROGER SOLSONA ROVIRA",
+    "rating": 65,
+    "salary": 13333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "EDUARDO JOSE QUEMADA CADAFALCH",
+    "rating": 81,
+    "salary": 72000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "MARIA LAURA PERRONE",
+    "rating": 67,
+    "salary": 42644,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "ALEIX MARGARIT AMATE",
+    "rating": 59,
+    "salary": 16166,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "ALEX SANCHEZ MIGUEL",
+    "rating": 61,
+    "salary": 16333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "JAN BORRAS MASSAGUER",
+    "rating": 55,
+    "salary": 15833,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "JORDI BORRAS CIMA",
+    "rating": 57,
+    "salary": 16000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=252&id=9368"
+ },
+ "hc-sant-cugat": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "ANNA NEGRE NOGUERAS",
+    "rating": 56,
+    "salary": 12733,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "ANNA ALSINA FERNANDEZ",
+    "rating": 64,
+    "salary": 13266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "IVET IMBERS BIOSCA",
+    "rating": 82,
+    "salary": 72333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "PABLO RECASENS FERRE",
+    "rating": 75,
+    "salary": 44333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "MARCEL MALGOSA FORRELLAT",
+    "rating": 64,
+    "salary": 16583,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=25&id=9368"
+ },
+ "iluro": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "ANDREA SANTANA GARÇON",
+    "rating": 64,
+    "salary": 13266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "CARLOS MEDINA SERRA",
+    "rating": 65,
+    "salary": 13333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "fitness_coach",
+    "name": "DAVID RUBIO ESCODA",
+    "rating": 71,
+    "salary": 32044,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "DAVID MONTERO CEBRIAN",
+    "rating": 61,
+    "salary": 13066,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "ARSENIO SAÑE FERRAN",
+    "rating": 83,
+    "salary": 72666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "FERRAN VILA SERRAHIMA",
+    "rating": 80,
+    "salary": 45388,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3911&id=9368"
+ },
+ "linia-22": {
+  "staff": [
+   {
+    "role": "physio",
+    "name": "FERRAN PASTOR DOMINGO",
+    "rating": 80,
+    "salary": 29861,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "LLORENÇ MARTORELL PEREZ",
+    "rating": 65,
+    "salary": 13333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "RAUL GALY PELLICER",
+    "rating": 57,
+    "salary": 12800,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "JOSEP OLIVE CRISTANY",
+    "rating": 74,
+    "salary": 69666,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "RAMON RIUS SANLLEHI",
+    "rating": 70,
+    "salary": 43277,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3892&id=9368"
+ },
+ "pedralbes": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "CARLOS MASDEVALL GARÇON",
+    "rating": 63,
+    "salary": 13200,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "GERARD VILLARONGA RICHARTE",
+    "rating": 73,
+    "salary": 28888,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "IGNACIO VIVES CUATRECASAS",
+    "rating": 61,
+    "salary": 13066,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JORDI ALASTRUE LAMAS",
+    "rating": 58,
+    "salary": 12866,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "MARTIN CORNADOR",
+    "rating": 58,
+    "salary": 12866,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "SANTIAGO TOMAS FERRAN PRIESTLEY",
+    "rating": 56,
+    "salary": 12733,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "ANTONIO GONZALEZ IZQUIERDO",
+    "rating": 76,
+    "salary": 70333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "IGNACIO VIVES CUATRECASAS",
+    "rating": 70,
+    "salary": 43277,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "VICENTE ORERO GARCIA",
+    "rating": 69,
+    "salary": 43066,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "ARTURO BROS MENENDEZ",
+    "rating": 66,
+    "salary": 16750,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=2954&id=9368"
+ },
+ "rc-jolaseta": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "CARLOS AGUERREA CALLEJA",
+    "rating": 59,
+    "salary": 12933,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JAIME SOCIAS URIBE",
+    "rating": 66,
+    "salary": 13400,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JUAN FITO LLORENS",
+    "rating": 61,
+    "salary": 13066,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "physio",
+    "name": "MARKEL AZKUE ARROYO",
+    "rating": 68,
+    "salary": 28194,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "CARLOS AGUERREA CALLEJA",
+    "rating": 76,
+    "salary": 70333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "MARC SALVATELLA PANES",
+    "rating": 81,
+    "salary": 45600,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=1897&id=9368"
+ },
+ "pozuelo": {
+  "staff": [
+   {
+    "role": "fitness_coach",
+    "name": "JAVIER CANTERO ZAMORA",
+    "rating": 77,
+    "salary": 32977,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JAVIER CANTERO ZAMORA",
+    "rating": 62,
+    "salary": 13133,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "MARTIN RAMA PALOMA",
+    "rating": 59,
+    "salary": 12933,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "MONICA GARCIA GONZALEZ",
+    "rating": 56,
+    "salary": 12733,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "NAHUEL RODRIGUEZ DE LEON",
+    "rating": 62,
+    "salary": 13133,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "RODRIGO CANTERO GARCIA",
+    "rating": 62,
+    "salary": 13133,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "VICTOR ANTONIO BERMEJO NGUYEN",
+    "rating": 64,
+    "salary": 13266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "MARTIN RAMA PALOMA",
+    "rating": 82,
+    "salary": 72333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "NAHUEL RODRIGUEZ DE LEON",
+    "rating": 76,
+    "salary": 44544,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "RODRIGO CANTERO GARCIA",
+    "rating": 80,
+    "salary": 45388,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "ANGEL MONTERRUBIO IBAÑEZ",
+    "rating": 55,
+    "salary": 15833,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "JAVIER JOSE SANCHEZ DELGADO",
+    "rating": 57,
+    "salary": 16000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "MARTA GIL RODRIGUEZ",
+    "rating": 68,
+    "salary": 16916,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "PABLO MONTERRUBIO SERRANO",
+    "rating": 64,
+    "salary": 16583,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "ROBERTO ANTONIO BERMEJO NGUYEN",
+    "rating": 58,
+    "salary": 16083,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3938&id=9368"
+ },
+ "real-sociedad-1927": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "ANTHONY COERT J DE RIDDER",
+    "rating": 64,
+    "salary": 13266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "EDUARDO AGUILAR ESTRADA",
+    "rating": 57,
+    "salary": 12800,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JAVIER DE LA JOYA MATO",
+    "rating": 60,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "JORGE SUAREZ RODRIGUEZ",
+    "rating": 81,
+    "salary": 72000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "DIEGO TORNERO TELLA",
+    "rating": 69,
+    "salary": 17000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "JORGE SUAREZ RODRIGUEZ",
+    "rating": 66,
+    "salary": 16750,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "MAXIMILINO MARTIN MASUCCI",
+    "rating": 58,
+    "salary": 16083,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "RAFAEL JARO MOLINA",
+    "rating": 59,
+    "salary": 16166,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3937&id=9368"
+ },
+ "spv": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "FEDERICO MARTIN MANSILLA",
+    "rating": 64,
+    "salary": 13266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "FRANCISCO JOSE BAYARRI CEBRIAN",
+    "rating": 59,
+    "salary": 12933,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "JOSE MORENO MUÑOZ",
+    "rating": 60,
+    "salary": 13000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "CARLOS ERNESTO LOUGHLIN",
+    "rating": 70,
+    "salary": 68333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "CRISTIAN ESTEBAN GONZALEZ",
+    "rating": 64,
+    "salary": 16583,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "MAXIMILIANO BRAVO ALMONACID",
+    "rating": 62,
+    "salary": 16416,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=232&id=9368"
+ },
+ "universitat-alacant": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "ADRIANA DE MIGUEL GOMEZ",
+    "rating": 65,
+    "salary": 13333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "MARIA VICTORIA GARCIA MARTIN",
+    "rating": 64,
+    "salary": 13266,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "DANIEL LAMBERT CARRAMOLINO",
+    "rating": 72,
+    "salary": 69000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "GABRIEL PLAZAS GOMEZ",
+    "rating": 80,
+    "salary": 45388,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "LUCAS VIOLERO ARENAS",
+    "rating": 78,
+    "salary": 44966,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "PABLO MENDIAS BARBERA",
+    "rating": 80,
+    "salary": 45388,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "AGUSTIN FABIAN PORCHIA",
+    "rating": 59,
+    "salary": 16166,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "JAVIER JOAQUIN SIRVENT LLAMAS",
+    "rating": 62,
+    "salary": 16416,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=1868&id=9368"
+ },
+ "valles-esportiu": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "PERE FREIXA PALOMA",
+    "rating": 58,
+    "salary": 12866,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "RAMON TRENCHS CASTILLANO",
+    "rating": 58,
+    "salary": 12866,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "FRANCISCO JAVIER TRENCHS CASTILLANO",
+    "rating": 81,
+    "salary": 72000,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "assistant",
+    "name": "ORIOL FREIXA ESCUDE",
+    "rating": 71,
+    "salary": 43488,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3902&id=9368"
+ },
+ "san-fernando-andaluza": {
+  "staff": [
+   {
+    "role": "delegate",
+    "name": "MARCO ANTONIO ALEU RAMOS",
+    "rating": 66,
+    "salary": 13400,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "MIGUEL AMBITE LOBATO",
+    "rating": 63,
+    "salary": 13200,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "delegate",
+    "name": "MIGUEL MUIÑO MORENO",
+    "rating": 65,
+    "salary": 13333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "head_coach",
+    "name": "ISRAEL GARCIA RODRIGUEZ",
+    "rating": 76,
+    "salary": 70333,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "IDELFONSO FUENTES ASENCIO",
+    "rating": 58,
+    "salary": 16083,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "MIGUEL AMBITE LOBATO",
+    "rating": 56,
+    "salary": 15916,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   },
+   {
+    "role": "additional",
+    "name": "TRINIDAD BOZA LEON",
+    "rating": 63,
+    "salary": 16500,
+    "contract_until": "2027-06-30",
+    "source": "iSquad",
+    "confidence": "media"
+   }
+  ],
+  "source_url": "https://resultadoshockey.isquad.es/equipo.php?id_equipo=3939&id=9429"
+ }
+}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block title %}Partido en directo{% endblock %}
+{% block content %}
+<h1>Partido en directo</h1>
+<div class="card">
+  <div class="scoreboard">
+    <div class="team">{{ m.crest(home, 'crest-lg') }}<div><h2>{{ home.name }}</h2><span class="muted">{{ engine.stats[0].possession }}% posesión</span></div></div>
+    <div><div class="score">{{ engine.score[0] }}-{{ engine.score[1] }}</div><div class="match-meta">{{ engine.quarter }}º cuarto · {{ engine.minute }}'</div></div>
+    <div class="team right"><div><h2>{{ away.name }}</h2><span class="muted">{{ engine.stats[1].possession }}% posesión</span></div>{{ m.crest(away, 'crest-lg') }}</div>
+  </div>
+  {% if engine.finished %}
+    <form method="post" action="{{ url_for('match_live_finish') }}"><button class="btn primary" type="submit">Finalizar y ver parte</button></form>
+  {% else %}
+  <div class="actions">
+    <form method="post" action="{{ url_for('match_live_advance') }}"><input type="hidden" name="mode" value="quarter"><button class="btn primary">Avanzar cuarto</button></form>
+    <form method="post" action="{{ url_for('match_live_advance') }}"><input type="hidden" name="mode" value="moment"><button class="btn">Avanzar momento</button></form>
+    <form method="post" action="{{ url_for('match_live_advance') }}"><input type="hidden" name="mode" value="rest"><button class="btn">Simular resto</button></form>
+  </div>
+  {% endif %}
+</div>
+<div class="grid grid-2">
+<div class="card">
+<h3>Estadísticas</h3>
+<div class="possession"><span>{{ engine.stats[0].possession }}%</span><div class="bar"><div class="home" style="width:{{ engine.stats[0].possession }}%"></div><div class="away" style="width:{{ engine.stats[1].possession }}%"></div></div><span>{{ engine.stats[1].possession }}%</span></div>
+<table><tbody>
+<tr><td>Posesión</td><td class="num">{{ engine.stats[0].possession }}% - {{ engine.stats[1].possession }}%</td></tr>
+<tr><td>Tiros</td><td class="num">{{ engine.stats[0].shots }} - {{ engine.stats[1].shots }}</td></tr>
+<tr><td>Tiros a puerta</td><td class="num">{{ engine.stats[0].shots_on_target }} - {{ engine.stats[1].shots_on_target }}</td></tr>
+<tr><td>PC</td><td class="num">{{ engine.stats[0].pc }} - {{ engine.stats[1].pc }}</td></tr>
+<tr><td>Paradas</td><td class="num">{{ engine.stats[0].saves }} - {{ engine.stats[1].saves }}</td></tr>
+<tr><td>Tarjetas V/A/R</td><td class="num">{{ engine.stats[0].green }}/{{ engine.stats[0].yellow }}/{{ engine.stats[0].red }} - {{ engine.stats[1].green }}/{{ engine.stats[1].yellow }}/{{ engine.stats[1].red }}</td></tr>
+</tbody></table>
+<h3 style="margin-top:16px">Gestión</h3>
+<p class="small">Local {{ engine.home.management_score(engine.home_lineup) }}/100 · Visitante {{ engine.away.management_score(engine.away_lineup) }}/100</p>
+<p class="small">Lectura táctica: +{{ engine.tactical_matchup_bonus(0) }} / +{{ engine.tactical_matchup_bonus(1) }}</p>
+</div>
+<div class="card">
+<h3>Comentario</h3>
+<div style="max-height:420px;overflow:auto">
+{% for e in events %}<div class="event {{ e.type }}"><b>{{ e.minute }}'</b> {{ e.text }}</div>{% else %}<div class="event"><b>0'</b> El partido está a punto de comenzar. Avanza un cuarto o un momento para ver la primera acción.</div>{% endfor %}
+</div>
+</div>
+</div>
+<div class="grid grid-2">
+<div class="card">
+<h3>Tu once</h3><table><thead><tr><th></th><th>Jugador</th><th>Pos</th><th class="num">Min</th><th class="num">G</th><th class="num">A</th><th class="num">Rating</th><th class="num">Fatiga</th></tr></thead><tbody>
+{% for r in player_rows %}{% set p = players_by_id.get(r.id) %}<tr><td>{{ m.avatar(p, 'avatar-small') if p else '' }}</td><td>{{r.name}}<br><span class="tag">{{ p.archetype if p else '' }}</span></td><td>{{r.position}}</td><td class="num">{{r.minutes}}</td><td class="num">{{r.goals}}</td><td class="num">{{r.assists}}</td><td class="num">{{ '%.2f'|format(r.rating) }}</td><td class="num">{{r.fatigue}}%</td></tr>{% endfor %}
+</tbody></table>
+</div>
+<div class="card">
+<h3>Táctica en directo</h3>
+<form method="post" action="{{ url_for('match_live_tactics') }}">
+  <div class="row">
+    <div class="field"><label>Mentalidad</label><select name="mentality">{% for x in ['muy_defensiva','defensiva','equilibrada','ofensiva','muy_ofensiva'] %}<option value="{{x}}" {% if team.tactics.mentality==x %}selected{% endif %}>{{x|replace('_',' ')}}</option>{% endfor %}</select></div>
+    <div class="field"><label>Presión</label><select name="press">{% for x in ['baja','media','alta','muy_alta'] %}<option value="{{x}}" {% if team.tactics.press==x %}selected{% endif %}>{{x|replace('_',' ')}}</option>{% endfor %}</select></div>
+    <div class="field"><label>Tempo</label><select name="tempo">{% for x in ['lento','normal','rapido'] %}<option value="{{x}}" {% if team.tactics.tempo==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></div>
+    <div class="field"><label>Pase</label><select name="passing">{% for x in ['corto','mixto','directo'] %}<option value="{{x}}" {% if team.tactics.passing==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></div>
+  </div>
+  <button class="btn small primary" type="submit">Aplicar</button>
+</form>
+<h3 style="margin-top:16px">Cambio</h3>
+<form method="post" action="{{ url_for('match_live_sub') }}">
+  <div class="field"><label>Sale</label><select name="out_id">{% for p in line %}<option value="{{p.id}}">{{p.name}} · fatiga {{ '%.0f'|format(p.fatigue) }}%</option>{% endfor %}</select></div>
+  <div class="field"><label>Entra</label><select name="in_id">{% for p in bench %}<option value="{{p.id}}">{{p.name}} · OVR {{ '%.1f'|format(p.overall) }}</option>{% endfor %}</select></div>
+  <button class="btn small" type="submit">Hacer cambio</button>
+</form>
+</div>
+</div>
+{% endblock %}

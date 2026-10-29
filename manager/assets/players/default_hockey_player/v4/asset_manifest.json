@@ -1,0 +1,420 @@
+{
+  "asset": "default_hockey_player_v4",
+  "version": "4.0.0",
+  "generated": "2026-10-29",
+  "scope": "Jugador low-poly estilizado para Hockey Manager; asset de producción para tiempo real.",
+  "units": "metros",
+  "coordinate_system": {
+    "source": "Blender Z-up",
+    "glb": "glTF Y-up"
+  },
+  "dimensions_m": {
+    "player_height": 1.954,
+    "ball_diameter": 0.075,
+    "stick_bbox": [
+      0.826,
+      0.394,
+      1.34
+    ]
+  },
+  "rig": {
+    "name": "Rig Humanoide",
+    "bones": 21,
+    "bone_names": [
+      "root",
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "shoulder.L",
+      "upper_arm.L",
+      "forearm.L",
+      "hand.L",
+      "stick",
+      "shoulder.R",
+      "upper_arm.R",
+      "forearm.R",
+      "hand.R",
+      "thigh.L",
+      "shin.L",
+      "foot.L",
+      "thigh.R",
+      "shin.R",
+      "foot.R"
+    ]
+  },
+  "actions": [
+    {
+      "name": "Idle",
+      "range": [
+        1.0,
+        120.0
+      ]
+    },
+    {
+      "name": "Pass",
+      "range": [
+        1.0,
+        30.0
+      ]
+    },
+    {
+      "name": "Run",
+      "range": [
+        1.0,
+        30.0
+      ]
+    },
+    {
+      "name": "Shoot",
+      "range": [
+        1.0,
+        24.0
+      ]
+    }
+  ],
+  "mesh_budget": {
+    "Player_v4": {
+      "tris": 17196,
+      "verts": 10348,
+      "materials": 10
+    },
+    "Stick_v4": {
+      "tris": 1828,
+      "verts": 928,
+      "materials": 4
+    },
+    "Ball_v4": {
+      "tris": 912,
+      "verts": 458,
+      "materials": 2
+    },
+    "Player_v4_LOD1": {
+      "tris": 8598,
+      "verts": 4962,
+      "materials": 10
+    },
+    "Player_v4_LOD2": {
+      "tris": 4291,
+      "verts": 2669,
+      "materials": 10
+    },
+    "Collision_Capsule": {
+      "tris": 508,
+      "verts": 260,
+      "materials": 0
+    }
+  },
+  "textures": {
+    "count": 13,
+    "resolution": [
+      512,
+      512
+    ],
+    "format": "PNG sRGB",
+    "images": [
+      {
+        "name": "T_Azul_marino",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Azul_San_Fernando",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Azul_sombra",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Blanco",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Carbono",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Cesped_base",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Detalle_dorado",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Goma",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Naranja",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Pelo",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Piel",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Piel_clara",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      },
+      {
+        "name": "T_Protector_bucal",
+        "size": [
+          512,
+          512
+        ],
+        "packed": true
+      }
+    ]
+  },
+  "glb": {
+    "default_hockey_player_v4.glb": {
+      "bytes": 2506200,
+      "meshes": 3,
+      "materials": 12,
+      "images": 12,
+      "skins": 1,
+      "joints": [
+        21
+      ],
+      "animations": [
+        "Idle",
+        "Pass",
+        "Run",
+        "Shoot"
+      ]
+    },
+    "default_hockey_player_v4_LOD1.glb": {
+      "bytes": 1746380,
+      "meshes": 1,
+      "materials": 10,
+      "images": 10,
+      "skins": 1,
+      "joints": [
+        21
+      ],
+      "animations": [
+        "Idle",
+        "Pass",
+        "Run",
+        "Shoot"
+      ]
+    },
+    "default_hockey_player_v4_LOD2.glb": {
+      "bytes": 1556900,
+      "meshes": 1,
+      "materials": 10,
+      "images": 10,
+      "skins": 1,
+      "joints": [
+        21
+      ],
+      "animations": [
+        "Idle",
+        "Pass",
+        "Run",
+        "Shoot"
+      ]
+    },
+    "player_v4_collision.glb": {
+      "bytes": 37920,
+      "meshes": 1,
+      "materials": 0,
+      "images": 0,
+      "skins": 0,
+      "joints": [],
+      "animations": []
+    }
+  },
+  "validation": {
+    "internal_nonmanifold_player": 0,
+    "internal_nonmanifold_lod1": 0,
+    "internal_nonmanifold_lod2": 0,
+    "unweighted_player": 0,
+    "max_influences_player": 2,
+    "status": "PASS"
+  },
+  "files": {
+    "README.md": {
+      "bytes": 3627,
+      "sha256": "4e12e507661952737bf411b789011b74422970f332a5dab4e6fc55edb244d431"
+    },
+    "animations.mp4": {
+      "bytes": 151650,
+      "sha256": "f285c5adadb29e90b058e6ac370e8694bc834cf54feb029f8b9e6f437c585e2b"
+    },
+    "animations/idle.mp4": {
+      "bytes": 27696,
+      "sha256": "b12f7b01bb3ab0153f67c8b54ce5085379f7a8ead7026b86f3409190322b1955"
+    },
+    "animations/pass.mp4": {
+      "bytes": 42758,
+      "sha256": "61cec88ac097c0a999d6ce498ce386235f4a72a36f8488da61d209cb940b01ea"
+    },
+    "animations/run.mp4": {
+      "bytes": 36911,
+      "sha256": "7beddba345e025d5f08735cda65f1dc5171815cbe63ae51cb958f0b3f747d24b"
+    },
+    "animations/shoot.mp4": {
+      "bytes": 46698,
+      "sha256": "aa7bf28f3bddc1eb1fca955a9506cadc8dd4f92aecacee84438b2200b85d4a95"
+    },
+    "animations_preview.png": {
+      "bytes": 1229930,
+      "sha256": "99b0a1cccaf1c5cb2ed0545f2f76daf82a7bd9a5693ae2c24bb21bdcd2fcab94"
+    },
+    "default_hockey_player_v4.blend": {
+      "bytes": 2430281,
+      "sha256": "41acb3b385575a6b931e0d3d6fdc3f7fc00623c0b8af7f9919f659497f812df7"
+    },
+    "default_hockey_player_v4.glb": {
+      "bytes": 2506200,
+      "sha256": "5807a32ae153ebf164f83c5d9ec9313d6e059ad4b3a579f5e5219fef0b12f6d0"
+    },
+    "default_hockey_player_v4.png": {
+      "bytes": 1702459,
+      "sha256": "52326ec25389e8ceb0b0a45c5bd9e5b0834aa14d1f2053cf685483ef3ab24ce4"
+    },
+    "default_hockey_player_v4_LOD1.glb": {
+      "bytes": 1746380,
+      "sha256": "a6da667930227c19c0189dda81d45ef347cde8cab00818d6a569e38bc5dc392a"
+    },
+    "default_hockey_player_v4_LOD2.glb": {
+      "bytes": 1556900,
+      "sha256": "5df7b8d31b34c929a352572cdebec8dc0d8cf88593b65c5e8bb04c7981e8d39a"
+    },
+    "evaluation_report.md": {
+      "bytes": 4084,
+      "sha256": "bcdd96c3abc764d54101f165db0d1ea6db36b928fa45eed027c64564b75b223f"
+    },
+    "player_v4_collision.glb": {
+      "bytes": 37920,
+      "sha256": "94e612e41614399dce36eee5660688ab11e9e5d91cd84e1be41429061bcb6835"
+    },
+    "references.md": {
+      "bytes": 4149,
+      "sha256": "0f850a59467692a26a4db8781bb08daf35b418b2ddc6c6991aa2395a29a9103e"
+    },
+    "renders/back.png": {
+      "bytes": 831207,
+      "sha256": "a0e586504f42ae4b81cc8aa621dc1823330a0a35a8f5421a1d6c43f3c4494ed1"
+    },
+    "renders/front.png": {
+      "bytes": 861264,
+      "sha256": "95c9814892d6565def202f42c66bd3798c267e0fef9e690f746172df3a0ade4a"
+    },
+    "renders/side.png": {
+      "bytes": 837706,
+      "sha256": "9f7216009f9d402bd0da7fcaa3ea943603e9e2491f90ecae268bf8a24e4f27a1"
+    },
+    "renders/three_quarter.png": {
+      "bytes": 870822,
+      "sha256": "b67fe6055b3e79ebe4620d9f0472644a2199498be244155b9e84fa15e79873d9"
+    },
+    "textures/materials/Azul_San_Fernando.png": {
+      "bytes": 99942,
+      "sha256": "a7f99b9de3c11356d92272a80f1b19e5ad5d994b4c555fc902e9fb1bb605c8ca"
+    },
+    "textures/materials/Azul_marino.png": {
+      "bytes": 66617,
+      "sha256": "c4ee9197685cd676d53e63e0f7947c0c1bdfb6e42c58549129b208307986d286"
+    },
+    "textures/materials/Azul_sombra.png": {
+      "bytes": 88282,
+      "sha256": "4804ed0b6e398258bbe6e289bddd191b9d64a0e0799172108fdcf63ac990a7b7"
+    },
+    "textures/materials/Blanco.png": {
+      "bytes": 151416,
+      "sha256": "050594d87608a4f1ed090677375b3a94b4b258976ef0d2939d84a599c2241a46"
+    },
+    "textures/materials/Carbono.png": {
+      "bytes": 36758,
+      "sha256": "ff5dafe380bdade6478e2cf9329e75b718c5bbd532fcc020479442380a884d8a"
+    },
+    "textures/materials/Cesped_base.png": {
+      "bytes": 17982,
+      "sha256": "9bee251e66cac332306fff571959674416018638dc852a9aad5df95cfd42fd62"
+    },
+    "textures/materials/Detalle_dorado.png": {
+      "bytes": 244863,
+      "sha256": "d67877855a510b6f42252504b95c9cdeb051e427d5788af8e9b86a415346520f"
+    },
+    "textures/materials/Goma.png": {
+      "bytes": 82544,
+      "sha256": "d05ddfdb34483ee15579fded7e6dcd1aa8e57ec3f556b679f0268911313314a7"
+    },
+    "textures/materials/Naranja.png": {
+      "bytes": 115281,
+      "sha256": "b3289160d27649aec4b205b5ad3316bd96e87bff3249009c1b0773243c56eff8"
+    },
+    "textures/materials/Pelo.png": {
+      "bytes": 147221,
+      "sha256": "e35d183a3033e274868727921f4a030b6b4844b148e0b4b18500077155cee1fb"
+    },
+    "textures/materials/Piel.png": {
+      "bytes": 158418,
+      "sha256": "435111feb7e2ef5265b08f94a9b9216bf9db469106f33339994e9b288666e0f9"
+    },
+    "textures/materials/Piel_clara.png": {
+      "bytes": 166622,
+      "sha256": "137ee5c433e97d617c22fb1e8b129129f2f8f4919f9b95165e8d72f93737ad5c"
+    },
+    "textures/materials/Protector_bucal.png": {
+      "bytes": 143615,
+      "sha256": "f0837725420724cb5636a0557d3b057e081ae6eb83855c3605b2b3a81903b163"
+    }
+  }
+}

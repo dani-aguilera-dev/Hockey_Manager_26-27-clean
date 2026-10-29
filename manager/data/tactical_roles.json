@@ -1,0 +1,43 @@
+{
+  "formations": {
+    "4-3-3": {"slots": ["GK", "LAT", "CEN", "CEN", "LAT", "MED", "MED", "MED", "DEL", "DEL", "DEL"], "style": "equilibrado"},
+    "3-4-3": {"slots": ["GK", "CEN", "CEN", "CEN", "LAT", "MED", "MED", "LAT", "DEL", "DEL", "DEL"], "style": "ofensivo"},
+    "3-3-3-1": {"slots": ["GK", "CEN", "CEN", "CEN", "LAT", "MED", "MED", "LAT", "MED", "DEL", "DEL"], "style": "control"},
+    "4-4-2": {"slots": ["GK", "LAT", "CEN", "CEN", "LAT", "MED", "MED", "MED", "MED", "DEL", "DEL"], "style": "compacto"},
+    "5-3-2": {"slots": ["GK", "LAT", "CEN", "CEN", "CEN", "LAT", "MED", "MED", "MED", "DEL", "DEL"], "style": "defensivo"},
+    "3-2-1-4": {"slots": ["GK", "CEN", "CEN", "CEN", "MED", "MED", "MED", "DEL", "DEL", "DEL", "DEL"], "style": "muy ofensivo"}
+  },
+  "roles": {
+    "POR": {
+      "Portero clásico": {"reflejos": 0.24, "blocaje": 0.22, "posicionamiento": 0.14, "alto": 0.12, "uno_vs_uno": 0.10, "distribucion": 0.08, "concentracion": 0.06, "liderazgo": 0.04},
+      "Portero moderno": {"reflejos": 0.20, "blocaje": 0.18, "distribucion": 0.18, "pc_gk_save": 0.12, "uno_vs_uno": 0.10, "alto": 0.08, "posicionamiento": 0.08, "decisiones": 0.06}
+    },
+    "CEN": {
+      "Central stopper": {"cobertura": 0.20, "fuerza": 0.16, "pc_first_runner": 0.14, "posicionamiento": 0.12, "pressing": 0.10, "decisiones": 0.08, "pase": 0.06, "liderazgo": 0.06, "agilidad": 0.04, "velocidad": 0.04},
+      "Central constructor": {"cobertura": 0.16, "pase": 0.16, "posicionamiento": 0.14, "decisiones": 0.12, "pc_trap": 0.08, "pc_first_runner": 0.08, "fuerza": 0.08, "control": 0.06, "transicion": 0.06, "liderazgo": 0.06}
+    },
+    "LAT": {
+      "Lateral defensivo": {"velocidad": 0.18, "cobertura": 0.18, "resistencia": 0.14, "pressing": 0.10, "posicionamiento": 0.10, "pase": 0.08, "pc_first_runner": 0.08, "decisiones": 0.06, "agilidad": 0.04, "fuerza": 0.04},
+      "Carrilero ofensivo": {"velocidad": 0.20, "resistencia": 0.16, "conduccion": 0.12, "pase": 0.12, "cobertura": 0.10, "transicion": 0.10, "regate_3d": 0.08, "aerial": 0.04, "decisiones": 0.04, "pressing": 0.04}
+    },
+    "MED": {
+      "Medio creativo": {"pase": 0.22, "posicionamiento": 0.14, "decisiones": 0.12, "control": 0.10, "conduccion": 0.08, "pc_injection": 0.08, "free_hit": 0.08, "pressing": 0.06, "transicion": 0.06, "resistencia": 0.06},
+      "Medio box-to-box": {"resistencia": 0.20, "pressing": 0.16, "transicion": 0.14, "cobertura": 0.12, "pase": 0.10, "fuerza": 0.08, "posicionamiento": 0.08, "conduccion": 0.06, "decisiones": 0.06},
+      "Medio defensivo": {"cobertura": 0.20, "posicionamiento": 0.16, "pressing": 0.14, "pase": 0.12, "fuerza": 0.10, "pc_trap": 0.08, "decisiones": 0.08, "transicion": 0.06, "control": 0.06}
+    },
+    "DEL": {
+      "Finalizador de área": {"definicion": 0.24, "posicionamiento": 0.14, "pc_deflection": 0.12, "pc_flick": 0.10, "velocidad": 0.10, "flick": 0.08, "fuerza": 0.08, "decisiones": 0.06, "desmarque": 0.04, "concentracion": 0.04},
+      "Delantero de espacio": {"velocidad": 0.22, "desmarque": 0.16, "definicion": 0.16, "regate_3d": 0.12, "conduccion": 0.10, "posicionamiento": 0.08, "resistencia": 0.06, "decisiones": 0.06, "aerial": 0.04},
+      "Delantero de apoyo": {"control": 0.18, "pase": 0.16, "posicionamiento": 0.14, "definicion": 0.12, "desmarque": 0.10, "conduccion": 0.10, "decisiones": 0.08, "flick": 0.06, "presion": 0.06}
+    }
+  },
+  "team_instructions": {
+    "mentality": ["muy_defensiva", "defensiva", "equilibrada", "ofensiva", "muy_ofensiva"],
+    "press": ["baja", "media", "alta", "muy_alta"],
+    "block": ["bajo", "medio", "alto"],
+    "width": ["estrecha", "normal", "ancha"],
+    "tempo": ["lento", "normal", "rapido"],
+    "passing": ["corto", "mixto", "directo"],
+    "pc_routine": ["directa", "slip_izquierda", "slip_derecha", "desvio", "rebote", "ensayada"]
+  }
+}
