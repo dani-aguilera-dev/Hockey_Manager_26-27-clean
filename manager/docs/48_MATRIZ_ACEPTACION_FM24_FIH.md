@@ -55,15 +55,17 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Escalada de tarjetas | `next_card_for_player` | Test | PASS |
 | PC, strokes y shootout | Motor existente y pruebas de partido | Suite de tests | PASS |
 
-## 6. Visor 3D mínimo conectado a MatchEngine
+## 6. Simulación 3D conectada a MatchEngine
 
 | Criterio | Implementación | Evidencia | Estado |
 | --- | --- | --- | --- |
 | Campo 3D | `MatchViewer3D.tsx` con Three.js: césped, líneas, círculo, áreas y porterías | E2E `viewer3d` + captura `e2e_3d.png` | PASS |
-| 22 jugadores y balón | 11 locales y 11 visitantes, balón animado y cámara perspectiva | E2E comprueba canvas de 200×150 mínimo | PASS |
-| Conexión con MatchEngine | El visor consume `LivePayload`: `score`, `quarter`, `minute`, `line`, `events` y `tactics.formation` | `/api/match/live` y `/api/match/live/advance` | PASS |
-| Actualización en directo | El balón se mueve hacia el equipo del último evento y los jugadores reaccionan al lado atacante | E2E abre el partido en directo | PASS |
-| Física 3D completa | No hay colisiones, trayectorias físicas ni animación esquelética de jugadores | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
+| 22 jugadores con locomoción | 11 locales y 11 visitantes, piernas/brazos animados, desplazamiento y separación | E2E `players=22`, `frames=63` | PASS |
+| Balón con física | Velocidad, gravedad, rebote, fricción, límites y detección de gol | E2E `ballSpeed=7.58` | PASS |
+| Colisiones | Colisión jugador-jugador y jugador-balón con separación y rebote | E2E `collisions=58` | PASS |
+| UI 3D | Marcador, cuarto, minuto, estado y último evento superpuestos al canvas | E2E `match-viewer-ui` + captura | PASS |
+| Conexión con MatchEngine | El visor consume `LivePayload`: `score`, `quarter`, `minute`, `line`, `events`, formación y equipo atacante | `/api/match/live` y `/api/match/live/advance` | PASS |
+| Física 3D de alta fidelidad | No hay colisiones de stick/cuerpo completas, tejido, IK ni física de material | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
 
 ## 7. Reglas FIH avanzadas y arbitraje
 
@@ -84,7 +86,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerPhysics":{"frames":63,"collisions":58,"ballSpeed":7.58},"playerBrands":true}
 ```
 
 Flujo:
@@ -102,7 +104,7 @@ Flujo:
 
 | Límite anterior | Criterio verificable | Estado |
 | --- | --- | --- |
-| “No hay motor 3D” | Visor 3D mínimo con campo, 22 jugadores, balón y actualización desde MatchEngine | PASS visor mínimo / FAIL física 3D completa |
+| “No hay motor 3D” | Simulación 3D con campo, 22 jugadores animados, balón con física, colisiones y UI | PASS simulación 3D / FAIL física AAA |
 | “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones y árbitro tienen pruebas explícitas; el resto de interpretaciones discrecionales no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
 | “No replica todas las pantallas de FM24” | La matriz enumera los flujos cubiertos; la paridad total de pantallas no se declara | FAIL / fuera de alcance |
 | “Prensa textual” | Prensa previa y posterior con medios, efectos e historial | PASS |

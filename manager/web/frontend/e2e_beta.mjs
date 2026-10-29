@@ -48,7 +48,14 @@ try {
   await viewer.waitFor()
   const box = await viewer.boundingBox()
   if (!box || box.width < 200 || box.height < 150) throw new Error(`viewer size ${JSON.stringify(box)}`)
+  await page.waitForTimeout(1300)
+  const viewerState = await page.evaluate(() => window.__matchViewer3D)
+  if (!viewerState || viewerState.players !== 22) throw new Error(`viewer players ${JSON.stringify(viewerState)}`)
+  if (viewerState.frames < 10) throw new Error(`viewer frames ${viewerState.frames}`)
+  if (!(viewerState.ballSpeed > 0)) throw new Error(`viewer ball ${viewerState.ballSpeed}`)
+  if (!(viewerState.collisions > 0)) throw new Error(`viewer collisions ${viewerState.collisions}`)
   result.viewer3d = true
+  result.viewerPhysics = { frames: viewerState.frames, collisions: viewerState.collisions, ballSpeed: viewerState.ballSpeed }
   await page.screenshot({ path: '/tmp/opencode/e2e_3d.png' })
 
   await page.goto('/app/game/commercial')

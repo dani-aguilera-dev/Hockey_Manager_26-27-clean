@@ -1001,3 +1001,52 @@ select option { background: #0b1220; color: #e8eef8; }
 @media (max-width: 760px) {
   .match-viewer-3d { height: 280px; }
 }
+
+/* UI superpuesta del visor 3D */
+.match-viewer-ui {
+  position: absolute;
+  inset: 12px 12px auto auto;
+  z-index: 3;
+  width: min(390px, calc(100% - 24px));
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 9px;
+  background: rgba(4,12,22,.74);
+  backdrop-filter: blur(8px);
+}
+.match-viewer-score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #eef7ff;
+  font-size: 12px;
+}
+.match-viewer-score span {
+  color: var(--gold);
+  font-size: 20px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.match-viewer-meta {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+  color: #9fb3c8;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.match-viewer-event {
+  margin-top: 7px;
+  overflow: hidden;
+  color: #d7e8f8;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .match-viewer-ui { inset: 8px 8px auto auto; width: min(320px, calc(100% - 16px)); }
+  .match-viewer-score { font-size: 10px; }
+  .match-viewer-score span { font-size: 16px; }
+}
