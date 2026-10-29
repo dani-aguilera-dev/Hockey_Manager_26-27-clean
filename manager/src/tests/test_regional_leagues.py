@@ -36,6 +36,8 @@ def test_primera_andalucia_is_playable_with_san_fernando():
 def test_regional_champion_can_promote_to_dhb():
     state = new_game("reg-codema", "Regional", seed=1203)
     _finish(state)
+    # La fase de ascenso es jugable; este test aísla la transición administrativa.
+    state.phase = "season_end"
     state.promoted_ids = [state.club_id]
     advance_to_next_season(state)
     assert state.user_team.league == "DHB"

@@ -157,6 +157,12 @@ class MatchEngine:
             "passes": 0,
             "passes_completed": 0,
             "goals": 0,
+            "fouls": 0,
+            "advantage": 0,
+            "dangerous_play": 0,
+            "distance_5m": 0,
+            "pc_denied": 0,
+            "stroke_awarded": 0,
         }
 
     # ---------- utilidades ----------
@@ -644,20 +650,99 @@ class MatchEngine:
             self.possession = opp
             self.zone = "middle"
 
-    def _foul(self, side: int):
+    def _foul(
+        self,
+        side: int,
+        foul_type: str | None = None,
+        advantage: bool | None = None,
+        pc_decision: str | None = None,
+        distance_call: bool | None = None,
+    ):
         # side = equipo que comete la falta
         t = self._team(side)
         opp = 1 - side
         lineup = self._lineup(side)
         offender = self.rng.choice(lineup)
+        if foul_type not in rules.FOUL_TYPES:
+            keys = list(rules.FOUL_TYPES)
+            foul_type = self.rng.choices(keys, weights=[float(rules.FOUL_TYPES[k]["weight"]) for k in keys], k=1)[0]
+        profile = rules.FOUL_TYPES[foul_type]
+        dangerous = bool(profile.get("dangerous"))
+        in_circle = self.zone == "circle"
         in_attack = self.zone in ("attacking_23", "circle")
-        self._add_event("foul", side, offender, f"Falta de {offender.name} ({t.name}).")
-        if in_attack:
-            self._penalty_corner(opp)
-        else:
-            self._add_event("free_hit", side, None, f"Falta para {self._team(opp).name} en el centro del campo.")
+        self._inc_stat(side, "fouls")
+        self._add_event("foul", side, offender, f"Falta de {offender.name} ({t.name}): {profile['label']}.")
+        if dangerous:
+            self._inc_stat(side, "dangerous_play")
+            self._add_event(
+                "dangerous_play",
+                side,
+                offender,
+                f"Juego peligroso de {offender.name}: el árbitro detiene la jugada y valora la tarjeta.",
+            )
+            if self.rng.random() < 0.45:
+                self._card(side)
+        if advantage is None:
+            advantage = not dangerous and not in_circle and in_attack and self.rng.random() < 0.25
+        if advantage:
+            self._inc_stat(opp, "advantage")
+            self._add_event(
+                "advantage",
+                opp,
+                None,
+                f"El árbitro deja jugar la ventaja a {self._team(opp).name} durante {rules.ADVANTAGE_SECONDS} segundos.",
+            )
             self.possession = opp
-            self.zone = "middle"
+            return
+        if in_circle:
+            if pc_decision is None:
+                if dangerous and self.rng.random() < 0.35:
+                    pc_decision = "stroke"
+                elif self.rng.random() < 0.12:
+                    pc_decision = "denied"
+                else:
+                    pc_decision = "pc"
+            if pc_decision == "stroke":
+                self._inc_stat(opp, "stroke_awarded")
+                self._add_event(
+                    "pc_decision",
+                    opp,
+                    None,
+                    f"El árbitro concede penalty stroke a {self._team(opp).name} por la falta en el círculo.",
+                )
+                self._stroke(opp)
+                return
+            if pc_decision == "denied":
+                self._inc_stat(opp, "pc_denied")
+                self._add_event(
+                    "pc_decision",
+                    opp,
+                    None,
+                    f"El árbitro no concede penalty corner a {self._team(opp).name}: la falta no impide una ocasión clara.",
+                )
+                self.possession = opp
+                self.zone = "middle"
+                return
+            self._penalty_corner(opp)
+            return
+        self._add_event(
+            "free_hit",
+            side,
+            None,
+            f"Falta para {self._team(opp).name}. El árbitro marca la distancia de {rules.FREE_HIT_DISTANCE_METERS} metros.",
+        )
+        if distance_call is None:
+            distance_call = self.rng.random() < 0.25 or float(self.referee.get("strictness", 55)) >= 65
+        if distance_call:
+            self._inc_stat(opp, "distance_5m")
+            self._add_event(
+                "distance_5m",
+                opp,
+                None,
+                f"El árbitro obliga a retroceder {rules.FREE_HIT_DISTANCE_METERS} metros a la defensa.",
+            )
+            self.zone = "attacking_23" if self.rng.random() < 0.35 else "middle"
+        self.possession = opp
 
     def _card(self, side: int):
         t = self._team(side)

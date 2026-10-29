@@ -40,6 +40,17 @@ RED_CARD_NEXT_MATCHES = 1
 # la pierde. El capitán puede solicitar la revisión de un gol, un penalty
 # corner o un penalty stroke.
 REFERRALS_PER_TEAM = 1
+# Faltas y discrecionalidad arbitral.
+FREE_HIT_DISTANCE_METERS = 5
+ADVANTAGE_SECONDS = 3
+FOUL_TYPES: dict[str, dict[str, object]] = {
+    "stick": {"label": "golpe de stick", "dangerous": True, "weight": 0.30},
+    "dangerous": {"label": "juego peligroso", "dangerous": True, "weight": 0.15},
+    "physical": {"label": "carga física", "dangerous": False, "weight": 0.25},
+    "foot": {"label": "pie", "dangerous": False, "weight": 0.20},
+    "obstruction": {"label": "obstrucción", "dangerous": False, "weight": 0.10},
+}
+
 OPPOSITION_INSTRUCTIONS: dict[str, dict[str, object]] = {
     "tight_marking": {
         "label": "Marcaje individual",

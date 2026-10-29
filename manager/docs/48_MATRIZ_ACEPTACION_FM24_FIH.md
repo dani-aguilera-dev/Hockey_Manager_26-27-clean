@@ -108,7 +108,12 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Revisión de vídeo de gol, PC y stroke | `MatchEngine.review_decision`, `/api/match/live/review`, tarjeta “Revisión de vídeo” en `LiveMatch.tsx` | `test_video_review_overturns_goal_and_retains_referral`, `test_penalty_corner_and_stroke_are_reviewable`, `test_api_video_review_flow`, E2E `videoReview` | PASS |
 | Referencia por equipo y retención si prospera | `REFERRALS_PER_TEAM=1`; una revisión acertada conserva la referencia y una fallida la consume | `test_video_review_overturns_goal_and_retains_referral`, `test_video_review_upheld_consumes_referral` | PASS |
 | Corrección de marcador y estadísticas | El gol anulado resta marcador, stats de equipo y stats individuales | `test_video_review_overturns_goal_and_retains_referral` | PASS |
-| Arbitraje discrecional completo | No se modela cada interpretación subjetiva del reglamento; solo las decisiones revisables y sus correcciones | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
+| Ventaja | `_foul` deja jugar la ventaja si no hay juego peligroso y el ataque conserva la posesión | `test_advantage_keeps_possession_and_is_recorded` | PASS |
+| Juego peligroso | `FOUL_TYPES` distingue golpe de stick y juego peligroso; puede derivar en tarjeta | `test_dangerous_play_is_recorded_and_can_award_pc` | PASS |
+| Distancia de 5 metros | `distance_5m` y aviso arbitral en el libre directo | `test_five_meters_is_enforced_on_free_hit` | PASS |
+| Decisión de PC/stroke | `pc_decision` permite PC, denegarlo o convertirlo en stroke | `test_pc_can_be_denied_by_referee`, `test_dangerous_play_can_upgrade_pc_to_stroke` | PASS |
+| Decisiones en el parte | `Report.tsx` muestra ventajas, juego peligroso, 5 m, PC denegados y strokes concedidos | E2E `refereeDiscretion` | PASS |
+| Arbitraje discrecional completo | Quedan interpretaciones subjetivas no modeladas (criterios de peligrosidad, ventaja en cada zona, gestión de protestas, etc.) | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
 
 
 > Los contadores de frames, IK y colisiones varían entre ejecuciones; el E2E exige que sean mayores que cero y que el esqueleto y los sticks estén completos.
@@ -120,7 +125,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2772},"viewerPhysics":{"frames":63,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":32,"ballSpeed":7.67},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":33,"ballSpeed":7.60},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -147,7 +152,7 @@ Flujo:
 | Límite anterior | Criterio verificable | Estado |
 | --- | --- | --- |
 | “No hay motor 3D” | Simulación 3D con campo, 22 jugadores con esqueleto e IK, 22 sticks, balón con física, colisiones de cuerpo/stick y UI | PASS simulación 3D / FAIL física AAA |
-| “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones, árbitro y revisión de vídeo tienen pruebas explícitas; el resto de interpretaciones discrecionales no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
+| “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones, árbitro, revisión de vídeo, ventaja, juego peligroso, 5 metros y decisión de PC tienen pruebas explícitas; el resto de interpretaciones subjetivas no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
 | “No replica todas las pantallas de FM24” | La matriz enumera los flujos cubiertos; la paridad total de pantallas no se declara | FAIL / fuera de alcance |
 | “Prensa textual” | Prensa previa y posterior con medios, efectos e historial | PASS |
 | “Marcas no cambian la física” | Contratos de club e individuales con efectos económicos, de marca y relación; no se promete física de material | PASS para gestión / FAIL para simulación física |
@@ -182,10 +187,10 @@ Flujo:
 | Instrucciones al rival y data hub | PASS | `DataHub.tsx`, `/api/datahub`, `/api/datahub/instructions`, análisis del rival e instrucciones aplicadas al motor |
 | Clubes afiliados y mentoring | PASS | `Affiliates.tsx`, `/api/affiliates`, `/api/mentoring`, red de clubes, beneficios y planes de desarrollo |
 | Historial/base de datos consultable | PASS | `History.tsx`, `/api/history`, archivo de partidos y jugadores, filtros y récords |
-| Arbitraje discrecional completo | FAIL | Solo están modeladas las decisiones revisables (gol, PC, stroke), no cada interpretación subjetiva |
+| Arbitraje discrecional completo | FAIL / parcial | Ventaja, juego peligroso, 5 m y decisión de PC están modelados; el resto de interpretaciones subjetivas sigue fuera de alcance |
 
 La lista permite priorizar la siguiente iteración sin confundir “flujo cubierto” con “paridad total”. Las pantallas marcadas FAIL no se presentan como terminadas.
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada y de la reunión de equipo. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA, paridad total de pantallas y arbitraje discrecional.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo y de las decisiones arbitrales discrecionales implementadas. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.

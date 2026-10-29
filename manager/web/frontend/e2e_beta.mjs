@@ -28,8 +28,11 @@ try {
 
   await page.goto('/app/game/report')
   await page.getByText('Árbitro:').waitFor()
-  await page.getByText('Strokes').waitFor()
+  await page.getByText('Strokes', { exact: true }).waitFor()
+  await page.getByText('Decisiones arbitrales').waitFor()
+  await page.getByText('Ventajas').waitFor()
   result.refereeAndSetPieces = true
+  result.refereeDiscretion = true
 
   await page.goto('/app/game/press/post')
   await page.getByRole('heading', { name: 'La voz del vestuario' }).waitFor()

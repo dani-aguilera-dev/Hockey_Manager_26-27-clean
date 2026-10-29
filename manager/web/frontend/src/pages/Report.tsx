@@ -74,6 +74,22 @@ export default function ReportPage() {
       </div>
 
       <Card className="mt-2">
+        <h3>Decisiones arbitrales</h3>
+        <div className="stack-sm mt-2">
+          {[
+            ['Ventajas', 'advantage'],
+            ['Juego peligroso', 'dangerous_play'],
+            ['Distancia de 5 metros', 'distance_5m'],
+            ['PC denegados', 'pc_denied'],
+            ['Strokes concedidos', 'stroke_awarded'],
+          ].map(([label, key]) => (
+            <div className="stat-line" key={key}><b>{report.home_stats[key] || 0}</b><span>{label}</span><b className="num">{report.away_stats[key] || 0}</b></div>
+          ))}
+        </div>
+        <p className="small muted mt-2">El árbitro puede dejar jugar la ventaja, señalar juego peligroso, marcar cinco metros o denegar un penalty corner.</p>
+      </Card>
+
+      <Card className="mt-2">
         <h3>Crónica</h3>
         <div className="event-list" style={{ maxHeight: 420 }}>
           {report.events?.length ? report.events.map((event, index) => <div className={`event-row ${event.type}`} key={`${event.minute}-${index}`}><span className="event-minute">{event.minute}'</span><p><b>{event.text}</b></p></div>) : <p className="small muted">Sin eventos registrados.</p>}

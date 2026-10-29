@@ -2551,6 +2551,10 @@ def _live_payload(state, ctx):
             "tactic",
             "review",
             "goal_disallowed",
+            "advantage",
+            "dangerous_play",
+            "distance_5m",
+            "pc_decision",
         )
     ]
     user_side = ctx.user_side
