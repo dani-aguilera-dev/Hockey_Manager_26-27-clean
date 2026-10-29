@@ -54,6 +54,14 @@ from src.brands import (
 from src.board import board_overview, request_board
 from src.loans import loan_overview, offer_loan_out, request_loan_in
 from src.datahub import datahub_overview, set_instructions
+from src.affiliates import (
+    affiliate_overview,
+    assign_mentor,
+    end_affiliate,
+    end_mentoring,
+    mentoring_overview,
+    request_affiliate,
+)
 from src.player_editor import edit_player, editor_payload, find_player
 from src.international import club_catalog, international_cities, load_all_teams
 from src.logistics import travel_options
@@ -1792,6 +1800,101 @@ def datahub_instructions():
         return _error(result.get("message", "No se pudieron guardar las instrucciones."), 409, "datahub_failed")
     _save(state)
     return _ok({"result": result, "datahub": datahub_overview(state), "state": _state_payload(state)}, result["message"])
+
+
+@api.get("/affiliates")
+def affiliates():
+    state, err = _state()
+    if err:
+        return err
+    return _ok({"affiliates": affiliate_overview(state), "mentoring": mentoring_overview(state)})
+
+
+@api.post("/affiliates/request")
+def affiliate_request():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = request_affiliate(state, str(payload.get("club_id", "")))
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo firmar la afiliación."), 409, "affiliate_failed")
+    _save(state)
+    return _ok(
+        {
+            "result": result,
+            "affiliates": affiliate_overview(state),
+            "mentoring": mentoring_overview(state),
+            "state": _state_payload(state),
+        },
+        result.get("message", ""),
+    )
+
+
+@api.post("/affiliates/<affiliate_id>/end")
+def affiliate_end(affiliate_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = end_affiliate(state, affiliate_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo finalizar la afiliación."), 409, "affiliate_failed")
+    _save(state)
+    return _ok(
+        {
+            "result": result,
+            "affiliates": affiliate_overview(state),
+            "mentoring": mentoring_overview(state),
+            "state": _state_payload(state),
+        },
+        result.get("message", ""),
+    )
+
+
+@api.post("/mentoring")
+def mentoring_create():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = assign_mentor(
+        state,
+        str(payload.get("mentor_id", "")),
+        str(payload.get("mentee_id", "")),
+        str(payload.get("focus", "tecnica") or "tecnica"),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo crear el plan de mentoría."), 409, "mentoring_failed")
+    _save(state)
+    return _ok(
+        {
+            "result": result,
+            "affiliates": affiliate_overview(state),
+            "mentoring": mentoring_overview(state),
+            "state": _state_payload(state),
+        },
+        result.get("message", ""),
+    )
+
+
+@api.delete("/mentoring/<pair_id>")
+def mentoring_delete(pair_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = end_mentoring(state, pair_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo finalizar el plan."), 409, "mentoring_failed")
+    _save(state)
+    return _ok(
+        {
+            "result": result,
+            "affiliates": affiliate_overview(state),
+            "mentoring": mentoring_overview(state),
+            "state": _state_payload(state),
+        },
+        result.get("message", ""),
+    )
 
 
 @api.get("/staff")

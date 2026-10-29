@@ -387,6 +387,8 @@ class TeamState:
     equipment_deals: list[dict[str, Any]] = field(default_factory=list)
     facilities: dict[str, int] = field(default_factory=lambda: dict(DEFAULT_FACILITIES))
     board_requests: list[dict[str, Any]] = field(default_factory=list)
+    mentoring: list[dict[str, Any]] = field(default_factory=list)
+    mentoring_history: list[dict[str, Any]] = field(default_factory=list)
     staff: list[StaffMember] = field(default_factory=list)
     board: list[BoardMember] = field(default_factory=list)
     transfer_budget: int = 0
@@ -609,6 +611,8 @@ class TeamState:
             "equipment_deals": self.equipment_deals,
             "facilities": self.facilities,
             "board_requests": self.board_requests,
+            "mentoring": self.mentoring,
+            "mentoring_history": self.mentoring_history,
             "staff": [m.to_dict() for m in self.staff],
             "board": [m.to_dict() for m in self.board],
             "transfer_budget": self.transfer_budget,
@@ -662,6 +666,8 @@ class TeamState:
             equipment_deals=d.get("equipment_deals", []),
             facilities={**DEFAULT_FACILITIES, **(d.get("facilities") or {})},
             board_requests=d.get("board_requests") or [],
+            mentoring=d.get("mentoring") or [],
+            mentoring_history=d.get("mentoring_history") or [],
             staff=[StaffMember.from_dict(m) for m in d.get("staff", [])],
             board=[BoardMember.from_dict(m) for m in d.get("board", [])],
             transfer_budget=d.get("transfer_budget", 0),
@@ -775,6 +781,8 @@ class GameState:
     loans: list[dict[str, Any]] = field(default_factory=list)
     loan_history: list[dict[str, Any]] = field(default_factory=list)
     opposition_instructions: dict[str, dict[str, str]] = field(default_factory=dict)
+    affiliates: list[dict[str, Any]] = field(default_factory=list)
+    affiliate_history: list[dict[str, Any]] = field(default_factory=list)
 
     @property
     def total_rounds(self) -> int:
@@ -891,6 +899,8 @@ class GameState:
             "loans": self.loans,
             "loan_history": self.loan_history,
             "opposition_instructions": self.opposition_instructions,
+            "affiliates": self.affiliates,
+            "affiliate_history": self.affiliate_history,
         }
 
     @classmethod
@@ -961,6 +971,8 @@ class GameState:
             loans=d.get("loans", []),
             loan_history=d.get("loan_history", []),
             opposition_instructions=d.get("opposition_instructions", {}),
+            affiliates=d.get("affiliates", []),
+            affiliate_history=d.get("affiliate_history", []),
         )
         if state.league_fixtures.get(state.competition):
             # Los partidos de Copa y de la fase de ascenso viven en

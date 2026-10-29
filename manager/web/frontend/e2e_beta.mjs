@@ -122,6 +122,19 @@ try {
   result.datahub = true
   await page.screenshot({ path: '/tmp/opencode/e2e_datahub.png', fullPage: true })
 
+  await page.goto('/app/game/affiliates')
+  await page.getByRole('heading', { name: 'Afiliados y mentoring' }).waitFor()
+  await page.getByText('CANDIDATOS A AFILIACIÓN', { exact: true }).waitFor()
+  const affiliateButton = page.locator('[data-testid^="affiliate-"]').first()
+  await affiliateButton.waitFor()
+  await affiliateButton.click()
+  await page.locator('.affiliate-history-row').first().waitFor()
+  result.affiliates = true
+  await page.getByTestId('mentoring-assign').click()
+  await page.locator('.mentoring-row').first().waitFor()
+  result.mentoring = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_affiliates.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

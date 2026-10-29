@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 from typing import Any
 
+from .affiliates import advance_mentoring
 from .calendar import create_dha_fixtures, create_fixtures, dha_table, league_table, recompute_table
 from .competitions import (
     COMPETITIONS,
@@ -544,6 +545,7 @@ def _reset_week_training(state: GameState) -> None:
     state.training_report = {}
     for t in state.teams.values():
         t.prep_bonus = 0.0
+    advance_mentoring(state)
 
 
 def _user_result_payload(state: GameState, fixture: Fixture, result: MatchResult, travel: dict | None) -> dict:

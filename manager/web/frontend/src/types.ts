@@ -1591,3 +1591,102 @@ export interface DatahubData {
   recommended?: Record<string, string>
   effect?: { attack: number; defense: number; players: number }
 }
+
+export interface AffiliateClub {
+  id: string
+  club_id: string
+  club_name: string
+  league: string
+  league_name: string
+  city: string
+  country: string
+  since: string
+  annual_fee: number
+  benefits: string[]
+  status: string
+}
+
+export interface AffiliateCandidate {
+  id: string
+  name: string
+  league: string
+  league_name: string
+  city: string
+  country: string
+  standard: number
+  academy_rating: number
+  annual_fee: number
+  approval_chance: number
+  benefits: string[]
+}
+
+export interface AffiliateHistory {
+  date: string
+  club_id: string
+  club_name: string
+  league_name: string
+  annual_fee: number
+  accepted: boolean
+  chance: number
+  message: string
+  ended_on?: string
+}
+
+export interface AffiliateOverview {
+  affiliates: AffiliateClub[]
+  candidates: AffiliateCandidate[]
+  history: AffiliateHistory[]
+  scouting: number
+  youth: number
+  academy_rating: number
+  benefits: string[]
+}
+
+export interface MentoringPair {
+  id: string
+  mentor_id: string
+  mentor_name: string
+  mentee_id: string
+  mentee_name: string
+  focus: string
+  focus_label: string
+  since: string
+  sessions: number
+  progress: number
+  status: string
+  mentor_overall: number | null
+  mentee_overall: number | null
+  mentee_potential: number | null
+}
+
+export interface MentorCandidate {
+  id: string
+  name: string
+  age: number
+  overall: number
+  position: string
+  relationship: number
+}
+
+export interface MenteeCandidate {
+  id: string
+  name: string
+  age: number
+  overall: number
+  potential: number
+  position: string
+  category: string
+}
+
+export interface MentoringOverview {
+  pairs: MentoringPair[]
+  mentors: MentorCandidate[]
+  mentees: MenteeCandidate[]
+  focus_options: Array<{ id: string; label: string; description: string; attributes: string[] }>
+  history: MentoringPair[]
+}
+
+export interface AffiliatesPayload {
+  affiliates: AffiliateOverview
+  mentoring: MentoringOverview
+}

@@ -104,6 +104,7 @@ def outgoing_candidates(state: GameState) -> list[dict[str, Any]]:
     """Jugadores del usuario que pueden salir cedidos y clubes interesados."""
     user = state.user_team
     threshold = _key_threshold(user)
+    affiliate_ids = {item.get("club_id") for item in state.affiliates}
     rows: list[dict[str, Any]] = []
     for player in user.players:
         if player.loan or player.age > 34:
@@ -112,9 +113,10 @@ def outgoing_candidates(state: GameState) -> list[dict[str, Any]]:
         for team in state.teams.values():
             if team.id == user.id or len(team.squad) >= 25:
                 continue
-            if competition(team.league).standard + 12 < player.overall:
+            is_affiliate = team.id in affiliate_ids
+            if not is_affiliate and competition(team.league).standard + 12 < player.overall:
                 continue
-            if team.league == user.league or competition(team.league).standard <= competition(user.league).standard:
+            if is_affiliate or team.league == user.league or competition(team.league).standard <= competition(user.league).standard:
                 interested.append(
                     {
                         "id": team.id,
@@ -122,6 +124,7 @@ def outgoing_candidates(state: GameState) -> list[dict[str, Any]]:
                         "league": team.league,
                         "league_name": competition(team.league).short_name,
                         "squad_size": len(team.players),
+                        "affiliate": is_affiliate,
                     }
                 )
         interested.sort(key=lambda item: (item["league_name"], item["name"]))
@@ -286,8 +289,11 @@ def offer_loan_out(
     fee = _loan_fee(player, wage_share)
     if borrower.budget < fee:
         return {"ok": False, "message": "El club de destino no puede pagar la tasa de cesión."}
+    is_affiliate = any(item.get("club_id") == borrower.id for item in state.affiliates)
     chance = 0.50 + (player.overall - _mean_overall(borrower)) / 140
     chance += (wage_share - 50) / 250 + PLAYING_TIMES[playing_time]["bonus"]
+    if is_affiliate:
+        chance += 0.15
     if player.overall < _key_threshold(borrower):
         chance -= 0.10
     chance = max(0.08, min(0.90, chance))
@@ -307,6 +313,7 @@ def offer_loan_out(
         "accepted": accepted,
         "chance": round(chance, 3),
         "direction": "out",
+        "affiliate": is_affiliate,
     }
     if not accepted:
         entry["message"] = f"{borrower.name} rechaza la cesión de {player.name}."

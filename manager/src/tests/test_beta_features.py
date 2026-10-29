@@ -299,3 +299,30 @@ def test_api_datahub_and_opposition_instructions(client):
     assert payload["state"]["team"]["name"]
     refreshed = client.get("/api/datahub").get_json()["data"]
     assert refreshed["instructions"][player_id] == "tight_marking"
+
+
+def test_api_affiliates_and_mentoring(client):
+    _new_api(client, seed="42")
+    response = client.get("/api/affiliates")
+    assert response.status_code == 200, response.get_data(as_text=True)
+    data = response.get_json()["data"]
+    assert data["affiliates"]["candidates"]
+    assert data["mentoring"]["mentors"]
+    assert data["mentoring"]["mentees"]
+    candidate = data["affiliates"]["candidates"][0]
+    affiliate = client.post("/api/affiliates/request", json={"club_id": candidate["id"]})
+    assert affiliate.status_code == 200, affiliate.get_data(as_text=True)
+    assert affiliate.get_json()["data"]["affiliates"]["history"]
+    mentor = data["mentoring"]["mentors"][0]
+    mentee = data["mentoring"]["mentees"][0]
+    created = client.post(
+        "/api/mentoring",
+        json={"mentor_id": mentor["id"], "mentee_id": mentee["id"], "focus": "tecnica"},
+    )
+    assert created.status_code == 200, created.get_data(as_text=True)
+    payload = created.get_json()["data"]
+    assert payload["mentoring"]["pairs"]
+    pair_id = payload["mentoring"]["pairs"][0]["id"]
+    deleted = client.delete(f"/api/mentoring/{pair_id}")
+    assert deleted.status_code == 200, deleted.get_data(as_text=True)
+    assert deleted.get_json()["data"]["mentoring"]["pairs"] == []
