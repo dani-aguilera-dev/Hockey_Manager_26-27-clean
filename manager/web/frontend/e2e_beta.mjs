@@ -153,6 +153,13 @@ try {
   result.scouting = true
   await page.screenshot({ path: '/tmp/opencode/e2e_scouting.png', fullPage: true })
 
+  await page.goto('/app/game/team-meeting')
+  await page.getByRole('heading', { name: 'Reunión de equipo' }).waitFor()
+  await page.getByTestId('team-meeting-submit').click()
+  await page.locator('.team-meeting-result').waitFor()
+  result.teamMeeting = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_team_meeting.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

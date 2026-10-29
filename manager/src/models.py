@@ -389,6 +389,7 @@ class TeamState:
     board_requests: list[dict[str, Any]] = field(default_factory=list)
     mentoring: list[dict[str, Any]] = field(default_factory=list)
     mentoring_history: list[dict[str, Any]] = field(default_factory=list)
+    team_meetings: list[dict[str, Any]] = field(default_factory=list)
     staff: list[StaffMember] = field(default_factory=list)
     board: list[BoardMember] = field(default_factory=list)
     transfer_budget: int = 0
@@ -613,6 +614,7 @@ class TeamState:
             "board_requests": self.board_requests,
             "mentoring": self.mentoring,
             "mentoring_history": self.mentoring_history,
+            "team_meetings": self.team_meetings,
             "staff": [m.to_dict() for m in self.staff],
             "board": [m.to_dict() for m in self.board],
             "transfer_budget": self.transfer_budget,
@@ -668,6 +670,7 @@ class TeamState:
             board_requests=d.get("board_requests") or [],
             mentoring=d.get("mentoring") or [],
             mentoring_history=d.get("mentoring_history") or [],
+            team_meetings=d.get("team_meetings") or [],
             staff=[StaffMember.from_dict(m) for m in d.get("staff", [])],
             board=[BoardMember.from_dict(m) for m in d.get("board", [])],
             transfer_budget=d.get("transfer_budget", 0),

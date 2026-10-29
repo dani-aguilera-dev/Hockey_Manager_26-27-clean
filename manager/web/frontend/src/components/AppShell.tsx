@@ -41,6 +41,7 @@ const primary = [
   { to: '/game/decisions', label: 'Decisiones', icon: ListChecks },
   { to: '/game/news', label: 'Actualidad', icon: Newspaper },
   { to: '/game/chat', label: 'Vestuario', icon: MessageSquare },
+  { to: '/game/team-meeting', label: 'Reunión de equipo', icon: Users },
 ]
 
 const teamLinks = [

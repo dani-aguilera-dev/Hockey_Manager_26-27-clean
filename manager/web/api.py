@@ -108,6 +108,7 @@ from src.objectives import competition_objectives
 from src.promotion import promotion_path
 from src.ratings import league_label, profile, scout_stars, stars_bar, stars_text, tier
 from src.scouting import cancel_assignment, create_assignment, scouting_overview
+from src.team_meeting import perform_team_meeting, team_meeting_context
 from src.season import (
     advance_to_next_season,
     finish_live_round,
@@ -1960,6 +1961,40 @@ def history():
             player_query=str(request.args.get("player", "")),
             limit=limit,
         )
+    )
+
+
+@api.get("/team-meeting")
+def team_meeting():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(team_meeting_context(state))
+
+
+@api.post("/team-meeting")
+def team_meeting_perform():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    topics = payload.get("topics", [])
+    if not isinstance(topics, list):
+        topics = []
+    result = perform_team_meeting(
+        state,
+        str(payload.get("meeting_type", "pre_match") or "pre_match"),
+        str(payload.get("tone", "serena") or "serena"),
+        [str(item) for item in topics],
+        str(payload.get("promise_player_id", "")),
+        str(payload.get("promise_type", "")),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo celebrar la reunión."), 409, "team_meeting_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "meeting": team_meeting_context(state), "state": _state_payload(state)},
+        result.get("message", "Reunión celebrada."),
     )
 
 

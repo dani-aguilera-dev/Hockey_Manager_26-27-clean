@@ -1834,3 +1834,56 @@ export interface HistoryData {
     teams: Array<{ id: string; name: string }>
   }
 }
+
+export interface TeamMeetingContext {
+  team: { id: string; name: string }
+  dynamics: {
+    morale: number
+    morale_label: string
+    cohesion: number
+    cohesion_label: string
+    board_confidence: number
+    board_label: string
+    fan_confidence: number
+    fan_label: string
+    avg_relationship: number
+    open_promises: number
+    warnings: string[]
+  }
+  next_fixture: null | { id: string; date: string; round: number; home_name: string; away_name: string }
+  last_result: null | { result: string; score: string; rival: string; date: string }
+  meeting_types: Array<{ id: string; label: string; description: string }>
+  tones: Array<{ id: string; label: string; bonus?: number }>
+  topics: Array<{ id: string; label: string; description: string }>
+  promise_types: Array<{ id: string; label: string; days: number; text: string }>
+  players: Array<{ id: string; name: string; age: number; position: string; overall: number; relationship: number; open_promises: number }>
+  recommended_type: string
+  history: TeamMeetingHistory[]
+}
+
+export interface TeamMeetingHistory {
+  id: string
+  date: string
+  season: string
+  type: string
+  type_label: string
+  tone: string
+  tone_label: string
+  topics: string[]
+  topic_labels: string[]
+  success: boolean
+  chance: number
+  effects: Record<string, number>
+  promise: Record<string, unknown> | null
+  promise_player: string
+  message: string
+}
+
+export interface TeamMeetingResult {
+  ok: boolean
+  success: boolean
+  message: string
+  effects: Record<string, number>
+  promise: Record<string, unknown> | null
+  meeting: TeamMeetingHistory
+}

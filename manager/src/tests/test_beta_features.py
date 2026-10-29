@@ -369,3 +369,29 @@ def test_api_scouting_assignments(client):
     deleted = client.delete(f"/api/scouting/assignments/{assignment_id}")
     assert deleted.status_code == 200, deleted.get_data(as_text=True)
     assert deleted.get_json()["data"]["scouting"]["assignments"] == []
+
+
+def test_api_team_meeting(client):
+    _new_api(client, seed="45")
+    context = client.get("/api/team-meeting")
+    assert context.status_code == 200, context.get_data(as_text=True)
+    data = context.get_json()["data"]
+    assert data["meeting_types"]
+    assert data["tones"]
+    assert data["players"]
+    player = data["players"][0]
+    response = client.post(
+        "/api/team-meeting",
+        json={
+            "meeting_type": data["recommended_type"],
+            "tone": "serena",
+            "topics": ["objetivo", "vestuario"],
+            "promise_player_id": player["id"],
+            "promise_type": "minutes",
+        },
+    )
+    assert response.status_code == 200, response.get_data(as_text=True)
+    payload = response.get_json()["data"]
+    assert payload["result"]["ok"] is True
+    assert payload["meeting"]["history"]
+    assert payload["state"]["team"]["name"]
