@@ -1093,7 +1093,7 @@
         "verde",
         "blanco"
       ],
-      "founded": 1919,
+      "founded": 1921,
       "expectation": "Top 8",
       "finances": {
         "tier": 4,
@@ -1103,8 +1103,8 @@
       "academy": 4,
       "nickname": "Herakles",
       "location_verified": true,
-      "history": "Royal Herakles Hockey Club es un club de hockey de Lier, Bélgica, fundado en 1919. Es un club de Lier, fundado en 1921. Juega en Herakles Hockey y compite en la Belgian League.",
-      "description": "Royal Herakles Hockey Club es un club de hockey de Lier, Bélgica, fundado en 1919. Es un club de Lier, fundado en 1921. Juega en Herakles Hockey y compite en la Belgian League.",
+      "history": "Royal Herakles Hockey Club es un club de hockey de Lier (Bélgica), fundado en 1921. Es un club histórico de la provincia de Amberes; juega en Lier y compite en la Belgian League.",
+      "description": "Royal Herakles Hockey Club es un club de hockey de Lier (Bélgica), fundado en 1921. Es un club histórico de la provincia de Amberes; juega en Lier y compite en la Belgian League.",
       "source_url": "http://www.herakles.be",
       "source_type": "official",
       "history_source": "http://www.herakles.be",
@@ -1157,7 +1157,7 @@
         "amarillo",
         "negro"
       ],
-      "founded": 1922,
+      "founded": 1912,
       "expectation": "Permanencia",
       "finances": {
         "tier": 3,
@@ -1167,8 +1167,8 @@
       "academy": 3,
       "nickname": "Namur",
       "location_verified": true,
-      "history": "Royal Hockey Club Namur es un club de hockey de Namur, Bélgica, fundado en 1922. Fundado en 1912, es uno de los clubes más antiguos de Bélgica. Juega en Hockey Namur y compite en la Belgian League.",
-      "description": "Royal Hockey Club Namur es un club de hockey de Namur, Bélgica, fundado en 1922. Fundado en 1912, es uno de los clubes más antiguos de Bélgica. Juega en Hockey Namur y compite en la Belgian League.",
+      "history": "Royal Hockey Club Namur es un club de hockey de Namur (Bélgica), fundado en 1912. Es uno de los clubes más antiguos de Bélgica; juega en Namur y compite en la Belgian League.",
+      "description": "Royal Hockey Club Namur es un club de hockey de Namur (Bélgica), fundado en 1912. Es uno de los clubes más antiguos de Bélgica; juega en Namur y compite en la Belgian League.",
       "source_url": "https://www.hockeynamur.be/",
       "source_type": "official",
       "history_source": "https://www.hockeynamur.be/",
@@ -1605,7 +1605,7 @@
         "azul",
         "blanco"
       ],
-      "founded": 1900,
+      "founded": 1896,
       "expectation": "Permanencia",
       "finances": {
         "tier": 3,
@@ -1615,8 +1615,8 @@
       "academy": 3,
       "nickname": "MSC",
       "location_verified": true,
-      "history": "Münchner Sport-Club es un club de hockey de Múnich, Alemania, fundado en 1900. Es un club de Múnich fundado en 1896. Juega en Münchner SC y compite en la Feldhockey-Bundesliga.",
-      "description": "Münchner Sport-Club es un club de hockey de Múnich, Alemania, fundado en 1900. Es un club de Múnich fundado en 1896. Juega en Münchner SC y compite en la Feldhockey-Bundesliga.",
+      "history": "Münchner Sport-Club es un club de hockey de Múnich (Alemania), fundado en 1896. Es uno de los clubes tradicionales de hockey y tenis de la ciudad; juega en Múnich y compite en la Feldhockey-Bundesliga.",
+      "description": "Münchner Sport-Club es un club de hockey de Múnich (Alemania), fundado en 1896. Es uno de los clubes tradicionales de hockey y tenis de la ciudad; juega en Múnich y compite en la Feldhockey-Bundesliga.",
       "source_url": "https://www.muenchner-sportclub.de/",
       "source_type": "official",
       "history_source": "https://www.muenchner-sportclub.de/",
