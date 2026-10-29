@@ -70,6 +70,7 @@ const clubLinks = [
   { to: '/game/commercial', label: 'Comercial y marca', icon: Building2 },
   { to: '/game/finance', label: 'Finanzas', icon: Wallet },
   { to: '/game/staff', label: 'Staff', icon: Users },
+  { to: '/game/responsibilities', label: 'Responsabilidades', icon: ClipboardList },
   { to: '/game/board', label: 'Junta y visión', icon: Landmark },
   { to: '/game/youth', label: 'Cantera', icon: Shield },
   { to: '/game/affiliates', label: 'Afiliados y mentoring', icon: Network },

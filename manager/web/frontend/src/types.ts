@@ -1942,3 +1942,22 @@ export interface AnalysisData {
   source?: string
   message?: string
 }
+
+export interface ResponsibilityArea {
+  id: string
+  label: string
+  description: string
+  session: string
+  staff_name: string
+  staff_role: string
+  staff_rating: number | null
+  bonus: number
+  options: Array<{ name: string; role: string; rating: number }>
+}
+
+export interface ResponsibilitiesData {
+  areas: ResponsibilityArea[]
+  assigned: number
+  total: number
+  staff: Array<{ name: string; role: string; rating: number; salary: number }>
+}

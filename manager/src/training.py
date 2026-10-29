@@ -6,6 +6,7 @@ import random
 from typing import Any
 
 from .models import PlayerState, TeamState
+from .responsibilities import responsibility_bonus
 
 SESSION_TYPES: dict[str, dict[str, Any]] = {
     "recuperacion": {
@@ -205,7 +206,7 @@ def apply_training_plan(
     fitness_q = max(0.0, min(1.0, (team.staff_rating("fitness_coach") - 45.0) / 50.0))
     physio_q = max(0.0, min(1.0, (team.staff_rating("physio") - 45.0) / 50.0))
     analyst_q = max(0.0, min(1.0, (team.staff_rating("performance_analyst") - 45.0) / 50.0))
-    gk_q = max(0.0, min(1.0, (team.staff_rating("gk_coach") - 45.0) / 50.0))
+    gk_q = max(0.0, min(1.0, (team.staff_rating("gk_coach") - 45.0) / 50.0 + responsibility_bonus(team, "goalkeeping") * 0.10))
     fatigue_before = sum(p.fatigue for p in team.players) / max(1, len(team.players))
     morale_before = team.morale
     form_before = sum(p.form for p in team.players) / max(1, len(team.players))
@@ -227,6 +228,19 @@ def apply_training_plan(
             session_q = (quality + gk_q) / 2
         else:
             session_q = quality
+        area = {
+            "fisico": "fitness",
+            "activacion": "fitness",
+            "set_pieces": "set_pieces",
+            "ataque": "attack",
+            "defensa": "defense",
+            "video": "analysis",
+            "recuperacion": "medical",
+            "descanso": "medical",
+        }.get(session)
+        if area:
+            session_q = min(1.0, session_q + responsibility_bonus(team, area) * 0.08)
+        session_q = min(1.0, session_q + responsibility_bonus(team, "training") * 0.04)
         for p in team.players:
             fat = spec["fatigue"] * (1.0 - session_q * 0.12) * rng.uniform(0.85, 1.15)
             p.fatigue = max(0.0, min(100.0, p.fatigue + fat))

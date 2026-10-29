@@ -13,6 +13,7 @@ from typing import Any
 from .competitions import competition
 from .market import asking_price, market_players, scout_range
 from .models import GameState, PlayerState, TeamState
+from .responsibilities import responsibility_bonus
 
 FOCUS_LABELS = {
     "equilibrado": "Equilibrado",
@@ -57,6 +58,7 @@ def scout_context(state: GameState) -> dict[str, Any]:
     scout = next((m for m in team.staff if m.role == "scout"), None)
     quality, average_age = _team_quality(team)
     rating = scout.rating if scout else 55
+    rating = min(99, int(rating + responsibility_bonus(team, "scouting") * 10))
     return {
         "scout": {
             "name": scout.name if scout else "Red de ojeadores del club",

@@ -452,3 +452,17 @@ def test_api_live_protest_once_per_match(client):
     assert payload["protest_used"][payload["user_side"]] is True
     second = client.post("/api/match/live/protest", json={"tone": "respetuosa"})
     assert second.status_code == 409
+
+
+def test_api_responsibilities_assignment(client):
+    _new_api(client, seed="50")
+    data = client.get("/api/responsibilities")
+    assert data.status_code == 200, data.get_data(as_text=True)
+    payload = data.get_json()["data"]
+    assert payload["areas"]
+    staff = payload["staff"][0]
+    response = client.post("/api/responsibilities", json={"area": "attack", "staff_name": staff["name"]})
+    assert response.status_code == 200, response.get_data(as_text=True)
+    result = response.get_json()["data"]
+    assert result["responsibilities"]["areas"][1]["staff_name"] == staff["name"]
+    assert result["state"]["team"]["name"]

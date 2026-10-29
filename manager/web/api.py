@@ -56,6 +56,7 @@ from src.loans import loan_overview, offer_loan_out, request_loan_in
 from src.datahub import datahub_overview, set_instructions
 from src.history import history_overview
 from src.analysis import analysis_overview
+from src.responsibilities import responsibilities_overview, set_responsibility
 from src.affiliates import (
     affiliate_overview,
     assign_mentor,
@@ -2030,6 +2031,30 @@ def team_meeting_perform():
     return _ok(
         {"result": result, "meeting": team_meeting_context(state), "state": _state_payload(state)},
         result.get("message", "Reunión celebrada."),
+    )
+
+
+@api.get("/responsibilities")
+def responsibilities():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(responsibilities_overview(state))
+
+
+@api.post("/responsibilities")
+def responsibilities_update():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = set_responsibility(state, str(payload.get("area", "")), str(payload.get("staff_name", "")))
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo actualizar la responsabilidad."), 409, "responsibility_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "responsibilities": responsibilities_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
     )
 
 

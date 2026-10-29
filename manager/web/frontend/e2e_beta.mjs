@@ -200,6 +200,14 @@ try {
   result.finance = true
   await page.screenshot({ path: '/tmp/opencode/e2e_finance.png', fullPage: true })
 
+  await page.goto('/app/game/responsibilities')
+  await page.getByRole('heading', { name: 'Responsabilidades del staff' }).waitFor()
+  await page.getByTestId('responsibility-select-attack').selectOption({ index: 1 })
+  await page.getByTestId('responsibility-save-attack').click()
+  await page.locator('.responsibility-saved').waitFor()
+  result.responsibilities = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_responsibilities.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true
