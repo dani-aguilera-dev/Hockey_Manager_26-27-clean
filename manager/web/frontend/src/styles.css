@@ -832,3 +832,88 @@ select option { background: #0b1220; color: #e8eef8; }
 .promotion-objective.status-failed { opacity: .82; border-left-color: var(--danger); }
 .promotion-objective-state { margin: 2px 0 0; color: var(--text); font-size: 12px; font-weight: 600; }
 .promotion-objective.status-pending { border-left-color: var(--muted-2); }
+
+/* Beta avanzada: prensa, calendario, amistosos y editor de fichas */
+.press-context-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.press-effect {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--gold);
+  font-size: 12px;
+  font-style: normal;
+}
+.press-followup {
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+.editor-attributes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin-top: 12px;
+}
+.editor-attributes .field input {
+  padding: 6px 8px;
+}
+.calendar-row,
+.friendly-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.calendar-row:last-child,
+.friendly-row:last-child {
+  border-bottom: 0;
+}
+.calendar-date {
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.calendar-date span,
+.friendly-row span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.calendar-match {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  min-width: 0;
+}
+.calendar-match b {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.calendar-match span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.friendly-row > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+@media (max-width: 980px) {
+  .press-context-grid { grid-template-columns: 1fr; }
+  .editor-attributes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .calendar-row, .friendly-row { align-items: flex-start; flex-direction: column; }
+  .calendar-date { min-width: 0; }
+  .editor-attributes { grid-template-columns: 1fr; }
+}

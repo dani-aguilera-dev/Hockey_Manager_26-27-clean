@@ -51,6 +51,8 @@ export default function TeamPage() {
           <p className="small muted">{club.history || 'Sin historia registrada.'}</p>
           <div className="inline"><Crest src={team.crest} name={team.name} size={50} /><div><b>{club.full_name || team.name}</b><div className="small muted">Fundado en {club.founded || '—'}</div></div></div>
           <p className="small muted mt-2">Colores: {club.colors?.length ? club.colors.join(' · ') : '—'}</p>
+          <p className="small muted">Ubicación: {[club.city || team.city, club.province, club.community, club.country].filter(Boolean).join(' · ')}</p>
+          <div className="inline mt-1">{club.location_verified ? <Badge tone="ok">Ubicación verificada</Badge> : <Badge tone="warn">Ubicación por revisar</Badge>}{club.source_url && <a className="small gold" href={club.source_url} target="_blank" rel="noreferrer">Fuente</a>}</div>
         </Card>
         <Card>
           <h3>Instalaciones</h3>

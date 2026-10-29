@@ -7,6 +7,7 @@ import LoadGame from './pages/LoadGame'
 import SaveManager from './pages/SaveManager'
 import Options from './pages/Options'
 import Dashboard from './pages/Dashboard'
+import CalendarPage from './pages/Calendar'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -64,6 +65,7 @@ export default function App() {
       >
         <Route index element={<Dashboard />} />
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="calendar" element={<CalendarPage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />

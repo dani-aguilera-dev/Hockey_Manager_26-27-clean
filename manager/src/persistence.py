@@ -134,6 +134,33 @@ def _backfill_leagues(state: GameState) -> None:
             player.league = DEFAULT_REGIONAL_LEAGUE
 
 
+def _backfill_clean_players(state: GameState) -> None:
+    """Elimina cuerpo técnico que antiguas partidas cargaban como jugadores.
+
+    iSquad mezcla plantilla y staff en el CSV. Las partidas nuevas ya se cargan
+    filtradas; esta migración limpia las antiguas y evita que fisioterapeutas,
+    delegados o entrenadoras aparezcan como futbolistas.
+    """
+    staff_profiles = {
+        "delegado equipo",
+        "entrenador",
+        "staff adicional",
+        "fisioterapeuta",
+        "preparador fisico",
+        "médico",
+        "medico",
+        "psicólogo",
+        "psicologo",
+    }
+    for team in state.teams.values():
+        team.players = [
+            player for player in team.players if str(player.perfil or "").strip().lower() not in staff_profiles
+        ]
+    state.free_agents = [
+        player for player in state.free_agents if str(player.perfil or "").strip().lower() not in staff_profiles
+    ]
+
+
 def _backfill_staff(state: GameState) -> None:
     """Añade el cuerpo técnico de iSquad a partidas antiguas."""
     if all(team.staff and any(m.role == "head_coach" for m in team.staff) for team in state.teams.values()):
@@ -272,6 +299,7 @@ def backfill_state(state: GameState) -> GameState:
     _backfill_communities(state)
     _backfill_media(state)
     _backfill_leagues(state)
+    _backfill_clean_players(state)
     _backfill_staff(state)
     _backfill_ratings(state)
     _backfill_lower_agents(state)
@@ -293,6 +321,7 @@ def load_game(name_or_id: str | int, path: Path | str = DEFAULT_DB) -> GameState
     _backfill_communities(state)
     _backfill_media(state)
     _backfill_leagues(state)
+    _backfill_clean_players(state)
     _backfill_staff(state)
     _backfill_ratings(state)
     _backfill_lower_agents(state)
@@ -355,6 +384,7 @@ def import_json(path: Path | str) -> GameState:
     _backfill_communities(state)
     _backfill_media(state)
     _backfill_leagues(state)
+    _backfill_clean_players(state)
     _backfill_staff(state)
     _backfill_ratings(state)
     _backfill_lower_agents(state)

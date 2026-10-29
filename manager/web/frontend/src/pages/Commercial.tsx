@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, BadgeEuro, Building2, Check, Megaphone, RefreshCw, Ticket, TrendingUp, Users, X } from 'lucide-react'
 import { api } from '../lib/api'
 import { money } from '../lib/format'
-import type { CommercialCampaign, CommercialData, SponsorOffer } from '../types'
+import type { BrandData, BrandOffer, CommercialCampaign, CommercialData, SponsorOffer } from '../types'
 import { useGame } from '../context/GameContext'
 import { useToast } from '../context/ToastContext'
 import { Badge, Button, Card, LoadingBlock, PageHeader, Progress, StatCard } from '../components/ui'
 
 interface CommercialPayload {
   commercial: CommercialData
+  brands: BrandData
   finance: { cash: number; sponsor_annual: number }
-  team: { name: string }
+  team: { name: string; equipment_bonus: number }
 }
 
 export default function CommercialPage() {
@@ -45,6 +46,20 @@ export default function CommercialPage() {
       load()
     } catch (err) {
       toast(err instanceof Error ? err.message : 'No se pudo procesar el patrocinio.', 'danger')
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  async function brandAction(offer: BrandOffer, action: 'accept' | 'reject') {
+    setBusy(`brand-${offer.id}`)
+    try {
+      const response = await api.post<{ state: unknown }>(`/brands/${offer.id}`, { action })
+      applyState(response.data.state as never)
+      toast(response.message || (action === 'accept' ? 'Marca firmada.' : 'Oferta de marca rechazada.'), action === 'accept' ? 'success' : 'info')
+      load()
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudo procesar la marca.', 'danger')
     } finally {
       setBusy(null)
     }
@@ -146,6 +161,36 @@ export default function CommercialPage() {
             </div>
           ))}
           {!commercial.offers.length && <p className="small muted">No hay ofertas nuevas. La próxima llegará con la simulación.</p>}
+        </div>
+      </Card>
+
+      <Card className="mt-2">
+        <div className="inline" style={{ justifyContent: 'space-between' }}>
+          <div><div className="cat">EQUIPACIÓN · MARCAS REALES DE HOCKEY</div><h3 style={{ margin: '3px 0 0' }}>{data.brands.active_deals.length} acuerdos de material</h3></div>
+          <Badge tone="blue">Bonus equipación +{data.brands.equipment_bonus.toFixed(1)}</Badge>
+        </div>
+        <div className="stack-sm mt-2">
+          {data.brands.active_deals.map((deal) => (
+            <div className="sponsor-row" key={deal.id}>
+              <span className="sponsor-mark"><Building2 size={17} /></span>
+              <span className="sponsor-main"><b>{deal.brand}</b><span>{(deal.categories || []).join(' · ')} · hasta {deal.end || '—'}</span></span>
+              <b className="gold">{money(deal.annual)}</b>
+            </div>
+          ))}
+          {!data.brands.active_deals.length && <p className="small muted">Todavía no hay marca de equipación. Firma una oferta para mejorar material, caja y marca.</p>}
+        </div>
+        <div className="sponsor-offer-grid mt-2">
+          {data.brands.offers.map((offer) => (
+            <div className="sponsor-offer" key={offer.id}>
+              <div className="inline" style={{ justifyContent: 'space-between' }}><Badge tone="blue">{offer.tier_label || offer.tier}</Badge><span className="small muted">{offer.years} años</span></div>
+              <h3>{offer.brand}</h3>
+              <p className="small muted">{(offer.categories || []).join(' · ')} · {offer.requirement}</p>
+              <p className="small muted">{offer.description}</p>
+              <div className="sponsor-offer-numbers"><div><span>Anual</span><b>{money(offer.annual)}</b></div><div><span>Firma</span><b>{money(offer.signing_bonus || 0)}</b></div><div><span>Bonus</span><b>+{Number(offer.bonus || 0).toFixed(1)}</b></div></div>
+              <div className="actions mt-2"><Button size="sm" variant="primary" icon={Check} onClick={() => brandAction(offer, 'accept')} loading={busy === `brand-${offer.id}`}>Firmar marca</Button><Button size="sm" icon={X} onClick={() => brandAction(offer, 'reject')} loading={busy === `brand-${offer.id}`}>Rechazar</Button></div>
+            </div>
+          ))}
+          {!data.brands.offers.length && <p className="small muted">No hay ofertas de equipación nuevas. La próxima llegará con la simulación.</p>}
         </div>
       </Card>
 

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "osaka",
+    "name": "Osaka",
+    "country": "Países Bajos",
+    "categories": ["sticks", "apparel", "shoes"],
+    "tier": "global",
+    "base": 260000,
+    "bonus": 1.1,
+    "description": "Marca neerlandesa de hockey con palas, ropa y calzado de alto rendimiento."
+  },
+  {
+    "id": "ritual",
+    "name": "Ritual",
+    "country": "Países Bajos",
+    "categories": ["sticks", "protection"],
+    "tier": "global",
+    "base": 235000,
+    "bonus": 1.0,
+    "description": "Marca europea especializada en palas, protección y equipación de hockey."
+  },
+  {
+    "id": "gryphon",
+    "name": "Gryphon",
+    "country": "Países Bajos",
+    "categories": ["sticks", "protection", "apparel"],
+    "tier": "global",
+    "base": 245000,
+    "bonus": 1.0,
+    "description": "Fabricante histórico de palas y protección con presencia internacional."
+  },
+  {
+    "id": "grays",
+    "name": "Grays",
+    "country": "Reino Unido",
+    "categories": ["sticks", "shoes", "apparel"],
+    "tier": "global",
+    "base": 220000,
+    "bonus": 0.9,
+    "description": "Marca británica de palas, calzado y equipación de hockey hierba."
+  },
+  {
+    "id": "tk",
+    "name": "TK",
+    "country": "Países Bajos",
+    "categories": ["sticks", "protection", "goalkeeping"],
+    "tier": "global",
+    "base": 230000,
+    "bonus": 1.0,
+    "description": "Marca neerlandesa con palas, protección y material para porteros."
+  },
+  {
+    "id": "mercian",
+    "name": "Mercian",
+    "country": "Reino Unido",
+    "categories": ["sticks", "protection", "apparel"],
+    "tier": "nacional",
+    "base": 170000,
+    "bonus": 0.8,
+    "description": "Marca británica de hockey con palas, protecciones y ropa técnica."
+  },
+  {
+    "id": "stx",
+    "name": "STX",
+    "country": "Estados Unidos",
+    "categories": ["sticks", "apparel", "protection"],
+    "tier": "global",
+    "base": 210000,
+    "bonus": 0.9,
+    "description": "Marca internacional de palas y equipación con fuerte presencia en hockey."
+  },
+  {
+    "id": "adidas",
+    "name": "Adidas",
+    "country": "Alemania",
+    "categories": ["shoes", "apparel"],
+    "tier": "global",
+    "base": 300000,
+    "bonus": 1.0,
+    "description": "Marca global de calzado y ropa deportiva con línea de hockey."
+  },
+  {
+    "id": "kookaburra",
+    "name": "Kookaburra",
+    "country": "Australia",
+    "categories": ["sticks", "balls", "apparel"],
+    "tier": "global",
+    "base": 200000,
+    "bonus": 0.8,
+    "description": "Marca australiana de material de hockey, palas y bolas."
+  },
+  {
+    "id": "jdh",
+    "name": "JDH",
+    "country": "Países Bajos",
+    "categories": ["sticks", "protection"],
+    "tier": "nacional",
+    "base": 155000,
+    "bonus": 0.8,
+    "description": "Fabricante neerlandés de palas y protección para hockey hierba."
+  },
+  {
+    "id": "malik",
+    "name": "Malik",
+    "country": "Pakistán",
+    "categories": ["sticks"],
+    "tier": "nacional",
+    "base": 145000,
+    "bonus": 0.9,
+    "description": "Marca con tradición en palas de hockey y acabados artesanales."
+  },
+  {
+    "id": "dita",
+    "name": "Dita",
+    "country": "Países Bajos",
+    "categories": ["sticks", "protection"],
+    "tier": "nacional",
+    "base": 140000,
+    "bonus": 0.7,
+    "description": "Marca neerlandesa de palas y protección de hockey."
+  },
+  {
+    "id": "voodoo",
+    "name": "Voodoo",
+    "country": "Reino Unido",
+    "categories": ["sticks", "protection"],
+    "tier": "nacional",
+    "base": 135000,
+    "bonus": 0.7,
+    "description": "Marca británica de palas y equipamiento de hockey."
+  },
+  {
+    "id": "byte",
+    "name": "Byte",
+    "country": "Países Bajos",
+    "categories": ["sticks", "protection"],
+    "tier": "nacional",
+    "base": 130000,
+    "bonus": 0.7,
+    "description": "Marca europea de palas y protección para jugadores de campo."
+  },
+  {
+    "id": "princess",
+    "name": "Princess",
+    "country": "Países Bajos",
+    "categories": ["sticks", "apparel"],
+    "tier": "nacional",
+    "base": 125000,
+    "bonus": 0.6,
+    "description": "Marca neerlandesa de hockey con palas y equipación."
+  },
+  {
+    "id": "harrow",
+    "name": "Harrow",
+    "country": "Reino Unido",
+    "categories": ["sticks", "balls"],
+    "tier": "nacional",
+    "base": 120000,
+    "bonus": 0.6,
+    "description": "Marca británica de palas y material de entrenamiento."
+  },
+  {
+    "id": "obo",
+    "name": "OBO",
+    "country": "Nueva Zelanda",
+    "categories": ["goalkeeping", "protection"],
+    "tier": "global",
+    "base": 190000,
+    "bonus": 0.8,
+    "description": "Referencia mundial en equipamiento de portero de hockey."
+  },
+  {
+    "id": "fatpipe",
+    "name": "Fat Pipe",
+    "country": "Suecia",
+    "categories": ["sticks", "protection"],
+    "tier": "nacional",
+    "base": 130000,
+    "bonus": 0.7,
+    "description": "Marca escandinava de palas y protección de hockey."
+  },
+  {
+    "id": "monkey",
+    "name": "Monkey",
+    "country": "Países Bajos",
+    "categories": ["sticks", "protection"],
+    "tier": "nacional",
+    "base": 115000,
+    "bonus": 0.6,
+    "description": "Marca europea de palas y accesorios de hockey."
+  },
+  {
+    "id": "tempest",
+    "name": "Tempest",
+    "country": "Reino Unido",
+    "categories": ["sticks"],
+    "tier": "regional",
+    "base": 90000,
+    "bonus": 0.5,
+    "description": "Marca británica de palas de hockey con enfoque artesanal."
+  },
+  {
+    "id": "rage",
+    "name": "Rage",
+    "country": "Países Bajos",
+    "categories": ["sticks", "protection"],
+    "tier": "regional",
+    "base": 85000,
+    "bonus": 0.5,
+    "description": "Marca de palas y protección para jugadores de club."
+  }
+]

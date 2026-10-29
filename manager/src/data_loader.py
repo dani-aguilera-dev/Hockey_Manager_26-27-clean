@@ -16,6 +16,21 @@ BASE = project_root()
 DATA = BASE / "manager" / "data"
 TOOLS = BASE / "tools"
 
+# iSquad mezcla plantilla y cuerpo técnico en el mismo CSV. Solo estos perfiles
+# son jugadores; el resto se carga en `staff_isquad.json`. Los perfiles vacíos
+# son jugadores de equipos B que no tienen ficha individual en la fuente.
+STAFF_PROFILES = {
+    "delegado equipo",
+    "entrenador",
+    "staff adicional",
+    "fisioterapeuta",
+    "preparador fisico",
+    "médico",
+    "medico",
+    "psicólogo",
+    "psicologo",
+}
+
 
 def norm(s: str) -> str:
     s = str(s or "").upper()
@@ -101,6 +116,9 @@ def load_teams() -> tuple[dict[str, TeamState], dict[str, dict], dict[str, dict]
         players: list[PlayerState] = []
         seen: dict[str, int] = {}
         for i, r in enumerate(team_rows):
+            profile = str(r.get("perfil", "")).strip().lower()
+            if profile in STAFF_PROFILES:
+                continue
             name = str(r.get("jugador", "")).strip()
             key = slug(name)
             seen[key] = seen.get(key, 0) + 1
@@ -285,6 +303,8 @@ def load_lower_division_free_agents() -> list[PlayerState]:
             league = str(row.get("liga") or "").strip()
             if league not in LOWER_LEAGUE_CODES:
                 continue
+            if str(row.get("perfil") or "").strip().lower() in STAFF_PROFILES:
+                continue
             team_name = str(row.get("equipo") or "").strip()
             # San Fernando 1ª ya se incorpora desde el equipo 1A original.
             if team_name == "CLUB DE HOCKEY SAN FERNANDO":
@@ -313,6 +333,12 @@ def load_lower_division_free_agents() -> list[PlayerState]:
                 overall = float(row.get("overall") or 0)
             except (TypeError, ValueError):
                 overall = 0.0
+            # Techo general por categoría: un jugador de 1A puede destacar,
+            # pero no debe superar la media del DHB más bajo. Es una
+            # calibración de escalera, no una excepción de club.
+            from .ratings import profile as league_profile
+
+            overall = min(overall, league_profile(league).standard + 3.4)
             try:
                 potential = float(row.get("potential") or overall)
             except (TypeError, ValueError):

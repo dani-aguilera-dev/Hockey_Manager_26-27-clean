@@ -38,6 +38,18 @@ from src.events import resolve_event as resolve_game_event
 from src.data_loader import load_clubs
 from src.ehl import ehl_next_date, ehl_status_text, simulate_ehl_round
 from src.finance import financial_summary
+from src.friendlies import (
+    cancel_friendly,
+    friendlies_payload,
+    play_friendly,
+    schedule_friendly,
+)
+from src.brands import (
+    accept_brand_offer,
+    brand_summary,
+    reject_brand_offer,
+)
+from src.player_editor import edit_player, editor_payload, find_player
 from src.international import club_catalog, international_cities, load_all_teams
 from src.logistics import travel_options
 from src.market import (
@@ -232,6 +244,9 @@ def _team(t):
             "board_pressure": t.board_pressure,
             "board_patience": t.board_patience,
             "prep_bonus": round(float(t.prep_bonus), 2),
+            "media_confidence": t.media_confidence,
+            "equipment_bonus": round(float(t.equipment_bonus), 2),
+            "equipment_deals": t.equipment_deals,
             "management_score": round(float(t.management_score()), 1),
             "brand_rating": t.brand_rating,
             "ticket_price": t.ticket_price,
@@ -461,6 +476,7 @@ def _state_payload(state):
         "next_fixture": _fixture(fx, state) if fx else None,
         "finance": financial_summary(user),
         "commercial": commercial_summary(state),
+        "friendlies": friendlies_payload(state),
         "news": [_news_item(state, item) for item in news_feed(state, 20)],
         "awards": _awards_payload(state, awards_for_last_match(state)),
         "inbox": list(reversed(state.inbox[-8:])),
@@ -1010,6 +1026,7 @@ def player_detail(player_id):
         "owner": owner_summary,
         "owner_name": owner.name if owner else "Agente libre",
         "is_user": owner is not None and owner.id == state.club_id,
+        "editor": editor_payload(player),
         "market": None,
     }
     if owner is None or owner.id != state.club_id:
@@ -1054,6 +1071,12 @@ def team_detail(team_id):
                 "history": club.get("history", ""),
                 "founded": club.get("founded", ""),
                 "full_name": club.get("full_name", selected.name),
+                "city": club.get("city", selected.city),
+                "province": club.get("province", ""),
+                "community": club.get("community", selected.community),
+                "country": club.get("country", selected.country),
+                "source_url": club.get("source_url", ""),
+                "location_verified": club.get("location_verified", False),
                 "stadium": club.get("stadium", {}),
                 "colors": club.get("colors", []),
                 "facilities": club.get("facilities", {}),
@@ -1425,7 +1448,14 @@ def commercial():
     if err:
         return err
     generate_sponsor_offers(state)
-    return _ok({"commercial": commercial_summary(state), "finance": financial_summary(state.user_team), "team": _team(state.user_team)})
+    return _ok(
+        {
+            "commercial": commercial_summary(state),
+            "brands": brand_summary(state),
+            "finance": financial_summary(state.user_team),
+            "team": _team(state.user_team),
+        }
+    )
 
 
 @api.post("/commercial/offers/<offer_id>")
@@ -1781,6 +1811,126 @@ def youth_action(action, player_id):
 
 
 # ---------------------------------------------------------------------------
+# calendar / friendlies / brands / player editor
+# ---------------------------------------------------------------------------
+
+
+@api.get("/calendar")
+def calendar():
+    state, err = _state()
+    if err:
+        return err
+    official = sorted(
+        [fixture for fixture in state.fixtures if fixture.phase in ("regular", "cup", "promotion")],
+        key=lambda fixture: (fixture.date, fixture.round, fixture.id),
+    )
+    friendly_payload = friendlies_payload(state)
+    pending_friendlies = [item for item in friendly_payload["items"] if not item["played"]]
+    return _ok(
+        {
+            "friendlies": friendly_payload,
+            "fixtures": [_fixture(fixture, state) for fixture in official],
+            "next_fixture": _fixture(state.next_user_fixture(), state) if state.next_user_fixture() else None,
+            "next_friendly": pending_friendlies[0] if pending_friendlies else None,
+            "today": state.date,
+            "season": state.season,
+            "competition": _competition(competition(state.competition)),
+        }
+    )
+
+
+@api.post("/friendlies")
+def friendly_create():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = schedule_friendly(
+        state,
+        str(payload.get("opponent_id", "")),
+        str(payload.get("date", "")),
+        home=str(payload.get("home", "1")) not in ("0", "false", "False", ""),
+        notes=str(payload.get("notes", "")),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo programar el amistoso."), 409, "friendly_failed")
+    _save(state)
+    return _ok({"result": result, "state": _state_payload(state)}, result.get("message", ""))
+
+
+@api.post("/friendlies/<friendly_id>/play")
+def friendly_play(friendly_id: str):
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    lineup = payload.get("lineup") if isinstance(payload, dict) else None
+    result = play_friendly(state, friendly_id, lineup if isinstance(lineup, list) else None)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo jugar el amistoso."), 409, "friendly_failed")
+    _save(state)
+    return _ok({"result": result, "state": _state_payload(state)}, result.get("message", ""))
+
+
+@api.delete("/friendlies/<friendly_id>")
+def friendly_delete(friendly_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = cancel_friendly(state, friendly_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo cancelar el amistoso."), 409, "friendly_failed")
+    _save(state)
+    return _ok({"result": result, "state": _state_payload(state)}, result.get("message", ""))
+
+
+@api.get("/brands")
+def brands():
+    state, err = _state()
+    if err:
+        return err
+    return _ok({"brands": brand_summary(state), "team": _team(state.user_team)})
+
+
+@api.post("/brands/<offer_id>")
+def brand_action(offer_id: str):
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    action = payload.get("action", "accept")
+    result = accept_brand_offer(state, offer_id) if action == "accept" else reject_brand_offer(state, offer_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo procesar la marca."), 409, "brand_failed")
+    _save(state)
+    return _ok({"result": result, "state": _state_payload(state)}, result.get("message", ""))
+
+
+@api.post("/player/<player_id>/edit")
+def player_edit(player_id: str):
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    changes = payload.get("changes", payload) if isinstance(payload, dict) else {}
+    result = edit_player(state, player_id, changes if isinstance(changes, dict) else {})
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo editar la ficha."), 400, "player_edit_failed")
+    _save(state)
+    player, owner_id = find_player(state, player_id)
+    owner = state.teams.get(owner_id) if owner_id else None
+    return _ok(
+        {
+            "result": result,
+            "player": _player(player, owner) if player else None,
+            "editor": editor_payload(player) if player else None,
+            "state": _state_payload(state),
+        },
+        result.get("message", ""),
+    )
+
+
+# ---------------------------------------------------------------------------
 # press / cup / ehl / table
 # ---------------------------------------------------------------------------
 
@@ -1796,6 +1946,7 @@ def press():
             {
                 "id": q["id"],
                 "question": q["question"],
+                "topic": q.get("topic", ""),
                 "player_id": q.get("player_id", ""),
                 "options": [
                     {"label": label, "effects": effects, "headline": headline}

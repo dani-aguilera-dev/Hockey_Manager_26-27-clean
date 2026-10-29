@@ -217,10 +217,10 @@ class MatchEngine:
         am = self.away.management_bonus(away_lineup)
         ht = self.tactical_matchup_bonus(0)
         at = self.tactical_matchup_bonus(1)
-        ha += hm + ht * 0.8 + self.live_bonus[0] + self.talk_bonus[0] + self.home.prep_bonus
-        hd += hm + ht * 0.5 + self.live_bonus[0] * 0.5 + self.talk_bonus[0] * 0.7 + self.home.prep_bonus * 0.5
-        aa += am + at * 0.8 + self.live_bonus[1] + self.talk_bonus[1] + self.away.prep_bonus
-        ad += am + at * 0.5 + self.live_bonus[1] * 0.5 + self.talk_bonus[1] * 0.7 + self.away.prep_bonus * 0.5
+        ha += hm + ht * 0.8 + self.live_bonus[0] + self.talk_bonus[0] + self.home.prep_bonus + self.home.equipment_bonus
+        hd += hm + ht * 0.5 + self.live_bonus[0] * 0.5 + self.talk_bonus[0] * 0.7 + self.home.prep_bonus * 0.5 + self.home.equipment_bonus * 0.5
+        aa += am + at * 0.8 + self.live_bonus[1] + self.talk_bonus[1] + self.away.prep_bonus + self.away.equipment_bonus
+        ad += am + at * 0.5 + self.live_bonus[1] * 0.5 + self.talk_bonus[1] * 0.7 + self.away.prep_bonus * 0.5 + self.away.equipment_bonus * 0.5
         ha += (self.home.morale - 10) * 0.3
         hd += (self.home.morale - 10) * 0.3
         aa += (self.away.morale - 10) * 0.3

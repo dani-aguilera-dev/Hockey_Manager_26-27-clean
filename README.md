@@ -53,7 +53,7 @@ python3 build_excel_attributes.py
 
 ## Manager (juego de gestión)
 
-El proyecto incluye un juego de entrenador/gestión, solo texto, inspirado en Football Manager. El juego ya es jugable con **DHA y DHB** desde el inicio y añade **seis ligas internacionales** (Países Bajos, Bélgica, Alemania, Inglaterra, Argentina e India), con partidos en directo, charla de vestuario, IA reactiva, entrenamiento semanal, staff, finanzas, mercado, contratos, multi-temporada, DHB de dos fases, agentes libres, Copa del Rey, cantera, prensa, junta dinámica, logística, clasificación, Final Four, playout y guardado/carga. La **web alpha** añade fotos reales de los 976 jugadores, escudos oficiales de iSquad, noticias generadas, un editor de once visual y un menú global para guardar, cargar, volver al menú principal y ajustar opciones.
+El proyecto incluye un juego de entrenador/gestión, solo texto, inspirado en Football Manager. El juego ya es jugable con **DHA y DHB** desde el inicio y añade **seis ligas internacionales** (Países Bajos, Bélgica, Alemania, Inglaterra, Argentina e India), con partidos en directo, charla de vestuario, IA reactiva, entrenamiento semanal, staff, finanzas, mercado, contratos, multi-temporada, DHB de dos fases, agentes libres, Copa del Rey, cantera, prensa, junta dinámica, logística, clasificación, Final Four, playout y guardado/carga. La **beta avanzada** añade fotos reales de jugadores, escudos oficiales de iSquad, noticias generadas, un editor de once visual, calendario y amistosos, prensa con medios, marcas reales de equipación, editor de fichas y un menú global para guardar, cargar, volver al menú principal y ajustar opciones.
 
 - [`manager/README.md`](manager/README.md) — índice y cómo ejecutar el juego.
 - [`manager/docs/00_VISION_Y_ARQUITECTURA.md`](manager/docs/00_VISION_Y_ARQUITECTURA.md) — arquitectura.
@@ -71,6 +71,8 @@ El proyecto incluye un juego de entrenador/gestión, solo texto, inspirado en Fo
 - [`manager/docs/12_FASE4_COPA_CANTERA_PRENSA_JUNTA.md`](manager/docs/12_FASE4_COPA_CANTERA_PRENSA_JUNTA.md) — Copa, cantera, prensa y junta.
 - [`manager/docs/13_FASE5A_DHB_REAL_Y_AGENTES_LIBRES.md`](manager/docs/13_FASE5A_DHB_REAL_Y_AGENTES_LIBRES.md) — DHB de dos fases y agentes libres.
 - [`manager/docs/15_WEB_ALPHA.md`](manager/docs/15_WEB_ALPHA.md) — alpha web.
+- [`manager/docs/45_BETA_AVANZADA.md`](manager/docs/45_BETA_AVANZADA.md) — beta avanzada: calendario, amistosos, prensa, marcas, editor y auditoría.
+- [`manager/docs/46_AUDITORIA_CLUBES.md`](manager/docs/46_AUDITORIA_CLUBES.md) — ubicaciones y fuentes de clubes.
 - [`manager/docs/16_DISENO_UI.md`](manager/docs/16_DISENO_UI.md) — diseño visual, paleta, escudos y usabilidad.
 - [`manager/docs/17_CANTERA_Y_CATEGORIAS.md`](manager/docs/17_CANTERA_Y_CATEGORIAS.md) — cantera Sub-16/Sub-18/Sub-21 y nombres por comunidad.
 - [`manager/docs/18_SIMULACION_DIARIA_Y_SCOUTING.md`](manager/docs/18_SIMULACION_DIARIA_Y_SCOUTING.md) — calendario diario, eventos, vestuario, mercado, equipos e histórico.

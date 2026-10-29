@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, BadgeEuro, Heart, MessageSquare, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BadgeEuro, Heart, MessageSquare, Pencil, ShieldCheck } from 'lucide-react'
 import { api } from '../lib/api'
 import { dateLabel, money, number } from '../lib/format'
-import type { PlayerDetailPayload } from '../types'
+import type { PlayerDetailPayload, PlayerEditorData } from '../types'
 import { useGame } from '../context/GameContext'
 import { useToast } from '../context/ToastContext'
-import { Avatar, Badge, Button, Card, Crest, Field, LoadingBlock, PageHeader, Progress } from '../components/ui'
+import { Avatar, Badge, Button, Card, Crest, Field, LoadingBlock, Modal, PageHeader, Progress } from '../components/ui'
 
 const attrGroups: Array<[string, string[]]> = [
   ['Técnica', ['control', 'pase', 'conduccion', 'golpeo', 'flick', 'regate_3d', 'definicion']],
@@ -30,6 +30,9 @@ export default function PlayerPage() {
   const [loading, setLoading] = useState(true)
   const [listingPrice, setListingPrice] = useState('')
   const [listingBusy, setListingBusy] = useState(false)
+  const [editorOpen, setEditorOpen] = useState(false)
+  const [editorBusy, setEditorBusy] = useState(false)
+  const [editor, setEditor] = useState<PlayerEditorData | null>(null)
 
   useEffect(() => {
     if (!id) return
@@ -37,6 +40,7 @@ export default function PlayerPage() {
     api.get<PlayerDetailPayload>(`/player/${id}`)
       .then(({ data }) => {
         setData(data)
+        setEditor(data.editor || null)
         setListingPrice(String(data.player.transfer_asking_price || data.player.value || 0))
       })
       .catch((err) => toast(err instanceof Error ? err.message : 'No se pudo cargar la ficha.', 'danger'))
@@ -63,6 +67,34 @@ export default function PlayerPage() {
     }
   }
 
+  async function saveEditor() {
+    if (!data || !editor) return
+    setEditorBusy(true)
+    try {
+      const response = await api.post<{ player: PlayerDetailPayload['player']; editor: PlayerEditorData; state: unknown }>(`/player/${data.player.id}/edit`, {
+        changes: {
+          name: editor.player.name,
+          age: editor.player.age,
+          position_group: editor.player.position_group,
+          subposition: editor.player.subposition,
+          archetype: editor.player.archetype,
+          overall: editor.player.overall,
+          potential: editor.player.potential,
+          attributes: editor.player.attributes,
+        },
+      })
+      setEditor(response.data.editor)
+      setData((current) => current ? { ...current, player: response.data.player, editor: response.data.editor } : current)
+      applyState(response.data.state as never)
+      toast(response.message || 'Ficha actualizada.', 'success')
+      setEditorOpen(false)
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudo editar la ficha.', 'danger')
+    } finally {
+      setEditorBusy(false)
+    }
+  }
+
   if (loading) return <LoadingBlock label="Cargando ficha del jugador…" />
   if (!data) return <Card><p className="muted">No se encontró el jugador.</p><Button onClick={() => navigate(-1)}>Volver</Button></Card>
 
@@ -74,7 +106,7 @@ export default function PlayerPage() {
         eyebrow={`${player.league_label} · ${player.archetype}`}
         title={player.name}
         subtitle={`${player.age} años · ${player.subposition} · ${player.origin_team ? `procede de ${player.origin_team}` : owner_name} · valor ${money(player.value)}`}
-        actions={<><Button icon={ArrowLeft} onClick={() => navigate(-1)}>Volver</Button>{data.is_user && <Button variant="primary" icon={MessageSquare} onClick={() => navigate(`/game/chat?target_type=player&target_id=${encodeURIComponent(player.id)}`)}>Hablar</Button>}</>}
+        actions={<><Button icon={ArrowLeft} onClick={() => navigate(-1)}>Volver</Button>{editor && <Button icon={Pencil} onClick={() => setEditorOpen(true)}>Editar ficha</Button>}{data.is_user && <Button variant="primary" icon={MessageSquare} onClick={() => navigate(`/game/chat?target_type=player&target_id=${encodeURIComponent(player.id)}`)}>Hablar</Button>}</>}
       />
 
       <section className="player-hero">
@@ -198,6 +230,62 @@ export default function PlayerPage() {
           </table>
         </div>
       </Card>
+
+      <Modal open={editorOpen} title="Editar ficha del jugador" onClose={() => setEditorOpen(false)} wide>
+        {editor && (
+          <div className="stack-sm">
+            <div className="notice notice-info">
+              <Pencil size={16} />
+              <div>Corrige posiciones estimadas, atributos o datos básicos. El cambio queda registrado en la partida y no reinicia la temporada.</div>
+            </div>
+            <div className="form-row">
+              <Field label="Nombre"><input value={editor.player.name} onChange={(event) => setEditor({ ...editor, player: { ...editor.player, name: event.target.value } })} /></Field>
+              <Field label="Edad"><input type="number" min={14} max={50} value={editor.player.age} onChange={(event) => setEditor({ ...editor, player: { ...editor.player, age: Number(event.target.value) } })} /></Field>
+            </div>
+            <div className="form-row">
+              <Field label="Línea">
+                <select value={editor.player.position_group} onChange={(event) => setEditor({ ...editor, player: { ...editor.player, position_group: event.target.value } })}>
+                  {editor.position_groups.map((group) => <option key={group} value={group}>{group}</option>)}
+                </select>
+              </Field>
+              <Field label="Posición">
+                <select value={editor.player.subposition} onChange={(event) => setEditor({ ...editor, player: { ...editor.player, subposition: event.target.value } })}>
+                  {editor.subpositions.map((sub) => <option key={sub} value={sub}>{sub}</option>)}
+                </select>
+              </Field>
+              <Field label="Arquetipo"><input value={editor.player.archetype} onChange={(event) => setEditor({ ...editor, player: { ...editor.player, archetype: event.target.value } })} /></Field>
+            </div>
+            <div className="form-row">
+              <Field label="Overall"><input type="number" min={1} max={99} value={editor.player.overall} onChange={(event) => setEditor({ ...editor, player: { ...editor.player, overall: Number(event.target.value) } })} /></Field>
+              <Field label="Potencial"><input type="number" min={1} max={99} value={editor.player.potential} onChange={(event) => setEditor({ ...editor, player: { ...editor.player, potential: Number(event.target.value) } })} /></Field>
+            </div>
+            <details>
+              <summary className="small muted">Editar atributos ({Object.keys(editor.player.attributes).length})</summary>
+              <div className="editor-attributes">
+                {Object.entries(editor.player.attributes).sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => (
+                  <label className="field" key={key}>
+                    <span>{labelAttr(key)}</span>
+                    <input
+                      type="number"
+                      min={1}
+                      max={99}
+                      value={value}
+                      onChange={(event) => setEditor({
+                        ...editor,
+                        player: { ...editor.player, attributes: { ...editor.player.attributes, [key]: Number(event.target.value) } },
+                      })}
+                    />
+                  </label>
+                ))}
+              </div>
+            </details>
+            <div className="actions mt-2">
+              <Button variant="primary" icon={Pencil} onClick={saveEditor} loading={editorBusy}>Guardar cambios</Button>
+              <Button onClick={() => setEditorOpen(false)}>Cancelar</Button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </>
   )
 }

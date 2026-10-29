@@ -54,7 +54,10 @@
       "Club Egara",
       "Junior FC"
     ],
-    "data_quality": "alta"
+    "data_quality": "alta",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "cd-terrassa",
@@ -110,7 +113,10 @@
       "Atlètic Terrassa HC",
       "Club Egara"
     ],
-    "data_quality": "alta"
+    "data_quality": "alta",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://visitvalles.com/es/portfolio_page/club-deportiu-terrassa-hockey/"
   },
   {
     "id": "ch-carpesa",
@@ -165,7 +171,10 @@
     "rivalries": [
       "Valencia HC"
     ],
-    "data_quality": "media"
+    "data_quality": "media",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "fc-barcelona",
@@ -221,7 +230,10 @@
       "RC Polo",
       "Junior FC"
     ],
-    "data_quality": "alta"
+    "data_quality": "alta",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "club-egara",
@@ -277,7 +289,10 @@
       "Atlètic Terrassa HC",
       "CD Terrassa Hockey"
     ],
-    "data_quality": "alta"
+    "data_quality": "alta",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://egara.es/"
   },
   {
     "id": "rc-polo",
@@ -333,7 +348,10 @@
       "FC Barcelona",
       "Atlètic Terrassa HC"
     ],
-    "data_quality": "alta"
+    "data_quality": "alta",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "rc-de-campo",
@@ -389,7 +407,10 @@
       "RC Polo",
       "Sanse Complutense"
     ],
-    "data_quality": "alta"
+    "data_quality": "alta",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "sanse-complutense",
@@ -445,7 +466,10 @@
       "RC de Campo",
       "SPV"
     ],
-    "data_quality": "media"
+    "data_quality": "media",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://es.wikipedia.org/wiki/SPV_Complutense"
   },
   {
     "id": "sardinero",
@@ -500,7 +524,10 @@
     "rivalries": [
       "RS Tenis"
     ],
-    "data_quality": "media"
+    "data_quality": "media",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "rs-tenis",
@@ -555,7 +582,10 @@
     "rivalries": [
       "Sardinero Hockey Club"
     ],
-    "data_quality": "media"
+    "data_quality": "media",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "ud-taburiente",
@@ -608,7 +638,10 @@
       "notes": "Todos los desplazamientos a la península requieren vuelo y traslado; coste y fatiga altos."
     },
     "rivalries": [],
-    "data_quality": "media"
+    "data_quality": "media",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "junior-fc",
@@ -664,7 +697,10 @@
       "FC Barcelona",
       "Atlètic Terrassa HC"
     ],
-    "data_quality": "media"
+    "data_quality": "media",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "ad-rimas",
@@ -719,7 +755,10 @@
     "rivalries": [
       "Vallès Esportiu"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://resultadoshockey.isquad.es/equipo.php?seleccion=0&id_equipo=339&id=6308"
   },
   {
     "id": "aticos-san-fernando",
@@ -774,7 +813,10 @@
     "rivalries": [
       "Club de Hockey San Fernando"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "castelldefels",
@@ -829,31 +871,35 @@
     "rivalries": [
       "HC Sant Cugat"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "cd-giner",
     "name": "CD Giner de los Ríos",
     "full_name": "Club Deportivo Giner de los Ríos",
     "league": "DHB",
-    "city": "Madrid",
-    "community": "Comunidad de Madrid",
-    "province": "Madrid",
-    "founded": null,
+    "city": "Valencia",
+    "community": "Comunidad Valenciana",
+    "province": "Valencia",
+    "founded": 1993,
     "colors": [
-      "verde",
+      "azul",
+      "naranja",
       "blanco"
     ],
     "nickname": "Giner",
-    "history": "Club vinculado al colegio Giner de los Ríos, en Madrid. Proyecto formativo con equipo senior en DHB.",
+    "history": "Club fundado en 1993 en el Colegio Público Giner de los Ríos, en el barrio de Campanar (Valencia), a partir de las Escuelas Deportivas Municipales. Es un club de formación con equipos senior masculino y femenino; el masculino ascendió a División de Honor B y compite en Beteró.",
     "stadium": {
-      "name": "Instalaciones CD Giner de los Ríos",
-      "address": "Madrid",
-      "city": "Madrid",
-      "surface": "sand-dressed",
-      "capacity": 200,
+      "name": "Instalaciones Municipales de Beteró",
+      "address": "Av. de Beteró, Valencia",
+      "city": "Valencia",
+      "surface": "water-based",
+      "capacity": 500,
       "capacity_confidence": "estimada",
-      "notes": "Dirección por confirmar."
+      "notes": "Instalación municipal; el club nació en el colegio Giner de los Ríos de Campanar."
     },
     "facilities": {
       "pitches": 1,
@@ -876,13 +922,19 @@
       "pressure": "baja"
     },
     "logistics": {
-      "airport": "MAD",
-      "train": "Madrid",
+      "airport": "VLC",
+      "train": "Valencia",
       "preferred_mode": "bus",
-      "notes": "Cluster madrileño."
+      "notes": "Cluster valenciano; desplazamientos cortos en bus."
     },
-    "rivalries": [],
-    "data_quality": "baja"
+    "rivalries": [
+      "Valencia CH",
+      "CH Carpesa"
+    ],
+    "data_quality": "alta",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://yosoynoticia.es/hockey/giner-de-los-rios-la-gran-familia-del-hockey-en-valencia"
   },
   {
     "id": "ch-madrid-las-rozas",
@@ -937,7 +989,10 @@
     "rivalries": [
       "Pozuelo"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://www.chmlasrozas.es/es"
   },
   {
     "id": "egara-1935",
@@ -993,7 +1048,10 @@
       "Vallès Esportiu",
       "AD Rimas"
     ],
-    "data_quality": "media"
+    "data_quality": "media",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://egara.es/"
   },
   {
     "id": "hc-sant-cugat",
@@ -1049,7 +1107,10 @@
       "Junior FC",
       "Castelldefels HC"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://resultadoshockey.isquad.es/equipo_movil.php?id_equipo=26&id=6309"
   },
   {
     "id": "iluro",
@@ -1102,7 +1163,10 @@
       "notes": "Cluster catalán."
     },
     "rivalries": [],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://ilurohc.com/"
   },
   {
     "id": "linia-22",
@@ -1158,7 +1222,10 @@
       "AD Rimas",
       "Vallès Esportiu"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://www.linia22.cat/historia/"
   },
   {
     "id": "pedralbes",
@@ -1213,7 +1280,10 @@
     "rivalries": [
       "RC Polo"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://www.fchockey.cat/club/7"
   },
   {
     "id": "rc-jolaseta",
@@ -1268,7 +1338,10 @@
     "rivalries": [
       "Real Sociedad 1927"
     ],
-    "data_quality": "media"
+    "data_quality": "media",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "pozuelo",
@@ -1323,7 +1396,10 @@
     "rivalries": [
       "CH Madrid - Las Rozas"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "real-sociedad-1927",
@@ -1378,7 +1454,10 @@
     "rivalries": [
       "RC Jolaseta"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://resultadoshockey.isquad.es/equipo.php?seleccion=0&id_superficie=1&id_equipo=136&id=5867"
   },
   {
     "id": "spv",
@@ -1433,7 +1512,10 @@
     "rivalries": [
       "Sanse Complutense"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://es.wikipedia.org/wiki/SPV_Complutense"
   },
   {
     "id": "universitat-alacant",
@@ -1486,7 +1568,10 @@
       "notes": "Desplazamientos a Madrid/Cataluña en tren o bus."
     },
     "rivalries": [],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   },
   {
     "id": "valles-esportiu",
@@ -1542,7 +1627,10 @@
       "Egara 1935",
       "Línia 22"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": "https://athc.cat/category/vallesesportiu/"
   },
   {
     "id": "san-fernando-andaluza",
@@ -1597,6 +1685,9 @@
     "rivalries": [
       "Aticos Inmobiliaria CH San Fernando"
     ],
-    "data_quality": "baja"
+    "data_quality": "baja",
+    "country": "España",
+    "location_verified": true,
+    "source_url": ""
   }
 ]

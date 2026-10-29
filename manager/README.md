@@ -7,8 +7,9 @@ Diseño y prototipo de un juego de **entrenador y gestión de club** de hockey h
 - **Diseño:** completo en `docs/`.
 - **Datos:** 29 clubes españoles y 70 internacionales, plantillas reales en las seis ligas internacionales y 37 atributos.
 - **Motor:** DHA y DHB jugables, partidos en directo, mercado, staff, entrenamiento, cantera, Copa, EHL, multi-temporada y guardado/carga.
-- **Web React:** Flask como backend/API + SPA React en `/app`, con fotos de los 976 jugadores, escudos oficiales de iSquad, noticias inmersivas y diseño responsive.
-- **Tests:** 139 superados.
+- **Web React:** Flask como backend/API + SPA React en `/app`, con fotos de jugadores, escudos oficiales de iSquad, noticias inmersivas y diseño responsive.
+- **Beta avanzada:** calendario de amistosos, prensa con periodistas y medios, marcas reales de equipación (Osaka, Ritual, Gryphon, TK, Grays, STX…), editor de fichas y auditoría de plantillas.
+- **Tests:** 165 superados.
 
 ## Inicio rápido
 
@@ -95,6 +96,7 @@ El juego incluye:
 - **diálogos por turnos**: apertura contextual, memoria, temas recientes, segunda decisión, transcripción y promesas comprobadas. Ver `docs/35_DIALOGOS.md`.
 - **divisiones autonómicas como agentes libres**: 1.460 jugadores de 59 equipos, con equipo de procedencia, posición estimada y ratings recalibrados por división, clasificación real e historial DHB. Ver `docs/36_DATOS_DIVISIONES_Y_RATINGS.md`.
 - **ligas regionales jugables**: 1N, 1A, 1M, 1G, 1C, 1V, Superlliga Catalana y Primera Catalana, con fase regular, equipos B sin jugadores repetidos y eliminatorias de ascenso a DHB. Ver `docs/37_LIGAS_REGIONALES.md` y `docs/38_AUDITORIA_EQUIPOS_Y_PLANTILLAS.md`.
+- **beta avanzada**: calendario y amistosos, prensa con periodistas/medios y confianza mediática, marcas reales de equipación, editor de jugadores y auditoría de clubes. Ver `docs/45_BETA_AVANZADA.md` y `docs/46_AUDITORIA_CLUBES.md`.
 
 Pendiente:
 

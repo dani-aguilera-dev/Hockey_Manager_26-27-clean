@@ -179,6 +179,9 @@ export interface Team extends TeamSummary {
   board_pressure: string
   board_patience: number
   prep_bonus: number
+  media_confidence: number
+  equipment_bonus: number
+  equipment_deals: BrandDeal[]
   management_score: number
   player_wage_bill: number
   staff_wage_bill: number
@@ -600,11 +603,16 @@ export interface GameState {
 export interface PressHistoryItem {
   round: number
   question: string
+  topic?: string
   answer: string
   headline: string
   opponent: string
   opponent_coach: string
   opponent_quote: string
+  journalist?: string
+  outlet?: string
+  effects?: Record<string, number | string>
+  media_confidence?: number
 }
 
 export interface NegotiationOffer {
@@ -847,6 +855,7 @@ export interface TrainingPayload {
 export interface PressQuestion {
   id: string
   question: string
+  topic?: string
   player_id: string
   options: Array<{ label: string; effects: Record<string, number | string>; headline: string }>
 }
@@ -860,6 +869,12 @@ export interface PressPayload {
     quote: string
     position?: number
     date: string
+    journalist?: string
+    outlet?: string
+    style?: string
+    bias?: string
+    tone?: string
+    media_confidence?: number
   }
   done: boolean
   history: PressHistoryItem[]
@@ -886,6 +901,48 @@ export interface SponsorDeal {
 }
 
 export interface SponsorOffer extends SponsorDeal {}
+
+export interface BrandDeal {
+  id: string
+  brand_id?: string
+  brand: string
+  country?: string
+  tier?: string
+  tier_label?: string
+  categories?: string[]
+  annual: number
+  per_round?: number
+  signing_bonus?: number
+  years?: number
+  bonus?: number
+  description?: string
+  requirement?: string
+  expires?: string
+  signed?: string
+  end?: string
+  active?: boolean
+  status?: string
+}
+
+export interface BrandOffer extends BrandDeal {}
+
+export interface BrandData {
+  offers: BrandOffer[]
+  active_deals: BrandDeal[]
+  equipment_bonus: number
+  brand_rating: number
+  history: CommercialHistory[]
+  brands: Array<{
+    id: string
+    name: string
+    country: string
+    categories: string[]
+    tier: string
+    base: number
+    bonus: number
+    description: string
+  }>
+}
 
 export interface CommercialHistory {
   date: string
@@ -1026,11 +1083,28 @@ export interface MarketPayload {
   staff_total: number
 }
 
+export interface PlayerEditorData {
+  position_groups: string[]
+  subpositions: string[]
+  player: {
+    id: string
+    name: string
+    age: number
+    position_group: string
+    subposition: string
+    archetype: string
+    overall: number
+    potential: number
+    attributes: Record<string, number>
+  }
+}
+
 export interface PlayerDetailPayload {
   player: Player
   owner: TeamSummary | null
   owner_name: string
   is_user: boolean
+  editor?: PlayerEditorData
   market: null | {
     asking: number
     scout: string
@@ -1040,12 +1114,63 @@ export interface PlayerDetailPayload {
   }
 }
 
+export interface FriendlyItem {
+  id: string
+  date: string
+  home_id: string
+  away_id: string
+  home_name: string
+  away_name: string
+  home_goals: number
+  away_goals: number
+  played: boolean
+  phase: string
+  is_home: boolean
+  notes?: string
+}
+
+export interface FriendlyCandidate {
+  id: string
+  name: string
+  league: string
+  league_name: string
+  country: string
+  city: string
+  stadium_name: string
+  overall: number
+  crest: string
+}
+
+export interface FriendliesPayload {
+  items: FriendlyItem[]
+  dates: string[]
+  candidates: FriendlyCandidate[]
+  played: number
+  pending: number
+}
+
+export interface CalendarPayload {
+  friendlies: FriendliesPayload
+  fixtures: Fixture[]
+  next_fixture: Fixture | null
+  next_friendly: FriendlyItem | null
+  today: string
+  season: string
+  competition: Competition
+}
+
 export interface TeamDetailPayload {
   team: Team
   club: {
     history: string
     founded: string
     full_name: string
+    city?: string
+    province?: string
+    community?: string
+    country?: string
+    source_url?: string
+    location_verified?: boolean
     stadium: Record<string, unknown>
     colors: string[]
     facilities: Record<string, unknown>

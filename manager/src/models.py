@@ -370,6 +370,9 @@ class TeamState:
     manager_rating: int = 60
     assistant_rating: int = 60
     prep_bonus: float = 0.0
+    media_confidence: int = 50
+    equipment_bonus: float = 0.0
+    equipment_deals: list[dict[str, Any]] = field(default_factory=list)
     staff: list[StaffMember] = field(default_factory=list)
     board: list[BoardMember] = field(default_factory=list)
     transfer_budget: int = 0
@@ -587,6 +590,9 @@ class TeamState:
             "manager_rating": self.manager_rating,
             "assistant_rating": self.assistant_rating,
             "prep_bonus": self.prep_bonus,
+            "media_confidence": self.media_confidence,
+            "equipment_bonus": self.equipment_bonus,
+            "equipment_deals": self.equipment_deals,
             "staff": [m.to_dict() for m in self.staff],
             "board": [m.to_dict() for m in self.board],
             "transfer_budget": self.transfer_budget,
@@ -635,6 +641,9 @@ class TeamState:
             manager_rating=d.get("manager_rating", 60),
             assistant_rating=d.get("assistant_rating", 60),
             prep_bonus=d.get("prep_bonus", 0.0),
+            media_confidence=d.get("media_confidence", 50),
+            equipment_bonus=d.get("equipment_bonus", 0.0),
+            equipment_deals=d.get("equipment_deals", []),
             staff=[StaffMember.from_dict(m) for m in d.get("staff", [])],
             board=[BoardMember.from_dict(m) for m in d.get("board", [])],
             transfer_budget=d.get("transfer_budget", 0),
@@ -717,6 +726,9 @@ class GameState:
     market_offers_date: str = ""
     sponsor_offers: list[dict[str, Any]] = field(default_factory=list)
     sponsor_offer_date: str = ""
+    brand_offers: list[dict[str, Any]] = field(default_factory=list)
+    brand_offer_date: str = ""
+    friendlies: list[Fixture] = field(default_factory=list)
     pending_transfers: list[dict[str, Any]] = field(default_factory=list)
     daily_events: list[dict[str, Any]] = field(default_factory=list)
     chat_messages: list[dict[str, Any]] = field(default_factory=list)
@@ -786,6 +798,10 @@ class GameState:
             min(candidates, key=lambda f: (f.date, 0 if f.phase == "regular" else 1, f.round)) if candidates else None
         )
 
+    def next_user_friendly(self) -> Fixture | None:
+        candidates = [f for f in self.friendlies if not f.played and self.club_id in (f.home_id, f.away_id)]
+        return min(candidates, key=lambda f: (f.date, f.id)) if candidates else None
+
     def to_dict(self) -> dict:
         return {
             "manager_name": self.manager_name,
@@ -821,6 +837,9 @@ class GameState:
             "market_offers_date": self.market_offers_date,
             "sponsor_offers": self.sponsor_offers,
             "sponsor_offer_date": self.sponsor_offer_date,
+            "brand_offers": self.brand_offers,
+            "brand_offer_date": self.brand_offer_date,
+            "friendlies": [f.to_dict() for f in self.friendlies],
             "pending_transfers": self.pending_transfers,
             "daily_events": self.daily_events,
             "chat_messages": self.chat_messages,
@@ -883,6 +902,9 @@ class GameState:
             market_offers_date=d.get("market_offers_date", ""),
             sponsor_offers=d.get("sponsor_offers", []),
             sponsor_offer_date=d.get("sponsor_offer_date", ""),
+            brand_offers=d.get("brand_offers", []),
+            brand_offer_date=d.get("brand_offer_date", ""),
+            friendlies=[Fixture.from_dict(f) for f in d.get("friendlies", [])],
             pending_transfers=d.get("pending_transfers", []),
             daily_events=d.get("daily_events", []),
             chat_messages=d.get("chat_messages", []),
