@@ -1990,3 +1990,20 @@ export interface DevelopmentData {
   focuses: Array<{ id: string; label: string; attributes: string[] }>
   intensities: Array<{ id: string; label: string; progress: number; gain: number; fatigue: number }>
 }
+
+export interface SeasonAward extends Award {
+  position: string
+  age: number
+  overall: number
+  apps: number
+  rating: number
+}
+
+export interface AwardsData {
+  season: string
+  competition: string
+  awards: SeasonAward[]
+  best_xi: SeasonAward[]
+  last_match: Award[]
+  history: Array<{ season: string; competition: string; awards: SeasonAward[]; best_xi: SeasonAward[] }>
+}

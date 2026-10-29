@@ -217,6 +217,13 @@ try {
   result.development = true
   await page.screenshot({ path: '/tmp/opencode/e2e_development.png', fullPage: true })
 
+  await page.goto('/app/game/awards')
+  await page.getByRole('heading', { name: 'Premios y galardones' }).waitFor()
+  await page.locator('.awards-grid').waitFor()
+  await page.locator('.award-xi-row').first().waitFor()
+  result.awards = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_awards.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

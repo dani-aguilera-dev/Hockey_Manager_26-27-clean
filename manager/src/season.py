@@ -9,6 +9,7 @@ from datetime import date, timedelta
 from typing import Any
 
 from .affiliates import advance_mentoring
+from .awards import archive_season_awards
 from .calendar import create_dha_fixtures, create_fixtures, dha_table, league_table, recompute_table
 from .competitions import (
     COMPETITIONS,
@@ -2417,6 +2418,7 @@ def advance_to_next_season(state: GameState) -> None:
         return
     new_year = int(state.season[:4]) + 1
     archive_season(state)
+    archive_season_awards(state)
     return_loans(state)
     old_system = competition(state.competition).system
     top_code = _system_code("dha")

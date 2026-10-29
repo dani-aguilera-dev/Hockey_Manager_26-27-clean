@@ -485,3 +485,15 @@ def test_api_development_plan(client):
     cleared = client.delete(f"/api/development/{player['player_id']}")
     assert cleared.status_code == 200, cleared.get_data(as_text=True)
     assert cleared.get_json()["data"]["development"]["active"] == 0
+
+
+def test_api_awards_overview(client):
+    _new_api(client, seed="52")
+    quick = client.post("/api/match/quick", json={"travel": "equilibrado"})
+    assert quick.status_code == 200, quick.get_data(as_text=True)
+    response = client.get("/api/awards")
+    assert response.status_code == 200, response.get_data(as_text=True)
+    data = response.get_json()["data"]
+    assert data["awards"]
+    assert len(data["best_xi"]) == 11
+    assert data["last_match"]

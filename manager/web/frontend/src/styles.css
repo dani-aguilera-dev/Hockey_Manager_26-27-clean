@@ -1354,3 +1354,16 @@ select option { background: #0b1220; color: #e8eef8; }
 .development-card .field span { font-size: 10px; }
 @media (max-width: 980px) { .development-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .development-grid { grid-template-columns: 1fr; } }
+
+/* Premios y galardones */
+.awards-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.award-card { padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.015); }
+.award-card h3 { margin: 6px 0 3px; font-size: 15px; }
+.award-card p { margin: 2px 0; }
+.award-xi-row, .award-history-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.award-xi-row:last-child, .award-history-row:last-child { border-bottom: 0; }
+.award-xi-row > span { width: 18px; color: var(--muted); font-size: 11px; }
+.award-xi-row > div, .award-history-row > div { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.award-xi-row small, .award-history-row span { color: var(--muted); font-size: 11px; }
+@media (max-width: 980px) { .awards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .awards-grid { grid-template-columns: 1fr; } }

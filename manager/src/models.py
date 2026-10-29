@@ -792,6 +792,7 @@ class GameState:
     affiliate_history: list[dict[str, Any]] = field(default_factory=list)
     match_history: list[dict[str, Any]] = field(default_factory=list)
     player_history: list[dict[str, Any]] = field(default_factory=list)
+    awards_history: list[dict[str, Any]] = field(default_factory=list)
     scouting_assignments: list[dict[str, Any]] = field(default_factory=list)
     scouting_reports: list[dict[str, Any]] = field(default_factory=list)
 
@@ -914,6 +915,7 @@ class GameState:
             "affiliate_history": self.affiliate_history,
             "match_history": self.match_history,
             "player_history": self.player_history,
+            "awards_history": self.awards_history,
             "scouting_assignments": self.scouting_assignments,
             "scouting_reports": self.scouting_reports,
         }
@@ -990,6 +992,7 @@ class GameState:
             affiliate_history=d.get("affiliate_history", []),
             match_history=d.get("match_history", []),
             player_history=d.get("player_history", []),
+            awards_history=d.get("awards_history", []),
             scouting_assignments=d.get("scouting_assignments", []),
             scouting_reports=d.get("scouting_reports", []),
         )
