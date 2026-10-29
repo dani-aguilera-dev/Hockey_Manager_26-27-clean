@@ -35,6 +35,7 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Persistencia del ojeo | `GameState.scouting_assignments` y `GameState.scouting_reports` serializados | `test_scouting_assignments_persist` | PASS |
 | Finanzas detalladas | `src/finance.py`, `/api/finance`, `Finance.tsx`: caja, presupuesto, salarios, ingresos, gastos, proyección y taquilla | `test_finance_overview_has_breakdown_projection_and_earners`, E2E `finance` | PASS |
 | Control de taquilla | `/api/finance/ticket` y escenarios de precio/asistencia/ingresos | `test_finance_ticket_price_updates_and_persists` | PASS |
+| Análisis de partido | `src/analysis.py`, `/api/analysis`, `Analysis.tsx`: eficiencia, comparativa, cronología, ratings y archivo | `test_analysis_overview_has_metrics_timeline_and_players`, E2E `analysis` | PASS |
 | Reunión de equipo | `src/team_meeting.py`, `/api/team-meeting`, `TeamMeeting.tsx`: tipo, tono, temas, dinámica y efectos | `test_team_meeting_applies_effects_and_history`, E2E `teamMeeting` | PASS |
 | Promesas de la reunión | Promesas de minutos o renovación persistentes en `PlayerState.promises` y comprobadas por `check_promises` | `test_team_meeting_creates_persistent_promise` | PASS |
 | Persistencia de reuniones | `TeamState.team_meetings` serializado con efectos, temas y promesas | `test_team_meeting_creates_persistent_promise` | PASS |
@@ -129,7 +130,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"postPress":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":40,"stickFlexes":49},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.60},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"analysis":true,"postPress":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":37,"stickFlexes":47},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2772},"viewerPhysics":{"frames":63,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":31,"ballSpeed":5.65},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -149,8 +150,9 @@ Flujo:
 13. Abrir `/app/game/scouting`, crear una asignación de ojeo y comprobar la pantalla dedicada.
 14. Abrir `/app/game/team-meeting`, convocar una reunión y comprobar el resultado y el historial.
 15. Abrir `/app/game/finance`, cambiar el precio de taquilla y comprobar la proyección.
-16. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-17. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+16. Abrir `/app/game/analysis`, revisar eficiencia, cronología y rendimiento individual.
+17. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+18. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
 ## 9. Límites convertidos en criterios pass/fail
 
@@ -183,6 +185,7 @@ Flujo:
 | Prensa previa y posterior | PASS | `Press.tsx`, `PostPress.tsx`, `/api/press*` |
 | Clasificación, Copa, EHL y ascenso | PASS | `Table.tsx`, `Cup.tsx`, `Ehl.tsx`, `Promotion.tsx`, `Objectives.tsx` |
 | Previa, directo y parte de partido | PASS | `MatchPreview.tsx`, `LiveMatch.tsx`, `Report.tsx` |
+| Análisis de partido | PASS | `Analysis.tsx`, `/api/analysis`, eficiencia, comparativa, cronología, ratings y archivo |
 | Revisión de vídeo | PASS | `LiveMatch.tsx`, `/api/match/live/review`, `MatchEngine.review_decision` |
 | Fin de temporada y multi-temporada | PASS | `SeasonEnd.tsx`, `/api/season/*` |
 | Ojeo con pantalla dedicada | PASS | `Scouting.tsx`, `/api/scouting`, `/api/scouting/assignments`, asignaciones, progreso e informes |
@@ -199,4 +202,4 @@ La lista permite priorizar la siguiente iteración sin confundir “flujo cubier
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas, de la respuesta de materiales/colisiones stick-cuerpo del visor y del centro financiero. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA (tejido/mocap/biomecánica), paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas, de la respuesta de materiales/colisiones stick-cuerpo del visor, del centro financiero y del análisis de partido. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA (tejido/mocap/biomecánica), paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.

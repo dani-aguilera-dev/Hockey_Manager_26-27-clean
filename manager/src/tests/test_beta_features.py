@@ -410,3 +410,20 @@ def test_api_finance_overview_and_ticket(client):
     payload = ticket.get_json()["data"]
     assert payload["finance"]["ticket_price"] == 22
     assert any(row["price"] == 22 for row in payload["finance"]["ticket_scenarios"])
+
+
+def test_api_analysis_overview_and_archive(client):
+    _new_api(client, seed="47")
+    quick = client.post("/api/match/quick", json={"travel": "equilibrado"})
+    assert quick.status_code == 200, quick.get_data(as_text=True)
+    response = client.get("/api/analysis")
+    assert response.status_code == 200, response.get_data(as_text=True)
+    data = response.get_json()["data"]
+    assert data["match"]
+    assert data["metrics"]["home"]["shots"] >= 0
+    assert data["timeline"]
+    assert data["players"]
+    fixture_id = data["match"]["fixture_id"]
+    archived = client.get(f"/api/analysis?fixture_id={fixture_id}")
+    assert archived.status_code == 200, archived.get_data(as_text=True)
+    assert archived.get_json()["data"]["match"]["fixture_id"] == fixture_id

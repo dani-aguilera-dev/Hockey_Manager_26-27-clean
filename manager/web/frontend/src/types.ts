@@ -1902,3 +1902,40 @@ export interface FinanceOverview extends Finance {
   equipment_deals: BrandDeal[]
   commercial_history: CommercialHistory[]
 }
+
+export interface AnalysisMetrics {
+  goals: number
+  shots: number
+  shots_on_target: number
+  pc: number
+  pc_goals: number
+  saves: number
+  possession: number
+  goal_conversion: number
+  accuracy: number
+  pc_conversion: number
+  save_rate: number
+  danger_index: number
+}
+
+export interface AnalysisData {
+  match: null | {
+    fixture_id: string
+    date: string
+    round: number
+    phase: string
+    competition: string
+    home_name: string
+    away_name: string
+    home_goals: number
+    away_goals: number
+    user_is_home: boolean
+  }
+  metrics: null | { home: AnalysisMetrics; away: AnalysisMetrics }
+  timeline: Array<{ minute: number; quarter: number; type: string; text: string; team: string; player: string }>
+  players: Array<{ id: string; name: string; position: string; overall: number; rating: number; minutes: number; goals: number; assists: number }>
+  recent: Array<{ fixture_id: string; date: string; round: number; phase: string; home_name: string; away_name: string; home_goals: number; away_goals: number }>
+  season: { matches: number; goals_for: number; goals_against: number; shots: number; shots_on_target: number; pc: number; possession: number }
+  source?: string
+  message?: string
+}

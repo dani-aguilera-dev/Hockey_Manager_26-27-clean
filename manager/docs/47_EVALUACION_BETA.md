@@ -16,7 +16,7 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **223 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **226 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -29,7 +29,8 @@
 | Reunión de equipo | `/api/team-meeting`, `TeamMeeting.tsx`: charla, dinámica, promesas y efectos persistentes | PASS |
 | Arbitraje discrecional | Ventaja, juego peligroso, distancia de 5 m y decisión de PC/stroke con eventos, estadísticas y parte | PASS |
 | Finanzas detalladas | `/api/finance`, `/api/finance/ticket`, `Finance.tsx`: cuenta de resultados, salarios, proyección y taquilla | PASS |
-| E2E Playwright | calendario, amistosos, visor 3D con materiales y stick-cuerpo, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje, finanzas, prensa y marcas | PASS |
+| Análisis de partido | `/api/analysis`, `Analysis.tsx`: eficiencia, comparativa, cronología, ratings y archivo | PASS |
+| E2E Playwright | calendario, amistosos, visor 3D, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje, finanzas, análisis, prensa y marcas | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media y equipación; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -52,6 +53,7 @@
 14. `test_api_scouting_assignments`
 15. `test_api_team_meeting`
 16. `test_api_finance_overview_and_ticket`
+17. `test_api_analysis_overview_and_archive`
 
 `src/tests/test_referee_discretion.py`:
 
@@ -65,6 +67,11 @@
 
 - `test_finance_overview_has_breakdown_projection_and_earners`
 - `test_finance_ticket_price_updates_and_persists`
+
+`src/tests/test_analysis.py`:
+
+- `test_analysis_overview_has_metrics_timeline_and_players`
+- `test_analysis_can_open_archived_match`
 
 `src/tests/test_acceptance_beta.py` incluye además:
 
@@ -128,17 +135,17 @@
 
 ```text
 python3 -m pytest src/tests -q
-223 passed in 329.45s
+226 passed in 335.86s
 
 cd manager/web/frontend && npm run build
-✓ built in 4.83s
+✓ built in 4.98s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-CT4xkwkU.js → 200
+curl /static/react/assets/index-BNDsBpNu.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"postPress":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":40,"stickFlexes":49},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.60},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"analysis":true,"postPress":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":37,"stickFlexes":47},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2772},"viewerPhysics":{"frames":63,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":31,"ballSpeed":5.65},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

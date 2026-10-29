@@ -55,6 +55,7 @@ from src.board import board_overview, request_board
 from src.loans import loan_overview, offer_loan_out, request_loan_in
 from src.datahub import datahub_overview, set_instructions
 from src.history import history_overview
+from src.analysis import analysis_overview
 from src.affiliates import (
     affiliate_overview,
     assign_mentor,
@@ -1535,6 +1536,14 @@ def board_request():
         {"result": result, "board": board_overview(state), "state": _state_payload(state)},
         result.get("message", "Petición registrada."),
     )
+
+
+@api.get("/analysis")
+def analysis():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(analysis_overview(state, str(request.args.get("fixture_id", ""))))
 
 
 @api.get("/finance")

@@ -34,6 +34,13 @@ try {
   result.refereeAndSetPieces = true
   result.refereeDiscretion = true
 
+  await page.goto('/app/game/analysis')
+  await page.getByRole('heading', { name: 'Análisis de partido' }).waitFor()
+  await page.getByText('COMPARATIVA', { exact: true }).waitFor()
+  await page.locator('.analysis-timeline').waitFor()
+  result.analysis = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_analysis.png', fullPage: true })
+
   await page.goto('/app/game/press/post')
   await page.getByRole('heading', { name: 'La voz del vestuario' }).waitFor()
   const questionCount = await page.locator('.press-question').count()
