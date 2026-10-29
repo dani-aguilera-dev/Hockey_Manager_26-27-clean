@@ -92,7 +92,9 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Colisiones de cuerpo | Colisión cuerpo-bola con rebote y separación jugador-jugador | E2E `bodyCollisions=50` | PASS |
 | UI 3D | Marcador, cuarto, minuto, estado, último evento y cámara táctica superpuestos al canvas | E2E `match-viewer-ui` + captura | PASS |
 | Conexión con MatchEngine | El visor consume `LivePayload`: `score`, `quarter`, `minute`, `line`, `events`, formación y equipo atacante | `/api/match/live` y `/api/match/live/advance` | PASS |
-| Física 3D AAA | No hay tejido, física de materiales, colisión de stick contra cuerpo ni animación de captura de movimiento | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
+| Respuesta de materiales | Restitución de 0,62, fricción, deformación de la bola al impactar y flexión del stick | E2E `viewerMaterials.materialBounces=39`, `stickFlexes=48` | PASS |
+| Colisión stick-cuerpo | Segmento del stick contra puntos del cuerpo rival, empuje y flexión; escenario de contacto determinista | E2E `viewerMaterials.stickBodyCollisions=16` | PASS |
+| Física 3D AAA | No hay tejido real, captura de movimiento, biomecánica completa ni física de materiales de nivel producción | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
 
 ## 7. Reglas FIH avanzadas y arbitraje
 
@@ -125,7 +127,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":33,"ballSpeed":7.60},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"postPress":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":39,"stickFlexes":48},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":32,"ballSpeed":7.41},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -151,7 +153,7 @@ Flujo:
 
 | Límite anterior | Criterio verificable | Estado |
 | --- | --- | --- |
-| “No hay motor 3D” | Simulación 3D con campo, 22 jugadores con esqueleto e IK, 22 sticks, balón con física, colisiones de cuerpo/stick y UI | PASS simulación 3D / FAIL física AAA |
+| “No hay motor 3D” | Simulación 3D con campo, 22 jugadores con esqueleto e IK, 22 sticks, balón con física, respuesta de materiales, colisiones de cuerpo/stick-cuerpo y UI | PASS simulación 3D / FAIL física AAA |
 | “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones, árbitro, revisión de vídeo, ventaja, juego peligroso, 5 metros y decisión de PC tienen pruebas explícitas; el resto de interpretaciones subjetivas no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
 | “No replica todas las pantallas de FM24” | La matriz enumera los flujos cubiertos; la paridad total de pantallas no se declara | FAIL / fuera de alcance |
 | “Prensa textual” | Prensa previa y posterior con medios, efectos e historial | PASS |
@@ -193,4 +195,4 @@ La lista permite priorizar la siguiente iteración sin confundir “flujo cubier
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo y de las decisiones arbitrales discrecionales implementadas. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas y de la respuesta de materiales/colisiones stick-cuerpo del visor. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA (tejido/mocap/biomecánica), paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.

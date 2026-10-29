@@ -61,8 +61,19 @@ try {
   if (viewerState.sticks !== 22) throw new Error(`viewer sticks ${viewerState.sticks}`)
   if (viewerState.bones < 22 * 17) throw new Error(`viewer bones ${viewerState.bones}`)
   if (!(viewerState.ikSolutions > 100)) throw new Error(`viewer ik ${viewerState.ikSolutions}`)
+  await page.evaluate(() => window.__matchViewer3D.forceContact())
+  await page.waitForTimeout(400)
+  const materialState = await page.evaluate(() => window.__matchViewer3D)
+  if (!(materialState.stickBodyCollisions > 0)) throw new Error(`viewer stick-body ${JSON.stringify(materialState)}`)
+  if (!(materialState.materialBounces > 0)) throw new Error(`viewer material bounces ${materialState.materialBounces}`)
+  if (!(materialState.stickFlexes > 0)) throw new Error(`viewer stick flexes ${materialState.stickFlexes}`)
   await page.getByRole('button', { name: 'Cámara táctica' }).click()
   result.viewer3d = true
+  result.viewerMaterials = {
+    stickBodyCollisions: materialState.stickBodyCollisions,
+    materialBounces: materialState.materialBounces,
+    stickFlexes: materialState.stickFlexes,
+  }
   result.viewerSkeleton = { bones: viewerState.bones, sticks: viewerState.sticks, ikSolutions: viewerState.ikSolutions }
   result.viewerPhysics = {
     frames: viewerState.frames,

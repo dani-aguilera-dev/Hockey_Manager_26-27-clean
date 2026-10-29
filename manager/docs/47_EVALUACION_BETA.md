@@ -28,7 +28,7 @@
 | Ojeo con pantalla dedicada | `/api/scouting`, `/api/scouting/assignments`, `Scouting.tsx`: asignaciones, progreso e informes | PASS |
 | Reunión de equipo | `/api/team-meeting`, `TeamMeeting.tsx`: charla, dinámica, promesas y efectos persistentes | PASS |
 | Arbitraje discrecional | Ventaja, juego peligroso, distancia de 5 m y decisión de PC/stroke con eventos, estadísticas y parte | PASS |
-| E2E Playwright | calendario, amistosos, visor 3D, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje discrecional, prensa y marcas | PASS |
+| E2E Playwright | calendario, amistosos, visor 3D con materiales y stick-cuerpo, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje discrecional, prensa y marcas | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media y equipación; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -124,14 +124,14 @@ python3 -m pytest src/tests -q
 220 passed in 327.77s
 
 cd manager/web/frontend && npm run build
-✓ built in 4.91s
+✓ built in 4.86s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-PfzbtPh5.js → 200
+curl /static/react/assets/index-89g_CvZ7.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":33,"ballSpeed":7.60},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"postPress":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":39,"stickFlexes":48},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":32,"ballSpeed":7.41},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

@@ -16,6 +16,7 @@ type PlayerEntity = {
   stick: THREE.Group
   stickStart: THREE.Vector3
   stickEnd: THREE.Vector3
+  stickFlex: number
   base: Vec2
   velocity: THREE.Vector3
   side: number
@@ -98,6 +99,13 @@ function solveArm(upper: THREE.Group, forearm: THREE.Group, shoulder: THREE.Vect
   forearm.quaternion.setFromUnitVectors(Y_AXIS, localDirection)
 }
 
+function closestPointOnSegment(point: THREE.Vector3, start: THREE.Vector3, end: THREE.Vector3) {
+  const direction = end.clone().sub(start)
+  const lengthSq = Math.max(0.001, direction.lengthSq())
+  const t = Math.max(0, Math.min(1, point.clone().sub(start).dot(direction) / lengthSq))
+  return start.clone().addScaledVector(direction, t)
+}
+
 function createPlayer(name: string, color: number, accent: number) {
   const root = new THREE.Group()
   const kit = new THREE.MeshStandardMaterial({ color, roughness: 0.58, metalness: 0.06 })
@@ -175,7 +183,7 @@ function createPlayer(name: string, color: number, accent: number) {
   root.add(stick)
   root.add(makeLabel(name))
   root.scale.setScalar(0.78)
-  return { root, leftArm, rightArm, leftForearm, rightForearm, leftLeg, rightLeg, leftShin, rightShin, stick, stickStart: start, stickEnd: end }
+  return { root, leftArm, rightArm, leftForearm, rightForearm, leftLeg, rightLeg, leftShin, rightShin, stick, stickStart: start, stickEnd: end, stickFlex: 0 }
 }
 
 export default function MatchViewer3D({ data }: { data: LivePayload }) {
@@ -184,7 +192,7 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
   const playersRef = useRef<PlayerEntity[]>([])
   const ballRef = useRef<THREE.Mesh | null>(null)
   const cameraModeRef = useRef<'broadcast' | 'tactical'>('broadcast')
-  const debugRef = useRef({ frames: 0, playerCollisions: 0, bodyCollisions: 0, stickCollisions: 0, goals: 0, ballSpeed: 0, ikSolutions: 0, players: 0, sticks: 0, bones: 0, lastEvent: '' })
+  const debugRef = useRef({ frames: 0, playerCollisions: 0, bodyCollisions: 0, stickCollisions: 0, stickBodyCollisions: 0, materialBounces: 0, stickFlexes: 0, goals: 0, ballSpeed: 0, ikSolutions: 0, players: 0, sticks: 0, bones: 0, lastEvent: '' })
   const lastEventRef = useRef('')
 
   useEffect(() => {
@@ -237,6 +245,7 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
     const ball = new THREE.Mesh(new THREE.SphereGeometry(0.62, 14, 10), new THREE.MeshStandardMaterial({ color: 0xf7f7ef, roughness: 0.35 }))
     ball.position.set(2.5, 0.62, 0)
     ball.userData.velocity = new THREE.Vector3(7.5, 0, 0.5)
+    ball.userData.squash = 1
     scene.add(ball)
     ballRef.current = ball
 
@@ -258,6 +267,16 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
     }
     playersRef.current = players
     Object.assign(debugRef.current, { players: players.length, sticks: players.length, bones: players.length * 17 })
+    ;(debugRef.current as any).forceContact = () => {
+      const first = players[0]
+      const second = players[1]
+      if (!first || !second) return false
+      const stickEnd = first.root.localToWorld(first.stickEnd.clone())
+      second.root.position.set(stickEnd.x, 0, stickEnd.z)
+      first.stickFlex = 0.3
+      ;(debugRef.current as any).forcedContactFrames = 8
+      return true
+    }
     ;(window as any).__matchViewer3D = debugRef.current
 
     const resize = () => {
@@ -306,8 +325,13 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
       ballVelocity.z *= 0.992
       if (ball.position.y < 0.62) {
         ball.position.y = 0.62
-        ballVelocity.y = Math.abs(ballVelocity.y) * 0.58
+        ballVelocity.y = Math.abs(ballVelocity.y) * 0.62
+        ball.userData.squash = 1.22
+        debugRef.current.materialBounces += 1
       }
+      const squash = Math.max(1, Number(ball.userData.squash || 1) - dt * 2.5)
+      ball.userData.squash = squash
+      ball.scale.set(1 + (squash - 1) * 0.55, 1 - (squash - 1) * 0.55, 1 + (squash - 1) * 0.55)
       if (Math.abs(ball.position.x) > 49.2) {
         if (Math.abs(ball.position.z) < 5.2) {
           debugRef.current.goals += 1
@@ -316,13 +340,18 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
         } else {
           ball.position.x = Math.sign(ball.position.x) * 49.2
           ballVelocity.x *= -0.7
+          ball.userData.squash = 1.18
+          debugRef.current.materialBounces += 1
         }
       }
       if (Math.abs(ball.position.z) > 29.2) {
         ball.position.z = Math.sign(ball.position.z) * 29.2
         ballVelocity.z *= -0.7
+        ball.userData.squash = 1.18
+        debugRef.current.materialBounces += 1
       }
 
+      const forcedContact = Number((debugRef.current as any).forcedContactFrames || 0) > 0
       for (const player of players) {
         const direction = player.side === 0 ? 1 : -1
         const attacking = attackingSide === player.side
@@ -330,11 +359,15 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
         const targetZ = player.base[1] + (player.base[1] > 0 ? -1 : 1) * 0.8
         const desiredX = targetX + (ball.position.x - targetX) * 0.035
         const desiredZ = targetZ + (ball.position.z - targetZ) * 0.045
-        player.velocity.x += (desiredX - player.root.position.x) * 0.42 * dt
-        player.velocity.z += (desiredZ - player.root.position.z) * 0.42 * dt
-        player.velocity.multiplyScalar(0.9)
-        player.root.position.x = Math.max(-47, Math.min(47, player.root.position.x + player.velocity.x * dt))
-        player.root.position.z = Math.max(-27, Math.min(27, player.root.position.z + player.velocity.z * dt))
+        if (!(forcedContact && (player === players[0] || player === players[1]))) {
+          player.velocity.x += (desiredX - player.root.position.x) * 0.42 * dt
+          player.velocity.z += (desiredZ - player.root.position.z) * 0.42 * dt
+          player.velocity.multiplyScalar(0.9)
+          player.root.position.x = Math.max(-47, Math.min(47, player.root.position.x + player.velocity.x * dt))
+          player.root.position.z = Math.max(-27, Math.min(27, player.root.position.z + player.velocity.z * dt))
+        } else {
+          player.velocity.set(0, 0, 0)
+        }
         const speed = player.velocity.length()
         const swing = Math.sin(elapsed * 8 + player.phase) * Math.min(0.75, speed * 0.16)
         player.leftLeg.rotation.x = swing
@@ -353,6 +386,7 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
         for (let j = i + 1; j < players.length; j += 1) {
           const a = players[i]
           const b = players[j]
+          if (forcedContact && ((a === players[0] && b === players[1]) || (a === players[1] && b === players[0]))) continue
           const dx = a.root.position.x - b.root.position.x
           const dz = a.root.position.z - b.root.position.z
           const distance = Math.hypot(dx, dz)
@@ -387,7 +421,49 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
           ballVelocity.x += (ball.position.x - closest.x) * 8
           ballVelocity.z += (ball.position.z - closest.z) * 8
           ballVelocity.y = 1.4
+          ball.userData.squash = 1.3
+          player.stickFlex = 0.26
           debugRef.current.stickCollisions += 1
+          debugRef.current.stickFlexes += 1
+          debugRef.current.materialBounces += 1
+        }
+        player.stickFlex = Math.max(0, player.stickFlex - dt * 1.8)
+        player.stick.rotation.x = player.stickFlex * 0.9
+        player.stick.rotation.z = -player.stickFlex * 0.35
+      }
+
+      if (forcedContact) {
+        ;(debugRef.current as any).forcedContactFrames = Number((debugRef.current as any).forcedContactFrames) - 1
+      }
+
+      for (let i = 0; i < players.length; i += 1) {
+        const attacker = players[i]
+        const stickStart = attacker.root.localToWorld(attacker.stickStart.clone())
+        const stickEnd = attacker.root.localToWorld(attacker.stickEnd.clone())
+        for (let j = 0; j < players.length; j += 1) {
+          if (i === j) continue
+          const target = players[j]
+          let distance = Infinity
+          let body = target.root.position.clone().add(new THREE.Vector3(0, 0.45, 0))
+          for (const height of [0.45, 1.1, 1.8]) {
+            const point = target.root.position.clone().add(new THREE.Vector3(0, height, 0))
+            const candidate = closestPointOnSegment(point, stickStart, stickEnd)
+            const candidateDistance = candidate.distanceTo(point)
+            if (candidateDistance < distance) {
+              distance = candidateDistance
+              body = point
+            }
+          }
+          if (distance < 0.55) {
+            const closest = closestPointOnSegment(body, stickStart, stickEnd)
+            const normal = body.clone().sub(closest)
+            if (normal.lengthSq() < 0.0001) normal.set(1, 0, 0)
+            normal.normalize()
+            target.root.position.addScaledVector(normal, (0.55 - distance) * 0.35)
+            attacker.stickFlex = 0.3
+            debugRef.current.stickBodyCollisions += 1
+            debugRef.current.stickFlexes += 1
+          }
         }
       }
 
