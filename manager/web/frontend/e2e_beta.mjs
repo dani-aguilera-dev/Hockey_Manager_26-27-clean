@@ -146,6 +146,13 @@ try {
   result.history = true
   await page.screenshot({ path: '/tmp/opencode/e2e_history.png', fullPage: true })
 
+  await page.goto('/app/game/scouting')
+  await page.getByRole('heading', { name: 'Ojeo y asignaciones' }).waitFor()
+  await page.getByTestId('scout-assignment-create').click()
+  await page.locator('.scout-assignment-row').first().waitFor()
+  result.scouting = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_scouting.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

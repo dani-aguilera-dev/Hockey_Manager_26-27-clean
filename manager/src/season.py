@@ -32,6 +32,7 @@ from .loans import return_loans
 from .logistics import apply_travel, travel_options
 from .match_engine import MatchEngine, MatchResult
 from .models import Fixture, GameState, PlayerState, TeamState
+from .scouting import advance_scouting
 from .training import apply_training_plan, auto_plan
 from .youth import develop_youth, generate_youth, initial_youth, intake
 
@@ -547,6 +548,7 @@ def _reset_week_training(state: GameState) -> None:
     for t in state.teams.values():
         t.prep_bonus = 0.0
     advance_mentoring(state)
+    advance_scouting(state)
 
 
 def _user_result_payload(state: GameState, fixture: Fixture, result: MatchResult, travel: dict | None) -> dict:

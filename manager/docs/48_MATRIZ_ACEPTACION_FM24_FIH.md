@@ -30,6 +30,9 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Consulta y filtros | `GET /api/history`, `History.tsx`: temporada, competición, equipo y jugador; pestañas de temporadas, competiciones, partidos, jugadores y récords | `test_history_filters_and_records`, E2E `history` | PASS |
 | Récords históricos | Máximo goleador, más partidos, mejor rating, mayor victoria, club con más títulos y mejor posición | `test_history_filters_and_records` | PASS |
 | Persistencia del historial | `GameState.match_history` y `GameState.player_history` serializados y compatibles con partidas antiguas | `test_history_archive_is_idempotent_and_persists` | PASS |
+| Asignaciones de ojeo | `src/scouting.py`, `/api/scouting/assignments`, `Scouting.tsx`: ojeador, competición, posición, edad y enfoque | `test_create_assignment_and_complete_report`, E2E `scouting` | PASS |
+| Progreso e informes de ojeo | `advance_scouting` avanza con las jornadas y genera informes con objetivos reales de la competición asignada | `test_create_assignment_and_complete_report` | PASS |
+| Persistencia del ojeo | `GameState.scouting_assignments` y `GameState.scouting_reports` serializados | `test_scouting_assignments_persist` | PASS |
 
 ## 2. Plantillas y datos
 
@@ -114,7 +117,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":34,"ballSpeed":6.41},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.61},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -131,8 +134,9 @@ Flujo:
 10. Abrir `/app/game/datahub`, revisar el análisis del rival y guardar instrucciones.
 11. Abrir `/app/game/affiliates`, solicitar una afiliación y crear una mentoría.
 12. Abrir `/app/game/history`, consultar partidos, jugadores y récords.
-13. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-14. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+13. Abrir `/app/game/scouting`, crear una asignación de ojeo y comprobar la pantalla dedicada.
+14. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+15. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
 ## 9. Límites convertidos en criterios pass/fail
 
@@ -167,7 +171,7 @@ Flujo:
 | Previa, directo y parte de partido | PASS | `MatchPreview.tsx`, `LiveMatch.tsx`, `Report.tsx` |
 | Revisión de vídeo | PASS | `LiveMatch.tsx`, `/api/match/live/review`, `MatchEngine.review_decision` |
 | Fin de temporada y multi-temporada | PASS | `SeasonEnd.tsx`, `/api/season/*` |
-| Ojeo con pantalla dedicada | PARCIAL | Existe `/api/scouting`, pero no una pantalla de asignaciones de ojeadores |
+| Ojeo con pantalla dedicada | PASS | `Scouting.tsx`, `/api/scouting`, `/api/scouting/assignments`, asignaciones, progreso e informes |
 | Charlas de equipo y dinámica de vestuario | PARCIAL | Chat y charlas automáticas del motor; no hay reunión de equipo completa |
 | Cesiones y préstamos | PASS | `Loans.tsx`, `/api/loans`, `/api/loans/in`, `/api/loans/out`, retorno al club de origen al cerrar la temporada |
 | Junta, visión de club e instalaciones | PASS | `Board.tsx`, `/api/board`, `/api/board/request`, visión a corto/medio/largo plazo, instalaciones y peticiones con historial |
@@ -180,4 +184,4 @@ La lista permite priorizar la siguiente iteración sin confundir “flujo cubier
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring y del historial completo. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: física AAA, paridad total de pantallas y arbitraje discrecional.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo y del ojeo con pantalla dedicada. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: charlas de equipo completas, física AAA, paridad total de pantallas y arbitraje discrecional.

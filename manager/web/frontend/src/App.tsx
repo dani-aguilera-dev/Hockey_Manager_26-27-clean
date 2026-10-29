@@ -13,6 +13,7 @@ import LoansPage from './pages/Loans'
 import DataHubPage from './pages/DataHub'
 import AffiliatesPage from './pages/Affiliates'
 import HistoryPage from './pages/History'
+import ScoutingPage from './pages/Scouting'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -77,6 +78,7 @@ export default function App() {
         <Route path="datahub" element={<DataHubPage />} />
         <Route path="affiliates" element={<AffiliatesPage />} />
         <Route path="history" element={<HistoryPage />} />
+        <Route path="scouting" element={<ScoutingPage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />

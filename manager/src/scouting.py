@@ -203,3 +203,186 @@ def scout_summary(state: GameState, focus: str = "equilibrado", max_age: int | N
     context["focus"] = focus
     context["recommendations"] = recommendations(state, focus=focus, limit=16, max_age=max_age, position=position)
     return context
+
+
+SCOUT_POSITIONS = ("Portero", "Central", "Lateral", "Medio", "Delantero")
+MAX_ACTIVE_ASSIGNMENTS = 3
+
+
+def _scout_staff(state: GameState) -> list[dict[str, Any]]:
+    rows = [
+        {"id": member.name, "name": member.name, "rating": int(member.rating)}
+        for member in state.user_team.staff
+        if member.role == "scout"
+    ]
+    if not rows:
+        rows.append(
+            {
+                "id": "",
+                "name": "Red de ojeadores del club",
+                "rating": state.user_team.staff_rating("scout", 55),
+            }
+        )
+    return rows
+
+
+def assignment_options(state: GameState) -> dict[str, Any]:
+    competitions = []
+    seen = set()
+    for team in state.teams.values():
+        if team.league in seen:
+            continue
+        seen.add(team.league)
+        meta = competition(team.league)
+        competitions.append({"code": meta.code, "name": meta.short_name, "country": meta.country})
+    competitions.sort(key=lambda item: (item["country"], item["name"]))
+    return {
+        "scouts": _scout_staff(state),
+        "competitions": competitions,
+        "positions": [{"id": "", "label": "Todas"}, *({"id": pos, "label": pos} for pos in SCOUT_POSITIONS)],
+        "focuses": [{"id": key, "label": value} for key, value in FOCUS_LABELS.items()],
+        "max_active": MAX_ACTIVE_ASSIGNMENTS,
+    }
+
+
+def create_assignment(
+    state: GameState,
+    scout_id: str,
+    competition_code: str,
+    position: str = "",
+    max_age: int | None = None,
+    focus: str = "equilibrado",
+) -> dict[str, Any]:
+    scouts = _scout_staff(state)
+    scout = next((item for item in scouts if item["id"] == scout_id), None)
+    if scout is None:
+        return {"ok": False, "message": "El ojeador no está disponible."}
+    if competition_code not in {team.league for team in state.teams.values()}:
+        return {"ok": False, "message": "La competición no es válida."}
+    if position and position not in SCOUT_POSITIONS:
+        return {"ok": False, "message": "La posición no es válida."}
+    if focus not in FOCUS_LABELS:
+        focus = "equilibrado"
+    if max_age is not None:
+        max_age = max(14, min(40, int(max_age)))
+    active = [item for item in state.scouting_assignments if item.get("status") == "activo"]
+    if len(active) >= MAX_ACTIVE_ASSIGNMENTS:
+        return {"ok": False, "message": f"Solo puedes tener {MAX_ACTIVE_ASSIGNMENTS} asignaciones activas."}
+    meta = competition(competition_code)
+    assignment = {
+        "id": f"SC-{state.season}-{state.round}-{zlib.crc32((scout_id + competition_code + position).encode('utf-8')) % 10000}",
+        "scout_id": scout["id"],
+        "scout_name": scout["name"],
+        "scout_rating": scout["rating"],
+        "competition": competition_code,
+        "competition_name": meta.short_name,
+        "position": position,
+        "max_age": max_age,
+        "focus": focus,
+        "focus_label": FOCUS_LABELS[focus],
+        "created": state.date,
+        "progress": 0,
+        "status": "activo",
+        "reports": 0,
+    }
+    state.scouting_assignments.append(assignment)
+    state.inbox.append(
+        {
+            "date": state.date,
+            "from": "Red de ojeadores",
+            "subject": f"Nueva asignación: {meta.short_name}",
+            "body": f"{scout['name']} buscará {position.lower() if position else 'jugadores'} en {meta.short_name}.",
+        }
+    )
+    state.inbox = state.inbox[-80:]
+    return {"ok": True, "message": "Asignación de ojeo creada.", "assignment": assignment}
+
+
+def cancel_assignment(state: GameState, assignment_id: str) -> dict[str, Any]:
+    assignment = next((item for item in state.scouting_assignments if item.get("id") == assignment_id), None)
+    if assignment is None:
+        return {"ok": False, "message": "La asignación no existe."}
+    state.scouting_assignments = [item for item in state.scouting_assignments if item.get("id") != assignment_id]
+    return {"ok": True, "message": "Asignación cancelada."}
+
+
+def advance_scouting(state: GameState) -> dict[str, Any]:
+    """Avanza una semana de ojeo y genera informes al completar una asignación."""
+    completed = 0
+    active = 0
+    for assignment in state.scouting_assignments:
+        if assignment.get("status") != "activo":
+            continue
+        progress = min(100, int(assignment.get("progress", 0)) + 22 + int(assignment.get("scout_rating", 55)) // 10)
+        assignment["progress"] = progress
+        if progress < 100:
+            active += 1
+            continue
+        rows = recommendations(
+            state,
+            focus=str(assignment.get("focus", "equilibrado")),
+            limit=30,
+            max_age=assignment.get("max_age"),
+            position=assignment.get("position") or None,
+        )
+        league_rows = [row for row in rows if row.get("league") == assignment.get("competition")]
+        chosen = league_rows[:5]
+        report = {
+            "id": f"SR-{state.season}-{assignment['id']}",
+            "assignment_id": assignment["id"],
+            "date": state.date,
+            "season": state.season,
+            "scout_name": assignment.get("scout_name", ""),
+            "competition": assignment.get("competition", ""),
+            "competition_name": assignment.get("competition_name", ""),
+            "position": assignment.get("position", ""),
+            "focus": assignment.get("focus", ""),
+            "message": (
+                f"{len(chosen)} objetivos encontrados en {assignment.get('competition_name', '')}."
+                if chosen
+                else f"Sin objetivos que encajen en {assignment.get('competition_name', '')} con los filtros actuales."
+            ),
+            "players": [
+                {
+                    "id": row["player"].id,
+                    "name": row["player"].name,
+                    "team": row.get("owner_name", ""),
+                    "league": row.get("league_name", ""),
+                    "age": row.get("age"),
+                    "overall": row.get("overall"),
+                    "potential": row.get("potential"),
+                    "score": row.get("score"),
+                    "reasons": row.get("reasons", []),
+                }
+                for row in chosen
+            ],
+        }
+        assignment["status"] = "completado"
+        assignment["completed"] = state.date
+        assignment["reports"] = int(assignment.get("reports", 0)) + 1
+        state.scouting_reports.append(report)
+        state.scouting_reports = state.scouting_reports[-30:]
+        state.inbox.append(
+            {
+                "date": state.date,
+                "from": "Red de ojeadores",
+                "subject": f"Informe de {assignment.get('competition_name', '')}",
+                "body": f"{assignment.get('scout_name', 'El ojeador')} ha entregado un informe con {len(chosen)} objetivos.",
+            }
+        )
+        state.inbox = state.inbox[-80:]
+        completed += 1
+    return {"completed": completed, "active": active}
+
+
+def scouting_overview(
+    state: GameState,
+    focus: str = "equilibrado",
+    max_age: int | None = None,
+    position: str | None = None,
+) -> dict[str, Any]:
+    payload = scout_summary(state, focus=focus, max_age=max_age, position=position)
+    payload["assignments"] = [item for item in state.scouting_assignments if item.get("status") == "activo"]
+    payload["assignment_options"] = assignment_options(state)
+    payload["reports"] = list(reversed(state.scouting_reports[-10:]))
+    return payload

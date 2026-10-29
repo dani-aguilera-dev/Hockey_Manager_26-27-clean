@@ -6,6 +6,7 @@ import {
   Building2,
   CalendarDays,
   ChevronRight,
+  Compass,
   ClipboardList,
   Dumbbell,
   Flag,
@@ -61,6 +62,7 @@ const competitionLinks = [
 
 const clubLinks = [
   { to: '/game/market', label: 'Mercado', icon: ArrowLeftRight },
+  { to: '/game/scouting', label: 'Ojeo', icon: Compass },
   { to: '/game/loans', label: 'Cesiones', icon: Repeat },
   { to: '/game/commercial', label: 'Comercial y marca', icon: Building2 },
   { to: '/game/staff', label: 'Staff', icon: Users },

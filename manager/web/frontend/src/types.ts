@@ -1045,6 +1045,48 @@ export interface ScoutRecommendation {
   need_group: string
 }
 
+export interface ScoutAssignment {
+  id: string
+  scout_id: string
+  scout_name: string
+  scout_rating: number
+  competition: string
+  competition_name: string
+  position: string
+  max_age: number | null
+  focus: string
+  focus_label: string
+  created: string
+  progress: number
+  status: string
+  reports: number
+  completed?: string
+}
+
+export interface ScoutReport {
+  id: string
+  assignment_id: string
+  date: string
+  season: string
+  scout_name: string
+  competition: string
+  competition_name: string
+  position: string
+  focus: string
+  message: string
+  players: Array<{
+    id: string
+    name: string
+    team: string
+    league: string
+    age: number | null
+    overall: number | null
+    potential: number | null
+    score: number | null
+    reasons: string[]
+  }>
+}
+
 export interface ScoutData {
   scout: { name: string; rating: number; confidence: string; range: string }
   team_quality: number
@@ -1055,6 +1097,15 @@ export interface ScoutData {
   focuses: Array<{ id: string; label: string }>
   focus: string
   recommendations: ScoutRecommendation[]
+  assignments?: ScoutAssignment[]
+  assignment_options?: {
+    scouts: Array<{ id: string; name: string; rating: number }>
+    competitions: Array<{ code: string; name: string; country: string }>
+    positions: Array<{ id: string; label: string }>
+    focuses: Array<{ id: string; label: string }>
+    max_active: number
+  }
+  reports?: ScoutReport[]
 }
 
 export interface MarketStaff {

@@ -785,6 +785,8 @@ class GameState:
     affiliate_history: list[dict[str, Any]] = field(default_factory=list)
     match_history: list[dict[str, Any]] = field(default_factory=list)
     player_history: list[dict[str, Any]] = field(default_factory=list)
+    scouting_assignments: list[dict[str, Any]] = field(default_factory=list)
+    scouting_reports: list[dict[str, Any]] = field(default_factory=list)
 
     @property
     def total_rounds(self) -> int:
@@ -905,6 +907,8 @@ class GameState:
             "affiliate_history": self.affiliate_history,
             "match_history": self.match_history,
             "player_history": self.player_history,
+            "scouting_assignments": self.scouting_assignments,
+            "scouting_reports": self.scouting_reports,
         }
 
     @classmethod
@@ -979,6 +983,8 @@ class GameState:
             affiliate_history=d.get("affiliate_history", []),
             match_history=d.get("match_history", []),
             player_history=d.get("player_history", []),
+            scouting_assignments=d.get("scouting_assignments", []),
+            scouting_reports=d.get("scouting_reports", []),
         )
         if state.league_fixtures.get(state.competition):
             # Los partidos de Copa y de la fase de ascenso viven en

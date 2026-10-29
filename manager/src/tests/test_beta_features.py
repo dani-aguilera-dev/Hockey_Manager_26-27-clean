@@ -343,3 +343,29 @@ def test_api_history_and_filters(client):
     filtered = client.get(f"/api/history?team_id={team_id}").get_json()["data"]
     assert filtered["matches"]
     assert all(team_id in (row["home_id"], row["away_id"]) for row in filtered["matches"])
+
+
+def test_api_scouting_assignments(client):
+    _new_api(client, seed="44")
+    data = client.get("/api/scouting")
+    assert data.status_code == 200, data.get_data(as_text=True)
+    payload = data.get_json()["data"]
+    assert payload["assignment_options"]["scouts"]
+    options = payload["assignment_options"]
+    created = client.post(
+        "/api/scouting/assignments",
+        json={
+            "scout_id": options["scouts"][0]["id"],
+            "competition": options["competitions"][0]["code"],
+            "position": "Delantero",
+            "max_age": "24",
+            "focus": "joven",
+        },
+    )
+    assert created.status_code == 200, created.get_data(as_text=True)
+    created_payload = created.get_json()["data"]
+    assert created_payload["scouting"]["assignments"]
+    assignment_id = created_payload["scouting"]["assignments"][0]["id"]
+    deleted = client.delete(f"/api/scouting/assignments/{assignment_id}")
+    assert deleted.status_code == 200, deleted.get_data(as_text=True)
+    assert deleted.get_json()["data"]["scouting"]["assignments"] == []

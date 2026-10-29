@@ -107,7 +107,7 @@ from src.press import (
 from src.objectives import competition_objectives
 from src.promotion import promotion_path
 from src.ratings import league_label, profile, scout_stars, stars_bar, stars_text, tier
-from src.scouting import scout_summary
+from src.scouting import cancel_assignment, create_assignment, scouting_overview
 from src.season import (
     advance_to_next_season,
     finish_live_round,
@@ -1328,7 +1328,7 @@ def scouting():
     raw_age = str(request.args.get("max_age", "")).strip()
     max_age = int(raw_age) if raw_age.isdigit() else None
     position = request.args.get("position", "")
-    payload = scout_summary(state, focus=focus, max_age=max_age, position=position or None)
+    payload = scouting_overview(state, focus=focus, max_age=max_age, position=position or None)
     payload["recommendations"] = [
         {
             **{key: value for key, value in row.items() if key != "player"},
@@ -1337,6 +1337,50 @@ def scouting():
         for row in payload["recommendations"]
     ]
     return _ok(payload)
+
+
+@api.post("/scouting/assignments")
+def scouting_assignment_create():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    raw_age = str(payload.get("max_age", "")).strip()
+    max_age = int(raw_age) if raw_age.isdigit() else None
+    result = create_assignment(
+        state,
+        str(payload.get("scout_id", "")),
+        str(payload.get("competition", "")),
+        str(payload.get("position", "")),
+        max_age,
+        str(payload.get("focus", "equilibrado") or "equilibrado"),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo crear la asignación."), 409, "scouting_failed")
+    _save(state)
+    overview = scouting_overview(state)
+    overview["recommendations"] = [
+        {**{key: value for key, value in row.items() if key != "player"}, "player": _market_player(row["player"], state)}
+        for row in overview["recommendations"]
+    ]
+    return _ok({"result": result, "scouting": overview, "state": _state_payload(state)}, result["message"])
+
+
+@api.delete("/scouting/assignments/<assignment_id>")
+def scouting_assignment_delete(assignment_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = cancel_assignment(state, assignment_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo cancelar la asignación."), 409, "scouting_failed")
+    _save(state)
+    overview = scouting_overview(state)
+    overview["recommendations"] = [
+        {**{key: value for key, value in row.items() if key != "player"}, "player": _market_player(row["player"], state)}
+        for row in overview["recommendations"]
+    ]
+    return _ok({"result": result, "scouting": overview, "state": _state_payload(state)}, result["message"])
 
 
 @api.get("/market")
