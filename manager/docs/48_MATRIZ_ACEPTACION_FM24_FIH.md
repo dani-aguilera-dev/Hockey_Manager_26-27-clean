@@ -122,6 +122,39 @@ Flujo:
 | “Marcas no cambian la física” | Contratos de club e individuales con efectos económicos, de marca y relación; no se promete física de material | PASS para gestión / FAIL para simulación física |
 | “No hay vídeo de comparecencia” | La prensa es una pantalla textual interactiva | FAIL / fuera de alcance |
 
-## 10. Resultado
+## 10. Inventario de pantallas y flujos FM24
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas y de la revisión de vídeo. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total.
+| Pantalla / flujo | Estado | Evidencia o hueco |
+| --- | --- | --- |
+| Dashboard y centro de decisiones | PASS | `Dashboard.tsx`, `Decisions.tsx`, `/api/state`, `/api/events` |
+| Plantilla y ficha de jugador | PASS | `Squad.tsx`, `Player.tsx`, `/api/squad`, `/api/player/<id>` |
+| Editor de jugadores | PASS | Modal de `Player.tsx`, `/api/player/<id>/edit` |
+| Club y estadio | PASS | `Team.tsx`, `/api/team/<id>`, auditoría de 99 clubes |
+| Táctica y planes de partido | PASS | `Tactics.tsx`, `/api/tactics`, táctica en directo |
+| Entrenamiento semanal | PASS | `Training.tsx`, `/api/training` |
+| Médico y disponibilidad | PASS | `Medical.tsx`, `/api/medical` |
+| Mercado, negociaciones y ofertas | PASS | `Market.tsx`, `Offers.tsx`, `/api/market/*` |
+| Renovaciones de contrato | PASS | `Renew.tsx`, `/api/market/renew*` |
+| Comercial, patrocinios y marcas | PASS | `Commercial.tsx`, `/api/commercial`, `/api/brands*` |
+| Staff y cuerpo técnico | PASS | `Staff.tsx`, `/api/staff*` |
+| Cantera | PASS | `Youth.tsx`, `/api/youth*` |
+| Calendario, amistosos y vista mensual | PASS | `Calendar.tsx`, `/api/calendar`, `/api/friendlies*` |
+| Prensa previa y posterior | PASS | `Press.tsx`, `PostPress.tsx`, `/api/press*` |
+| Clasificación, Copa, EHL y ascenso | PASS | `Table.tsx`, `Cup.tsx`, `Ehl.tsx`, `Promotion.tsx`, `Objectives.tsx` |
+| Previa, directo y parte de partido | PASS | `MatchPreview.tsx`, `LiveMatch.tsx`, `Report.tsx` |
+| Revisión de vídeo | PASS | `LiveMatch.tsx`, `/api/match/live/review`, `MatchEngine.review_decision` |
+| Fin de temporada y multi-temporada | PASS | `SeasonEnd.tsx`, `/api/season/*` |
+| Ojeo con pantalla dedicada | PARCIAL | Existe `/api/scouting`, pero no una pantalla de asignaciones de ojeadores |
+| Charlas de equipo y dinámica de vestuario | PARCIAL | Chat y charlas automáticas del motor; no hay reunión de equipo completa |
+| Cesiones y préstamos | FAIL | No implementados |
+| Junta, visión de club e instalaciones | FAIL | No hay pantalla de peticiones a la junta ni visión a largo plazo |
+| Instrucciones al rival y data hub | FAIL | No implementados |
+| Clubes afiliados y mentoring | FAIL | No implementados |
+| Historial/base de datos consultable | FAIL | No hay pantalla de historial completo |
+| Arbitraje discrecional completo | FAIL | Solo están modeladas las decisiones revisables (gol, PC, stroke), no cada interpretación subjetiva |
+
+La lista permite priorizar la siguiente iteración sin confundir “flujo cubierto” con “paridad total”. Las pantallas marcadas FAIL no se presentan como terminadas.
+
+## 11. Resultado
+
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas y de la revisión de vídeo. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan.
