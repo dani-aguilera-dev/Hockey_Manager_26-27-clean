@@ -39,7 +39,7 @@
 
 ```text
 python3 -m pytest src/tests -q
-173 passed in 278.08s
+173 passed in 280.67s
 
 cd manager/web/frontend && npm run build
 ✓ built in 3.68s
