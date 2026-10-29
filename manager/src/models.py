@@ -774,6 +774,7 @@ class GameState:
     negotiations: list[dict[str, Any]] = field(default_factory=list)
     loans: list[dict[str, Any]] = field(default_factory=list)
     loan_history: list[dict[str, Any]] = field(default_factory=list)
+    opposition_instructions: dict[str, dict[str, str]] = field(default_factory=dict)
 
     @property
     def total_rounds(self) -> int:
@@ -889,6 +890,7 @@ class GameState:
             "negotiations": self.negotiations,
             "loans": self.loans,
             "loan_history": self.loan_history,
+            "opposition_instructions": self.opposition_instructions,
         }
 
     @classmethod
@@ -958,6 +960,7 @@ class GameState:
             negotiations=d.get("negotiations", []),
             loans=d.get("loans", []),
             loan_history=d.get("loan_history", []),
+            opposition_instructions=d.get("opposition_instructions", {}),
         )
         if state.league_fixtures.get(state.competition):
             # Los partidos de Copa y de la fase de ascenso viven en

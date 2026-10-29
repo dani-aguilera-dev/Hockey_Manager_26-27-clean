@@ -53,6 +53,7 @@ from src.brands import (
 )
 from src.board import board_overview, request_board
 from src.loans import loan_overview, offer_loan_out, request_loan_in
+from src.datahub import datahub_overview, set_instructions
 from src.player_editor import edit_player, editor_payload, find_player
 from src.international import club_catalog, international_cities, load_all_teams
 from src.logistics import travel_options
@@ -1767,6 +1768,30 @@ def loan_out():
         return _error(result.get("message", "No se pudo ofrecer la cesión."), 409, "loan_out_failed")
     _save(state)
     return _ok({"result": result, "loans": loan_overview(state), "state": _state_payload(state)}, result.get("message", ""))
+
+
+@api.get("/datahub")
+def datahub():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(datahub_overview(state))
+
+
+@api.post("/datahub/instructions")
+def datahub_instructions():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    instructions = payload.get("instructions", {})
+    if not isinstance(instructions, dict):
+        instructions = {}
+    result = set_instructions(state, str(payload.get("opponent_id", "")), instructions)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudieron guardar las instrucciones."), 409, "datahub_failed")
+    _save(state)
+    return _ok({"result": result, "datahub": datahub_overview(state), "state": _state_payload(state)}, result["message"])
 
 
 @api.get("/staff")

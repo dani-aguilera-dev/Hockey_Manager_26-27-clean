@@ -19,6 +19,9 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Cesiones salientes | `/api/loans/out`: oferta a clubes interesados, tasa de cesión y contribución salarial | `test_loan_out_moves_player_to_borrower_and_returns` | PASS |
 | Retorno al club de origen | `return_loans()` en `advance_to_next_season`: devuelve a todos los cedidos y registra el historial | `test_loan_in_moves_player_and_returns_to_parent` | PASS |
 | Persistencia de cesiones | `GameState.loans`, `GameState.loan_history` y `PlayerState.loan` serializados | `test_loan_validation_and_persistence` | PASS |
+| Data hub del rival | `src/datahub.py`, `/api/datahub`, `DataHub.tsx`: forma, estadísticas, táctica, bajas, jugadores clave, historial directo y comparativa | `test_datahub_has_opponent_analysis_key_players_and_options`, E2E `datahub` | PASS |
+| Instrucciones al rival | `/api/datahub/instructions`, `GameState.opposition_instructions`: marcaje, presión, doblar por banda y forzar lado débil | `test_set_instructions_validates_players_and_saves`, `test_opposition_instructions_persist_in_game_state` | PASS |
+| Efecto de las instrucciones en el motor | `MatchEngine.opposition_effect` reduce ataque/defensa del rival según los jugadores marcados | `test_opposition_instructions_reduce_opponent_strength` | PASS |
 
 ## 2. Plantillas y datos
 
@@ -103,7 +106,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":33,"ballSpeed":7.66},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":33,"ballSpeed":7.64},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -117,8 +120,9 @@ Flujo:
 7. Avanzar hasta una decisión contra el usuario y solicitar la revisión de vídeo desde la pantalla en directo.
 8. Abrir `/app/game/board`, comprobar la visión de club y presentar una petición de mejora de entrenamiento.
 9. Abrir `/app/game/loans`, comprobar las cesiones entrantes y solicitar una cesión.
-10. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-11. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+10. Abrir `/app/game/datahub`, revisar el análisis del rival y guardar instrucciones.
+11. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+12. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
 ## 9. Límites convertidos en criterios pass/fail
 
@@ -157,7 +161,7 @@ Flujo:
 | Charlas de equipo y dinámica de vestuario | PARCIAL | Chat y charlas automáticas del motor; no hay reunión de equipo completa |
 | Cesiones y préstamos | PASS | `Loans.tsx`, `/api/loans`, `/api/loans/in`, `/api/loans/out`, retorno al club de origen al cerrar la temporada |
 | Junta, visión de club e instalaciones | PASS | `Board.tsx`, `/api/board`, `/api/board/request`, visión a corto/medio/largo plazo, instalaciones y peticiones con historial |
-| Instrucciones al rival y data hub | FAIL | No implementados |
+| Instrucciones al rival y data hub | PASS | `DataHub.tsx`, `/api/datahub`, `/api/datahub/instructions`, análisis del rival e instrucciones aplicadas al motor |
 | Clubes afiliados y mentoring | FAIL | No implementados |
 | Historial/base de datos consultable | FAIL | No hay pantalla de historial completo |
 | Arbitraje discrecional completo | FAIL | Solo están modeladas las decisiones revisables (gol, PC, stroke), no cada interpretación subjetiva |
@@ -166,4 +170,4 @@ La lista permite priorizar la siguiente iteración sin confundir “flujo cubier
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club y de las cesiones. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: instrucciones al rival/data hub, afiliados/mentoring, historial completo, física AAA y paridad total de pantallas.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones y del data hub con instrucciones al rival. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: afiliados/mentoring, historial completo, física AAA y paridad total de pantallas.

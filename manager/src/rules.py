@@ -40,6 +40,33 @@ RED_CARD_NEXT_MATCHES = 1
 # la pierde. El capitán puede solicitar la revisión de un gol, un penalty
 # corner o un penalty stroke.
 REFERRALS_PER_TEAM = 1
+OPPOSITION_INSTRUCTIONS: dict[str, dict[str, object]] = {
+    "tight_marking": {
+        "label": "Marcaje individual",
+        "description": "Seguir de cerca al jugador para quitarle tiempo y espacio.",
+        "attack": 1.3,
+        "defense": 0.2,
+    },
+    "press": {
+        "label": "Presión alta",
+        "description": "Saltar a presionar para forzar errores en la salida.",
+        "attack": 1.0,
+        "defense": 0.1,
+    },
+    "double_team": {
+        "label": "Doblar por banda",
+        "description": "Enviar ayuda al lado del jugador y cerrar la superioridad.",
+        "attack": 1.8,
+        "defense": 0.3,
+    },
+    "force_weak_side": {
+        "label": "Forzar lado débil",
+        "description": "Orientar al rival hacia su lado menos peligroso.",
+        "attack": 0.8,
+        "defense": 0.0,
+    },
+}
+
 REFERRAL_DECISIONS: dict[str, str] = {
     "goal": "Gol",
     "penalty_corner": "Penalty corner",

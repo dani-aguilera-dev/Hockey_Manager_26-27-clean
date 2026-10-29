@@ -69,6 +69,8 @@ class MatchEngine:
         ai_sides: set[int] | None = None,
         auto_talk_sides: set[int] | None = None,
         match_date: str = "",
+        opposition: dict[str, str] | None = None,
+        opposition_side: int | None = None,
     ):
         self.home = home
         self.away = away
@@ -124,6 +126,8 @@ class MatchEngine:
         self.auto_sub_sides = set(auto_sub_sides) if auto_sub_sides is not None else {0, 1}
         self.ai_sides = set(ai_sides) if ai_sides is not None else {0, 1}
         self.auto_talk_sides = set(auto_talk_sides) if auto_talk_sides is not None else set(self.ai_sides)
+        self.opposition = dict(opposition or {})
+        self.opposition_side = opposition_side
         self.live_bonus = {0: 0.0, 1: 0.0}
         self.talk_bonus = {0: 0.0, 1: 0.0}
         self.talk_done = {0: False, 1: False}
@@ -207,6 +211,25 @@ class MatchEngine:
             self._lineup(side), key=lambda p: p.attributes.get("reflejos", 0) if p.subposition == "Portero" else -1
         )
 
+    def opposition_effect(self, side: int) -> dict[str, float]:
+        """Penalización de ataque/defensa por las instrucciones al rival."""
+        if self.opposition_side != side or not self.opposition:
+            return {"attack": 0.0, "defense": 0.0, "players": 0.0}
+        attack = 0.0
+        defense = 0.0
+        count = 0
+        for player in self._lineup(side):
+            instruction = self.opposition.get(player.id)
+            if not instruction:
+                continue
+            profile = rules.OPPOSITION_INSTRUCTIONS.get(instruction)
+            if not profile:
+                continue
+            attack += float(profile.get("attack", 0.0))
+            defense += float(profile.get("defense", 0.0))
+            count += 1
+        return {"attack": round(attack, 2), "defense": round(defense, 2), "players": float(count)}
+
     def _attack_defense(self) -> tuple[float, float, float, float]:
         home_lineup = self._lineup(0)
         away_lineup = self._lineup(1)
@@ -233,7 +256,15 @@ class MatchEngine:
         hd += (self.home.morale - 10) * 0.3
         aa += (self.away.morale - 10) * 0.3
         ad += (self.away.morale - 10) * 0.3
-        return ha, hd, aa, ad
+        if self.opposition_side == 0:
+            effect = self.opposition_effect(0)
+            ha -= effect["attack"]
+            hd -= effect["defense"]
+        elif self.opposition_side == 1:
+            effect = self.opposition_effect(1)
+            aa -= effect["attack"]
+            ad -= effect["defense"]
+        return max(25.0, ha), max(25.0, hd), max(25.0, aa), max(25.0, ad)
 
     def _add_event(
         self, type_: str, side: int | None, player: PlayerState | None, text: str, minute: int | None = None
@@ -1274,6 +1305,11 @@ class MatchEngine:
             "home_tactical_bonus": round(self.tactical_matchup_bonus(0), 2),
             "away_tactical_bonus": round(self.tactical_matchup_bonus(1), 2),
             "referee": self.referee,
+            "opposition": {
+                "side": self.opposition_side,
+                "effect": self.opposition_effect(self.opposition_side) if self.opposition_side is not None else {"attack": 0.0, "defense": 0.0, "players": 0.0},
+                "instructions": self.opposition,
+            },
             "referrals": [self.referrals.get(0, 0), self.referrals.get(1, 0)],
             "last_decision": self.last_decision,
             "reviews": self.reviews,

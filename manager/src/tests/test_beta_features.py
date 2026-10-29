@@ -278,3 +278,24 @@ def test_api_loans_in_and_active_list(client):
     assert accepted["loans"]["active"]
     assert accepted["loans"]["active"][0]["is_incoming"] is True
     assert accepted["loans"]["history"]
+
+
+def test_api_datahub_and_opposition_instructions(client):
+    _new_api(client, seed="41")
+    datahub = client.get("/api/datahub")
+    assert datahub.status_code == 200, datahub.get_data(as_text=True)
+    data = datahub.get_json()["data"]
+    assert data["fixture"]
+    assert data["key_players"]
+    opponent_id = data["opponent"]["id"]
+    player_id = data["key_players"][0]["id"]
+    response = client.post(
+        "/api/datahub/instructions",
+        json={"opponent_id": opponent_id, "instructions": {player_id: "tight_marking"}},
+    )
+    assert response.status_code == 200, response.get_data(as_text=True)
+    payload = response.get_json()["data"]
+    assert payload["datahub"]["instructions"][player_id] == "tight_marking"
+    assert payload["state"]["team"]["name"]
+    refreshed = client.get("/api/datahub").get_json()["data"]
+    assert refreshed["instructions"][player_id] == "tight_marking"

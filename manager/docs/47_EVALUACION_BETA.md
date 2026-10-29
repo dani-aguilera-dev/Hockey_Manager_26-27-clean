@@ -16,13 +16,14 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **190 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **195 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
 | Junta y visión de club | `/api/board`, `/api/board/request`, `Board.tsx`: confianza, visión, instalaciones, peticiones e historial | PASS |
 | Cesiones y préstamos | `/api/loans`, `/api/loans/in`, `/api/loans/out`, `Loans.tsx`: entrantes, salientes, tasas, salario, minutos y retorno | PASS |
-| E2E Playwright | calendario mensual, amistoso/partido, visor 3D, revisión de vídeo, junta, cesiones, prensa posterior y marcas individuales | PASS |
+| Data hub e instrucciones al rival | `/api/datahub`, `/api/datahub/instructions`, `DataHub.tsx`: análisis, jugadores clave e instrucciones aplicadas al motor | PASS |
+| E2E Playwright | calendario mensual, amistoso/partido, visor 3D, revisión de vídeo, junta, cesiones, data hub, prensa posterior y marcas individuales | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media y equipación; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -39,6 +40,7 @@
 8. `test_api_video_review_flow`
 9. `test_api_board_overview_and_request`
 10. `test_api_loans_in_and_active_list`
+11. `test_api_datahub_and_opposition_instructions`
 
 `src/tests/test_acceptance_beta.py` incluye además:
 
@@ -63,21 +65,28 @@
 - `test_rejected_loan_keeps_player_and_records_history`
 - `test_loan_validation_and_persistence`
 
+`src/tests/test_datahub.py`:
+
+- `test_datahub_has_opponent_analysis_key_players_and_options`
+- `test_set_instructions_validates_players_and_saves`
+- `test_opposition_instructions_reduce_opponent_strength`
+- `test_opposition_instructions_persist_in_game_state`
+
 ## Comandos ejecutados
 
 ```text
 python3 -m pytest src/tests -q
-190 passed in 295.92s
+195 passed in 300.10s
 
 cd manager/web/frontend && npm run build
-✓ built in 4.88s
+✓ built in 4.96s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-CpOqmDeM.js → 200
+curl /static/react/assets/index-DLGHZmBX.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":33,"ballSpeed":7.66},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":49,"stickCollisions":33,"ballSpeed":7.64},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

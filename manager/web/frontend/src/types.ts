@@ -1515,3 +1515,79 @@ export interface LoansData {
   history: LoanHistoryEntry[]
   playing_times: Array<{ id: string; label: string }>
 }
+
+export interface DatahubKeyPlayer {
+  id: string
+  name: string
+  position: string
+  position_group: string
+  age: number
+  overall: number
+  goals: number
+  assists: number
+  rating: number
+  apps: number
+  status: string
+  threat: string
+  recommended_instruction: string
+}
+
+export interface DatahubInstructionOption {
+  id: string
+  label: string
+  description: string
+  attack: number
+  defense: number
+}
+
+export interface DatahubTeamStats {
+  played: number
+  wins: number
+  draws: number
+  losses: number
+  goals_for: number
+  goals_against: number
+  goals_per_game: number
+  goals_against_per_game: number
+  shots_per_game: number
+  shots_on_target_per_game: number
+  pc_per_game: number
+  possession: number
+  form: string
+  position: number
+}
+
+export interface DatahubData {
+  fixture: null | {
+    id: string
+    date: string
+    round: number
+    phase: string
+    home_id: string
+    away_id: string
+    home_name: string
+    away_name: string
+    user_is_home: boolean
+  }
+  message?: string
+  user_side?: number
+  competition?: { code: string; name: string; short_name: string }
+  user?: { id: string; name: string; stats: DatahubTeamStats; availability: Array<Record<string, unknown>> }
+  opponent?: {
+    id: string
+    name: string
+    league: string
+    city: string
+    stadium_name: string
+    stats: DatahubTeamStats
+    tactics: Tactics
+    availability: Array<{ id: string; name: string; reason: string; injury: number; suspension: number }>
+  }
+  key_players?: DatahubKeyPlayer[]
+  head_to_head?: Array<{ date: string; round: number; home_name: string; away_name: string; home_goals: number; away_goals: number }>
+  analysis?: string[]
+  options: DatahubInstructionOption[]
+  instructions?: Record<string, string>
+  recommended?: Record<string, string>
+  effect?: { attack: number; defense: number; players: number }
+}

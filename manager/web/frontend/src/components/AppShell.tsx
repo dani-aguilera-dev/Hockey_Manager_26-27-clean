@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import {
   ArrowLeftRight,
+  BarChart3,
   Building2,
   CalendarDays,
   ChevronRight,
@@ -49,6 +50,7 @@ const teamLinks = [
 const competitionLinks = [
   { to: '/game/calendar', label: 'Calendario y amistosos', icon: CalendarDays },
   { to: '/game/match', label: 'Próximo partido', icon: Flag },
+  { to: '/game/datahub', label: 'Data hub rival', icon: BarChart3 },
   { to: '/game/table', label: 'Clasificación', icon: Trophy },
   { to: '/game/objectives', label: 'Objetivos', icon: Trophy },
   { to: '/game/cup', label: 'Copa del Rey', icon: Shield },

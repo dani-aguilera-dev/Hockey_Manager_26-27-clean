@@ -112,6 +112,16 @@ try {
   result.loans = true
   await page.screenshot({ path: '/tmp/opencode/e2e_loans.png', fullPage: true })
 
+  await page.goto('/app/game/datahub')
+  await page.getByRole('heading', { name: 'Data hub e instrucciones' }).waitFor()
+  await page.getByText('JUGADORES CLAVE E INSTRUCCIONES', { exact: true }).waitFor()
+  const instruction = page.locator('[data-testid^="instruction-"]').first()
+  await instruction.selectOption('tight_marking')
+  await page.getByTestId('datahub-save').click()
+  await page.locator('.datahub-saved').waitFor()
+  result.datahub = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_datahub.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

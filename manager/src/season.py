@@ -438,6 +438,12 @@ def _simulate_fixture(
     else:
         ai_sides = {1 - user_side}
         auto_talk_sides = {0, 1}  # en simulación rápida el segundo entrenador asume la charla
+    opposition: dict[str, str] = {}
+    opposition_side = None
+    if user_side is not None:
+        opponent_id = away.id if user_side == 0 else home.id
+        opposition = state.opposition_instructions.get(opponent_id, {})
+        opposition_side = 1 - user_side
     engine = MatchEngine(
         home,
         away,
@@ -453,6 +459,8 @@ def _simulate_fixture(
         auto_talk_sides=auto_talk_sides,
         auto_sub_sides={0, 1},
         match_date=fixture.date,
+        opposition=opposition,
+        opposition_side=opposition_side,
     )
     result = engine.simulate()
     fixture.played = True
@@ -736,6 +744,8 @@ def prepare_live_round(
     idx_user = fixtures.index(user_fixture)
     rng = random.Random(state.seed * 1000 + round_no * 37 + idx_user)
     ai_side = 1 - user_side
+    opponent_id = away.id if user_side == 0 else home.id
+    opposition = state.opposition_instructions.get(opponent_id, {})
     engine = MatchEngine(
         home,
         away,
@@ -751,6 +761,8 @@ def prepare_live_round(
         ai_sides={ai_side},
         auto_talk_sides={ai_side},
         match_date=user_fixture.date,
+        opposition=opposition,
+        opposition_side=ai_side,
     )
     return LiveRoundContext(
         fixture=user_fixture,
