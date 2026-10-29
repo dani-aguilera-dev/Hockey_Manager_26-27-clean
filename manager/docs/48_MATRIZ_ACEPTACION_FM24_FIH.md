@@ -63,9 +63,9 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | 22 jugadores con locomoción | 11 locales y 11 visitantes, piernas/brazos animados, desplazamiento y separación | E2E `players=22`, `frames=65` | PASS |
 | Esqueleto jerárquico | Cadera, torso, cabeza, cuello, brazos, antebrazos, manos, muslos, espinillas y pies; 17 huesos por jugador | E2E `bones=374` | PASS |
 | IK de brazos | IK analítico de dos huesos para llevar ambas manos a las agarraderas del stick en cada frame | E2E `ikSolutions=2860` | PASS |
-| Sticks | 22 sticks con mango y pala; colisión segmento-bola | E2E `sticks=22`, `stickCollisions=33` | PASS |
+| Sticks | 22 sticks con mango y pala; colisión segmento-bola | E2E `sticks=22`, `stickCollisions=34` | PASS |
 | Balón con física | Velocidad, gravedad, rebote, fricción, límites y detección de gol | E2E `ballSpeed=7.64` | PASS |
-| Colisiones de cuerpo | Colisión cuerpo-bola con rebote y separación jugador-jugador | E2E `bodyCollisions=51` | PASS |
+| Colisiones de cuerpo | Colisión cuerpo-bola con rebote y separación jugador-jugador | E2E `bodyCollisions=50` | PASS |
 | UI 3D | Marcador, cuarto, minuto, estado, último evento y cámara táctica superpuestos al canvas | E2E `match-viewer-ui` + captura | PASS |
 | Conexión con MatchEngine | El visor consume `LivePayload`: `score`, `quarter`, `minute`, `line`, `events`, formación y equipo atacante | `/api/match/live` y `/api/match/live/advance` | PASS |
 | Física 3D AAA | No hay tejido, física de materiales, colisión de stick contra cuerpo ni animación de captura de movimiento | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
@@ -89,7 +89,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":33,"ballSpeed":7.64},"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":34,"ballSpeed":7.64},"playerBrands":true}
 ```
 
 Flujo:

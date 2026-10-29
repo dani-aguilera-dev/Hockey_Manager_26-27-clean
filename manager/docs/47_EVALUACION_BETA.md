@@ -49,7 +49,7 @@ curl /app → 200
 curl /static/react/assets/index-Bu3vFlBz.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":33,"ballSpeed":7.64},"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":34,"ballSpeed":7.64},"playerBrands":true}
 ```
 
 ## Límites conscientes
