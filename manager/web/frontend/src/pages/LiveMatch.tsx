@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FastForward, Flag, MonitorCheck, Play, Timer, UserRoundPlus } from 'lucide-react'
+import { FastForward, Flag, MessageSquare, MonitorCheck, Play, Timer, UserRoundPlus } from 'lucide-react'
 import { api } from '../lib/api'
 import { dateLabel } from '../lib/format'
 import type { LivePayload } from '../types'
@@ -89,6 +89,19 @@ export default function LiveMatch() {
       toast(response.message || 'Revisión completada.', 'success')
     } catch (err) {
       toast(err instanceof Error ? err.message : 'No se pudo solicitar la revisión.', 'danger')
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  async function protest(tone: 'respetuosa' | 'vehemente') {
+    setBusy(`protest-${tone}`)
+    try {
+      const response = await api.post<LivePayload>('/match/live/protest', { tone })
+      setData(response.data)
+      toast(response.message || 'Protesta registrada.', tone === 'respetuosa' ? 'info' : 'success')
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudo protestar.', 'danger')
     } finally {
       setBusy(null)
     }
@@ -190,6 +203,17 @@ export default function LiveMatch() {
                 ))}
               </div>
             )}
+          </Card>
+          <Card>
+            <div className="inline" style={{ justifyContent: 'space-between' }}>
+              <h3 style={{ margin: 0 }}>Protesta arbitral</h3>
+              <Badge tone={data.protest_available ? 'gold' : 'neutral'} className={data.protest_available ? '' : 'protest-used'}>{data.protest_available ? 'Disponible' : 'Usada'}</Badge>
+            </div>
+            <p className="small muted mt-1">Puedes protestar una decisión por partido. La protesta respetuosa recibe un aviso; la vehemente puede acarrear tarjeta.</p>
+            <div className="actions">
+              <Button size="sm" icon={MessageSquare} onClick={() => protest('respetuosa')} loading={busy === 'protest-respetuosa'} disabled={!data.protest_available} data-testid="live-protest-respectful">Respetuosa</Button>
+              <Button size="sm" variant="danger" icon={MessageSquare} onClick={() => protest('vehemente')} loading={busy === 'protest-vehemente'} disabled={!data.protest_available} data-testid="live-protest-vehement">Vehemente</Button>
+            </div>
           </Card>
           <Card>
             <h3>Tu once</h3>

@@ -82,6 +82,9 @@ try {
   if (!(materialState.stickBodyCollisions > 0)) throw new Error(`viewer stick-body ${JSON.stringify(materialState)}`)
   if (!(materialState.materialBounces > 0)) throw new Error(`viewer material bounces ${materialState.materialBounces}`)
   if (!(materialState.stickFlexes > 0)) throw new Error(`viewer stick flexes ${materialState.stickFlexes}`)
+  await page.getByTestId('live-protest-respectful').click()
+  await page.locator('.protest-used').waitFor()
+  result.liveProtest = true
   await page.getByRole('button', { name: 'Cámara táctica' }).click()
   result.viewer3d = true
   result.viewerMaterials = {

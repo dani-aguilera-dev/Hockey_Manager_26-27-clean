@@ -122,6 +122,7 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Decisiones en el parte | `Report.tsx` muestra ventajas, juego peligroso, 5 m, PC denegados y strokes concedidos | E2E `refereeDiscretion` | PASS |
 | Protestas y conducta antideportiva | `_protest` y `_unsportsmanlike`: aviso, tarjeta, retraso, simulación y conducta antideportiva | `test_protest_warning_records_dissent_without_card`, `test_unsportsmanlike_delay_and_simulation` | PASS |
 | Tiempo añadido | `compute_added_time` por cuarto según lesiones, tarjetas, revisiones, protestas y PC; visible en el parte | `test_added_time_is_computed_and_in_result`, `test_api_report_has_added_time_and_discipline_stats`, E2E `refereeDiscipline` | PASS |
+| Protesta en directo | `/api/match/live/protest`, `protest_decision`: una por equipo, respetuosa o vehemente, con riesgo de tarjeta | `test_live_protest_respectful_is_one_per_team`, `test_api_live_protest_once_per_match`, E2E `liveProtest` | PASS |
 | Arbitraje discrecional completo | Quedan interpretaciones subjetivas no modeladas (criterios finos de peligrosidad, ventaja en cada zona, gestión de protestas en directo, etc.) | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
 
 
@@ -134,7 +135,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2464,"clothUpdates":1232},"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":36,"stickFlexes":45},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2464},"viewerPhysics":{"frames":56,"playerCollisions":0,"bodyCollisions":46,"stickCollisions":29,"ballSpeed":7.82},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2552,"clothUpdates":1276},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":37,"stickFlexes":47},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2552},"viewerPhysics":{"frames":58,"playerCollisions":0,"bodyCollisions":47,"stickCollisions":31,"ballSpeed":7.65},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -200,10 +201,10 @@ Flujo:
 | Clubes afiliados y mentoring | PASS | `Affiliates.tsx`, `/api/affiliates`, `/api/mentoring`, red de clubes, beneficios y planes de desarrollo |
 | Historial/base de datos consultable | PASS | `History.tsx`, `/api/history`, archivo de partidos y jugadores, filtros y récords |
 | Finanzas detalladas | PASS | `Finance.tsx`, `/api/finance`, `/api/finance/ticket`, cuenta de resultados, proyección, salarios y taquilla |
-| Arbitraje discrecional completo | FAIL / parcial | Ventaja, juego peligroso, 5 m, PC, protestas, conducta antideportiva y tiempo añadido están modelados; el resto de interpretaciones subjetivas sigue fuera de alcance |
+| Arbitraje discrecional completo | FAIL / parcial | Ventaja, juego peligroso, 5 m, PC, protestas, conducta antideportiva, tiempo añadido y protesta en directo están modelados; el resto de interpretaciones subjetivas sigue fuera de alcance |
 
 La lista permite priorizar la siguiente iteración sin confundir “flujo cubierto” con “paridad total”. Las pantallas marcadas FAIL no se presentan como terminadas.
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas (incluidas protestas y tiempo añadido), de la respuesta de materiales/colisiones stick-cuerpo, de la biomecánica procedural/tejido estilizado del visor, del centro financiero y del análisis de partido. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: mocap/física textil real, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas (incluidas protestas, tiempo añadido y protesta en directo), de la respuesta de materiales/colisiones stick-cuerpo, de la biomecánica procedural/tejido estilizado del visor, del centro financiero y del análisis de partido. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: mocap/física textil real, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.

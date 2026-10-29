@@ -1390,6 +1390,8 @@ export interface LivePayload {
   }
   subs_left: number
   referrals: [number, number]
+  protest_used: [boolean, boolean]
+  protest_available: boolean
   last_decision: ReviewDecision | null
   reviews: MatchReview[]
 }

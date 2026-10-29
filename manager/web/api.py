@@ -2618,6 +2618,8 @@ def _live_payload(state, ctx):
         "snapshot": engine.live_snapshot(),
         "subs_left": max(0, 5 - engine._subs[user_side]),
         "referrals": [engine.referrals.get(0, 0), engine.referrals.get(1, 0)],
+        "protest_used": [engine.protest_used.get(0, False), engine.protest_used.get(1, False)],
+        "protest_available": not engine.protest_used.get(user_side, False),
         "last_decision": engine.last_decision,
         "reviews": engine.reviews,
     }
@@ -2727,6 +2729,22 @@ def match_live_review():
     if not result.get("ok"):
         return _error(result.get("message", "No se pudo revisar la decisión."), 409, "review_failed")
     return _ok(_live_payload(state, ctx), result.get("message", "Revisión completada."))
+
+
+@api.post("/match/live/protest")
+def match_live_protest():
+    state, err = _state()
+    if err:
+        return err
+    web = _web()
+    ctx = web.LIVE.get(session.get("game_id"))
+    if not ctx:
+        return _error("No hay partido en directo.", 409, "no_live")
+    payload = request.get_json(silent=True) or request.form
+    result = ctx.engine.protest_decision(ctx.user_side, str(payload.get("tone", "respetuosa") or "respetuosa"))
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo protestar."), 409, "protest_failed")
+    return _ok(_live_payload(state, ctx), result.get("message", "Protesta registrada."))
 
 
 @api.post("/match/live/finish")

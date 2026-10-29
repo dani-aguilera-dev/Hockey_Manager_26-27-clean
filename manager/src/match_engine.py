@@ -120,6 +120,7 @@ class MatchEngine:
         self.reviews: list[dict[str, Any]] = []
         self.last_decision: dict[str, Any] | None = None
         self.added_time: dict[int, int] = {1: 0, 2: 0, 3: 0, 4: 0}
+        self.protest_used: dict[int, bool] = {0: False, 1: False}
         # Suspensiones temporales en minutos de juego. El equipo juega con
         # un jugador menos mientras el jugador siga en el diccionario.
         self.suspensions: dict[int, dict[str, float]] = {0: {}, 1: {}}
@@ -830,6 +831,28 @@ class MatchEngine:
             self._card(side)
         return {"ok": True, "outcome": outcome, "player_id": player.id}
 
+    def protest_decision(self, side: int, tone: str = "respetuosa") -> dict[str, Any]:
+        """Protesta en directo: una por equipo, con riesgo de tarjeta si es vehemente."""
+        if side not in (0, 1):
+            return {"ok": False, "message": "Equipo no válido."}
+        if self.protest_used.get(side):
+            return {"ok": False, "message": "Ya has usado la protesta de este equipo."}
+        if tone not in ("respetuosa", "vehemente"):
+            return {"ok": False, "message": "El tono de la protesta no es válido."}
+        lineup = self._lineup(side)
+        if not lineup:
+            return {"ok": False, "message": "No hay jugadores para protestar."}
+        player = lineup[0]
+        outcome = "warning" if tone == "respetuosa" else "card"
+        self._protest(side, player, "live", outcome)
+        self.protest_used[side] = True
+        message = (
+            f"{player.name} protesta con respeto. El árbitro responde con un aviso."
+            if tone == "respetuosa"
+            else f"{player.name} protesta de forma vehemente. El árbitro responde con tarjeta."
+        )
+        return {"ok": True, "message": message, "tone": tone, "card": outcome == "card", "player_id": player.id}
+
     def _unsportsmanlike(
         self,
         side: int,
@@ -1485,6 +1508,7 @@ class MatchEngine:
             },
             "referrals": [self.referrals.get(0, 0), self.referrals.get(1, 0)],
             "added_time": self.added_time,
+            "protest_used": [self.protest_used.get(0, False), self.protest_used.get(1, False)],
             "last_decision": self.last_decision,
             "reviews": self.reviews,
         }

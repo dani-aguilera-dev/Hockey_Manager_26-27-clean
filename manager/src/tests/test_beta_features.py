@@ -438,3 +438,17 @@ def test_api_report_has_added_time_and_discipline_stats(client):
     assert set(report["added_time"]) >= {"1", "2", "3", "4"}
     assert "dissent" in report["home_stats"]
     assert "unsportsmanlike" in report["away_stats"]
+
+
+def test_api_live_protest_once_per_match(client):
+    _new_api(client, seed="49")
+    start = client.post("/api/match/live/start", json={"travel": "equilibrado"})
+    assert start.status_code == 200, start.get_data(as_text=True)
+    assert start.get_json()["data"]["protest_available"] is True
+    protest = client.post("/api/match/live/protest", json={"tone": "respetuosa"})
+    assert protest.status_code == 200, protest.get_data(as_text=True)
+    payload = protest.get_json()["data"]
+    assert payload["protest_available"] is False
+    assert payload["protest_used"][payload["user_side"]] is True
+    second = client.post("/api/match/live/protest", json={"tone": "respetuosa"})
+    assert second.status_code == 409
