@@ -345,6 +345,16 @@ class BoardMember:
         )
 
 
+DEFAULT_FACILITIES: dict[str, int] = {
+    "training": 60,
+    "youth": 60,
+    "medical": 60,
+    "video": 55,
+    "scouting": 55,
+    "stadium": 55,
+}
+
+
 @dataclass
 class TeamState:
     id: str
@@ -374,6 +384,8 @@ class TeamState:
     media_confidence: int = 50
     equipment_bonus: float = 0.0
     equipment_deals: list[dict[str, Any]] = field(default_factory=list)
+    facilities: dict[str, int] = field(default_factory=lambda: dict(DEFAULT_FACILITIES))
+    board_requests: list[dict[str, Any]] = field(default_factory=list)
     staff: list[StaffMember] = field(default_factory=list)
     board: list[BoardMember] = field(default_factory=list)
     transfer_budget: int = 0
@@ -594,6 +606,8 @@ class TeamState:
             "media_confidence": self.media_confidence,
             "equipment_bonus": self.equipment_bonus,
             "equipment_deals": self.equipment_deals,
+            "facilities": self.facilities,
+            "board_requests": self.board_requests,
             "staff": [m.to_dict() for m in self.staff],
             "board": [m.to_dict() for m in self.board],
             "transfer_budget": self.transfer_budget,
@@ -645,6 +659,8 @@ class TeamState:
             media_confidence=d.get("media_confidence", 50),
             equipment_bonus=d.get("equipment_bonus", 0.0),
             equipment_deals=d.get("equipment_deals", []),
+            facilities={**DEFAULT_FACILITIES, **(d.get("facilities") or {})},
+            board_requests=d.get("board_requests") or [],
             staff=[StaffMember.from_dict(m) for m in d.get("staff", [])],
             board=[BoardMember.from_dict(m) for m in d.get("board", [])],
             transfer_budget=d.get("transfer_budget", 0),

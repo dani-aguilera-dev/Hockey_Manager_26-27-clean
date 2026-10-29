@@ -11,6 +11,7 @@ import {
   FolderOpen,
   HeartPulse,
   LayoutDashboard,
+  Landmark,
   ListChecks,
   LogOut,
   Menu,
@@ -56,7 +57,8 @@ const competitionLinks = [
 const clubLinks = [
   { to: '/game/market', label: 'Mercado', icon: ArrowLeftRight },
   { to: '/game/commercial', label: 'Comercial y marca', icon: Building2 },
-  { to: '/game/staff', label: 'Staff y junta', icon: Users },
+  { to: '/game/staff', label: 'Staff', icon: Users },
+  { to: '/game/board', label: 'Junta y visión', icon: Landmark },
   { to: '/game/youth', label: 'Cantera', icon: Shield },
   { to: '/game/press', label: 'Prensa', icon: Newspaper },
 ]

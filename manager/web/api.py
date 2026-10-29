@@ -51,6 +51,7 @@ from src.brands import (
     reject_brand_offer,
     reject_player_brand_offer,
 )
+from src.board import board_overview, request_board
 from src.player_editor import edit_player, editor_payload, find_player
 from src.international import club_catalog, international_cities, load_all_teams
 from src.logistics import travel_options
@@ -1453,6 +1454,30 @@ def market():
             "free_agent_total": len(free_agents),
             "staff_total": len(staff),
         }
+    )
+
+
+@api.get("/board")
+def board():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(board_overview(state))
+
+
+@api.post("/board/request")
+def board_request():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = request_board(state, str(payload.get("request_id", "")))
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo procesar la petición."), 409, "board_request_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "board": board_overview(state), "state": _state_payload(state)},
+        result.get("message", "Petición registrada."),
     )
 
 

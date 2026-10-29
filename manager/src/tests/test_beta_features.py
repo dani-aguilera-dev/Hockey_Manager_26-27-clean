@@ -238,3 +238,20 @@ def test_api_video_review_flow(client):
     assert payload["last_decision"]["reviewed"] is True
     assert payload["reviews"][-1]["type"] == decision["type"]
     assert payload["referrals"][payload["user_side"]] in (0, 1)
+
+
+def test_api_board_overview_and_request(client):
+    _new_api(client, seed="39")
+    board = client.get("/api/board")
+    assert board.status_code == 200, board.get_data(as_text=True)
+    data = board.get_json()["data"]
+    assert data["confidence"] >= 0
+    assert len(data["requests"]) == 7
+    assert len(data["facilities"]) == 6
+    request = client.post("/api/board/request", json={"request_id": "training"})
+    assert request.status_code == 200, request.get_data(as_text=True)
+    payload = request.get_json()["data"]
+    assert payload["result"]["ok"] is True
+    assert payload["board"]["history"]
+    assert payload["board"]["history"][0]["request_id"] == "training"
+    assert payload["state"]["team"]["name"]

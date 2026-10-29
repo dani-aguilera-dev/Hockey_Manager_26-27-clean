@@ -1075,3 +1075,54 @@ select option { background: #0b1220; color: #e8eef8; }
 .review-row.overturned { border-left-color: var(--ok, #3ecf8e); }
 .review-row.upheld { border-left-color: var(--danger, #e05252); }
 .review-row p { margin: 6px 0 0; }
+
+/* Junta y visión de club */
+.board-vision-row,
+.board-member-row,
+.board-history-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+.board-vision-row:last-child,
+.board-member-row:last-child,
+.board-history-row:last-child { border-bottom: 0; }
+.board-vision-row > div,
+.board-member-row > div,
+.board-history-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.board-vision-row span,
+.board-member-row span,
+.board-history-row span { color: var(--muted); font-size: 12px; }
+.board-facilities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+.board-facility { display: flex; flex-direction: column; gap: 5px; font-size: 12px; }
+.board-request-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.board-request {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255,255,255,.015);
+}
+.board-request h3 { margin: 0; font-size: 14px; }
+.board-request p { margin: 0; }
+.board-request-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; }
+.board-request-numbers div { display: flex; flex-direction: column; gap: 2px; }
+.board-request-numbers span { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+.board-request-numbers b { font-size: 12px; }
+@media (max-width: 980px) {
+  .board-request-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .board-facilities { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .board-request-grid { grid-template-columns: 1fr; }
+}

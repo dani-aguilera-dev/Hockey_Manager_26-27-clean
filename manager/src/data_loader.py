@@ -235,6 +235,14 @@ def load_teams() -> tuple[dict[str, TeamState], dict[str, dict], dict[str, dict]
             wage_budget = max(wage_budget, sum(p.salary for p in players))
         transfer_budget = int(int(fin.get("transfer_budget", 0) or 0) * 1.5)
         cash = transfer_budget + int(wage_budget * 0.45)
+        facilities = {
+            "training": max(40, min(95, 50 + int(bool(fac.get("gym"))) * 12 + int(fac.get("pitches", 0) or 0) * 4)),
+            "youth": max(40, min(90, 50 + int(fac.get("academy", 0) or 0) * 7)),
+            "medical": 60 if fac.get("medical") else 50,
+            "video": 60 if fac.get("video") else 50,
+            "scouting": max(40, min(90, 55 + int(fac.get("academy", 0) or 0) * 2)),
+            "stadium": max(40, min(95, 40 + int(stadium.get("capacity", 1000) or 1000) // 60)),
+        }
         teams[club["id"]] = TeamState(
             id=club["id"],
             name=club["name"],
@@ -257,6 +265,7 @@ def load_teams() -> tuple[dict[str, TeamState], dict[str, dict], dict[str, dict]
             club_tier=int(fin.get("tier", 3) or 3),
             budget=cash,
             wage_budget=wage_budget,
+            facilities=facilities,
         )
     return teams, clubs_by_id, cities_by_name
 

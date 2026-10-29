@@ -16,11 +16,12 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **178 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **184 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
-| E2E Playwright | calendario mensual, amistoso/partido, visor 3D, revisión de vídeo, prensa posterior y marcas individuales | PASS |
+| Junta y visión de club | `/api/board`, `/api/board/request`, `Board.tsx`: confianza, visión, instalaciones, peticiones e historial | PASS |
+| E2E Playwright | calendario mensual, amistoso/partido, visor 3D, revisión de vídeo, junta, prensa posterior y marcas individuales | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media y equipación; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -35,6 +36,7 @@
 6. `test_press_has_journalist_media_and_six_topics`
 7. `test_api_calendar_brands_editor_and_press`
 8. `test_api_video_review_flow`
+9. `test_api_board_overview_and_request`
 
 `src/tests/test_acceptance_beta.py` incluye además:
 
@@ -43,21 +45,29 @@
 - `test_penalty_corner_and_stroke_are_reviewable`
 - `test_video_review_rejects_own_decision_and_unknown_play`
 
+`src/tests/test_board.py`:
+
+- `test_board_overview_has_vision_facilities_and_requests`
+- `test_board_request_approved_updates_facility_and_budget`
+- `test_board_request_rejected_keeps_facility_and_records_history`
+- `test_board_request_requires_funds_and_valid_id`
+- `test_board_facilities_and_requests_persist_in_team_state`
+
 ## Comandos ejecutados
 
 ```text
 python3 -m pytest src/tests -q
-178 passed in 281.30s
+184 passed in 286.41s
 
 cd manager/web/frontend && npm run build
-✓ built in 4.71s
+✓ built in 4.77s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-CogsA2k0.js → 200
+curl /static/react/assets/index-BZXUzMg5.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.66},"videoReview":true,"videoReviewType":"penalty_corner","playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.65},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

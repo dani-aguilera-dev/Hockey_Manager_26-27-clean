@@ -92,6 +92,16 @@ try {
   result.videoReviewType = reviewDecision.type
   await page.screenshot({ path: '/tmp/opencode/e2e_review.png', fullPage: true })
 
+  await page.goto('/app/game/board')
+  await page.getByRole('heading', { name: 'Junta y visión de club' }).waitFor()
+  await page.getByText('VISIÓN DE CLUB', { exact: true }).waitFor()
+  const boardRequest = page.locator('[data-testid="board-request-training"]')
+  await boardRequest.waitFor()
+  await boardRequest.click()
+  await page.locator('.board-history-row').first().waitFor()
+  result.boardRequest = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_board.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

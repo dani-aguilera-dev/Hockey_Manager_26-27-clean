@@ -12,6 +12,9 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Amistosos sin puntos | `play_friendly` no llama a `recompute_table` | Test de tabla antes/después | PASS |
 | Calendario global | `league_fixtures` de DHA, DHB, regionales e internacionales | `test_competition_catalog_and_world_calendar` | PASS |
 | Competiciones declaradas | `competitions.json` y `league_rules.json` | `test_spanish_competition_boundaries_are_declared` | PASS |
+| Junta y visión de club | `src/board.py`, `/api/board`, `Board.tsx`: confianza, presión, paciencia, visión a corto/medio/largo plazo | `test_board_overview_has_vision_facilities_and_requests`, E2E `boardRequest` | PASS |
+| Peticiones de inversión | `/api/board/request`: entrenamiento, cantera, médico, video, ojeo, estadio y presupuesto; aprobación según confianza y caja | `test_board_request_approved_updates_facility_and_budget`, `test_board_request_rejected_keeps_facility_and_records_history` | PASS |
+| Instalaciones y estadio | Ratings de instalaciones, aforo, academia y presupuesto persistidos en `TeamState` | `test_board_facilities_and_requests_persist_in_team_state` | PASS |
 
 ## 2. Plantillas y datos
 
@@ -96,7 +99,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.66},"videoReview":true,"videoReviewType":"penalty_corner","playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"postPress":true,"viewer3d":true,"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":33,"ballSpeed":7.65},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -108,8 +111,9 @@ Flujo:
 5. Abrir el parte y comprobar árbitro y estadísticas de PC/strokes.
 6. Abrir `/app/game/live`, comprobar el canvas, el esqueleto, los sticks, el IK y las colisiones de cuerpo/stick.
 7. Avanzar hasta una decisión contra el usuario y solicitar la revisión de vídeo desde la pantalla en directo.
-8. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-9. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+8. Abrir `/app/game/board`, comprobar la visión de club y presentar una petición de mejora de entrenamiento.
+9. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+10. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
 ## 9. Límites convertidos en criterios pass/fail
 
@@ -147,7 +151,7 @@ Flujo:
 | Ojeo con pantalla dedicada | PARCIAL | Existe `/api/scouting`, pero no una pantalla de asignaciones de ojeadores |
 | Charlas de equipo y dinámica de vestuario | PARCIAL | Chat y charlas automáticas del motor; no hay reunión de equipo completa |
 | Cesiones y préstamos | FAIL | No implementados |
-| Junta, visión de club e instalaciones | FAIL | No hay pantalla de peticiones a la junta ni visión a largo plazo |
+| Junta, visión de club e instalaciones | PASS | `Board.tsx`, `/api/board`, `/api/board/request`, visión a corto/medio/largo plazo, instalaciones y peticiones con historial |
 | Instrucciones al rival y data hub | FAIL | No implementados |
 | Clubes afiliados y mentoring | FAIL | No implementados |
 | Historial/base de datos consultable | FAIL | No hay pantalla de historial completo |
@@ -157,4 +161,4 @@ La lista permite priorizar la siguiente iteración sin confundir “flujo cubier
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas y de la revisión de vídeo. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo y de la junta/visión de club. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: cesiones, instrucciones al rival/data hub, afiliados/mentoring, historial completo, física AAA y paridad total de pantallas.

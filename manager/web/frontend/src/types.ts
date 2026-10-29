@@ -1375,3 +1375,60 @@ export interface MatchReview {
   score_after: string
   text: string
 }
+
+export interface BoardFacility {
+  id: string
+  label: string
+  value: number
+}
+
+export interface BoardRequestOption {
+  id: string
+  label: string
+  description: string
+  cost: number
+  approval_chance: number
+  available: boolean
+  effect_text: string
+  facility?: string
+  delta?: number
+  capacity?: number
+  budget_gain?: number
+  confidence?: number
+}
+
+export interface BoardHistoryEntry {
+  date: string
+  request_id: string
+  label: string
+  cost: number
+  approved: boolean
+  chance: number
+  message: string
+  before: Record<string, number | null>
+  after: Record<string, number | null>
+}
+
+export interface BoardData {
+  confidence: number
+  fan_confidence: number
+  patience: number
+  pressure: string
+  expectation: string
+  manager_rating: number
+  budget: number
+  transfer_budget: number
+  competition: {
+    code: string
+    name: string
+    short_name: string
+    position: number
+    teams: number
+  }
+  stadium: { name: string; capacity: number }
+  board_members: BoardMember[]
+  vision: Array<{ horizon: string; goal: string; detail: string }>
+  facilities: BoardFacility[]
+  requests: BoardRequestOption[]
+  history: BoardHistoryEntry[]
+}
