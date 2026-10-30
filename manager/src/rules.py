@@ -98,10 +98,12 @@ REFERRAL_DECISIONS: dict[str, str] = {
     "penalty_stroke": "Penalty stroke",
 }
 
-# Infracciones de ataque que anulan un gol: pie o revés del stick.
+# Infracciones de ataque que anulan un gol: pie, revés del stick o
+# lanzamiento directo desde fuera del círculo.
 ATTACKING_GOAL_OFFENCES: dict[str, str] = {
     "foot": "pie",
     "back_stick": "revés del stick",
+    "outside_circle": "lanzamiento desde fuera del círculo",
 }
 
 CardType = Literal["green", "yellow", "red"]

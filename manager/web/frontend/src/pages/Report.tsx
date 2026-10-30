@@ -88,13 +88,14 @@ export default function ReportPage() {
             ['Goles anulados', 'goals_disallowed'],
             ['Anulados por pie', 'foot_goals_disallowed'],
             ['Anulados por revés', 'back_stick_goals_disallowed'],
+            ['Anulados fuera del círculo', 'outside_circle_goals_disallowed'],
             ['Strokes concedidos', 'stroke_awarded'],
             ['Strokes repetidos', 'stroke_retake'],
           ].map(([label, key]) => (
             <div className="stat-line" key={key}><b>{report.home_stats[key] || 0}</b><span>{label}</span><b className="num">{report.away_stats[key] || 0}</b></div>
           ))}
         </div>
-        <p className="small muted mt-2">El árbitro puede dejar jugar la ventaja, graduar el juego peligroso, adelantar 10 metros un golpe franco, repetir un PC/stroke por invasión o anular un gol por pie o revés del stick.</p>
+        <p className="small muted mt-2">El árbitro puede dejar jugar la ventaja, graduar el juego peligroso, adelantar 10 metros un golpe franco, repetir un PC/stroke por invasión o anular un gol por pie, revés del stick o disparo desde fuera del círculo.</p>
       </Card>
 
       <Card className="mt-2">

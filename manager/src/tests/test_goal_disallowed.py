@@ -118,3 +118,66 @@ def test_disallowed_goal_stats_and_event_reach_match_result():
     assert result.home_stats["goals_disallowed"] >= 1
     assert result.home_stats["foot_goals_disallowed"] >= 1
     assert any(event["type"] == "goal_disallowed" for event in result.events)
+
+
+def test_shot_from_outside_circle_cannot_score():
+    engine = _engine(7)
+    engine.rng = _FixedRng(0.0)
+    engine.zone = "attacking_23"
+    engine._shot(0, "open", deflected=False)
+    assert engine.score == [0, 0]
+    assert engine.stats[0]["goals"] == 0
+    assert engine.stats[0]["outside_circle_goals_disallowed"] == 1
+    assert engine.last_decision["type"] == "goal_disallowed"
+    assert engine.last_decision["disallowed_reason"] == "outside_circle"
+    event = next(event for event in engine.events if event["type"] == "goal_disallowed")
+    assert "fuera del círculo" in event["text"]
+
+
+def test_outside_circle_deflection_is_allowed():
+    engine = _engine(11)
+    engine.rng = _FixedRng(0.0)
+    engine.zone = "attacking_23"
+    engine._shot(0, "open", deflected=True)
+    assert engine.score == [1, 0]
+    assert engine.stats[0]["goals"] == 1
+    assert engine.stats[0]["outside_circle_goals_disallowed"] == 0
+    assert engine.last_decision["goal"] is True
+    assert engine.last_decision["goal_kind"] == "deflection"
+    event = next(event for event in engine.events if event["type"] == "goal")
+    assert "desvía" in event["text"]
+
+
+def test_goal_inside_circle_is_allowed():
+    engine = _engine(8)
+    engine.rng = _FixedRng(0.0)
+    engine.zone = "circle"
+    engine._shot(0, "open", offence="")
+    assert engine.score == [1, 0]
+    assert engine.stats[0]["goals"] == 1
+    assert engine.stats[0]["outside_circle_goals_disallowed"] == 0
+
+
+def test_review_overturns_outside_circle_disallowed_goal():
+    engine = _engine(9)
+    scorer = engine._lineup(0)[0]
+    engine._disallowed_goal(0, scorer, None, "open", "outside_circle")
+    engine.rng = _FixedRng(0.0)
+    result = engine.review_decision(0, "goal_disallowed")
+    assert result["ok"] is True
+    assert result["review"]["overturned"] is True
+    assert result["score"] == [1, 0]
+    assert engine.stats[0]["goals"] == 1
+    assert engine.stats[0]["outside_circle_goals_disallowed"] == 1
+
+
+def test_outside_circle_disallowed_goal_reaches_match_result():
+    engine = _engine(10)
+    scorer = engine._lineup(0)[0]
+    engine._disallowed_goal(0, scorer, None, "open", "outside_circle")
+    result = engine.simulate()
+    assert result.home_stats["outside_circle_goals_disallowed"] >= 1
+    assert any(
+        event["type"] == "goal_disallowed" and "fuera del círculo" in event["text"]
+        for event in result.events
+    )

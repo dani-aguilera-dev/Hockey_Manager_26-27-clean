@@ -174,6 +174,7 @@ class MatchEngine:
             "goals_disallowed": 0,
             "foot_goals_disallowed": 0,
             "back_stick_goals_disallowed": 0,
+            "outside_circle_goals_disallowed": 0,
             "dangerous_play": 0,
             "dangerous_sanction": 0,
             "distance_5m": 0,
@@ -756,6 +757,45 @@ class MatchEngine:
             return "back_stick"
         return None
 
+    def _outside_circle_deflection(self, side: int, scorer: PlayerState, kind: str) -> bool:
+        """Determina si un tiro desde fuera del círculo se desvía dentro.
+
+        Un disparo directo desde fuera no puede ser gol. Si el modelo lo trata
+        como desvío de un compañero dentro del círculo, el gol es válido.
+        """
+        key = "|".join(
+            (
+                str(self.match_date),
+                self.home.id,
+                self.away.id,
+                str(self.quarter),
+                str(int(self.minute)),
+                str(side),
+                scorer.id,
+                kind,
+                str(int(self.stats[side].get("shots", 0))),
+                "outside_circle_deflection",
+            )
+        )
+        return (zlib.crc32(key.encode("utf-8")) % 100) < 55
+
+    def _deflector(self, side: int, shooter: PlayerState) -> PlayerState:
+        candidates = [player for player in self._lineup(side) if player.id != shooter.id]
+        if not candidates:
+            return shooter
+        key = "|".join(
+            (
+                str(self.match_date),
+                self.home.id,
+                self.away.id,
+                str(self.quarter),
+                str(int(self.minute)),
+                shooter.id,
+                "deflector",
+            )
+        )
+        return candidates[zlib.crc32(key.encode("utf-8")) % len(candidates)]
+
     def _disallowed_goal(
         self,
         side: int,
@@ -782,13 +822,17 @@ class MatchEngine:
             goal_kind=kind,
         )
         reason = rules.ATTACKING_GOAL_OFFENCES.get(offence, offence)
-        self._add_event(
-            "goal_disallowed",
-            side,
-            scorer,
-            f"Gol anulado a {t.name}: {scorer.name} jugó la bola con el {reason}. "
-            f"Se concede golpe franco a {self._team(opp).name}.",
-        )
+        if offence == "outside_circle":
+            text = (
+                f"Gol anulado a {t.name}: el disparo de {scorer.name} entró directamente "
+                f"desde fuera del círculo. Se concede golpe franco a {self._team(opp).name}."
+            )
+        else:
+            text = (
+                f"Gol anulado a {t.name}: {scorer.name} jugó la bola con el {reason}. "
+                f"Se concede golpe franco a {self._team(opp).name}."
+            )
+        self._add_event("goal_disallowed", side, scorer, text)
         self.possession = opp
         self.zone = "middle"
 
@@ -858,7 +902,13 @@ class MatchEngine:
         if pending["moments_left"] <= 0:
             self.pending_advantage = None
 
-    def _shot(self, side: int, kind: str = "open", offence: str | None = None):
+    def _shot(
+        self,
+        side: int,
+        kind: str = "open",
+        offence: str | None = None,
+        deflected: bool | None = None,
+    ):
         self._clear_advantage(side)
         t = self._team(side)
         opp = 1 - side
@@ -898,12 +948,23 @@ class MatchEngine:
         goal_chance = 0.31 + (attack - defense) / 250
         goal_chance = max(0.10, min(0.65, goal_chance))
         if self.rng.random() < goal_chance:
-            if offence is None:
-                offence = self._goal_offence(side, scorer, kind)
-            if offence in rules.ATTACKING_GOAL_OFFENCES:
-                self._disallowed_goal(side, scorer, assister, kind, offence)
+            # Un gol solo puede concederse si la bola se juega dentro del
+            # círculo. Un disparo desde fuera solo vale si se desvía dentro.
+            if self.zone != "circle":
+                if deflected is None:
+                    deflected = self._outside_circle_deflection(side, scorer, kind)
+                if deflected:
+                    deflector = self._deflector(side, scorer)
+                    self._goal(side, deflector, scorer, "deflection")
+                else:
+                    self._disallowed_goal(side, scorer, assister, kind, "outside_circle")
             else:
-                self._goal(side, scorer, assister, kind)
+                if offence is None:
+                    offence = self._goal_offence(side, scorer, kind)
+                if offence in rules.ATTACKING_GOAL_OFFENCES:
+                    self._disallowed_goal(side, scorer, assister, kind, offence)
+                else:
+                    self._goal(side, scorer, assister, kind)
         else:
             self._inc_stat(opp, "saves")
             self.player_stats[gk.id]["saves"] += 1
