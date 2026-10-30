@@ -1,0 +1,174 @@
+import { useEffect, useState } from 'react'
+import { Briefcase, Check, Handshake, RefreshCw, ShieldAlert, X } from 'lucide-react'
+import { api } from '../lib/api'
+import { dateLabel, money } from '../lib/format'
+import type { JobOffer, JobsData } from '../types'
+import { useGame } from '../context/GameContext'
+import { useToast } from '../context/ToastContext'
+import { Badge, Button, Card, LoadingBlock, PageHeader, Progress, StatCard } from '../components/ui'
+
+const statusTones: Record<string, 'ok' | 'gold' | 'danger' | 'neutral'> = {
+  estable: 'ok',
+  observacion: 'gold',
+  peligro: 'danger',
+  ultimatum: 'danger',
+}
+
+export default function JobsPage() {
+  const { applyState } = useGame()
+  const { toast } = useToast()
+  const [data, setData] = useState<JobsData | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [busy, setBusy] = useState<string | null>(null)
+  const [accepted, setAccepted] = useState<string | null>(null)
+
+  function load() {
+    setLoading(true)
+    api.get<JobsData>('/jobs')
+      .then(({ data }) => setData(data))
+      .catch((err) => toast(err instanceof Error ? err.message : 'No se pudo cargar la situación laboral.', 'danger'))
+      .finally(() => setLoading(false))
+  }
+
+  useEffect(() => { load() }, [])
+
+  async function generate() {
+    setBusy('generate')
+    try {
+      const response = await api.post<{ jobs: JobsData; state: unknown }>('/jobs/offers', { force: true })
+      setData(response.data.jobs)
+      applyState(response.data.state as never)
+      toast(response.message || 'Ofertas actualizadas.', 'success')
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudieron buscar ofertas.', 'danger')
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  async function accept(offer: JobOffer) {
+    setBusy(`accept-${offer.id}`)
+    try {
+      const response = await api.post<{ result: { new_club: string }; jobs: JobsData; state: unknown }>(`/jobs/offers/${offer.id}/accept`)
+      setData(response.data.jobs)
+      applyState(response.data.state as never)
+      setAccepted(response.data.result.new_club)
+      toast(response.message || 'Oferta aceptada.', 'success')
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudo aceptar la oferta.', 'danger')
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  async function reject(offer: JobOffer) {
+    setBusy(`reject-${offer.id}`)
+    try {
+      const response = await api.post<{ jobs: JobsData; state: unknown }>(`/jobs/offers/${offer.id}/reject`)
+      setData(response.data.jobs)
+      applyState(response.data.state as never)
+      toast(response.message || 'Oferta rechazada.', 'info')
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudo rechazar la oferta.', 'danger')
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  if (loading && !data) return <LoadingBlock label="Revisando el mercado de entrenadores…" />
+  if (!data) return <Card><p className="muted">No se pudo cargar la situación laboral.</p></Card>
+
+  const { club, security, contract } = data
+  return (
+    <>
+      <PageHeader
+        eyebrow={`${club.league_name} · ${club.position}º de ${club.teams}`}
+        title="Trabajo y seguridad"
+        subtitle="Confianza de la junta, situación contractual y ofertas de otros clubes de la misma liga. Aceptar una oferta cambia de club de inmediato."
+        actions={<><Badge tone={statusTones[security.status] || 'neutral'}>{security.status_label}</Badge><Button icon={RefreshCw} onClick={load}>Actualizar</Button></>}
+      />
+
+      <div className="dashboard-kpis">
+        <StatCard label="Confianza de la junta" value={`${club.board_confidence}/100`} hint={`Presión ${club.board_pressure} · paciencia ${club.board_patience}/5`} tone={club.board_confidence >= 60 ? 'ok' : club.board_confidence >= 40 ? 'gold' : 'danger'} icon={ShieldAlert} />
+        <StatCard label="Afición" value={`${club.fan_confidence}/100`} hint="Apoyo de la grada" tone="blue" />
+        <StatCard label="Valoración" value={`${club.manager_rating}/100`} hint={security.form === '—' ? 'Sin partidos' : `Forma ${security.form}`} tone="gold" icon={Briefcase} />
+        <StatCard label="Riesgo" value={`${security.risk}%`} hint={`${security.form_points} puntos en los últimos 5`} tone={security.risk >= 60 ? 'danger' : 'ok'} />
+      </div>
+
+      <div className="split-2 mt-2">
+        <Card>
+          <div className="inline" style={{ justifyContent: 'space-between' }}>
+            <div><div className="cat">SEGURIDAD</div><h3 style={{ margin: '3px 0 0' }}>{club.name}</h3></div>
+            <Badge tone={statusTones[security.status] || 'neutral'}>{security.status_label}</Badge>
+          </div>
+          <div className="job-security mt-2">
+            <div><span>Objetivo</span><b>{club.board_expectation || 'Consolidar el proyecto'}</b></div>
+            <div><span>Posición</span><b>{club.position}º de {club.teams}</b></div>
+            <div><span>Forma</span><b>{security.form}</b></div>
+            <div><span>Caja</span><b>{money(club.budget)}</b></div>
+            <div><span>Masa salarial</span><b>{money(club.wage_budget)}</b></div>
+          </div>
+          <div className="mt-2"><Progress value={club.board_confidence} tone={club.board_confidence >= 60 ? 'ok' : club.board_confidence >= 40 ? 'gold' : 'danger'} /></div>
+          <p className="small muted mt-1">La confianza baja si los resultados y la posición quedan por debajo del objetivo. Un ultimátum no expulsa automáticamente: la junta sigue evaluando.</p>
+        </Card>
+
+        <Card>
+          <div className="inline" style={{ justifyContent: 'space-between' }}>
+            <div><div className="cat">CONTRATO</div><h3 style={{ margin: '3px 0 0' }}>Tu situación</h3></div>
+            <Handshake size={20} className="gold" />
+          </div>
+          <div className="job-security mt-2">
+            <div><span>Club</span><b>{contract.club_name}</b></div>
+            <div><span>Salario</span><b>{money(contract.salary)}</b></div>
+            <div><span>Años</span><b>{contract.years}</b></div>
+            <div><span>Inicio</span><b>{contract.started}</b></div>
+            <div><span>Hasta</span><b>{contract.until}</b></div>
+          </div>
+          {accepted && <Badge tone="ok" className="job-accepted">Nuevo club: {accepted}</Badge>}
+        </Card>
+      </div>
+
+      <Card className="mt-2">
+        <div className="inline" style={{ justifyContent: 'space-between' }}>
+          <div><div className="cat">OFERTAS</div><h3 style={{ margin: '3px 0 0' }}>Banquillos disponibles</h3></div>
+          <div className="actions"><Badge tone="gold">{data.offers.length}</Badge><Button size="sm" variant="primary" icon={Briefcase} onClick={generate} loading={busy === 'generate'} data-testid="jobs-generate">Buscar ofertas</Button></div>
+        </div>
+        <div className="job-offer-grid mt-2">
+          {data.offers.map((offer) => (
+            <div className="job-offer-card" key={offer.id}>
+              <div className="inline" style={{ justifyContent: 'space-between' }}><Badge tone="neutral">{offer.league_name}</Badge><span className="small muted">{offer.position}º</span></div>
+              <h3>{offer.club_name}</h3>
+              <p className="small muted">{offer.project}</p>
+              <div className="job-offer-numbers">
+                <div><span>Salario</span><b>{money(offer.salary)}</b></div>
+                <div><span>Años</span><b>{offer.years}</b></div>
+                <div><span>Caja</span><b>{money(offer.budget)}</b></div>
+                <div><span>Salarios</span><b>{money(offer.wage_budget)}</b></div>
+              </div>
+              <p className="small muted">Objetivo: {offer.expectation} · expira {dateLabel(offer.expires)}</p>
+              <div className="actions">
+                <Button size="sm" variant="primary" icon={Check} onClick={() => accept(offer)} loading={busy === `accept-${offer.id}`} data-testid={`job-accept-${offer.id}`}>Aceptar</Button>
+                <Button size="sm" variant="ghost" icon={X} onClick={() => reject(offer)} loading={busy === `reject-${offer.id}`} data-testid={`job-reject-${offer.id}`}>Rechazar</Button>
+              </div>
+            </div>
+          ))}
+          {!data.offers.length && <p className="small muted">No hay ofertas abiertas. Pulsa “Buscar ofertas” para que los clubes de tu liga se pronuncien.</p>}
+        </div>
+      </Card>
+
+      <Card className="mt-2">
+        <h3>Historial de ofertas</h3>
+        <div className="stack-sm mt-2">
+          {data.history.map((entry, index) => (
+            <div className="job-history-row" key={`${entry.date}-${entry.offer_id}-${index}`}>
+              <Badge tone={entry.type === 'accepted' ? 'ok' : 'neutral'}>{entry.type === 'accepted' ? 'Aceptada' : 'Rechazada'}</Badge>
+              <div><b>{entry.from_club} → {entry.to_club}</b><span>{dateLabel(entry.date)} · {entry.message}</span></div>
+              <b>{money(entry.salary)}</b>
+            </div>
+          ))}
+          {!data.history.length && <p className="small muted">Todavía no has aceptado ni rechazado ninguna oferta.</p>}
+        </div>
+      </Card>
+    </>
+  )
+}

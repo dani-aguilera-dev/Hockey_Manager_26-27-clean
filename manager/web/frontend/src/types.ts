@@ -2315,3 +2315,74 @@ export interface CompareData {
   summary: { a_wins: number; b_wins: number; ties: number; attributes: number; winner: 'a' | 'b' | 'tie' }
   differences: { overall: number; potential: number; value: number; salary: number; age: number; rating: number }
 }
+
+export interface JobOffer {
+  id: string
+  club_id: string
+  club_name: string
+  league: string
+  league_name: string
+  position: number
+  budget: number
+  transfer_budget: number
+  wage_budget: number
+  expectation: string
+  board_confidence: number
+  fan_confidence: number
+  squad_size: number
+  salary: number
+  years: number
+  created: string
+  expires: string
+  project: string
+  status: string
+}
+
+export interface JobHistoryEntry {
+  date: string
+  type: 'accepted' | 'rejected'
+  offer_id: string
+  from_club: string
+  to_club: string
+  league: string
+  salary: number
+  years: number
+  message: string
+}
+
+export interface JobsData {
+  club: {
+    id: string
+    name: string
+    league: string
+    league_name: string
+    position: number
+    teams: number
+    board_confidence: number
+    fan_confidence: number
+    manager_rating: number
+    board_expectation: string
+    board_patience: number
+    board_pressure: string
+    budget: number
+    wage_budget: number
+  }
+  security: {
+    status: string
+    status_label: string
+    risk: number
+    form: string
+    form_points: number
+  }
+  contract: {
+    club_id: string
+    club_name: string
+    salary: number
+    years: number
+    started: string
+    until: string
+  }
+  offers: JobOffer[]
+  history: JobHistoryEntry[]
+  eligible_clubs: number
+}

@@ -67,6 +67,12 @@ from src.shortlist import (
 )
 from src.clauses import clauses_overview, set_clause
 from src.compare import compare_candidates, compare_players
+from src.jobs import (
+    accept_job_offer,
+    generate_job_offers,
+    job_security_overview,
+    reject_job_offer,
+)
 from src.manager_profile import manager_profile_overview
 from src.match_plans import (
     create_match_plan,
@@ -1618,6 +1624,58 @@ def facilities_upgrade():
     _save(state)
     return _ok(
         {"result": result, "facilities": facilities_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.get("/jobs")
+def jobs():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(job_security_overview(state))
+
+
+@api.post("/jobs/offers")
+def jobs_offers():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    generate_job_offers(state, bool(payload.get("force", False)))
+    _save(state)
+    return _ok(
+        {"jobs": job_security_overview(state), "state": _state_payload(state)},
+        "Ofertas actualizadas.",
+    )
+
+
+@api.post("/jobs/offers/<offer_id>/accept")
+def jobs_accept(offer_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = accept_job_offer(state, offer_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo aceptar la oferta."), 409, "job_offer_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "jobs": job_security_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.post("/jobs/offers/<offer_id>/reject")
+def jobs_reject(offer_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = reject_job_offer(state, offer_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo rechazar la oferta."), 409, "job_offer_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "jobs": job_security_overview(state), "state": _state_payload(state)},
         result.get("message", ""),
     )
 

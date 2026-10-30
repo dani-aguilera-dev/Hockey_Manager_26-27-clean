@@ -298,6 +298,17 @@ try {
   result.playerBrands = true
 
   await page.screenshot({ path: '/tmp/opencode/e2e_beta.png', fullPage: true })
+
+  await page.goto('/app/game/jobs')
+  await page.getByRole('heading', { name: 'Trabajo y seguridad' }).waitFor()
+  await page.getByTestId('jobs-generate').click()
+  const jobOffer = page.locator('.job-offer-card').first()
+  await jobOffer.waitFor()
+  await jobOffer.locator('[data-testid^="job-accept-"]').click()
+  await page.locator('.job-accepted').waitFor()
+  result.jobs = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_jobs.png', fullPage: true })
+
   console.log(JSON.stringify(result))
 } finally {
   await browser.close()

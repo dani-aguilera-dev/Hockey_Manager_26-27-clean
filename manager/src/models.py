@@ -788,6 +788,9 @@ class GameState:
     event_flags: dict[str, Any] = field(default_factory=dict)
     negotiations: list[dict[str, Any]] = field(default_factory=list)
     shortlist: list[dict[str, Any]] = field(default_factory=list)
+    job_offers: list[dict[str, Any]] = field(default_factory=list)
+    job_offer_history: list[dict[str, Any]] = field(default_factory=list)
+    manager_contract: dict[str, Any] = field(default_factory=dict)
     loans: list[dict[str, Any]] = field(default_factory=list)
     loan_history: list[dict[str, Any]] = field(default_factory=list)
     opposition_instructions: dict[str, dict[str, str]] = field(default_factory=dict)
@@ -913,6 +916,9 @@ class GameState:
             "event_flags": self.event_flags,
             "negotiations": self.negotiations,
             "shortlist": self.shortlist,
+            "job_offers": self.job_offers,
+            "job_offer_history": self.job_offer_history,
+            "manager_contract": self.manager_contract,
             "loans": self.loans,
             "loan_history": self.loan_history,
             "opposition_instructions": self.opposition_instructions,
@@ -992,6 +998,9 @@ class GameState:
             event_flags=d.get("event_flags", {}),
             negotiations=d.get("negotiations", []),
             shortlist=d.get("shortlist", []),
+            job_offers=d.get("job_offers", []),
+            job_offer_history=d.get("job_offer_history", []),
+            manager_contract=d.get("manager_contract", {}),
             loans=d.get("loans", []),
             loan_history=d.get("loan_history", []),
             opposition_instructions=d.get("opposition_instructions", {}),

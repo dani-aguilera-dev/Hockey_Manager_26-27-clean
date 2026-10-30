@@ -648,3 +648,25 @@ def test_api_compare_players(client):
     assert data["summary"]["attributes"] == len(data["attributes"])
     same = client.get(f"/api/compare?player_a={players[0]['id']}&player_b={players[0]['id']}")
     assert same.status_code == 409
+
+
+def test_api_jobs_generate_accept_and_reject(client):
+    _new_api(client, seed="60")
+    jobs = client.get("/api/jobs")
+    assert jobs.status_code == 200, jobs.get_data(as_text=True)
+    initial = jobs.get_json()["data"]
+    assert initial["club"]["name"]
+    assert initial["contract"]["club_id"] == initial["club"]["id"]
+    generated = client.post("/api/jobs/offers", json={"force": True})
+    assert generated.status_code == 200, generated.get_data(as_text=True)
+    offers = generated.get_json()["data"]["jobs"]["offers"]
+    assert offers
+    rejected = client.post(f"/api/jobs/offers/{offers[-1]['id']}/reject")
+    assert rejected.status_code == 200, rejected.get_data(as_text=True)
+    accepted = client.post(f"/api/jobs/offers/{offers[0]['id']}/accept")
+    assert accepted.status_code == 200, accepted.get_data(as_text=True)
+    payload = accepted.get_json()["data"]
+    assert payload["state"]["team"]["name"] == offers[0]["club_name"]
+    assert payload["jobs"]["club"]["name"] == offers[0]["club_name"]
+    assert payload["jobs"]["contract"]["club_id"] == offers[0]["club_id"]
+    assert payload["jobs"]["history"]

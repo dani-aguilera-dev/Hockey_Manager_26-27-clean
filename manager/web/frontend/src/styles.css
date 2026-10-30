@@ -1487,3 +1487,22 @@ select option { background: #0b1220; color: #e8eef8; }
 .compare-bar-b { justify-self: start; background: var(--gold); }
 @media (max-width: 900px) { .compare-selectors { grid-template-columns: 1fr 1fr; } .compare-hero { grid-template-columns: 1fr; } .compare-vs { flex-direction: row; } }
 @media (max-width: 560px) { .compare-selectors { grid-template-columns: 1fr; } }
+
+/* Trabajo y seguridad */
+.job-security { display: flex; flex-direction: column; gap: 5px; }
+.job-security > div { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.job-security > div:last-child { border-bottom: 0; }
+.job-security span { color: var(--muted); }
+.job-offer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.job-offer-card { display: flex; flex-direction: column; gap: 7px; padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.015); }
+.job-offer-card h3 { margin: 0; font-size: 15px; }
+.job-offer-card p { margin: 0; }
+.job-offer-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.job-offer-numbers > div { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; }
+.job-offer-numbers span { color: var(--muted); }
+.job-history-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.job-history-row:last-child { border-bottom: 0; }
+.job-history-row > div { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.job-history-row span { color: var(--muted); font-size: 11px; }
+.job-accepted { margin-top: 10px; }
+@media (max-width: 760px) { .job-offer-grid { grid-template-columns: 1fr; } .job-history-row { align-items: flex-start; flex-direction: column; } }

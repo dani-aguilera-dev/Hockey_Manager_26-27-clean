@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import {
   ArrowLeftRight,
   BarChart3,
+  Briefcase,
   Building2,
   CalendarDays,
   ChevronRight,
@@ -85,6 +86,7 @@ const clubLinks = [
   { to: '/game/responsibilities', label: 'Responsabilidades', icon: ClipboardList },
   { to: '/game/board', label: 'Junta y visión', icon: Landmark },
   { to: '/game/manager', label: 'Perfil del mánager', icon: UserRound },
+  { to: '/game/jobs', label: 'Trabajo y seguridad', icon: Briefcase },
   { to: '/game/facilities', label: 'Instalaciones', icon: Building2 },
   { to: '/game/youth', label: 'Cantera', icon: Shield },
   { to: '/game/affiliates', label: 'Afiliados y mentoring', icon: Network },

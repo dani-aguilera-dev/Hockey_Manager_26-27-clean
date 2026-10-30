@@ -27,6 +27,7 @@ import ShortlistPage from './pages/Shortlist'
 import MatchPlansPage from './pages/MatchPlans'
 import ManagerProfilePage from './pages/ManagerProfile'
 import ComparePage from './pages/Compare'
+import JobsPage from './pages/Jobs'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -105,6 +106,7 @@ export default function App() {
         <Route path="match-plans" element={<MatchPlansPage />} />
         <Route path="manager" element={<ManagerProfilePage />} />
         <Route path="compare" element={<ComparePage />} />
+        <Route path="jobs" element={<JobsPage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />
