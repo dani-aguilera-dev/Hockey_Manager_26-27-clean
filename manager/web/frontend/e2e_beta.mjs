@@ -332,6 +332,15 @@ try {
   result.internationalJob = true
   await page.screenshot({ path: '/tmp/opencode/e2e_cross_league_job.png', fullPage: true })
 
+  await page.goto('/app/game/vacancies')
+  await page.getByRole('heading', { name: 'Vacantes de entrenador' }).waitFor()
+  const vacancyApply = page.locator('[data-testid^="vacancy-apply-"]').first()
+  await vacancyApply.waitFor()
+  await vacancyApply.click()
+  await page.locator('.vacancy-application').first().waitFor()
+  result.vacancies = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_vacancies.png', fullPage: true })
+
   console.log(JSON.stringify(result))
 } finally {
   await browser.close()

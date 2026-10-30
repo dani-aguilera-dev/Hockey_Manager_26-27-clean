@@ -722,3 +722,19 @@ def test_api_international_job_pending(client):
     assert payload["jobs"]["pending_job"]["club_id"] == international[0]["club_id"]
     assert payload["jobs"]["pending_job"]["international"] is True
     assert payload["state"]["team"]["name"] != international[0]["club_name"]
+
+
+def test_api_vacancies_apply(client):
+    _new_api(client, seed="64")
+    data = client.get("/api/vacancies")
+    assert data.status_code == 200, data.get_data(as_text=True)
+    payload = data.get_json()["data"]
+    assert payload["vacancies"]
+    vacancy = payload["vacancies"][0]
+    applied = client.post(f"/api/vacancies/{vacancy['id']}/apply")
+    assert applied.status_code == 200, applied.get_data(as_text=True)
+    result = applied.get_json()["data"]
+    assert result["result"]["ok"] is True
+    assert result["vacancies"]["applications"]
+    assert result["vacancies"]["applications"][-1]["club_id"] == vacancy["club_id"]
+    assert result["state"]["team"]["name"]

@@ -74,6 +74,7 @@ from src.jobs import (
     reject_job_offer,
 )
 from src.trials import end_trial, invite_trial, trial_overview
+from src.vacancies import apply_vacancy, vacancy_overview
 from src.manager_profile import manager_profile_overview
 from src.match_plans import (
     create_match_plan,
@@ -1625,6 +1626,29 @@ def facilities_upgrade():
     _save(state)
     return _ok(
         {"result": result, "facilities": facilities_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.get("/vacancies")
+def vacancies():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(vacancy_overview(state))
+
+
+@api.post("/vacancies/<vacancy_id>/apply")
+def vacancies_apply(vacancy_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = apply_vacancy(state, vacancy_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo presentar la candidatura."), 409, "vacancy_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "vacancies": vacancy_overview(state), "state": _state_payload(state)},
         result.get("message", ""),
     )
 

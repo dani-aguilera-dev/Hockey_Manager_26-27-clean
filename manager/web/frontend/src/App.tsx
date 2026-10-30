@@ -29,6 +29,7 @@ import ManagerProfilePage from './pages/ManagerProfile'
 import ComparePage from './pages/Compare'
 import JobsPage from './pages/Jobs'
 import TrialsPage from './pages/Trials'
+import VacanciesPage from './pages/Vacancies'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -109,6 +110,7 @@ export default function App() {
         <Route path="compare" element={<ComparePage />} />
         <Route path="jobs" element={<JobsPage />} />
         <Route path="trials" element={<TrialsPage />} />
+        <Route path="vacancies" element={<VacanciesPage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />

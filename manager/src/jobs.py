@@ -193,6 +193,25 @@ def _append_offer(state: GameState, offer: dict[str, Any], offers: list[dict[str
     return True
 
 
+def create_job_offer(state: GameState, team: TeamState, cross_league: bool) -> dict[str, Any] | None:
+    """Crea una oferta concreta para un club (usada por vacantes)."""
+    offer = _make_offer(state, team, cross_league)
+    if any(item.get("id") == offer["id"] and item.get("status") == "open" for item in state.job_offers):
+        return None
+    state.job_offers.append(offer)
+    state.job_offers = state.job_offers[-40:]
+    state.inbox.append(
+        {
+            "date": state.date,
+            "from": "Representante",
+            "subject": f"Oferta de {team.name}",
+            "body": f"{team.name} quiere hablar contigo para su banquillo.",
+        }
+    )
+    state.inbox = state.inbox[-80:]
+    return _offer_payload(state, offer)
+
+
 def generate_job_offers(
     state: GameState,
     force: bool = False,

@@ -2450,3 +2450,43 @@ export interface TrialsData {
   history: TrialHistoryEntry[]
   summary: { active: number; completed: number; candidates: number; max_active: number }
 }
+
+export interface Vacancy {
+  id: string
+  club_id: string
+  club_name: string
+  league: string
+  league_name: string
+  position: number
+  teams: number
+  budget: number
+  transfer_budget: number
+  wage_budget: number
+  expectation: string
+  board_confidence: number
+  fan_confidence: number
+  standard: number
+  international: boolean
+  same_league: boolean
+  interest: number
+  application_status: string
+}
+
+export interface VacancyApplication {
+  date: string
+  vacancy_id: string
+  club_id: string
+  club_name: string
+  league: string
+  league_name?: string
+  chance: number
+  status: 'offer' | 'rejected'
+  offer_id: string
+  message: string
+}
+
+export interface VacanciesData {
+  vacancies: Vacancy[]
+  applications: VacancyApplication[]
+  summary: { vacancies: number; applications: number; offers: number }
+}
