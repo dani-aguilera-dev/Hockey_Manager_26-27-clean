@@ -791,6 +791,7 @@ class GameState:
     job_offers: list[dict[str, Any]] = field(default_factory=list)
     job_offer_history: list[dict[str, Any]] = field(default_factory=list)
     manager_contract: dict[str, Any] = field(default_factory=dict)
+    pending_job: dict[str, Any] = field(default_factory=dict)
     trials: list[dict[str, Any]] = field(default_factory=list)
     trial_history: list[dict[str, Any]] = field(default_factory=list)
     loans: list[dict[str, Any]] = field(default_factory=list)
@@ -921,6 +922,7 @@ class GameState:
             "job_offers": self.job_offers,
             "job_offer_history": self.job_offer_history,
             "manager_contract": self.manager_contract,
+            "pending_job": self.pending_job,
             "trials": self.trials,
             "trial_history": self.trial_history,
             "loans": self.loans,
@@ -1005,6 +1007,7 @@ class GameState:
             job_offers=d.get("job_offers", []),
             job_offer_history=d.get("job_offer_history", []),
             manager_contract=d.get("manager_contract", {}),
+            pending_job=d.get("pending_job", {}),
             trials=d.get("trials", []),
             trial_history=d.get("trial_history", []),
             loans=d.get("loans", []),

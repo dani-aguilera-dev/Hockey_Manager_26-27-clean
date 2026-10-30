@@ -323,6 +323,14 @@ try {
   result.jobs = true
   await page.screenshot({ path: '/tmp/opencode/e2e_jobs.png', fullPage: true })
 
+  await page.getByTestId('jobs-generate').click()
+  const crossOffer = page.locator('.job-offer-card').filter({ hasText: 'Otra liga' }).first()
+  await crossOffer.waitFor()
+  await crossOffer.locator('[data-testid^="job-accept-"]').click()
+  await page.locator('.job-pending').waitFor()
+  result.crossLeagueJob = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_cross_league_job.png', fullPage: true })
+
   console.log(JSON.stringify(result))
 } finally {
   await browser.close()

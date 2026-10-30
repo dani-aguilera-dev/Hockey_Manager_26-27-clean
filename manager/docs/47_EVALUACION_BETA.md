@@ -16,7 +16,7 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **294 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **298 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -30,7 +30,8 @@
 | Arbitraje discrecional | Ventaja, juego peligroso, 5 m, PC/stroke, protestas, conducta antideportiva, tiempo añadido y protesta en directo | PASS |
 | Arbitraje subjetivo | Severidad del juego peligroso, golpe franco +10 m y repetición de PC/stroke | PASS |
 | Ventaja con retorno | Si la ventaja no se materializa, se vuelve a la falta original; en el círculo, PC | PASS |
-| Trabajo y seguridad | `/api/jobs`, `Jobs.tsx`: confianza, contrato, ofertas de la misma liga, aceptar/rechazar e historial | PASS |
+| Trabajo y seguridad | `/api/jobs`, `Jobs.tsx`: confianza, contrato, ofertas de misma liga y otras ligas, aceptar/rechazar e historial | PASS |
+| Cambio entre ligas | Acuerdo diferido, cambio de club y reconstrucción de calendario al avanzar la temporada | PASS |
 | Pruebas de agentes libres | `/api/trials`, `Trials.tsx`: invitación, progreso, informes y recomendación | PASS |
 | Finanzas detalladas | `/api/finance`, `/api/finance/ticket`, `Finance.tsx`: cuenta de resultados, salarios, proyección y taquilla | PASS |
 | Análisis de partido | `/api/analysis`, `Analysis.tsx`: eficiencia, comparativa, cronología, ratings y archivo | PASS |
@@ -45,7 +46,7 @@
 | Perfil y carrera del mánager | `/api/manager`, `ManagerProfile.tsx`: récord, palmarés, hitos, temporadas y situación actual | PASS |
 | Mocap CMU | Clip de carrera CMU subject 9 trial 1, 74 frames a 60 fps, licencia y atribución en `assets/mocap`; aplicado a piernas/cadera | PASS |
 | Comparación de jugadores | `/api/compare`, `Compare.tsx`: atributos, estadísticas, contrato, diferencias y resumen | PASS |
-| E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido/mocap CMU, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje subjetivo, ventaja con retorno, finanzas, análisis, responsabilidades, desarrollo, premios, contratos, instalaciones, cláusulas, seguimiento, planes de partido, perfil del mánager, comparación, pruebas, trabajo y seguridad, prensa y marcas | PASS |
+| E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido/mocap CMU, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje subjetivo, ventaja con retorno, finanzas, análisis, responsabilidades, desarrollo, premios, contratos, instalaciones, cláusulas, seguimiento, planes de partido, perfil del mánager, comparación, pruebas, trabajo y seguridad, cambio entre ligas, prensa y marcas | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media, equipación, seguimiento y planes de partido; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -83,6 +84,7 @@
 29. `test_api_compare_players`
 30. `test_api_jobs_generate_accept_and_reject`
 31. `test_api_trials_invite_and_end`
+32. `test_api_cross_league_job_pending`
 
 `src/tests/test_referee_discretion.py`:
 
@@ -113,6 +115,9 @@
 - `test_accept_job_offer_switches_club_and_persists`
 - `test_reject_job_offer_records_history`
 - `test_job_offer_validation_and_same_league_guard`
+- `test_generate_cross_league_offers`
+- `test_accept_cross_league_offer_sets_pending_without_switching`
+- `test_pending_job_applies_on_next_season_and_rebuilds_fixtures`
 
 `src/tests/test_trials.py`:
 
@@ -269,17 +274,17 @@
 
 ```text
 python3 -m pytest src/tests -q
-294 passed in 415.11s
+298 passed in 417.93s
 
 cd manager/web/frontend && npm run build
-✓ built in 5.17s
+✓ built in 5.18s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-5AdoZnEo.js → 200
+curl /static/react/assets/index-BtWQwYjZ.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2772,"clothUpdates":1386},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1386},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":61,"stickFlexes":69},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2772},"viewerPhysics":{"frames":63,"playerCollisions":0,"bodyCollisions":52,"stickCollisions":37,"ballSpeed":2.30},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2816,"clothUpdates":1408},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1408},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":60,"stickFlexes":69},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":53,"stickCollisions":38,"ballSpeed":1.69},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true}
 ```
 
 ## Límites conscientes

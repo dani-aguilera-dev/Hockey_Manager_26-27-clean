@@ -49,10 +49,12 @@ export default function JobsPage() {
   async function accept(offer: JobOffer) {
     setBusy(`accept-${offer.id}`)
     try {
-      const response = await api.post<{ result: { new_club: string }; jobs: JobsData; state: unknown }>(`/jobs/offers/${offer.id}/accept`)
+      const response = await api.post<{ result: { new_club: string; pending?: boolean; pending_job?: { effective_season?: string } }; jobs: JobsData; state: unknown }>(`/jobs/offers/${offer.id}/accept`)
       setData(response.data.jobs)
       applyState(response.data.state as never)
-      setAccepted(response.data.result.new_club)
+      if (!response.data.result.pending) {
+        setAccepted(response.data.result.new_club)
+      }
       toast(response.message || 'Oferta aceptada.', 'success')
     } catch (err) {
       toast(err instanceof Error ? err.message : 'No se pudo aceptar la oferta.', 'danger')
@@ -84,7 +86,7 @@ export default function JobsPage() {
       <PageHeader
         eyebrow={`${club.league_name} · ${club.position}º de ${club.teams}`}
         title="Trabajo y seguridad"
-        subtitle="Confianza de la junta, situación contractual y ofertas de otros clubes de la misma liga. Aceptar una oferta cambia de club de inmediato."
+        subtitle="Confianza de la junta, contrato y ofertas de tu liga u otras ligas. Las ofertas de la misma liga cambian de club de inmediato; las de otra liga se firman para la próxima temporada."
         actions={<><Badge tone={statusTones[security.status] || 'neutral'}>{security.status_label}</Badge><Button icon={RefreshCw} onClick={load}>Actualizar</Button></>}
       />
 
@@ -125,6 +127,7 @@ export default function JobsPage() {
             <div><span>Hasta</span><b>{contract.until}</b></div>
           </div>
           {accepted && <Badge tone="ok" className="job-accepted">Nuevo club: {accepted}</Badge>}
+          {data.pending_job?.club_name && <Badge tone="gold" className="job-pending">Acuerdo: {data.pending_job.club_name} · {data.pending_job.effective_season}</Badge>}
         </Card>
       </div>
 
@@ -136,7 +139,7 @@ export default function JobsPage() {
         <div className="job-offer-grid mt-2">
           {data.offers.map((offer) => (
             <div className="job-offer-card" key={offer.id}>
-              <div className="inline" style={{ justifyContent: 'space-between' }}><Badge tone="neutral">{offer.league_name}</Badge><span className="small muted">{offer.position}º</span></div>
+              <div className="inline" style={{ justifyContent: 'space-between' }}><div className="inline"><Badge tone="neutral">{offer.league_name}</Badge>{offer.cross_league && <Badge tone="gold">Otra liga · próxima temporada</Badge>}</div><span className="small muted">{offer.position}º</span></div>
               <h3>{offer.club_name}</h3>
               <p className="small muted">{offer.project}</p>
               <div className="job-offer-numbers">
@@ -147,12 +150,12 @@ export default function JobsPage() {
               </div>
               <p className="small muted">Objetivo: {offer.expectation} · expira {dateLabel(offer.expires)}</p>
               <div className="actions">
-                <Button size="sm" variant="primary" icon={Check} onClick={() => accept(offer)} loading={busy === `accept-${offer.id}`} data-testid={`job-accept-${offer.id}`}>Aceptar</Button>
+                <Button size="sm" variant="primary" icon={Check} onClick={() => accept(offer)} loading={busy === `accept-${offer.id}`} data-testid={`job-accept-${offer.id}`}>{offer.cross_league ? 'Firmar próxima temporada' : 'Aceptar'}</Button>
                 <Button size="sm" variant="ghost" icon={X} onClick={() => reject(offer)} loading={busy === `reject-${offer.id}`} data-testid={`job-reject-${offer.id}`}>Rechazar</Button>
               </div>
             </div>
           ))}
-          {!data.offers.length && <p className="small muted">No hay ofertas abiertas. Pulsa “Buscar ofertas” para que los clubes de tu liga se pronuncien.</p>}
+          {!data.offers.length && <p className="small muted">No hay ofertas abiertas. Pulsa “Buscar ofertas” para que los clubes de tu liga y de otras ligas se pronuncien.</p>}
         </div>
       </Card>
 
@@ -161,7 +164,7 @@ export default function JobsPage() {
         <div className="stack-sm mt-2">
           {data.history.map((entry, index) => (
             <div className="job-history-row" key={`${entry.date}-${entry.offer_id}-${index}`}>
-              <Badge tone={entry.type === 'accepted' ? 'ok' : 'neutral'}>{entry.type === 'accepted' ? 'Aceptada' : 'Rechazada'}</Badge>
+              <Badge tone={entry.type === 'accepted' ? 'ok' : entry.type === 'accepted_pending' ? 'gold' : 'neutral'}>{entry.type === 'accepted' ? 'Aceptada' : entry.type === 'accepted_pending' ? 'Acuerdo' : 'Rechazada'}</Badge>
               <div><b>{entry.from_club} → {entry.to_club}</b><span>{dateLabel(entry.date)} · {entry.message}</span></div>
               <b>{money(entry.salary)}</b>
             </div>

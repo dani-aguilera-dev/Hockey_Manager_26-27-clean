@@ -20,13 +20,56 @@ def test_job_security_overview_has_status_and_contract():
 
 def test_generate_job_offers_same_league_and_excludes_user():
     state = new_game("cd-terrassa", "Jobs Test", seed=242)
-    offers = generate_job_offers(state)
+    offers = generate_job_offers(state, include_cross_league=False)
     assert offers
     assert all(offer["club_id"] != state.club_id for offer in offers)
     assert all(offer["league"] == state.competition for offer in offers)
     assert all(offer["salary"] > 0 and offer["years"] >= 2 for offer in offers)
-    again = generate_job_offers(state)
+    again = generate_job_offers(state, include_cross_league=False)
     assert len(again) == len(offers)
+
+
+def test_generate_cross_league_offers():
+    state = new_game("cd-terrassa", "Jobs Test", seed=246)
+    offers = generate_job_offers(state, force=True, include_cross_league=True)
+    cross = [offer for offer in offers if offer["cross_league"]]
+    assert cross
+    assert all(offer["league"] != state.competition for offer in cross)
+    assert all(offer["effective"] == "next_season" for offer in cross)
+
+
+def test_accept_cross_league_offer_sets_pending_without_switching():
+    state = new_game("cd-terrassa", "Jobs Test", seed=247)
+    offers = generate_job_offers(state, force=True, include_cross_league=True)
+    target = next(offer for offer in offers if offer["cross_league"])
+    old_club = state.user_team.name
+    result = accept_job_offer(state, target["id"])
+    assert result["ok"] is True
+    assert result["pending"] is True
+    assert state.club_id != target["club_id"]
+    assert state.user_team.name == old_club
+    assert state.pending_job["club_id"] == target["club_id"]
+    assert state.job_offer_history[-1]["type"] == "accepted_pending"
+    assert job_security_overview(state)["pending_job"]["club_name"] == target["club_name"]
+
+
+def test_pending_job_applies_on_next_season_and_rebuilds_fixtures():
+    from src.season import advance_to_next_season
+
+    state = new_game("cd-terrassa", "Jobs Test", seed=248)
+    offers = generate_job_offers(state, force=True, include_cross_league=True)
+    target = next(offer for offer in offers if offer["cross_league"])
+    assert accept_job_offer(state, target["id"])["pending"] is True
+    state.phase = "season_end"
+    advance_to_next_season(state)
+    assert state.club_id == target["club_id"]
+    assert state.competition == target["league"]
+    assert state.user_team.name == target["club_name"]
+    assert state.fixtures
+    assert state.round == 1
+    assert state.pending_job == {}
+    assert state.manager_contract["club_id"] == target["club_id"]
+    assert state.manager_contract["club_name"] == target["club_name"]
 
 
 def test_accept_job_offer_switches_club_and_persists():

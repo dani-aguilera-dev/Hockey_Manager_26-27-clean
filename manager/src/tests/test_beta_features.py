@@ -690,3 +690,19 @@ def test_api_trials_invite_and_end(client):
     assert ended_payload["trials"]["active"] == []
     assert ended_payload["trials"]["history"]
     assert ended_payload["trials"]["history"][0]["report"]["summary"]
+
+
+def test_api_cross_league_job_pending(client):
+    _new_api(client, seed="62")
+    generated = client.post("/api/jobs/offers", json={"force": True, "cross_league": True})
+    assert generated.status_code == 200, generated.get_data(as_text=True)
+    offers = generated.get_json()["data"]["jobs"]["offers"]
+    cross = [offer for offer in offers if offer["cross_league"]]
+    assert cross, offers
+    accepted = client.post(f"/api/jobs/offers/{cross[0]['id']}/accept")
+    assert accepted.status_code == 200, accepted.get_data(as_text=True)
+    payload = accepted.get_json()["data"]
+    assert payload["result"]["pending"] is True
+    assert payload["jobs"]["pending_job"]["club_id"] == cross[0]["club_id"]
+    assert payload["jobs"]["pending_job"]["effective_season"]
+    assert payload["state"]["team"]["name"] != cross[0]["club_name"]

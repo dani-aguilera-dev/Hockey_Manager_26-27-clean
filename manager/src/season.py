@@ -2418,6 +2418,68 @@ def season_summary(state: GameState) -> dict:
     }
 
 
+def _apply_pending_job(state: GameState, new_year: int) -> None:
+    """Aplica un acuerdo de cambio de liga al empezar la nueva temporada."""
+    pending = state.pending_job
+    if not pending:
+        return
+    new_team = state.teams.get(str(pending.get("club_id", "")))
+    if new_team is None:
+        state.pending_job = {}
+        return
+    old_club = state.user_team.name
+    state.club_id = new_team.id
+    state.competition = new_team.league
+    meta = competition(state.competition)
+    start = date.fromisoformat(f"{new_year}-{meta.start_date[5:]}")
+    if meta.system == "dhb_two_phase":
+        state.dhb_groups = {}
+        setup_dhb_phase1(state, start.isoformat())
+        _sync_user_league_fixtures(state)
+    else:
+        state.fixtures = state.league_fixtures.get(state.competition, [])
+        if not state.fixtures:
+            team_ids = [team.id for team in state.teams.values() if team.league == state.competition]
+            state.fixtures = create_fixtures(team_ids, start.isoformat())
+            state.league_fixtures[state.competition] = state.fixtures
+        state.dhb_phase = 1
+        state.dhb_groups = {}
+        state.dhb_group = "A"
+        state.cup_active = False
+        state.cup_winner_id = ""
+        state.cup_third_id = ""
+        state.ehl = {}
+        if meta.system == "dha":
+            new_cup(state)
+    state.round = 1
+    first_regular = next((fixture.date for fixture in state.fixtures if fixture.phase == "regular"), start.isoformat())
+    state.date = (date.fromisoformat(first_regular) - timedelta(days=50)).isoformat()
+    years = int(pending.get("years", 2))
+    state.manager_contract = {
+        "club_id": new_team.id,
+        "club_name": new_team.name,
+        "salary": int(pending.get("salary", 0)),
+        "years": years,
+        "started": state.date,
+        "until": f"{new_year + years}-06-30",
+    }
+    state.pending_job = {}
+    state.manual_lineup = []
+    state.weekly_plan = []
+    state.training_report = {}
+    state.week_trained = False
+    state.last_result = {}
+    state.inbox.append(
+        {
+            "date": state.date,
+            "from": "Junta directiva",
+            "subject": f"Bienvenido a {new_team.name}",
+            "body": f"Has cambiado de {old_club} a {new_team.name}. Nueva temporada en {meta.short_name}.",
+        }
+    )
+    state.inbox = state.inbox[-80:]
+
+
 def advance_to_next_season(state: GameState) -> None:
     """Cierra la temporada y prepara la siguiente, con ascensos y descensos."""
     if state.phase != "season_end":
@@ -2561,3 +2623,4 @@ def advance_to_next_season(state: GameState) -> None:
             "body": f"Comienza una nueva temporada en {state.competition}. Revisa plantilla, contratos y mercado de verano.",
         }
     )
+    _apply_pending_job(state, new_year)

@@ -1686,7 +1686,11 @@ def jobs_offers():
     if err:
         return err
     payload = request.get_json(silent=True) or request.form
-    generate_job_offers(state, bool(payload.get("force", False)))
+    generate_job_offers(
+        state,
+        bool(payload.get("force", False)),
+        bool(payload.get("cross_league", True)),
+    )
     _save(state)
     return _ok(
         {"jobs": job_security_overview(state), "state": _state_payload(state)},

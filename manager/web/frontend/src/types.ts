@@ -2336,11 +2336,13 @@ export interface JobOffer {
   expires: string
   project: string
   status: string
+  cross_league: boolean
+  effective: 'now' | 'next_season'
 }
 
 export interface JobHistoryEntry {
   date: string
-  type: 'accepted' | 'rejected'
+  type: 'accepted' | 'accepted_pending' | 'rejected'
   offer_id: string
   from_club: string
   to_club: string
@@ -2383,6 +2385,13 @@ export interface JobsData {
     until: string
   }
   offers: JobOffer[]
+  pending_job: Partial<JobOffer> & {
+    club_name?: string
+    league?: string
+    league_name?: string
+    position?: number
+    effective_season?: string
+  }
   history: JobHistoryEntry[]
   eligible_clubs: number
 }
