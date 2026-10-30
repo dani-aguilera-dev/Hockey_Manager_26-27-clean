@@ -236,8 +236,8 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
 
     const scene = new THREE.Scene()
     scene.fog = new THREE.FogExp2(0x07101d, 0.011)
-    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 220)
-    camera.position.set(0, 58, 55)
+    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 220)
+    camera.position.set(0, 46, 36)
     camera.lookAt(0, 0, 0)
     scene.add(new THREE.HemisphereLight(0xd9f4ff, 0x16261b, 2.4))
     const key = new THREE.DirectionalLight(0xffffff, 2.8)
@@ -508,7 +508,7 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
       if (cameraModeRef.current === 'tactical') {
         camera.position.set(0, 78, 0.1)
       } else {
-        camera.position.set(0, 58, 55)
+        camera.position.set(0, 46, 36)
       }
       camera.lookAt(0, 0, 0)
       debugRef.current.frames += 1

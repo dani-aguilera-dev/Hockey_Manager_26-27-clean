@@ -966,7 +966,7 @@ select option { background: #0b1220; color: #e8eef8; }
 /* Visor 3D del partido */
 .match-viewer-3d {
   position: relative;
-  height: 380px;
+  height: 440px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 14px;
