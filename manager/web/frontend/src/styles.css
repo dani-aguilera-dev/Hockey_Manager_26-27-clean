@@ -1423,3 +1423,29 @@ select option { background: #0b1220; color: #e8eef8; }
 .match-plan-instructions span { padding: 3px 6px; border-radius: 4px; background: rgba(255,176,32,.08); color: var(--gold); font-size: 10px; }
 @media (max-width: 1100px) { .match-plan-form { grid-template-columns: repeat(3, minmax(0, 1fr)); } .match-plan-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .match-plan-form, .match-plan-grid { grid-template-columns: 1fr; } }
+
+/* Perfil del mánager */
+.manager-record { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.manager-record > div, .manager-money > div { display: flex; flex-direction: column; gap: 2px; padding: 8px; border: 1px solid var(--line); border-radius: 6px; }
+.manager-record span, .manager-money span { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .04em; }
+.manager-status { display: flex; flex-direction: column; gap: 5px; }
+.manager-status > div { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; }
+.manager-status span { color: var(--muted); }
+.manager-money { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.manager-trophies { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.manager-trophies > div { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 6px; border: 1px solid var(--line); border-radius: 7px; text-align: center; }
+.manager-trophies span { color: var(--muted); font-size: 10px; text-transform: uppercase; }
+.manager-trophies b { font-size: 18px; color: var(--gold); }
+.manager-trophy-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.manager-trophy-row:last-child { border-bottom: 0; }
+.manager-trophy-row span { color: var(--muted); }
+.manager-milestones { display: flex; flex-direction: column; gap: 8px; }
+.manager-milestone { padding: 8px; border: 1px solid var(--line); border-radius: 7px; }
+.manager-milestone.achieved { border-color: rgba(62,207,142,.35); background: rgba(62,207,142,.04); }
+.manager-milestone p { margin: 3px 0 5px; }
+.manager-recent { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.manager-recent:last-child { border-bottom: 0; }
+.manager-recent > div { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.manager-recent span { color: var(--muted); font-size: 11px; }
+@media (max-width: 980px) { .manager-record { grid-template-columns: repeat(2, minmax(0, 1fr)); } .manager-trophies { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .manager-record, .manager-money { grid-template-columns: 1fr; } .manager-trophies { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

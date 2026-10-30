@@ -66,6 +66,7 @@ from src.shortlist import (
     update_shortlist_entry,
 )
 from src.clauses import clauses_overview, set_clause
+from src.manager_profile import manager_profile_overview
 from src.match_plans import (
     create_match_plan,
     delete_match_plan,
@@ -1618,6 +1619,14 @@ def facilities_upgrade():
         {"result": result, "facilities": facilities_overview(state), "state": _state_payload(state)},
         result.get("message", ""),
     )
+
+
+@api.get("/manager")
+def manager_profile():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(manager_profile_overview(state))
 
 
 @api.get("/match-plans")

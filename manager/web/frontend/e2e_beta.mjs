@@ -268,6 +268,13 @@ try {
   result.matchPlans = true
   await page.screenshot({ path: '/tmp/opencode/e2e_match_plans.png', fullPage: true })
 
+  await page.goto('/app/game/manager')
+  await page.getByRole('heading', { name: 'Perfil del mánager' }).waitFor()
+  await page.locator('.manager-record').waitFor()
+  await page.locator('.manager-milestones').waitFor()
+  result.managerProfile = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_manager_profile.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

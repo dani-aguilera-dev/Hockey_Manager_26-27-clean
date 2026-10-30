@@ -2183,3 +2183,76 @@ export interface MatchPlansData {
   fields: MatchPlanField[]
   max_plans: number
 }
+
+export interface ManagerProfileData {
+  manager: {
+    name: string
+    club: string
+    club_id: string
+    season: string
+    competition: string
+    rating: number
+    reputation: string
+    formation: string
+  }
+  current: {
+    position: number
+    phase: string
+    board_confidence: number
+    fan_confidence: number
+    manager_rating: number
+    budget: number
+    transfer_budget: number
+  }
+  record: {
+    matches: number
+    wins: number
+    draws: number
+    losses: number
+    goals_for: number
+    goals_against: number
+    goal_difference: number
+    win_rate: number
+    points_per_match: number
+    best_finish: number | null
+    best_points: number | null
+  }
+  trophies: {
+    total: number
+    league: number
+    cup: number
+    ehl: number
+    promotions: number
+    details: Array<{ season: string; title: string; competition: string }>
+  }
+  seasons: Array<{
+    season: string
+    competition: string
+    position: number | null
+    points: number | null
+    champion: string | null
+    cup_winner: string | null
+    ehl_winner: string | null
+    promoted: string[]
+    relegated: string[]
+    trophies: string[]
+    in_progress: boolean
+  }>
+  milestones: Array<{
+    id: string
+    label: string
+    description: string
+    value: number
+    target: number
+    achieved: boolean
+    progress: number
+  }>
+  recent: Array<{
+    date: string
+    competition: string
+    opponent: string
+    goals_for: number
+    goals_against: number
+    result: string
+  }>
+}

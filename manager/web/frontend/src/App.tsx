@@ -25,6 +25,7 @@ import FacilitiesPage from './pages/Facilities'
 import ClausesPage from './pages/Clauses'
 import ShortlistPage from './pages/Shortlist'
 import MatchPlansPage from './pages/MatchPlans'
+import ManagerProfilePage from './pages/ManagerProfile'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -101,6 +102,7 @@ export default function App() {
         <Route path="clauses" element={<ClausesPage />} />
         <Route path="shortlist" element={<ShortlistPage />} />
         <Route path="match-plans" element={<MatchPlansPage />} />
+        <Route path="manager" element={<ManagerProfilePage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />

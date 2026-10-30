@@ -607,3 +607,21 @@ def test_api_match_plans_create_update_delete(client):
     deleted = client.delete(f"/api/match-plans/{plan['id']}")
     assert deleted.status_code == 200, deleted.get_data(as_text=True)
     assert deleted.get_json()["data"]["match_plans"]["plans"] == []
+
+
+def test_api_manager_profile_and_career_record(client):
+    _new_api(client, seed="58")
+    profile = client.get("/api/manager")
+    assert profile.status_code == 200, profile.get_data(as_text=True)
+    data = profile.get_json()["data"]
+    assert data["manager"]["name"]
+    assert data["current"]["position"] >= 1
+    assert data["record"]["matches"] == 0
+    assert data["milestones"]
+    quick = client.post("/api/match/quick", json={"travel": "equilibrado"})
+    assert quick.status_code == 200, quick.get_data(as_text=True)
+    refreshed = client.get("/api/manager").get_json()["data"]
+    record = refreshed["record"]
+    assert record["matches"] >= 1
+    assert record["wins"] + record["draws"] + record["losses"] == record["matches"]
+    assert refreshed["recent"]
