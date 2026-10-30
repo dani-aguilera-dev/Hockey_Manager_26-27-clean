@@ -32,7 +32,7 @@
 | Ventaja con retorno | Si la ventaja no se materializa, se vuelve a la falta original; en el círculo, PC | PASS |
 | Gol anulado por pie o revés | `_disallowed_goal` en juego abierto, stats `goals_disallowed`, `foot_goals_disallowed` y `back_stick_goals_disallowed`; revisable por el equipo atacante | PASS |
 | Gol solo desde el círculo | `_shot` anula el disparo directo desde fuera; el desvío dentro del círculo se concede | PASS |
-| Gol anulado por mano/brazo | `_disallowed_goal` con motivo `hand`, stat `hand_goals_disallowed`, evento y revisión | PASS |
+| Gol anulado por mano/brazo | `_disallowed_goal` en juego abierto con motivo `hand`, stat `hand_goals_disallowed`, evento y revisión | PASS |
 | Trabajo y seguridad | `/api/jobs`, `Jobs.tsx`: confianza, contrato, ofertas de misma liga y otras ligas, aceptar/rechazar e historial | PASS |
 | Cambio entre ligas | Acuerdo diferido, cambio de club y reconstrucción de calendario al avanzar la temporada; incluye ligas internacionales | PASS |
 | Vacantes de entrenador | `/api/vacancies`, `Vacancies.tsx`: clubes con banquillo disponible, candidaturas y ofertas | PASS |
