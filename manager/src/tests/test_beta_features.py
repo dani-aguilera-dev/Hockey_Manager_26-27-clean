@@ -446,6 +446,7 @@ def test_api_report_has_added_time_and_discipline_stats(client):
         "goals_disallowed",
         "foot_goals_disallowed",
         "back_stick_goals_disallowed",
+        "hand_goals_disallowed",
         "outside_circle_goals_disallowed",
         "dangerous_sanction",
         "free_hit_10m",

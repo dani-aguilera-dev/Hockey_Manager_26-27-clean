@@ -174,6 +174,7 @@ class MatchEngine:
             "goals_disallowed": 0,
             "foot_goals_disallowed": 0,
             "back_stick_goals_disallowed": 0,
+            "hand_goals_disallowed": 0,
             "outside_circle_goals_disallowed": 0,
             "dangerous_play": 0,
             "dangerous_sanction": 0,
@@ -755,6 +756,8 @@ class MatchEngine:
             return "foot"
         if roll < 0.060:
             return "back_stick"
+        if roll < 0.078:
+            return "hand"
         return None
 
     def _outside_circle_deflection(self, side: int, scorer: PlayerState, kind: str) -> bool:
@@ -829,7 +832,7 @@ class MatchEngine:
             )
         else:
             text = (
-                f"Gol anulado a {t.name}: {scorer.name} jugó la bola con el {reason}. "
+                f"Gol anulado a {t.name}: {scorer.name} jugó la bola con {reason}. "
                 f"Se concede golpe franco a {self._team(opp).name}."
             )
         self._add_event("goal_disallowed", side, scorer, text)

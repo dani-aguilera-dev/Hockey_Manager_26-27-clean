@@ -181,3 +181,52 @@ def test_outside_circle_disallowed_goal_reaches_match_result():
         event["type"] == "goal_disallowed" and "fuera del círculo" in event["text"]
         for event in result.events
     )
+
+
+def test_goal_disallowed_for_hand_records_event_and_stats():
+    engine = _engine(12)
+    scorer = engine._lineup(0)[0]
+    engine._disallowed_goal(0, scorer, None, "open", "hand")
+    assert engine.score == [0, 0]
+    assert engine.stats[0]["goals_disallowed"] == 1
+    assert engine.stats[0]["hand_goals_disallowed"] == 1
+    assert engine.last_decision["disallowed_reason"] == "hand"
+    event = next(event for event in engine.events if event["type"] == "goal_disallowed")
+    assert "mano" in event["text"]
+    assert "brazo" in event["text"]
+
+
+def test_shot_can_disallow_goal_for_hand():
+    engine = _engine(13)
+    engine.rng = _FixedRng(0.0)
+    engine.zone = "circle"
+    engine._shot(0, "open", offence="hand")
+    assert engine.score == [0, 0]
+    assert engine.stats[0]["hand_goals_disallowed"] == 1
+    assert engine.last_decision["type"] == "goal_disallowed"
+    assert engine.last_decision["disallowed_reason"] == "hand"
+
+
+def test_review_overturns_hand_disallowed_goal():
+    engine = _engine(14)
+    scorer = engine._lineup(0)[0]
+    engine._disallowed_goal(0, scorer, None, "open", "hand")
+    engine.rng = _FixedRng(0.0)
+    result = engine.review_decision(0, "goal_disallowed")
+    assert result["ok"] is True
+    assert result["review"]["overturned"] is True
+    assert result["score"] == [1, 0]
+    assert engine.stats[0]["goals"] == 1
+    assert engine.stats[0]["hand_goals_disallowed"] == 1
+
+
+def test_hand_disallowed_goal_reaches_match_result():
+    engine = _engine(15)
+    scorer = engine._lineup(0)[0]
+    engine._disallowed_goal(0, scorer, None, "open", "hand")
+    result = engine.simulate()
+    assert result.home_stats["hand_goals_disallowed"] >= 1
+    assert any(
+        event["type"] == "goal_disallowed" and "mano" in event["text"]
+        for event in result.events
+    )

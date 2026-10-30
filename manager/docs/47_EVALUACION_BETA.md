@@ -16,7 +16,7 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **326 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **330 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/gol anulado/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -32,6 +32,7 @@
 | Ventaja con retorno | Si la ventaja no se materializa, se vuelve a la falta original; en el círculo, PC | PASS |
 | Gol anulado por pie o revés | `_disallowed_goal` en juego abierto, stats `goals_disallowed`, `foot_goals_disallowed` y `back_stick_goals_disallowed`; revisable por el equipo atacante | PASS |
 | Gol solo desde el círculo | `_shot` anula el disparo directo desde fuera; el desvío dentro del círculo se concede | PASS |
+| Gol anulado por mano/brazo | `_disallowed_goal` con motivo `hand`, stat `hand_goals_disallowed`, evento y revisión | PASS |
 | Trabajo y seguridad | `/api/jobs`, `Jobs.tsx`: confianza, contrato, ofertas de misma liga y otras ligas, aceptar/rechazar e historial | PASS |
 | Cambio entre ligas | Acuerdo diferido, cambio de club y reconstrucción de calendario al avanzar la temporada; incluye ligas internacionales | PASS |
 | Vacantes de entrenador | `/api/vacancies`, `Vacancies.tsx`: clubes con banquillo disponible, candidaturas y ofertas | PASS |
@@ -50,7 +51,7 @@
 | Perfil y carrera del mánager | `/api/manager`, `ManagerProfile.tsx`: récord, palmarés, hitos, temporadas y situación actual | PASS |
 | Mocap CMU | Clip de carrera CMU subject 9 trial 1, 74 frames a 60 fps, licencia y atribución en `assets/mocap`; aplicado a piernas/cadera | PASS |
 | Comparación de jugadores | `/api/compare`, `Compare.tsx`: atributos, estadísticas, contrato, diferencias y resumen | PASS |
-| E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido/mocap CMU, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje subjetivo, ventaja con retorno, gol anulado por pie/revés, gol solo desde el círculo, finanzas, análisis, responsabilidades, desarrollo, premios, contratos, instalaciones, cláusulas, seguimiento, planes de partido, perfil del mánager, comparación, pruebas, trabajo y seguridad, cambio entre ligas e internacional, vacantes, cambios de entrenador, prensa y marcas | PASS |
+| E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido/mocap CMU, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje subjetivo, ventaja con retorno, gol anulado por pie/revés/mano, gol solo desde el círculo, finanzas, análisis, responsabilidades, desarrollo, premios, contratos, instalaciones, cláusulas, seguimiento, planes de partido, perfil del mánager, comparación, pruebas, trabajo y seguridad, cambio entre ligas e internacional, vacantes, cambios de entrenador, prensa y marcas | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media, equipación, seguimiento y planes de partido; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -129,6 +130,10 @@
 - `test_goal_inside_circle_is_allowed`
 - `test_review_overturns_outside_circle_disallowed_goal`
 - `test_outside_circle_disallowed_goal_reaches_match_result`
+- `test_goal_disallowed_for_hand_records_event_and_stats`
+- `test_shot_can_disallow_goal_for_hand`
+- `test_review_overturns_hand_disallowed_goal`
+- `test_hand_disallowed_goal_reaches_match_result`
 
 `src/tests/test_vacancies.py`:
 
@@ -315,17 +320,17 @@
 
 ```text
 python3 -m pytest src/tests -q
-326 passed in 435.37s
+330 passed in 434.25s
 
 cd manager/web/frontend && npm run build
-✓ built in 5.13s
+✓ built in 5.17s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-BAt_kGGI.js → 200
+curl /static/react/assets/index-Bm8spUmZ.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2640,"clothUpdates":1320},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1320},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":59,"stickFlexes":68},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2640},"viewerPhysics":{"frames":60,"playerCollisions":0,"bodyCollisions":52,"stickCollisions":36,"ballSpeed":2.31},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2772,"clothUpdates":1386},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1386},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":60,"stickFlexes":69},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2772},"viewerPhysics":{"frames":63,"playerCollisions":0,"bodyCollisions":52,"stickCollisions":36,"ballSpeed":2.10},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true}
 ```
 
 ## Límites conscientes

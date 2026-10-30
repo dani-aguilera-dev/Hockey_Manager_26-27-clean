@@ -101,8 +101,9 @@ REFERRAL_DECISIONS: dict[str, str] = {
 # Infracciones de ataque que anulan un gol: pie, revés del stick o
 # lanzamiento directo desde fuera del círculo.
 ATTACKING_GOAL_OFFENCES: dict[str, str] = {
-    "foot": "pie",
-    "back_stick": "revés del stick",
+    "foot": "el pie",
+    "back_stick": "el revés del stick",
+    "hand": "la mano o el brazo",
     "outside_circle": "lanzamiento desde fuera del círculo",
 }
 

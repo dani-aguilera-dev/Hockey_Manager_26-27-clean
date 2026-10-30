@@ -36,6 +36,7 @@ try {
   await page.getByText('Goles anulados').waitFor()
   await page.getByText('Anulados por pie').waitFor()
   await page.getByText('Anulados por revés').waitFor()
+  await page.getByText('Anulados por mano/brazo').waitFor()
   await page.getByText('Anulados fuera del círculo').waitFor()
   await page.getByText('Tiempo añadido').waitFor()
   result.refereeAndSetPieces = true
@@ -45,6 +46,7 @@ try {
   result.refereeAdvantage = true
   result.goalDisallowed = true
   result.goalOutsideCircle = true
+  result.goalHand = true
 
   await page.goto('/app/game/analysis')
   await page.getByRole('heading', { name: 'Análisis de partido' }).waitFor()
