@@ -806,6 +806,9 @@ class GameState:
     job_offer_history: list[dict[str, Any]] = field(default_factory=list)
     manager_contract: dict[str, Any] = field(default_factory=dict)
     manager_changes: list[dict[str, Any]] = field(default_factory=list)
+    user_sacked: bool = False
+    user_sacking: dict[str, Any] = field(default_factory=dict)
+    user_pressure: int = 0
     pending_job: dict[str, Any] = field(default_factory=dict)
     vacancy_applications: list[dict[str, Any]] = field(default_factory=list)
     trials: list[dict[str, Any]] = field(default_factory=list)
@@ -939,6 +942,9 @@ class GameState:
             "job_offer_history": self.job_offer_history,
             "manager_contract": self.manager_contract,
             "manager_changes": self.manager_changes,
+            "user_sacked": self.user_sacked,
+            "user_sacking": self.user_sacking,
+            "user_pressure": self.user_pressure,
             "pending_job": self.pending_job,
             "vacancy_applications": self.vacancy_applications,
             "trials": self.trials,
@@ -1026,6 +1032,9 @@ class GameState:
             job_offer_history=d.get("job_offer_history", []),
             manager_contract=d.get("manager_contract", {}),
             manager_changes=d.get("manager_changes", []),
+            user_sacked=d.get("user_sacked", False),
+            user_sacking=d.get("user_sacking", {}),
+            user_pressure=d.get("user_pressure", 0),
             pending_job=d.get("pending_job", {}),
             vacancy_applications=d.get("vacancy_applications", []),
             trials=d.get("trials", []),

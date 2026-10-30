@@ -73,6 +73,7 @@ from src.jobs import (
     job_security_overview,
     reject_job_offer,
 )
+from src.managers import resign_user
 from src.trials import end_trial, invite_trial, trial_overview
 from src.vacancies import apply_vacancy, vacancy_overview
 from src.manager_profile import manager_profile_overview
@@ -521,6 +522,9 @@ def _state_payload(state):
             "save_name": session.get("save_name", ""),
             "live_active": live_active,
             "week_trained": state.week_trained,
+            "user_sacked": state.user_sacked,
+            "user_sacking": state.user_sacking,
+            "user_pressure": state.user_pressure,
             "dhb_group": state.dhb_group,
             "promotion_round": state.promotion_round,
         },
@@ -1693,6 +1697,21 @@ def trials_end(trial_id: str):
     _save(state)
     return _ok(
         {"result": result, "trials": trial_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.post("/jobs/resign")
+def jobs_resign():
+    state, err = _state()
+    if err:
+        return err
+    result = resign_user(state)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo presentar la dimisión."), 409, "resign_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "jobs": job_security_overview(state), "state": _state_payload(state)},
         result.get("message", ""),
     )
 

@@ -35,7 +35,12 @@ from .logistics import apply_travel, travel_options
 from .match_engine import MatchEngine, MatchResult
 from .models import Fixture, GameState, PlayerState, TeamState
 from .scouting import advance_scouting
-from .managers import process_manager_changes, record_manager_change, replacement_manager
+from .managers import (
+    process_manager_changes,
+    process_user_sacking,
+    record_manager_change,
+    replacement_manager,
+)
 from .training import apply_training_plan, auto_plan
 from .trials import advance_trials
 from .youth import develop_youth, generate_youth, initial_youth, intake
@@ -655,6 +660,7 @@ def play_round(
     # clasificación, cambios de entrenador y recuperación
     recompute_table(state.teams, _world_fixtures(state))
     process_manager_changes(state)
+    process_user_sacking(state)
     _recover_after_round(state, old_status)
     apply_round_finances(state)
     _reset_week_training(state)
@@ -839,6 +845,7 @@ def finish_live_round(state: GameState, ctx: LiveRoundContext) -> dict:
         return user_payload
     recompute_table(state.teams, _world_fixtures(state))
     process_manager_changes(state)
+    process_user_sacking(state)
     _recover_after_round(state, ctx.old_status)
     apply_round_finances(state)
     _reset_week_training(state)

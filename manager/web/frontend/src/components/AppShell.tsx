@@ -246,6 +246,29 @@ function MobileNav({ onMore }: { onMore: () => void }) {
   )
 }
 
+function SackedScreen({ game }: { game: GameState }) {
+  const navigate = useNavigate()
+  const sacking = game.game.user_sacking || {}
+  return (
+    <div className="app-loading sacked-screen">
+      <Logo />
+      <div className="notice notice-danger">
+        <div className="cat">SIN CLUB</div>
+        <h1 style={{ margin: '6px 0' }}>Has salido del banquillo</h1>
+        <p>{sacking.reason || 'La junta ha decidido prescindir de tus servicios.'}</p>
+        <p className="small muted">
+          {sacking.club_name || game.team.name} · {dateLabel(sacking.date || game.game.date)} · Sustituto: {sacking.replacement || 'Entrenador interino'}
+        </p>
+      </div>
+      <div className="actions">
+        <Button variant="primary" icon={Briefcase} onClick={() => navigate('/game/vacancies')}>Buscar banquillo</Button>
+        <Button icon={FileSignature} onClick={() => navigate('/game/jobs')}>Ver ofertas</Button>
+        <Button icon={LogOut} onClick={() => navigate('/')}>Nueva partida</Button>
+      </div>
+    </div>
+  )
+}
+
 export function GameLayout() {
   const { game, loading, error } = useGame()
   const [drawer, setDrawer] = useState(false)
@@ -268,6 +291,12 @@ export function GameLayout() {
         <Button variant="primary" onClick={() => window.location.reload()}>Reintentar</Button>
       </div>
     )
+  }
+
+  const sacked = game.game.user_sacked
+  const canSearch = location.pathname.startsWith('/game/vacancies') || location.pathname.startsWith('/game/jobs')
+  if (sacked && !canSearch) {
+    return <SackedScreen game={game} />
   }
 
   return (

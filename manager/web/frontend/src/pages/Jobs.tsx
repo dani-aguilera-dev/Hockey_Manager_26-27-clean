@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Briefcase, Check, Handshake, RefreshCw, ShieldAlert, X } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Briefcase, Check, Handshake, LogOut, RefreshCw, ShieldAlert, X } from 'lucide-react'
 import { api } from '../lib/api'
 import { dateLabel, money } from '../lib/format'
 import type { JobOffer, JobsData } from '../types'
@@ -15,6 +16,7 @@ const statusTones: Record<string, 'ok' | 'gold' | 'danger' | 'neutral'> = {
 }
 
 export default function JobsPage() {
+  const navigate = useNavigate()
   const { applyState } = useGame()
   const { toast } = useToast()
   const [data, setData] = useState<JobsData | null>(null)
@@ -41,6 +43,21 @@ export default function JobsPage() {
       toast(response.message || 'Ofertas actualizadas.', 'success')
     } catch (err) {
       toast(err instanceof Error ? err.message : 'No se pudieron buscar ofertas.', 'danger')
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  async function resign() {
+    if (!window.confirm('¿Seguro que quieres dimitir? Quedarás sin club hasta aceptar otra oferta.')) return
+    setBusy('resign')
+    try {
+      const response = await api.post<{ jobs: JobsData; state: unknown }>('/jobs/resign')
+      applyState(response.data.state as never)
+      toast(response.message || 'Has presentado la dimisión.', 'info')
+      navigate('/game')
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudo presentar la dimisión.', 'danger')
     } finally {
       setBusy(null)
     }
@@ -119,6 +136,7 @@ export default function JobsPage() {
             <div><div className="cat">CONTRATO</div><h3 style={{ margin: '3px 0 0' }}>Tu situación</h3></div>
             <Handshake size={20} className="gold" />
           </div>
+          {data.user_sacked && <Badge tone="danger" className="job-sacked">Sin club · busca un banquillo</Badge>}
           <div className="job-security mt-2">
             <div><span>Club</span><b>{contract.club_name}</b></div>
             <div><span>Salario</span><b>{money(contract.salary)}</b></div>
@@ -128,6 +146,11 @@ export default function JobsPage() {
           </div>
           {accepted && <Badge tone="ok" className="job-accepted">Nuevo club: {accepted}</Badge>}
           {data.pending_job?.club_name && <Badge tone="gold" className="job-pending">Acuerdo: {data.pending_job.club_name} · {data.pending_job.effective_season}</Badge>}
+          {!data.user_sacked && (
+            <div className="actions mt-2">
+              <Button size="sm" variant="ghost" icon={LogOut} onClick={resign} loading={busy === 'resign'} data-testid="jobs-resign">Dimisión</Button>
+            </div>
+          )}
         </Card>
       </div>
 

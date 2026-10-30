@@ -6,6 +6,7 @@ const executablePath = process.env.CHROME_PATH || `${process.env.HOME}/.cache/ms
 const browser = await chromium.launch({ headless: true, executablePath })
 const context = await browser.newContext({ baseURL: base })
 const page = await context.newPage()
+page.on('dialog', async (dialog) => { await dialog.accept() })
 
 const result = {}
 try {
@@ -350,6 +351,13 @@ try {
   result.vacancies = true
   result.managerChanges = true
   await page.screenshot({ path: '/tmp/opencode/e2e_vacancies.png', fullPage: true })
+
+  await page.goto('/app/game/jobs')
+  await page.getByRole('heading', { name: 'Trabajo y seguridad' }).waitFor()
+  await page.getByTestId('jobs-resign').click()
+  await page.getByText('Has salido del banquillo').waitFor()
+  result.userSacking = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_user_sacking.png', fullPage: true })
 
   console.log(JSON.stringify(result))
 } finally {

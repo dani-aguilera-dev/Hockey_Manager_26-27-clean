@@ -153,3 +153,82 @@ def process_manager_changes(state: GameState) -> list[dict[str, Any]]:
 
 def manager_changes_overview(state: GameState) -> list[dict[str, Any]]:
     return list(reversed(state.manager_changes[-12:]))
+
+
+USER_SACK_PRESSURE = 3
+USER_SACK_BOARD_CONFIDENCE = 12
+USER_SACK_MIN_ROUNDS = 8
+
+
+def sack_user(state: GameState, reason: str, kind: str = "sacked") -> dict[str, Any]:
+    """Destituye al usuario o registra su dimisión.
+
+    El club sigue existiendo y queda dirigido por un sustituto, pero el usuario
+    pasa a estar sin banquillo hasta que acepte otra oferta.
+    """
+    if state.user_sacked:
+        return {"ok": False, "message": "Ya estás sin club."}
+    team = state.user_team
+    old_name = state.manager_name
+    new_name = replacement_manager(team)
+    team.manager_name = new_name
+    team.manager_pressure = 0
+    team.manager_since_round = state.round
+    state.user_sacked = True
+    state.user_pressure = 0
+    state.pending_job = {}
+    state.manager_contract = {}
+    state.user_sacking = {
+        "date": state.date,
+        "season": state.season,
+        "round": state.round,
+        "club_id": team.id,
+        "club_name": team.name,
+        "league": team.league,
+        "league_name": competition(team.league).short_name,
+        "manager_name": old_name,
+        "replacement": new_name,
+        "reason": reason,
+        "kind": kind,
+    }
+    change_type = "resigned" if kind == "resigned" else "user_sacked"
+    record_manager_change(state, team, old_name, new_name, change_type, reason)
+    state.inbox.append(
+        {
+            "date": state.date,
+            "from": "Junta directiva",
+            "subject": f"Salida del banquillo de {team.name}",
+            "body": reason,
+        }
+    )
+    state.inbox = state.inbox[-120:]
+    return {"ok": True, "message": reason, "sacking": state.user_sacking}
+
+
+def process_user_sacking(state: GameState) -> dict[str, Any] | None:
+    """Acumula presión sobre el usuario y lo destituye si la crisis persiste."""
+    if state.user_sacked or state.phase not in ("regular", "promotion"):
+        return None
+    team = state.user_team
+    if team.played < USER_SACK_MIN_ROUNDS:
+        return None
+    table = _league_table(state, team.league)
+    if len(table) < 4:
+        return None
+    position = _position(state, team)
+    bottom_from = max(1, len(table) - 1)
+    crisis = team.board_confidence <= USER_SACK_BOARD_CONFIDENCE and position >= bottom_from
+    if crisis:
+        state.user_pressure += 1
+    else:
+        state.user_pressure = max(0, state.user_pressure - 1)
+    if state.user_pressure < USER_SACK_PRESSURE:
+        return None
+    return sack_user(
+        state,
+        f"La junta destituye al mánager tras {USER_SACK_PRESSURE} avisos en la parte baja.",
+    )
+
+
+def resign_user(state: GameState) -> dict[str, Any]:
+    return sack_user(state, "El mánager presenta su dimisión.", kind="resigned")

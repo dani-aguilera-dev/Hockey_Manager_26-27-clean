@@ -507,8 +507,25 @@ export interface GameMeta {
   save_name: string
   live_active: boolean
   week_trained: boolean
+  user_sacked: boolean
+  user_sacking?: Partial<UserSacking>
+  user_pressure: number
   dhb_group: string
   promotion_round?: number
+}
+
+export interface UserSacking {
+  date: string
+  season: string
+  round: number
+  club_id: string
+  club_name: string
+  league: string
+  league_name: string
+  manager_name: string
+  replacement: string
+  reason: string
+  kind: 'sacked' | 'resigned' | string
 }
 
 export interface PromotionGroup {
@@ -2386,6 +2403,7 @@ export interface JobsData {
     started: string
     until: string
   }
+  user_sacked: boolean
   offers: JobOffer[]
   pending_job: Partial<JobOffer> & {
     club_name?: string

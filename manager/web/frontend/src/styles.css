@@ -1547,3 +1547,7 @@ select option { background: #0b1220; color: #e8eef8; }
 .manager-change-row:last-child { border-bottom: 0; }
 .manager-change-row > div { display: flex; flex-direction: column; gap: 2px; flex: 1; }
 .manager-change-row span { color: var(--muted); font-size: 11px; }
+
+/* Mánager sin club */
+.sacked-screen .notice { max-width: 620px; text-align: left; }
+.sacked-screen .actions { justify-content: center; flex-wrap: wrap; }

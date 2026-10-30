@@ -806,3 +806,23 @@ def test_api_vacancies_include_manager_market(client):
     assert any(row["club_id"] == team.id for row in payload["pool"])
     assert all(row["manager_name"] for row in payload["pool"])
     assert payload["summary"]["changes"] == len(payload["changes"])
+
+
+def test_api_user_resign_and_rehire(client):
+    _new_api(client, seed="67")
+    resign = client.post("/api/jobs/resign")
+    assert resign.status_code == 200, resign.get_data(as_text=True)
+    payload = resign.get_json()["data"]
+    assert payload["state"]["game"]["user_sacked"] is True
+    assert payload["state"]["game"]["user_sacking"]["kind"] == "resigned"
+    assert payload["jobs"]["club"]["name"] == payload["state"]["game"]["user_sacking"]["club_name"]
+    generated = client.post("/api/jobs/offers", json={"force": True, "cross_league": False})
+    assert generated.status_code == 200, generated.get_data(as_text=True)
+    offers = generated.get_json()["data"]["jobs"]["offers"]
+    assert offers
+    accepted = client.post(f"/api/jobs/offers/{offers[0]['id']}/accept")
+    assert accepted.status_code == 200, accepted.get_data(as_text=True)
+    state = accepted.get_json()["data"]["state"]
+    assert state["game"]["user_sacked"] is False
+    assert state["game"]["user_sacking"] == {}
+    assert state["team"]["name"] == offers[0]["club_name"]

@@ -106,7 +106,17 @@ def job_security_overview(state: GameState) -> dict[str, Any]:
     teams = len(table)
     status = _status(team, position, teams)
     form = _recent_form(state, team.id)
-    contract = state.manager_contract or _default_contract(state)
+    if state.user_sacked:
+        contract = {
+            "club_id": "",
+            "club_name": "Sin club",
+            "salary": 0,
+            "years": 0,
+            "started": "",
+            "until": "",
+        }
+    else:
+        contract = state.manager_contract or _default_contract(state)
     offers = [
         _offer_payload(state, offer)
         for offer in state.job_offers
@@ -150,6 +160,7 @@ def job_security_overview(state: GameState) -> dict[str, Any]:
             "form_points": sum(3 if result == "V" else (1 if result == "E" else 0) for result in form),
         },
         "contract": contract,
+        "user_sacked": state.user_sacked,
         "offers": offers,
         "pending_job": pending_job,
         "history": list(reversed(state.job_offer_history[-12:])),
@@ -293,6 +304,11 @@ def accept_job_offer(state: GameState, offer_id: str) -> dict[str, Any]:
     new_team = state.teams.get(str(offer.get("club_id", "")))
     if new_team is None:
         return {"ok": False, "message": "El club de la oferta no existe."}
+    if state.user_sacked and offer.get("cross_league"):
+        return {
+            "ok": False,
+            "message": "Sin club no puedes firmar un acuerdo diferido; busca un banquillo inmediato.",
+        }
     if offer.get("cross_league"):
         if new_team.league == state.competition:
             return {"ok": False, "message": "La oferta ya no es un cambio de liga."}
@@ -347,20 +363,25 @@ def accept_job_offer(state: GameState, offer_id: str) -> dict[str, Any]:
     if new_team.league != state.competition:
         return {"ok": False, "message": "Solo se admiten cambios dentro de la misma liga de forma inmediata."}
     old_team = state.user_team
-    old_manager = old_team.manager_name
-    old_team.manager_name = replacement_manager(old_team)
-    old_team.manager_pressure = 0
-    old_team.manager_since_round = state.round
-    record_manager_change(
-        state,
-        old_team,
-        old_manager,
-        old_team.manager_name,
-        "user_left",
-        "El mánager acepta otro banquillo.",
-    )
+    was_sacked = state.user_sacked
+    if not was_sacked:
+        old_manager = old_team.manager_name
+        old_team.manager_name = replacement_manager(old_team)
+        old_team.manager_pressure = 0
+        old_team.manager_since_round = state.round
+        record_manager_change(
+            state,
+            old_team,
+            old_manager,
+            old_team.manager_name,
+            "user_left",
+            "El mánager acepta otro banquillo.",
+        )
     new_old_manager = new_team.manager_name
     state.club_id = new_team.id
+    state.user_sacked = False
+    state.user_sacking = {}
+    state.user_pressure = 0
     new_team.manager_name = state.manager_name
     new_team.manager_pressure = 0
     new_team.manager_since_round = state.round
