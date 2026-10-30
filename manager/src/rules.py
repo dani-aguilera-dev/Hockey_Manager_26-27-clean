@@ -93,8 +93,15 @@ OPPOSITION_INSTRUCTIONS: dict[str, dict[str, object]] = {
 
 REFERRAL_DECISIONS: dict[str, str] = {
     "goal": "Gol",
+    "goal_disallowed": "Gol anulado",
     "penalty_corner": "Penalty corner",
     "penalty_stroke": "Penalty stroke",
+}
+
+# Infracciones de ataque que anulan un gol: pie o revés del stick.
+ATTACKING_GOAL_OFFENCES: dict[str, str] = {
+    "foot": "pie",
+    "back_stick": "revés del stick",
 }
 
 CardType = Literal["green", "yellow", "red"]

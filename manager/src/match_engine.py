@@ -7,6 +7,7 @@ explicables a partir de los 37 atributos, la táctica, la fatiga y el contexto.
 from __future__ import annotations
 
 import random
+import zlib
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
@@ -170,6 +171,9 @@ class MatchEngine:
             "fouls": 0,
             "advantage": 0,
             "advantage_failed": 0,
+            "goals_disallowed": 0,
+            "foot_goals_disallowed": 0,
+            "back_stick_goals_disallowed": 0,
             "dangerous_play": 0,
             "dangerous_sanction": 0,
             "distance_5m": 0,
@@ -453,34 +457,51 @@ class MatchEngine:
             return {"ok": False, "message": "Esa decisión ya fue revisada."}
         if decision_type and decision_type != decision.get("type"):
             return {"ok": False, "message": "La decisión ya no coincide con la jugada revisable."}
-        if int(decision.get("side", -1)) == side:
+        is_disallowed_goal = decision.get("type") == "goal_disallowed"
+        decision_side = int(decision.get("side", -1))
+        if is_disallowed_goal:
+            if decision_side != side:
+                return {
+                    "ok": False,
+                    "message": "Solo el equipo al que se le anuló el gol puede revisarlo.",
+                }
+        elif decision_side == side:
             return {"ok": False, "message": "Solo puedes revisar una decisión contra tu equipo."}
         if self.referrals.get(side, 0) <= 0:
             return {"ok": False, "message": "No te quedan referencias de vídeo."}
         strictness = float(self.referee.get("strictness", 55))
-        base = {"goal": 0.46, "penalty_corner": 0.34, "penalty_stroke": 0.30}.get(
-            str(decision.get("type")), 0.30
-        )
+        base = {
+            "goal": 0.46,
+            "goal_disallowed": 0.40,
+            "penalty_corner": 0.34,
+            "penalty_stroke": 0.30,
+        }.get(str(decision.get("type")), 0.30)
         chance = max(0.15, min(0.65, base + (55 - strictness) / 400))
         overturned = self.rng.random() < chance
         score_before = f"{self.score[0]}-{self.score[1]}"
         if overturned:
-            if decision.get("goal"):
+            if is_disallowed_goal:
+                self._award_goal_from_decision(decision)
+                text = (
+                    f"Revisión de vídeo: el árbitro corrige la decisión y concede el gol a "
+                    f"{decision.get('team_name')}. {decision.get('scorer_name') or ''} marca."
+                )
+            elif decision.get("goal"):
                 self._annul_goal(decision)
-            elif decision.get("type") == "penalty_corner":
-                stats = self.stats[int(decision["side"])]
-                stats["pc"] = max(0, int(stats.get("pc", 0)) - 1)
-            elif decision.get("type") == "penalty_stroke":
-                stats = self.stats[int(decision["side"])]
-                stats["strokes"] = max(0, int(stats.get("strokes", 0)) - 1)
-            text = (
-                f"Revisión de vídeo: el árbitro corrige la decisión y anula "
-                f"{decision.get('label', 'la jugada')} a favor de {decision.get('team_name')}."
-            )
-            if decision.get("goal"):
                 text = (
                     f"Revisión de vídeo: gol anulado a {decision.get('scorer_name') or decision.get('team_name')}. "
                     f"El árbitro de vídeo corrige la decisión."
+                )
+            else:
+                if decision.get("type") == "penalty_corner":
+                    stats = self.stats[int(decision["side"])]
+                    stats["pc"] = max(0, int(stats.get("pc", 0)) - 1)
+                elif decision.get("type") == "penalty_stroke":
+                    stats = self.stats[int(decision["side"])]
+                    stats["strokes"] = max(0, int(stats.get("strokes", 0)) - 1)
+                text = (
+                    f"Revisión de vídeo: el árbitro corrige la decisión y anula "
+                    f"{decision.get('label', 'la jugada')} a favor de {decision.get('team_name')}."
                 )
         else:
             self.referrals[side] = max(0, self.referrals.get(side, 0) - 1)
@@ -670,18 +691,10 @@ class MatchEngine:
         self.zone = "middle"
 
     # ---------- acciones de juego ----------
-    def _goal(self, side: int, scorer: PlayerState, assister: PlayerState | None, kind: str):
+    def _credit_goal(
+        self, side: int, scorer: PlayerState, assister: PlayerState | None, kind: str
+    ) -> None:
         t = self._team(side)
-        self._record_decision(
-            "goal",
-            side,
-            scorer,
-            goal=True,
-            scorer_id=scorer.id,
-            scorer_name=scorer.name,
-            assister_id=assister.id if assister else None,
-            goal_kind=kind,
-        )
         self.score[side] += 1
         self._inc_stat(side, "goals")
         self._inc_stat(side, "shots")
@@ -703,6 +716,113 @@ class MatchEngine:
         self._add_event("goal", side, scorer, text)
         self.possession = 1 - side
         self.zone = "middle"
+
+    def _goal(self, side: int, scorer: PlayerState, assister: PlayerState | None, kind: str):
+        self._record_decision(
+            "goal",
+            side,
+            scorer,
+            goal=True,
+            scorer_id=scorer.id,
+            scorer_name=scorer.name,
+            assister_id=assister.id if assister else None,
+            goal_kind=kind,
+        )
+        self._credit_goal(side, scorer, assister, kind)
+
+    def _goal_offence(self, side: int, scorer: PlayerState, kind: str) -> str | None:
+        """Infracción de ataque determinista que anula un gol.
+
+        No consume el RNG principal para no alterar la secuencia de partidos
+        existentes. El resultado depende del contexto y del número de tiros.
+        """
+        key = "|".join(
+            (
+                str(self.match_date),
+                self.home.id,
+                self.away.id,
+                str(self.quarter),
+                str(int(self.minute)),
+                str(side),
+                scorer.id,
+                kind,
+                str(int(self.stats[side].get("shots", 0))),
+            )
+        )
+        roll = (zlib.crc32(key.encode("utf-8")) % 10000) / 10000
+        if roll < 0.035:
+            return "foot"
+        if roll < 0.060:
+            return "back_stick"
+        return None
+
+    def _disallowed_goal(
+        self,
+        side: int,
+        scorer: PlayerState,
+        assister: PlayerState | None,
+        kind: str,
+        offence: str,
+    ) -> None:
+        t = self._team(side)
+        opp = 1 - side
+        self._inc_stat(side, "goals_disallowed")
+        if offence in rules.ATTACKING_GOAL_OFFENCES:
+            self._inc_stat(side, f"{offence}_goals_disallowed")
+        self._record_decision(
+            "goal_disallowed",
+            side,
+            scorer,
+            goal=False,
+            disallowed_goal=True,
+            disallowed_reason=offence,
+            scorer_id=scorer.id,
+            scorer_name=scorer.name,
+            assister_id=assister.id if assister else None,
+            goal_kind=kind,
+        )
+        reason = rules.ATTACKING_GOAL_OFFENCES.get(offence, offence)
+        self._add_event(
+            "goal_disallowed",
+            side,
+            scorer,
+            f"Gol anulado a {t.name}: {scorer.name} jugó la bola con el {reason}. "
+            f"Se concede golpe franco a {self._team(opp).name}.",
+        )
+        self.possession = opp
+        self.zone = "middle"
+
+    def _award_goal_from_decision(self, decision: dict[str, Any]) -> None:
+        side = int(decision["side"])
+        scorer_id = decision.get("scorer_id")
+        scorer = next(
+            (player for player in self._team(side).players if player.id == scorer_id), None
+        )
+        assister_id = decision.get("assister_id")
+        assister = None
+        if assister_id:
+            assister = next(
+                (player for player in self._team(side).players if player.id == assister_id),
+                None,
+            )
+        kind = str(decision.get("goal_kind") or "open")
+        self.score[side] += 1
+        self._inc_stat(side, "goals")
+        if kind == "pc":
+            self._inc_stat(side, "pc_goals")
+        if kind == "stroke":
+            self._inc_stat(side, "stroke_goals")
+        if scorer is not None:
+            self.player_stats[scorer.id]["goals"] += 1
+        if assister is not None and scorer is not None and assister.id != scorer.id:
+            self.player_stats[assister.id]["assists"] += 1
+        name = scorer.name if scorer is not None else decision.get("scorer_name") or self._team(side).name
+        self._add_event(
+            "goal",
+            side,
+            scorer,
+            f"Revisión de vídeo: gol concedido a {self._team(side).name}. {name} marca tras corregir el árbitro.",
+        )
 
     def _clear_advantage(self, side: int) -> None:
         if self.pending_advantage is not None and self.pending_advantage.get("side") == side:
@@ -738,7 +858,7 @@ class MatchEngine:
         if pending["moments_left"] <= 0:
             self.pending_advantage = None
 
-    def _shot(self, side: int, kind: str = "open"):
+    def _shot(self, side: int, kind: str = "open", offence: str | None = None):
         self._clear_advantage(side)
         t = self._team(side)
         opp = 1 - side
@@ -778,7 +898,12 @@ class MatchEngine:
         goal_chance = 0.31 + (attack - defense) / 250
         goal_chance = max(0.10, min(0.65, goal_chance))
         if self.rng.random() < goal_chance:
-            self._goal(side, scorer, assister, kind)
+            if offence is None:
+                offence = self._goal_offence(side, scorer, kind)
+            if offence in rules.ATTACKING_GOAL_OFFENCES:
+                self._disallowed_goal(side, scorer, assister, kind, offence)
+            else:
+                self._goal(side, scorer, assister, kind)
         else:
             self._inc_stat(opp, "saves")
             self.player_stats[gk.id]["saves"] += 1

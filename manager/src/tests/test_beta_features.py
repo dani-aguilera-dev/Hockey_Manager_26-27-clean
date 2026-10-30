@@ -440,7 +440,16 @@ def test_api_report_has_added_time_and_discipline_stats(client):
     assert set(report["added_time"]) >= {"1", "2", "3", "4"}
     assert "dissent" in report["home_stats"]
     assert "unsportsmanlike" in report["away_stats"]
-    for key in ("advantage_failed", "dangerous_sanction", "free_hit_10m", "pc_retake", "stroke_retake"):
+    for key in (
+        "advantage_failed",
+        "goals_disallowed",
+        "foot_goals_disallowed",
+        "back_stick_goals_disallowed",
+        "dangerous_sanction",
+        "free_hit_10m",
+        "pc_retake",
+        "stroke_retake",
+    ):
         assert key in report["home_stats"]
         assert key in report["away_stats"]
 
@@ -738,3 +747,33 @@ def test_api_vacancies_apply(client):
     assert result["vacancies"]["applications"]
     assert result["vacancies"]["applications"][-1]["club_id"] == vacancy["club_id"]
     assert result["state"]["team"]["name"]
+
+
+def test_api_live_disallowed_goal_review(client):
+    import web.app as web
+
+    _new_api(client, seed="65")
+    start = client.post("/api/match/live/start", json={"travel": "equilibrado"})
+    assert start.status_code == 200, start.get_data(as_text=True)
+    data = start.get_json()["data"]
+    user_side = data["user_side"]
+    with client.session_transaction() as sess:
+        game_id = sess["game_id"]
+    ctx = web.LIVE[game_id]
+    scorer = ctx.engine._lineup(user_side)[0]
+    ctx.engine.match_date = "2026-09-20"
+    ctx.engine._disallowed_goal(user_side, scorer, None, "open", "foot")
+
+    class _FixedRng:
+        def random(self):
+            return 0.0
+
+    ctx.engine.rng = _FixedRng()
+    review = client.post("/api/match/live/review", json={"decision": "goal_disallowed"})
+    assert review.status_code == 200, review.get_data(as_text=True)
+    payload = review.get_json()["data"]
+    assert payload["reviews"]
+    assert payload["reviews"][-1]["type"] == "goal_disallowed"
+    assert payload["reviews"][-1]["overturned"] is True
+    assert payload["score"][user_side] == 1
+    assert any(event["type"] == "goal_disallowed" for event in payload["events"])

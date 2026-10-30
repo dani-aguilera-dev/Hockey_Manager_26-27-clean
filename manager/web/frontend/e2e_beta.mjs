@@ -33,12 +33,16 @@ try {
   await page.getByText('Ventajas', { exact: true }).waitFor()
   await page.getByText('Ventajas fallidas').waitFor()
   await page.getByText('PC repetidos').waitFor()
+  await page.getByText('Goles anulados').waitFor()
+  await page.getByText('Anulados por pie').waitFor()
+  await page.getByText('Anulados por revés').waitFor()
   await page.getByText('Tiempo añadido').waitFor()
   result.refereeAndSetPieces = true
   result.refereeDiscretion = true
   result.refereeDiscipline = true
   result.refereeSubjective = true
   result.refereeAdvantage = true
+  result.goalDisallowed = true
 
   await page.goto('/app/game/analysis')
   await page.getByRole('heading', { name: 'Análisis de partido' }).waitFor()

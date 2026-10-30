@@ -128,9 +128,12 @@ export default function LiveMatch() {
   const homePossession = Number(homeStats.possession || 0)
   const awayPossession = Number(awayStats.possession || 0)
   const barHome = homePossession || 50
-  const decisionLabels: Record<string, string> = { goal: 'Gol', penalty_corner: 'Penalty corner', penalty_stroke: 'Penalty stroke' }
+  const decisionLabels: Record<string, string> = { goal: 'Gol', goal_disallowed: 'Gol anulado', penalty_corner: 'Penalty corner', penalty_stroke: 'Penalty stroke' }
   const referralsLeft = data.referrals?.[data.user_side] ?? 0
-  const reviewable = data.last_decision && !data.last_decision.reviewed && data.last_decision.side !== data.user_side
+  const reviewable = data.last_decision && !data.last_decision.reviewed && (
+    data.last_decision.side !== data.user_side
+    || (data.last_decision.type === 'goal_disallowed' && data.last_decision.side === data.user_side)
+  )
 
   return (
     <>
@@ -186,7 +189,7 @@ export default function LiveMatch() {
             {reviewable ? (
               <>
                 <p className="small muted mt-1">
-                  Última decisión revisable: <b>{decisionLabels[data.last_decision!.type] || data.last_decision!.type}</b> a favor de {data.last_decision!.team_name} ({data.last_decision!.minute}'). El capitán puede pedir revisión.
+                  Última decisión revisable: <b>{decisionLabels[data.last_decision!.type] || data.last_decision!.type}</b> ({data.last_decision!.team_name}, {data.last_decision!.minute}'). El capitán puede pedir revisión.
                 </p>
                 <Button size="sm" icon={MonitorCheck} onClick={requestReview} loading={busy === 'review'} disabled={!referralsLeft}>Solicitar revisión</Button>
               </>
