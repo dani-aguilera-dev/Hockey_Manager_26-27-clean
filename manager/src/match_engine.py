@@ -137,6 +137,7 @@ class MatchEngine:
         self.plan_side = plan_side
         self.applied_plans: set[str] = set()
         self.plan_effect_cache: dict[str, Any] = {"attack": 0.0, "defense": 0.0, "plans": []}
+        self.pending_advantage: dict[str, Any] | None = None
         self.live_bonus = {0: 0.0, 1: 0.0}
         self.talk_bonus = {0: 0.0, 1: 0.0}
         self.talk_done = {0: False, 1: False}
@@ -168,6 +169,7 @@ class MatchEngine:
             "goals": 0,
             "fouls": 0,
             "advantage": 0,
+            "advantage_failed": 0,
             "dangerous_play": 0,
             "dangerous_sanction": 0,
             "distance_5m": 0,
@@ -514,6 +516,7 @@ class MatchEngine:
 
     # ---------- set pieces ----------
     def _penalty_corner(self, side: int, retake: bool | None = None, retake_count: int = 0):
+        self._clear_advantage(side)
         t = self._team(side)
         spec = t.specialists(self._lineup(side))
         opp = 1 - side
@@ -617,6 +620,7 @@ class MatchEngine:
             self.zone = "middle"
 
     def _stroke(self, side: int, retake: bool | None = None, retake_count: int = 0):
+        self._clear_advantage(side)
         t = self._team(side)
         spec = t.specialists(self._lineup(side))
         opp = 1 - side
@@ -700,7 +704,42 @@ class MatchEngine:
         self.possession = 1 - side
         self.zone = "middle"
 
+    def _clear_advantage(self, side: int) -> None:
+        if self.pending_advantage is not None and self.pending_advantage.get("side") == side:
+            self.pending_advantage = None
+
+    def _resolve_advantage(self) -> None:
+        pending = self.pending_advantage
+        if pending is None:
+            return
+        side = int(pending["side"])
+        if self.possession != side:
+            self._inc_stat(side, "advantage_failed")
+            self._add_event(
+                "advantage_failed",
+                side,
+                None,
+                f"La ventaja no se materializa: el árbitro vuelve a la falta original a favor de {self._team(side).name}.",
+            )
+            self.pending_advantage = None
+            if pending.get("in_circle"):
+                self._penalty_corner(side)
+            else:
+                self.possession = side
+                self.zone = str(pending.get("zone", "middle"))
+                self._add_event(
+                    "free_hit",
+                    side,
+                    None,
+                    f"Se reanuda con golpe franco para {self._team(side).name}.",
+                )
+            return
+        pending["moments_left"] = int(pending.get("moments_left", 2)) - 1
+        if pending["moments_left"] <= 0:
+            self.pending_advantage = None
+
     def _shot(self, side: int, kind: str = "open"):
+        self._clear_advantage(side)
         t = self._team(side)
         opp = 1 - side
         lineup = self._lineup(side)
@@ -803,6 +842,14 @@ class MatchEngine:
                 None,
                 f"El árbitro deja jugar la ventaja a {self._team(opp).name} durante {rules.ADVANTAGE_SECONDS} segundos.",
             )
+            self.pending_advantage = {
+                "side": opp,
+                "offender_side": side,
+                "zone": self.zone,
+                "in_circle": in_circle,
+                "minute": int(self.minute),
+                "moments_left": 2,
+            }
             self.possession = opp
             return
         if in_circle:
@@ -1334,6 +1381,7 @@ class MatchEngine:
         start = len(self.events)
         m = self.moment_in_quarter
         self.minute = int((self.quarter - 1) * QUARTER_MINUTES + (m + 1) * (QUARTER_MINUTES / MOMENTS_PER_QUARTER))
+        self._resolve_advantage()
         base_home_pos = self._possession_base()
         ha, hd, aa, ad = self._attack_defense()
         # posesión

@@ -78,6 +78,7 @@ export default function ReportPage() {
         <div className="stack-sm mt-2">
           {[
             ['Ventajas', 'advantage'],
+            ['Ventajas fallidas', 'advantage_failed'],
             ['Juego peligroso', 'dangerous_play'],
             ['Juego peligroso sancionado', 'dangerous_sanction'],
             ['Distancia de 5 metros', 'distance_5m'],

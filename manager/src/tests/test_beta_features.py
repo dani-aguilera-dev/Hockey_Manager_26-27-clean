@@ -440,7 +440,7 @@ def test_api_report_has_added_time_and_discipline_stats(client):
     assert set(report["added_time"]) >= {"1", "2", "3", "4"}
     assert "dissent" in report["home_stats"]
     assert "unsportsmanlike" in report["away_stats"]
-    for key in ("dangerous_sanction", "free_hit_10m", "pc_retake", "stroke_retake"):
+    for key in ("advantage_failed", "dangerous_sanction", "free_hit_10m", "pc_retake", "stroke_retake"):
         assert key in report["home_stats"]
         assert key in report["away_stats"]
 
