@@ -106,8 +106,8 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Conexión con MatchEngine | El visor consume `LivePayload`: `score`, `quarter`, `minute`, `line`, `events`, formación y equipo atacante | `/api/match/live` y `/api/match/live/advance` | PASS |
 | Respuesta de materiales | Restitución de 0,62, fricción, deformación de la bola al impactar y flexión del stick | E2E `viewerMaterials.materialBounces=39`, `stickFlexes=48` | PASS |
 | Colisión stick-cuerpo | Segmento del stick contra puntos del cuerpo rival, empuje y flexión; escenario de contacto determinista | E2E `viewerMaterials.stickBodyCollisions=16` | PASS |
-| Biomecánica procedural | Equilibrio, inclinación del tronco, zancada, flexión de rodilla, contrapeso de brazos y límites articulares | E2E `viewerBiomechanics.biomechSolutions=2464` | PASS |
-| Tejido procedural | Paneles de camiseta con movimiento secundario ligado a velocidad, inclinación y fase del jugador | E2E `viewerBiomechanics.clothUpdates=1342` | PASS |
+| Biomecánica procedural | Equilibrio, inclinación del tronco, zancada, flexión de rodilla, contrapeso de brazos y límites articulares | E2E `viewerBiomechanics.biomechSolutions=2728` | PASS |
+| Tejido procedural | Paneles de camiseta con movimiento secundario ligado a velocidad, inclinación y fase del jugador | E2E `viewerBiomechanics.clothUpdates=1364` | PASS |
 | Mocap real integrado | Clip CMU subject 9 trial 1 (run) a 60 fps, retargetizado a piernas/cadera; licencia y atribución en `assets/mocap` | `test_mocap_clip_has_frames_and_metadata`, E2E `viewerMocap` | PASS |
 | Mocap específico de hockey / física AAA | El clip es una carrera genérica, no mocap de hockey; no hay tejido real, colisiones de tejido ni biomecánica de producción | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
 
@@ -145,7 +145,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2684,"clothUpdates":1342},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1342},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":59,"stickFlexes":68},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2684},"viewerPhysics":{"frames":61,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":36,"ballSpeed":1.75},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2728,"clothUpdates":1364},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1364},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":61,"stickFlexes":70},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":37,"ballSpeed":2.60},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"playerBrands":true}
 ```
 
 Flujo:
