@@ -6,6 +6,50 @@ import { useGame } from '../context/GameContext'
 import { useToast } from '../context/ToastContext'
 import { Badge, Button, Card, Field, LoadingBlock, PageHeader } from '../components/ui'
 
+const ATTRIBUTE_LABELS: Record<string, string> = {
+  aerial: 'Juego aéreo',
+  pc_injection: 'Saque de PC',
+  pc_trap: 'Control de PC',
+  pc_flick: 'Flick de PC',
+  pc_deflection: 'Desvío de PC',
+  pc_first_runner: 'Primer defensor de PC',
+  pc_gk_save: 'Parada de PC',
+  stroke_shot: 'Lanzamiento de stroke',
+  stroke_save: 'Parada de stroke',
+  free_hit: 'Golpe franco',
+  control: 'Control',
+  pase: 'Pase',
+  conduccion: 'Conducción',
+  golpeo: 'Golpeo',
+  flick: 'Flick',
+  regate_3d: 'Regate 3D',
+  definicion: 'Definición',
+  posicionamiento: 'Posicionamiento',
+  pressing: 'Pressing',
+  cobertura: 'Cobertura',
+  transicion: 'Transición',
+  desmarque: 'Desmarque',
+  velocidad: 'Velocidad',
+  resistencia: 'Resistencia',
+  fuerza: 'Fuerza',
+  agilidad: 'Agilidad',
+  coordinacion: 'Coordinación',
+  decisiones: 'Decisiones',
+  concentracion: 'Concentración',
+  competitividad: 'Competitividad',
+  liderazgo: 'Liderazgo',
+  reflejos: 'Reflejos',
+  blocaje: 'Blocaje',
+  distribucion: 'Distribución',
+  uno_vs_uno: 'Uno contra uno',
+  alto: 'Bola alta',
+  rebote_gk: 'Rebote',
+}
+
+function attrLabel(key: string) {
+  return ATTRIBUTE_LABELS[key] || key.replaceAll('_', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
+}
+
 export default function TrainingPage() {
   const { applyState } = useGame()
   const { toast } = useToast()
@@ -64,7 +108,7 @@ export default function TrainingPage() {
               <div className="stat-card"><span className="stat-top">MORAL</span><strong>{report.morale_before ?? '—'} → {report.morale_after ?? '—'}</strong></div>
               <div className="stat-card"><span className="stat-top">PREPARACIÓN</span><strong>+{report.prep_bonus ?? 0}</strong></div>
             </div>
-            {report.gains?.length ? <p className="small muted mt-2">Progresos: {report.gains.slice(0, 8).map((gain) => `${gain.player} ${gain.attr.replaceAll('_', ' ')} +1`).join(' · ')}</p> : null}
+            {report.gains?.length ? <p className="small muted mt-2">Progresos: {report.gains.slice(0, 8).map((gain) => `${gain.player} ${attrLabel(gain.attr)} +1`).join(' · ')}</p> : null}
             {report.injuries?.length ? <p className="small danger mt-1">Lesiones: {report.injuries.map((injury) => `${injury.player} (${injury.matches})`).join(', ')}</p> : null}
           </Card>
           <Card>
@@ -114,7 +158,7 @@ export default function TrainingPage() {
             <thead><tr><th>Sesión</th><th className="num">Fatiga</th><th>Efecto</th></tr></thead>
             <tbody>
               {data.session_order.map((key) => (
-                <tr key={key}><td>{data.sessions[key].label}</td><td className="num">{data.sessions[key].fatigue > 0 ? '+' : ''}{data.sessions[key].fatigue}%</td><td className="muted">{data.sessions[key].attrs.join(', ').replaceAll('_', ' ')}</td></tr>
+                <tr key={key}><td>{data.sessions[key].label}</td><td className="num">{data.sessions[key].fatigue > 0 ? '+' : ''}{data.sessions[key].fatigue}%</td><td className="muted">{data.sessions[key].attrs.map(attrLabel).join(', ')}</td></tr>
               ))}
             </tbody>
           </table>

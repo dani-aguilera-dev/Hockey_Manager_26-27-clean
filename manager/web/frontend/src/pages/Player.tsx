@@ -10,7 +10,7 @@ import { Avatar, Badge, Button, Card, Crest, Field, LoadingBlock, Modal, PageHea
 
 const attrGroups: Array<[string, string[]]> = [
   ['Técnica', ['control', 'pase', 'conduccion', 'golpeo', 'flick', 'regate_3d', 'definicion']],
-  ['Set pieces', ['aerial', 'pc_injection', 'pc_trap', 'pc_flick', 'pc_deflection', 'pc_first_runner', 'pc_gk_save', 'stroke_shot', 'stroke_save', 'free_hit']],
+  ['Balón parado', ['aerial', 'pc_injection', 'pc_trap', 'pc_flick', 'pc_deflection', 'pc_first_runner', 'pc_gk_save', 'stroke_shot', 'stroke_save', 'free_hit']],
   ['Táctica', ['posicionamiento', 'pressing', 'cobertura', 'transicion', 'desmarque']],
   ['Física', ['velocidad', 'resistencia', 'fuerza', 'agilidad', 'coordinacion']],
   ['Mental', ['decisiones', 'concentracion', 'competitividad', 'liderazgo']],

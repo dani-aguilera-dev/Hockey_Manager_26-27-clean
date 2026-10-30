@@ -16,7 +16,7 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Limpieza de plantillas | Invitados al mercado con equipo de procedencia; DHA/DHB con 18 fichas reales, sin `Invitado` y presupuesto salarial recalculado | PASS |
-| Pulido de UI y scouting | Mercado con carga y recuento real; calendario “Agosto de 2026”; tácticas sin lista duplicada; score del ojeador normalizado 60-100 | PASS |
+| Pulido de UI y scouting | Mercado con carga y recuento real; calendario “Agosto de 2026”; tácticas sin lista duplicada; entrenamiento con etiquetas en español; score del ojeador normalizado 60-100 | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
 | Backend | `python3 -m pytest src/tests -q` → **341 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
@@ -344,17 +344,17 @@
 
 ```text
 python3 -m pytest src/tests -q
-341 passed in 306.92s
+341 passed in 298.72s
 
 cd manager/web/frontend && npm run build
-✓ built in 4.10s
+✓ built in 3.48s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-BL367wBG.js → 200
+curl /static/react/assets/index-lWg4mnvP.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2948,"clothUpdates":1474},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1474},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":64,"stickFlexes":71},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2948},"viewerPhysics":{"frames":67,"playerCollisions":0,"bodyCollisions":57,"stickCollisions":40,"ballSpeed":1.58},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":3740,"clothUpdates":1870},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1870},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":76,"stickFlexes":84},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3740},"viewerPhysics":{"frames":85,"playerCollisions":0,"bodyCollisions":68,"stickCollisions":46,"ballSpeed":1.41},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
 ```
 
 ## Límites conscientes

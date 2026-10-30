@@ -54,7 +54,7 @@ SESSION_TYPES: dict[str, dict[str, Any]] = {
         "attrs": ["posicionamiento", "decisiones", "cobertura", "pressing"],
     },
     "set_pieces": {
-        "label": "Set pieces",
+        "label": "Balón parado",
         "short": "PC",
         "fatigue": 4.0,
         "injury": 0.0015,
