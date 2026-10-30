@@ -8,7 +8,7 @@ Se detectó la causa de las fichas femeninas que aparecían como jugadoras: iSqu
 
 Ahora:
 
-- `Jugador` e `Invitado` se cargan como jugadores.
+- `Jugador` e `Invitado` se cargan como jugadores y se conservan en sus equipos; no se eliminan de la plantilla.
 - `Entrenador`, `Delegado Equipo`, `Staff Adicional`, `Fisioterapeuta`, `Preparador Fisico`, `Medico` y `Psicologo` se excluyen de la plantilla.
 - Los perfiles vacíos de equipos B se mantienen como jugadores.
 - Las partidas antiguas se limpian con `_backfill_clean_players`.
@@ -78,7 +78,7 @@ La auditoría completa está en `46_AUDITORIA_CLUBES.md`.
 
 ## 7. Evidencia técnica
 
-- `python3 -m pytest src/tests -q` → **341 passed**.
+- `python3 -m pytest src/tests -q` → **338 passed**.
 - `npm run build` → SPA React compilada correctamente.
 - `src/tests/test_beta_features.py` cubre:
   - plantillas sin staff;

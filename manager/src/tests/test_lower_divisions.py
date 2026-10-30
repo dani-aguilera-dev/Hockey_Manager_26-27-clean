@@ -22,16 +22,12 @@ def test_league_average_order_and_promoted_teams_are_not_overrated():
     state = new_game("cd-terrassa", "Lower", seed=1002)
     dha = [p for t in state.teams.values() if t.league == "DHA" for p in t.players]
     dhb = [p for t in state.teams.values() if t.league == "DHB" for p in t.players]
-    lower_codes = {"1N", "1M", "1G", "1C", "1V", "SUP", "CAT1"}
-    lower = [p for p in state.free_agents if p.league in lower_codes]
-    assert lower
+    lower = [p for p in state.free_agents if p.league != "1A"]
     assert _mean(dha) > _mean(dhb) > _mean(lower)
     pozuelo = next(t for t in state.teams.values() if t.name == "Pozuelo")
     san_fernando = next(t for t in state.teams.values() if t.league == "DHB" and "San Fernando" in t.name)
-    # Tras separar invitados, la plantilla oficial puede quedar algo por
-    # encima de la media; se tolera un margen de 4 puntos, no un equipo roto.
-    assert _mean(pozuelo.players) <= _mean(dhb) + 4.0
-    assert _mean(san_fernando.players) <= _mean(dhb) + 4.0
+    assert _mean(pozuelo.players) <= _mean(dhb) + 2.0
+    assert _mean(san_fernando.players) <= _mean(dhb) + 2.0
 
 
 def test_dhb_history_team_has_higher_average_than_never_promoted_team():
