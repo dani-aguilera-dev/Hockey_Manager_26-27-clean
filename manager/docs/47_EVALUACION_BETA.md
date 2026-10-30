@@ -16,7 +16,7 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **259 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **265 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -37,8 +37,9 @@
 | Instalaciones del club | `/api/facilities`, `Facilities.tsx`: estado, aforo, cantera, médico, vídeo, ojeo y mejoras | PASS |
 | Cláusulas y primas | `/api/clauses`, `Clauses.tsx`: cláusula de rescisión, prima de renovación y protección | PASS |
 | Lista de seguimiento | `/api/shortlist`, `Shortlist.tsx`: búsqueda, prioridad, notas, valor, contrato y petición | PASS |
-| E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje, finanzas, análisis, prensa y marcas | PASS |
-| Persistencia | `GameState` serializa amistosos, marcas, media y equipación; `persistence` limpia staff de partidas antiguas | PASS |
+| Planes de partido | `/api/match-plans`, `MatchPlans.tsx`: situación, minuto, instrucciones y efecto en el motor | PASS |
+| E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje, finanzas, análisis, responsabilidades, desarrollo, premios, contratos, instalaciones, cláusulas, seguimiento, planes de partido, prensa y marcas | PASS |
+| Persistencia | `GameState` serializa amistosos, marcas, media, equipación, seguimiento y planes de partido; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
 
@@ -70,6 +71,7 @@
 24. `test_api_facilities_overview_and_upgrade`
 25. `test_api_clauses_update`
 26. `test_api_shortlist_add_update_remove`
+27. `test_api_match_plans_create_update_delete`
 
 `src/tests/test_referee_discretion.py`:
 
@@ -140,6 +142,14 @@
 - `test_add_update_and_remove_shortlist_entry`
 - `test_shortlist_validation_and_persistence`
 
+`src/tests/test_match_plans.py`:
+
+- `test_match_plans_overview_has_options_and_empty_state`
+- `test_create_update_delete_match_plan_and_persist`
+- `test_match_plan_validation_and_limit`
+- `test_engine_applies_plan_only_when_situation_and_minute_match`
+- `test_engine_ignores_disabled_plan_and_other_side`
+
 `src/tests/test_acceptance_beta.py` incluye además:
 
 - `test_video_review_overturns_goal_and_retains_referral`
@@ -202,17 +212,17 @@
 
 ```text
 python3 -m pytest src/tests -q
-259 passed in 375.59s
+265 passed in 383.87s
 
 cd manager/web/frontend && npm run build
-✓ built in 5.07s
+✓ built in 5.11s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-CbJfN8T6.js → 200
+curl /static/react/assets/index-iBoRWLKJ.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2772,"clothUpdates":1386},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":60,"stickFlexes":69},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2772},"viewerPhysics":{"frames":63,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":36,"ballSpeed":2.39},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2816,"clothUpdates":1408},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":59,"stickFlexes":68},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":53,"stickCollisions":37,"ballSpeed":2.25},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

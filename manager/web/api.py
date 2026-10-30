@@ -66,6 +66,12 @@ from src.shortlist import (
     update_shortlist_entry,
 )
 from src.clauses import clauses_overview, set_clause
+from src.match_plans import (
+    create_match_plan,
+    delete_match_plan,
+    match_plans_overview,
+    update_match_plan,
+)
 from src.facilities import facilities_overview, upgrade_facility
 from src.awards import awards_overview
 from src.responsibilities import responsibilities_overview, set_responsibility
@@ -1610,6 +1616,90 @@ def facilities_upgrade():
     _save(state)
     return _ok(
         {"result": result, "facilities": facilities_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.get("/match-plans")
+def match_plans():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(match_plans_overview(state))
+
+
+@api.post("/match-plans")
+def match_plans_create():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    instructions = payload.get("instructions", {})
+    if not isinstance(instructions, dict):
+        instructions = {}
+    try:
+        from_minute = int(payload.get("from_minute", 45) or 45)
+    except (TypeError, ValueError):
+        from_minute = 45
+    result = create_match_plan(
+        state,
+        str(payload.get("name", "")),
+        str(payload.get("situation", "leading") or "leading"),
+        from_minute,
+        instructions,
+        bool(payload.get("enabled", True)),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo crear el plan."), 409, "match_plan_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "match_plans": match_plans_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.post("/match-plans/<plan_id>")
+def match_plans_update(plan_id: str):
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    instructions = payload.get("instructions", {})
+    if not isinstance(instructions, dict):
+        instructions = {}
+    try:
+        from_minute = int(payload.get("from_minute", 45) or 45)
+    except (TypeError, ValueError):
+        from_minute = 45
+    result = update_match_plan(
+        state,
+        plan_id,
+        str(payload.get("name", "")),
+        str(payload.get("situation", "leading") or "leading"),
+        from_minute,
+        instructions,
+        bool(payload.get("enabled", True)),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo actualizar el plan."), 409, "match_plan_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "match_plans": match_plans_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.delete("/match-plans/<plan_id>")
+def match_plans_delete(plan_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = delete_match_plan(state, plan_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo eliminar el plan."), 409, "match_plan_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "match_plans": match_plans_overview(state), "state": _state_payload(state)},
         result.get("message", ""),
     )
 

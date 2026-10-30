@@ -568,3 +568,42 @@ def test_api_shortlist_add_update_remove(client):
     removed = client.delete(f"/api/shortlist/{candidate['id']}")
     assert removed.status_code == 200, removed.get_data(as_text=True)
     assert removed.get_json()["data"]["shortlist"]["entries"] == []
+
+
+def test_api_match_plans_create_update_delete(client):
+    _new_api(client, seed="57")
+    overview = client.get("/api/match-plans")
+    assert overview.status_code == 200, overview.get_data(as_text=True)
+    data = overview.get_json()["data"]
+    assert data["plans"] == []
+    assert data["fields"]
+    created = client.post(
+        "/api/match-plans",
+        json={
+            "name": "Cerrar el partido",
+            "situation": "leading",
+            "from_minute": 45,
+            "instructions": {"mentality": "defensiva", "press": "baja"},
+            "enabled": True,
+        },
+    )
+    assert created.status_code == 200, created.get_data(as_text=True)
+    payload = created.get_json()["data"]
+    plan = payload["match_plans"]["plans"][0]
+    assert plan["name"] == "Cerrar el partido"
+    assert plan["enabled"] is True
+    updated = client.post(
+        f"/api/match-plans/{plan['id']}",
+        json={
+            "name": plan["name"],
+            "situation": "leading",
+            "from_minute": 50,
+            "instructions": {"mentality": "muy_defensiva"},
+            "enabled": False,
+        },
+    )
+    assert updated.status_code == 200, updated.get_data(as_text=True)
+    assert updated.get_json()["data"]["match_plans"]["plans"][0]["enabled"] is False
+    deleted = client.delete(f"/api/match-plans/{plan['id']}")
+    assert deleted.status_code == 200, deleted.get_data(as_text=True)
+    assert deleted.get_json()["data"]["match_plans"]["plans"] == []

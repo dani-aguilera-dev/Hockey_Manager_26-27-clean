@@ -52,6 +52,7 @@ const primary = [
 const teamLinks = [
   { to: '/game/squad', label: 'Plantilla', icon: Users },
   { to: '/game/tactics', label: 'Táctica', icon: ClipboardList },
+  { to: '/game/match-plans', label: 'Planes de partido', icon: ClipboardList },
   { to: '/game/training', label: 'Entrenamiento', icon: Dumbbell },
   { to: '/game/development', label: 'Desarrollo', icon: TrendingUp },
   { to: '/game/medical', label: 'Enfermería', icon: HeartPulse },

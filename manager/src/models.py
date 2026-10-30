@@ -791,6 +791,7 @@ class GameState:
     loans: list[dict[str, Any]] = field(default_factory=list)
     loan_history: list[dict[str, Any]] = field(default_factory=list)
     opposition_instructions: dict[str, dict[str, str]] = field(default_factory=dict)
+    match_plans: list[dict[str, Any]] = field(default_factory=list)
     affiliates: list[dict[str, Any]] = field(default_factory=list)
     affiliate_history: list[dict[str, Any]] = field(default_factory=list)
     match_history: list[dict[str, Any]] = field(default_factory=list)
@@ -915,6 +916,7 @@ class GameState:
             "loans": self.loans,
             "loan_history": self.loan_history,
             "opposition_instructions": self.opposition_instructions,
+            "match_plans": self.match_plans,
             "affiliates": self.affiliates,
             "affiliate_history": self.affiliate_history,
             "match_history": self.match_history,
@@ -993,6 +995,7 @@ class GameState:
             loans=d.get("loans", []),
             loan_history=d.get("loan_history", []),
             opposition_instructions=d.get("opposition_instructions", {}),
+            match_plans=d.get("match_plans", []),
             affiliates=d.get("affiliates", []),
             affiliate_history=d.get("affiliate_history", []),
             match_history=d.get("match_history", []),

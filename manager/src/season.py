@@ -466,6 +466,8 @@ def _simulate_fixture(
         match_date=fixture.date,
         opposition=opposition,
         opposition_side=opposition_side,
+        match_plans=state.match_plans if user_side is not None else [],
+        plan_side=user_side,
     )
     result = engine.simulate()
     fixture.played = True
@@ -772,6 +774,8 @@ def prepare_live_round(
         match_date=user_fixture.date,
         opposition=opposition,
         opposition_side=ai_side,
+        match_plans=state.match_plans,
+        plan_side=user_side,
     )
     return LiveRoundContext(
         fixture=user_fixture,

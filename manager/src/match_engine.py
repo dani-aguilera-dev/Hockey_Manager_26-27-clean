@@ -11,7 +11,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 from . import rules
-from .models import SLOT_TO_SUB, PlayerState, TeamState
+from .models import SLOT_TO_SUB, TACTIC_MODS, PlayerState, TeamState
 
 HOME_ADVANTAGE_ATTACK = 4.0
 HOME_ADVANTAGE_DEFENSE = 2.0
@@ -72,6 +72,8 @@ class MatchEngine:
         match_date: str = "",
         opposition: dict[str, str] | None = None,
         opposition_side: int | None = None,
+        match_plans: list[dict[str, Any]] | None = None,
+        plan_side: int | None = None,
     ):
         self.home = home
         self.away = away
@@ -131,6 +133,10 @@ class MatchEngine:
         self.auto_talk_sides = set(auto_talk_sides) if auto_talk_sides is not None else set(self.ai_sides)
         self.opposition = dict(opposition or {})
         self.opposition_side = opposition_side
+        self.match_plans = list(match_plans or [])
+        self.plan_side = plan_side
+        self.applied_plans: set[str] = set()
+        self.plan_effect_cache: dict[str, Any] = {"attack": 0.0, "defense": 0.0, "plans": []}
         self.live_bonus = {0: 0.0, 1: 0.0}
         self.talk_bonus = {0: 0.0, 1: 0.0}
         self.talk_done = {0: False, 1: False}
@@ -241,6 +247,56 @@ class MatchEngine:
             count += 1
         return {"attack": round(attack, 2), "defense": round(defense, 2), "players": float(count)}
 
+    def match_plan_effect(self, side: int) -> dict[str, Any]:
+        """Delta táctico de los planes de partido activos para un equipo.
+
+        No modifica la táctica persistente: calcula la diferencia entre las
+        instrucciones del plan y la táctica base para ese momento del partido.
+        """
+        if self.plan_side != side or not self.match_plans:
+            return {"attack": 0.0, "defense": 0.0, "plans": []}
+        diff = self.score[side] - self.score[1 - side]
+        situation = "leading" if diff > 0 else ("trailing" if diff < 0 else "drawing")
+        labels = {"leading": "por delante", "drawing": "empatados", "trailing": "por detrás"}
+        tactics = self._team(side).tactics
+        attack = 0.0
+        defense = 0.0
+        active: list[str] = []
+        for plan in self.match_plans:
+            if not plan.get("enabled", True):
+                continue
+            if plan.get("situation") != situation:
+                continue
+            if self.minute < int(plan.get("from_minute", 45) or 0):
+                continue
+            instructions = plan.get("instructions") or {}
+            for field, value in instructions.items():
+                if field not in TACTIC_MODS or value not in TACTIC_MODS[field]:
+                    continue
+                old_value = getattr(tactics, field, "")
+                if old_value == value:
+                    continue
+                old_mod = TACTIC_MODS[field].get(old_value, (0.0, 0.0))
+                new_mod = TACTIC_MODS[field][value]
+                attack += new_mod[0] - old_mod[0]
+                defense += new_mod[1] - old_mod[1]
+            active.append(str(plan.get("id", "")))
+            if str(plan.get("id", "")) not in self.applied_plans:
+                self.applied_plans.add(str(plan.get("id", "")))
+                self._add_event(
+                    "match_plan",
+                    side,
+                    None,
+                    f"Plan «{plan.get('name', '')}» activado: {labels[situation]} desde el minuto {int(plan.get('from_minute', 45) or 0)}.",
+                )
+        result = {
+            "attack": round(max(-0.15, min(0.15, attack)), 3),
+            "defense": round(max(-0.15, min(0.15, defense)), 3),
+            "plans": active,
+        }
+        self.plan_effect_cache = result
+        return result
+
     def _attack_defense(self) -> tuple[float, float, float, float]:
         home_lineup = self._lineup(0)
         away_lineup = self._lineup(1)
@@ -275,6 +331,14 @@ class MatchEngine:
             effect = self.opposition_effect(1)
             aa -= effect["attack"]
             ad -= effect["defense"]
+        if self.plan_side == 0:
+            plan_effect = self.match_plan_effect(0)
+            ha += plan_effect["attack"]
+            hd += plan_effect["defense"]
+        elif self.plan_side == 1:
+            plan_effect = self.match_plan_effect(1)
+            aa += plan_effect["attack"]
+            ad += plan_effect["defense"]
         return max(25.0, ha), max(25.0, hd), max(25.0, aa), max(25.0, ad)
 
     def _add_event(
@@ -1505,6 +1569,11 @@ class MatchEngine:
                 "side": self.opposition_side,
                 "effect": self.opposition_effect(self.opposition_side) if self.opposition_side is not None else {"attack": 0.0, "defense": 0.0, "players": 0.0},
                 "instructions": self.opposition,
+            },
+            "match_plans": {
+                "side": self.plan_side,
+                "applied": sorted(self.applied_plans),
+                "effect": self.plan_effect_cache,
             },
             "referrals": [self.referrals.get(0, 0), self.referrals.get(1, 0)],
             "added_time": self.added_time,

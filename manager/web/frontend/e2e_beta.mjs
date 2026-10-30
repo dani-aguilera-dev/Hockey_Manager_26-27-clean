@@ -257,6 +257,17 @@ try {
   result.shortlist = true
   await page.screenshot({ path: '/tmp/opencode/e2e_shortlist.png', fullPage: true })
 
+  await page.goto('/app/game/match-plans')
+  await page.getByRole('heading', { name: 'Planes de partido' }).waitFor()
+  await page.getByTestId('match-plan-name').fill('Cerrar el partido')
+  await page.getByTestId('match-plan-create').click()
+  const matchPlanCard = page.locator('.match-plan-card').first()
+  await matchPlanCard.waitFor()
+  await matchPlanCard.locator('[data-testid^="match-plan-toggle-"]').click()
+  await page.locator('.match-plan-status').filter({ hasText: 'Desactivado' }).waitFor()
+  result.matchPlans = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_match_plans.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

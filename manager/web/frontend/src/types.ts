@@ -2151,3 +2151,35 @@ export interface ShortlistData {
   }
   priorities: Array<{ id: 'alta' | 'media' | 'baja'; label: string; order: number }>
 }
+
+export interface MatchPlan {
+  id: string
+  name: string
+  situation: 'leading' | 'drawing' | 'trailing'
+  situation_label: string
+  from_minute: number
+  enabled: boolean
+  instructions: Record<string, string>
+  instruction_labels: string[]
+  created: string
+}
+
+export interface MatchPlanField {
+  field: string
+  label: string
+  options: Array<{ value: string; label: string; attack: number; defense: number }>
+}
+
+export interface MatchPlansData {
+  plans: MatchPlan[]
+  summary: {
+    total: number
+    enabled: number
+    leading: number
+    drawing: number
+    trailing: number
+  }
+  situations: Array<{ id: 'leading' | 'drawing' | 'trailing'; label: string; description: string }>
+  fields: MatchPlanField[]
+  max_plans: number
+}
