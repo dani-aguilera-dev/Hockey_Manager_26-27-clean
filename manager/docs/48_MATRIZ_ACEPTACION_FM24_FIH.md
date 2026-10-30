@@ -39,6 +39,7 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Responsabilidades del staff | `src/responsibilities.py`, `/api/responsibilities`, `Responsibilities.tsx`: 10 áreas, responsable y bonus de entrenamiento/ojeo | `test_responsibility_assignment_and_bonus`, E2E `responsibilities` | PASS |
 | Desarrollo individual | `src/development.py`, `/api/development`, `Development.tsx`: foco, intensidad, progreso semanal, cantera y primer equipo | `test_development_plan_progresses_and_gains_attributes`, E2E `development` | PASS |
 | Premios y galardones | `src/awards.py`, `/api/awards`, `Awards.tsx`: MVP, goleador, joven, portero, defensa, once ideal, premios de partido e historial | `test_season_awards_and_best_xi`, E2E `awards` | PASS |
+| Centro de contratos | `src/contracts.py`, `/api/contracts`, `Contracts.tsx`: vencimientos, salarios, años restantes, masa salarial y renovaciones | `test_contracts_overview_has_summary_and_candidates`, E2E `contracts` | PASS |
 | Reunión de equipo | `src/team_meeting.py`, `/api/team-meeting`, `TeamMeeting.tsx`: tipo, tono, temas, dinámica y efectos | `test_team_meeting_applies_effects_and_history`, E2E `teamMeeting` | PASS |
 | Promesas de la reunión | Promesas de minutos o renovación persistentes en `PlayerState.promises` y comprobadas por `check_promises` | `test_team_meeting_creates_persistent_promise` | PASS |
 | Persistencia de reuniones | `TeamState.team_meetings` serializado con efectos, temas y promesas | `test_team_meeting_creates_persistent_promise` | PASS |
@@ -138,7 +139,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2684,"clothUpdates":1342},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":59,"stickFlexes":68},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2684},"viewerPhysics":{"frames":61,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":36,"ballSpeed":2.13},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2728,"clothUpdates":1364},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":59,"stickFlexes":68},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":52,"stickCollisions":37,"ballSpeed":2.35},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -162,8 +163,9 @@ Flujo:
 17. Abrir `/app/game/responsibilities`, asignar un responsable y comprobar el guardado.
 18. Abrir `/app/game/development`, asignar un plan individual y comprobar el guardado.
 19. Abrir `/app/game/awards`, revisar premios, once ideal e historial.
-20. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-21. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+20. Abrir `/app/game/contracts`, revisar vencimientos y masa salarial.
+21. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+22. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
 ## 9. Límites convertidos en criterios pass/fail
 
@@ -194,6 +196,7 @@ Flujo:
 | Responsabilidades del staff | PASS | `Responsibilities.tsx`, `/api/responsibilities`, áreas, responsables y bonus de entrenamiento/ojeo |
 | Desarrollo individual | PASS | `Development.tsx`, `/api/development`, foco, intensidad, progreso, cantera y primer equipo |
 | Premios y galardones | PASS | `Awards.tsx`, `/api/awards`, MVP, goleador, joven, portero, defensa, once ideal e historial |
+| Centro de contratos | PASS | `Contracts.tsx`, `/api/contracts`, vencimientos, salarios, años, masa salarial y renovaciones |
 | Cantera | PASS | `Youth.tsx`, `/api/youth*` |
 | Calendario, amistosos y vista mensual | PASS | `Calendar.tsx`, `/api/calendar`, `/api/friendlies*` |
 | Prensa previa y posterior | PASS | `Press.tsx`, `PostPress.tsx`, `/api/press*` |
@@ -216,4 +219,4 @@ La lista permite priorizar la siguiente iteración sin confundir “flujo cubier
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas (incluidas protestas, tiempo añadido y protesta en directo), de la respuesta de materiales/colisiones stick-cuerpo, de la biomecánica procedural/tejido estilizado del visor, del centro financiero, del análisis de partido, de las responsabilidades del staff, del desarrollo individual y de los premios. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: mocap/física textil real, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas (incluidas protestas, tiempo añadido y protesta en directo), de la respuesta de materiales/colisiones stick-cuerpo, de la biomecánica procedural/tejido estilizado del visor, del centro financiero, del análisis de partido, de las responsabilidades del staff, del desarrollo individual, de los premios y del centro de contratos. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: mocap/física textil real, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.

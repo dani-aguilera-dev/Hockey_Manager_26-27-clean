@@ -56,6 +56,7 @@ from src.loans import loan_overview, offer_loan_out, request_loan_in
 from src.datahub import datahub_overview, set_instructions
 from src.history import history_overview
 from src.analysis import analysis_overview
+from src.contracts import contracts_overview
 from src.awards import awards_overview
 from src.responsibilities import responsibilities_overview, set_responsibility
 from src.development import clear_development_plan, development_overview, set_development_plan
@@ -1547,6 +1548,14 @@ def analysis():
     if err:
         return err
     return _ok(analysis_overview(state, str(request.args.get("fixture_id", ""))))
+
+
+@api.get("/contracts")
+def contracts():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(contracts_overview(state))
 
 
 @api.get("/awards")

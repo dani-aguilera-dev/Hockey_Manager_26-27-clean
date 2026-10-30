@@ -224,6 +224,12 @@ try {
   result.awards = true
   await page.screenshot({ path: '/tmp/opencode/e2e_awards.png', fullPage: true })
 
+  await page.goto('/app/game/contracts')
+  await page.getByRole('heading', { name: 'Centro de contratos' }).waitFor()
+  await page.locator('.data-table tbody tr').first().waitFor()
+  result.contracts = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_contracts.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

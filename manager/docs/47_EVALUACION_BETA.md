@@ -16,7 +16,7 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **245 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **248 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -33,6 +33,7 @@
 | Responsabilidades del staff | `/api/responsibilities`, `Responsibilities.tsx`: áreas, responsables y bonus de entrenamiento/ojeo | PASS |
 | Desarrollo individual | `/api/development`, `Development.tsx`: foco, intensidad, progreso semanal y cantera | PASS |
 | Premios y galardones | `/api/awards`, `Awards.tsx`: MVP, goleador, joven, portero, defensa, once ideal e historial | PASS |
+| Centro de contratos | `/api/contracts`, `Contracts.tsx`: vencimientos, salarios, años, masa salarial y renovaciones | PASS |
 | E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje, finanzas, análisis, prensa y marcas | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media y equipación; `persistence` limpia staff de partidas antiguas | PASS |
 
@@ -62,6 +63,7 @@
 20. `test_api_responsibilities_assignment`
 21. `test_api_development_plan`
 22. `test_api_awards_overview`
+23. `test_api_contracts_overview`
 
 `src/tests/test_referee_discretion.py`:
 
@@ -109,6 +111,11 @@
 
 - `test_season_awards_and_best_xi`
 - `test_awards_overview_includes_last_match_and_history`
+
+`src/tests/test_contracts.py`:
+
+- `test_contracts_overview_has_summary_and_candidates`
+- `test_contracts_persist_contract_dates`
 
 `src/tests/test_acceptance_beta.py` incluye además:
 
@@ -172,17 +179,17 @@
 
 ```text
 python3 -m pytest src/tests -q
-245 passed in 358.51s
+248 passed in 363.54s
 
 cd manager/web/frontend && npm run build
-✓ built in 5.18s
+✓ built in 5.19s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-xNDtcD4V.js → 200
+curl /static/react/assets/index-jQzCZFS-.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2684,"clothUpdates":1342},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":59,"stickFlexes":68},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2684},"viewerPhysics":{"frames":61,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":36,"ballSpeed":2.13},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2728,"clothUpdates":1364},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":59,"stickFlexes":68},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":52,"stickCollisions":37,"ballSpeed":2.35},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"playerBrands":true}
 ```
 
 ## Límites conscientes

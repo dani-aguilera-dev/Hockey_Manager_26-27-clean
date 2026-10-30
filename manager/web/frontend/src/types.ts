@@ -2007,3 +2007,35 @@ export interface AwardsData {
   last_match: Award[]
   history: Array<{ season: string; competition: string; awards: SeasonAward[]; best_xi: SeasonAward[] }>
 }
+
+export interface ContractPlayer {
+  id: string
+  name: string
+  age: number
+  position: string
+  overall: number
+  salary: number
+  value: number
+  contract_until: string
+  years_remaining: number
+  status: string
+  loan: boolean
+}
+
+export interface ContractsData {
+  players: ContractPlayer[]
+  summary: {
+    players: number
+    wage_bill: number
+    average_salary: number
+    expiring: number
+    renewal: number
+    secure: number
+    loaned: number
+    budget: number
+    wage_budget: number
+    total_value: number
+  }
+  top_earners: ContractPlayer[]
+  renewal_candidates: ContractPlayer[]
+}

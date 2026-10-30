@@ -497,3 +497,13 @@ def test_api_awards_overview(client):
     assert data["awards"]
     assert len(data["best_xi"]) == 11
     assert data["last_match"]
+
+
+def test_api_contracts_overview(client):
+    _new_api(client, seed="53")
+    response = client.get("/api/contracts")
+    assert response.status_code == 200, response.get_data(as_text=True)
+    data = response.get_json()["data"]
+    assert data["players"]
+    assert data["summary"]["players"] == len(data["players"])
+    assert data["renewal_candidates"]

@@ -10,6 +10,7 @@ import {
   ClipboardList,
   Dumbbell,
   Flag,
+  FileSignature,
   FolderOpen,
   HeartPulse,
   History,
@@ -68,6 +69,7 @@ const competitionLinks = [
 
 const clubLinks = [
   { to: '/game/market', label: 'Mercado', icon: ArrowLeftRight },
+  { to: '/game/contracts', label: 'Contratos', icon: FileSignature },
   { to: '/game/scouting', label: 'Ojeo', icon: Compass },
   { to: '/game/loans', label: 'Cesiones', icon: Repeat },
   { to: '/game/commercial', label: 'Comercial y marca', icon: Building2 },
