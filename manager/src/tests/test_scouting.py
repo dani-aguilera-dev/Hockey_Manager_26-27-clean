@@ -26,3 +26,16 @@ def test_scout_focus_filters_are_applied():
     summary = scout_summary(state, focus="necesidad")
     assert summary["focus"] == "necesidad"
     assert summary["recommendations"]
+
+
+def test_scout_recommendations_have_relative_scores():
+    from src.season import new_game
+
+    state = new_game("cd-terrassa", "Scout Scores", seed=1301)
+    rows = recommendations(state, limit=16)
+    assert rows
+    scores = [row["score"] for row in rows]
+    assert all(0 <= score <= 100 for score in scores)
+    assert max(scores) == 100
+    if len(set(scores)) > 1:
+        assert min(scores) < 100

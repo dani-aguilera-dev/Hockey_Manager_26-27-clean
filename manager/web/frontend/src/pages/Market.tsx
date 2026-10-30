@@ -130,6 +130,7 @@ export default function MarketPage() {
   }
 
   if (!game) return null
+  if (loading && !data) return <LoadingBlock label="Cargando mercado global…" />
 
   const players = data?.players || []
   const freeAgents = data?.free_agents || []
@@ -139,7 +140,7 @@ export default function MarketPage() {
   const negotiations = (data?.negotiations || []).filter((item) => item.status === 'open')
   const pendingTransfers = data?.pending_transfers || []
 
-  const counts = { players: data?.total || 0, free: data?.free_agent_total || 0, staff: data?.staff_total || 0, sales: ownPlayers.length, offers: offers.length }
+  const counts = { players: players.length, free: data?.free_agent_total || 0, staff: data?.staff_total || 0, sales: ownPlayers.length, offers: offers.length }
   const tabItems = [
     { value: 'scout' as Tab, label: 'Ojeador' },
     { value: 'players' as Tab, label: 'Jugadores', count: counts.players },

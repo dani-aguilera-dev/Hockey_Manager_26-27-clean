@@ -89,6 +89,7 @@ export default function CalendarPage() {
   const cursor = monthCursor || data.today.slice(0, 7)
   const cursorDate = new Date(`${cursor}-01T00:00:00`)
   const monthLabel = cursorDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })
+  const monthTitle = monthLabel.charAt(0).toUpperCase() + monthLabel.slice(1)
   const firstWeekday = (cursorDate.getDay() + 6) % 7
   const daysInMonth = new Date(cursorDate.getFullYear(), cursorDate.getMonth() + 1, 0).getDate()
   const officialByDate = new Map<string, typeof data.fixtures>()
@@ -124,7 +125,7 @@ export default function CalendarPage() {
 
       <Card className="mt-2">
         <div className="inline" style={{ justifyContent: 'space-between' }}>
-          <div><div className="cat">VISTA MENSUAL</div><h3 style={{ margin: '3px 0 0', textTransform: 'capitalize' }}>{monthLabel}</h3></div>
+          <div><div className="cat">VISTA MENSUAL</div><h3 style={{ margin: '3px 0 0' }}>{monthTitle}</h3></div>
           <div className="inline"><Button size="sm" icon={ChevronLeft} onClick={() => moveMonth(-1)} aria-label="Mes anterior" /><Button size="sm" icon={ChevronRight} onClick={() => moveMonth(1)} aria-label="Mes siguiente" /></div>
         </div>
         <div className="month-grid mt-2">

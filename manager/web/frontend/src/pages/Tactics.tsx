@@ -235,17 +235,6 @@ export default function TacticsPage() {
             </div>
             <Pitch rows={displayRows} formation={tactics.formation} selectable activeSlot={pickerSlot} onSlotClick={(index) => { setPickerQuery(''); setPickerSlot(index) }} />
           </Card>
-          <Card>
-            <div className="inline" style={{ justifyContent: 'space-between' }}><h3 style={{ margin: 0 }}>Disponibles</h3><Badge tone="neutral">{data.available.filter((player) => !selected.includes(player.id)).length}</Badge></div>
-            <div className="player-grid mt-1">
-              {data.available.filter((player) => !selected.includes(player.id)).slice(0, 12).map((player) => (
-                <div className="player-card" key={player.id}>
-                  <Avatar player={player} size={36} />
-                  <div className="player-card-body"><span className="player-card-name">{player.name}</span><span className="player-card-sub">{player.subposition} · {player.overall.toFixed(1)}</span></div>
-                </div>
-              ))}
-            </div>
-          </Card>
         </div>
       </div>
 

@@ -16,8 +16,9 @@
 | Firma de marcas | `/api/brands`, ofertas, prima, anualidad, bonus de equipación aplicado al motor | PASS |
 | Editor de jugadores | `/api/player/<id>/edit`, modal en `Player.tsx`, edición de posición, overall, potencial y atributos | PASS |
 | Limpieza de plantillas | Invitados al mercado con equipo de procedencia; DHA/DHB con 18 fichas reales, sin `Invitado` y presupuesto salarial recalculado | PASS |
+| Pulido de UI y scouting | Mercado con carga y recuento real; calendario “Agosto de 2026”; tácticas sin lista duplicada; score del ojeador normalizado 60-100 | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **340 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **341 passed** | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/gol anulado/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -53,7 +54,7 @@
 | Perfil y carrera del mánager | `/api/manager`, `ManagerProfile.tsx`: récord, palmarés, hitos, temporadas y situación actual | PASS |
 | Mocap CMU | Clip de carrera CMU subject 9 trial 1, 74 frames a 60 fps, licencia y atribución en `assets/mocap`; aplicado a piernas/cadera | PASS |
 | Comparación de jugadores | `/api/compare`, `Compare.tsx`: atributos, estadísticas, contrato, diferencias y resumen | PASS |
-| E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido/mocap CMU, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje subjetivo, ventaja con retorno, gol anulado por pie/revés/mano, gol solo desde el círculo, plantillas limpias, finanzas, análisis, responsabilidades, desarrollo, premios, contratos, instalaciones, cláusulas, seguimiento, planes de partido, perfil del mánager, comparación, pruebas, trabajo y seguridad, cambio entre ligas e internacional, vacantes, cambios de entrenador, despido del usuario, prensa y marcas | PASS |
+| E2E Playwright | calendario, amistosos, visor 3D con biomecánica/tejido/mocap CMU, revisión de vídeo, junta, cesiones, data hub, afiliados, mentoring, historial, ojeo, reunión, arbitraje subjetivo, ventaja con retorno, gol anulado por pie/revés/mano, gol solo desde el círculo, plantillas limpias, pulido de mercado/calendario/tácticas, finanzas, análisis, responsabilidades, desarrollo, premios, contratos, instalaciones, cláusulas, seguimiento, planes de partido, perfil del mánager, comparación, pruebas, trabajo y seguridad, cambio entre ligas e internacional, vacantes, cambios de entrenador, despido del usuario, prensa y marcas | PASS |
 | Persistencia | `GameState` serializa amistosos, marcas, media, equipación, seguimiento y planes de partido; `persistence` limpia staff de partidas antiguas | PASS |
 
 ## Pruebas específicas
@@ -320,6 +321,11 @@
 - `test_history_filters_and_records`
 - `test_history_archive_is_idempotent_and_persists`
 
+`src/tests/test_scouting.py`:
+
+- `test_scout_recommendations_respect_budget_quality_and_needs`
+- `test_scout_recommendations_have_relative_scores`
+
 `src/tests/test_scouting_assignments.py`:
 
 - `test_scouting_overview_has_assignment_options`
@@ -338,17 +344,17 @@
 
 ```text
 python3 -m pytest src/tests -q
-340 passed in 318.79s
+341 passed in 306.92s
 
 cd manager/web/frontend && npm run build
-✓ built in 3.43s
+✓ built in 4.10s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-CKAJMu1_.js → 200
+curl /static/react/assets/index-BL367wBG.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":3476,"clothUpdates":1738},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1738},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":75,"stickFlexes":82},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3476},"viewerPhysics":{"frames":79,"playerCollisions":0,"bodyCollisions":64,"stickCollisions":44,"ballSpeed":1.51},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":3080,"clothUpdates":1540},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1540},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":69,"stickFlexes":76},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3080},"viewerPhysics":{"frames":70,"playerCollisions":0,"bodyCollisions":59,"stickCollisions":42,"ballSpeed":2.90},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
 ```
 
 ## Límites conscientes

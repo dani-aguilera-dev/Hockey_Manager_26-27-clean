@@ -148,7 +148,9 @@ def _fit_score(
     # La confianza del ojeador introduce una lectura algo imperfecta.
     noise = (zlib.crc32(player.id.encode("utf-8")) % 100) / 100 - 0.5
     score += noise * 2.5
-    return max(0, min(100, round(score, 1))), reasons[:4]
+    # No se recorta a 100 aquí: la recomendación final se normaliza por
+    # ranking para que varios jugadores buenos no empaten todos en 100.
+    return max(0, round(score, 1)), reasons[:4]
 
 
 def recommendations(
@@ -197,7 +199,17 @@ def recommendations(
             }
         )
     rows.sort(key=lambda row: row["score"], reverse=True)
-    return rows[:limit]
+    rows = rows[:limit]
+    # El score bruto satura cuando hay varios jugadores por encima del nivel
+    # del once. Se normaliza dentro de la terna recomendada para que el
+    # ojeador distinga al mejor del resto (100 = mejor, 60 = último).
+    if len(rows) > 1:
+        high = max(row["score"] for row in rows)
+        low = min(row["score"] for row in rows)
+        if high > low:
+            for row in rows:
+                row["score"] = round(60 + 40 * (row["score"] - low) / (high - low), 1)
+    return rows
 
 
 def scout_summary(state: GameState, focus: str = "equilibrado", max_age: int | None = None, position: str | None = None) -> dict[str, Any]:
