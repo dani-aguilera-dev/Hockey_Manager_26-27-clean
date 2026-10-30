@@ -57,6 +57,7 @@ from src.datahub import datahub_overview, set_instructions
 from src.history import history_overview
 from src.analysis import analysis_overview
 from src.contracts import contracts_overview
+from src.facilities import facilities_overview, upgrade_facility
 from src.awards import awards_overview
 from src.responsibilities import responsibilities_overview, set_responsibility
 from src.development import clear_development_plan, development_overview, set_development_plan
@@ -1548,6 +1549,30 @@ def analysis():
     if err:
         return err
     return _ok(analysis_overview(state, str(request.args.get("fixture_id", ""))))
+
+
+@api.get("/facilities")
+def facilities():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(facilities_overview(state))
+
+
+@api.post("/facilities/upgrade")
+def facilities_upgrade():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = upgrade_facility(state, str(payload.get("request_id", "")))
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo solicitar la mejora."), 409, "facility_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "facilities": facilities_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
 
 
 @api.get("/contracts")

@@ -230,6 +230,13 @@ try {
   result.contracts = true
   await page.screenshot({ path: '/tmp/opencode/e2e_contracts.png', fullPage: true })
 
+  await page.goto('/app/game/facilities')
+  await page.getByRole('heading', { name: 'Instalaciones del club' }).waitFor()
+  await page.locator('[data-testid^="facility-upgrade-"]:not([disabled])').first().click()
+  await page.locator('.facility-saved').waitFor()
+  result.facilities = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_facilities.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

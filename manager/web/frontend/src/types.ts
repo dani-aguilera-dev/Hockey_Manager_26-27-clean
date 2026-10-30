@@ -2039,3 +2039,34 @@ export interface ContractsData {
   top_earners: ContractPlayer[]
   renewal_candidates: ContractPlayer[]
 }
+
+export interface FacilityItem {
+  id: string
+  label: string
+  description: string
+  value: number
+  level: string
+}
+
+export interface FacilityUpgrade {
+  id: string
+  label: string
+  description: string
+  cost: number
+  approval_chance: number
+  available: boolean
+  effect_text: string
+  facility?: string
+  delta?: number
+  capacity?: number
+  confidence?: number
+}
+
+export interface FacilitiesData {
+  facilities: FacilityItem[]
+  stadium: { name: string; capacity: number }
+  academy_rating: number
+  summary: { average: number; lowest: number; highest: number; capacity: number; upgrades: number }
+  upgrades: FacilityUpgrade[]
+  history: Array<{ date: string; request_id: string; label: string; cost: number; approved: boolean; message: string }>
+}

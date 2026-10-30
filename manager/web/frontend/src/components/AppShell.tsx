@@ -77,6 +77,7 @@ const clubLinks = [
   { to: '/game/staff', label: 'Staff', icon: Users },
   { to: '/game/responsibilities', label: 'Responsabilidades', icon: ClipboardList },
   { to: '/game/board', label: 'Junta y visión', icon: Landmark },
+  { to: '/game/facilities', label: 'Instalaciones', icon: Building2 },
   { to: '/game/youth', label: 'Cantera', icon: Shield },
   { to: '/game/affiliates', label: 'Afiliados y mentoring', icon: Network },
   { to: '/game/history', label: 'Historial', icon: History },

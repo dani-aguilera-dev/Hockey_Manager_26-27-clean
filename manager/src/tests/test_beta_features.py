@@ -507,3 +507,18 @@ def test_api_contracts_overview(client):
     assert data["players"]
     assert data["summary"]["players"] == len(data["players"])
     assert data["renewal_candidates"]
+
+
+def test_api_facilities_overview_and_upgrade(client):
+    _new_api(client, seed="54")
+    response = client.get("/api/facilities")
+    assert response.status_code == 200, response.get_data(as_text=True)
+    data = response.get_json()["data"]
+    assert data["facilities"]
+    assert data["upgrades"]
+    request_id = data["upgrades"][0]["id"]
+    upgrade = client.post("/api/facilities/upgrade", json={"request_id": request_id})
+    assert upgrade.status_code == 200, upgrade.get_data(as_text=True)
+    payload = upgrade.get_json()["data"]
+    assert payload["facilities"]["history"]
+    assert payload["state"]["team"]["name"]
