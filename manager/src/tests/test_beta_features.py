@@ -670,3 +670,23 @@ def test_api_jobs_generate_accept_and_reject(client):
     assert payload["jobs"]["club"]["name"] == offers[0]["club_name"]
     assert payload["jobs"]["contract"]["club_id"] == offers[0]["club_id"]
     assert payload["jobs"]["history"]
+
+
+def test_api_trials_invite_and_end(client):
+    _new_api(client, seed="61")
+    data = client.get("/api/trials")
+    assert data.status_code == 200, data.get_data(as_text=True)
+    payload = data.get_json()["data"]
+    assert payload["candidates"]
+    candidate = payload["candidates"][0]
+    invited = client.post("/api/trials", json={"player_id": candidate["id"], "days": 14})
+    assert invited.status_code == 200, invited.get_data(as_text=True)
+    invited_payload = invited.get_json()["data"]
+    assert invited_payload["trials"]["active"]
+    trial_id = invited_payload["trials"]["active"][0]["trial_id"]
+    ended = client.post(f"/api/trials/{trial_id}/end")
+    assert ended.status_code == 200, ended.get_data(as_text=True)
+    ended_payload = ended.get_json()["data"]
+    assert ended_payload["trials"]["active"] == []
+    assert ended_payload["trials"]["history"]
+    assert ended_payload["trials"]["history"][0]["report"]["summary"]

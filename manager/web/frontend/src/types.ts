@@ -2386,3 +2386,57 @@ export interface JobsData {
   history: JobHistoryEntry[]
   eligible_clubs: number
 }
+
+export interface TrialCandidate {
+  id: string
+  name: string
+  age: number
+  position: string
+  position_group: string
+  overall: number
+  potential: number
+  value: number
+  salary: number
+  origin_team: string
+  attributes: Record<string, number>
+}
+
+export interface ActiveTrial extends TrialCandidate {
+  trial_id: string
+  start: string
+  end: string
+  progress: number
+  status: string
+  days_left: number
+}
+
+export interface TrialReport {
+  score: number
+  recommendation: 'fichar' | 'seguir' | 'descartar'
+  recommendation_label: string
+  fit: number
+  growth: number
+  strengths: string[]
+  weaknesses: string[]
+  summary: string
+}
+
+export interface TrialHistoryEntry {
+  id: string
+  player_id: string
+  player_name: string
+  start: string
+  end: string
+  status: string
+  progress: number
+  days: number
+  completed?: string
+  report: TrialReport
+}
+
+export interface TrialsData {
+  active: ActiveTrial[]
+  candidates: TrialCandidate[]
+  history: TrialHistoryEntry[]
+  summary: { active: number; completed: number; candidates: number; max_active: number }
+}

@@ -7,6 +7,7 @@ import {
   Building2,
   CalendarDays,
   ChevronRight,
+  ClipboardCheck,
   Compass,
   ClipboardList,
   Dumbbell,
@@ -75,6 +76,7 @@ const competitionLinks = [
 const clubLinks = [
   { to: '/game/market', label: 'Mercado', icon: ArrowLeftRight },
   { to: '/game/shortlist', label: 'Seguimiento', icon: Star },
+  { to: '/game/trials', label: 'Pruebas', icon: ClipboardCheck },
   { to: '/game/compare', label: 'Comparar jugadores', icon: ArrowLeftRight },
   { to: '/game/contracts', label: 'Contratos', icon: FileSignature },
   { to: '/game/clauses', label: 'Cláusulas', icon: Lock },

@@ -293,6 +293,18 @@ try {
   result.compare = true
   await page.screenshot({ path: '/tmp/opencode/e2e_compare.png', fullPage: true })
 
+  await page.goto('/app/game/trials')
+  await page.getByRole('heading', { name: 'Período de prueba' }).waitFor()
+  const trialInvite = page.locator('[data-testid^="trial-invite-"]').first()
+  await trialInvite.waitFor()
+  await trialInvite.click()
+  const trialRow = page.locator('.trial-row').first()
+  await trialRow.waitFor()
+  await trialRow.locator('[data-testid^="trial-end-"]').click()
+  await page.locator('.trial-report').first().waitFor()
+  result.trials = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_trials.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

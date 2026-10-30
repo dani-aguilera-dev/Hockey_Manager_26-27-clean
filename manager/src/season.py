@@ -36,6 +36,7 @@ from .match_engine import MatchEngine, MatchResult
 from .models import Fixture, GameState, PlayerState, TeamState
 from .scouting import advance_scouting
 from .training import apply_training_plan, auto_plan
+from .trials import advance_trials
 from .youth import develop_youth, generate_youth, initial_youth, intake
 
 # Fase Nacional de ascenso a DHB (RFEH, Circular nº1 2026-27, apartado 1.3).
@@ -554,6 +555,7 @@ def _reset_week_training(state: GameState) -> None:
     advance_mentoring(state)
     advance_scouting(state)
     advance_development(state)
+    advance_trials(state)
 
 
 def _user_result_payload(state: GameState, fixture: Fixture, result: MatchResult, travel: dict | None) -> dict:
