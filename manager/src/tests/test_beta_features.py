@@ -216,16 +216,18 @@ def test_api_calendar_brands_editor_and_press(client):
 
 
 def test_api_video_review_flow(client):
-    _new_api(client, seed="38")
+    _new_api(client, seed="1")
     start = client.post("/api/match/live/start", json={"travel": "equilibrado"})
     assert start.status_code == 200, start.get_data(as_text=True)
     data = start.get_json()["data"]
     assert data["referrals"] == [1, 1]
-    for _ in range(4):
+    for _ in range(64):
         decision = data.get("last_decision")
         if decision and decision["side"] != data["user_side"]:
             break
-        advance = client.post("/api/match/live/advance", json={"mode": "quarter"})
+        if data["snapshot"]["finished"]:
+            break
+        advance = client.post("/api/match/live/advance", json={"mode": "moment"})
         assert advance.status_code == 200, advance.get_data(as_text=True)
         data = advance.get_json()["data"]
     decision = data.get("last_decision")
@@ -438,6 +440,9 @@ def test_api_report_has_added_time_and_discipline_stats(client):
     assert set(report["added_time"]) >= {"1", "2", "3", "4"}
     assert "dissent" in report["home_stats"]
     assert "unsportsmanlike" in report["away_stats"]
+    for key in ("dangerous_sanction", "free_hit_10m", "pc_retake", "stroke_retake"):
+        assert key in report["home_stats"]
+        assert key in report["away_stats"]
 
 
 def test_api_live_protest_once_per_match(client):

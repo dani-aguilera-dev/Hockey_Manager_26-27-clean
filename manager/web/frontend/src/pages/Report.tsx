@@ -79,14 +79,18 @@ export default function ReportPage() {
           {[
             ['Ventajas', 'advantage'],
             ['Juego peligroso', 'dangerous_play'],
+            ['Juego peligroso sancionado', 'dangerous_sanction'],
             ['Distancia de 5 metros', 'distance_5m'],
+            ['Golpe franco +10 m', 'free_hit_10m'],
             ['PC denegados', 'pc_denied'],
+            ['PC repetidos', 'pc_retake'],
             ['Strokes concedidos', 'stroke_awarded'],
+            ['Strokes repetidos', 'stroke_retake'],
           ].map(([label, key]) => (
             <div className="stat-line" key={key}><b>{report.home_stats[key] || 0}</b><span>{label}</span><b className="num">{report.away_stats[key] || 0}</b></div>
           ))}
         </div>
-        <p className="small muted mt-2">El árbitro puede dejar jugar la ventaja, señalar juego peligroso, marcar cinco metros o denegar un penalty corner.</p>
+        <p className="small muted mt-2">El árbitro puede dejar jugar la ventaja, graduar el juego peligroso, adelantar 10 metros un golpe franco o repetir un PC/stroke por invasión.</p>
       </Card>
 
       <Card className="mt-2">

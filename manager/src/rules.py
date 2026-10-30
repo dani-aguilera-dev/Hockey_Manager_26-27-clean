@@ -49,6 +49,12 @@ UNSPORTSMANLIKE_TYPES: dict[str, dict[str, object]] = {
     "misconduct": {"label": "conducta antideportiva", "card": True},
 }
 MAX_ADDED_TIME_MINUTES = 5
+FREE_HIT_ADVANCE_METERS = 10
+DANGEROUS_PLAY_LEVELS: dict[str, dict[str, object]] = {
+    "careless": {"label": "imprudencia", "card_chance": 0.0},
+    "reckless": {"label": "juego temerario", "card_chance": 0.55},
+    "dangerous": {"label": "juego peligroso grave", "card_chance": 1.0},
+}
 
 FOUL_TYPES: dict[str, dict[str, object]] = {
     "stick": {"label": "golpe de stick", "dangerous": True, "weight": 0.30},

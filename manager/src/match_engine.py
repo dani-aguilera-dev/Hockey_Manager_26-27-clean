@@ -169,9 +169,13 @@ class MatchEngine:
             "fouls": 0,
             "advantage": 0,
             "dangerous_play": 0,
+            "dangerous_sanction": 0,
             "distance_5m": 0,
+            "free_hit_10m": 0,
             "pc_denied": 0,
+            "pc_retake": 0,
             "stroke_awarded": 0,
+            "stroke_retake": 0,
             "dissent": 0,
             "unsportsmanlike": 0,
         }
@@ -509,7 +513,7 @@ class MatchEngine:
         }
 
     # ---------- set pieces ----------
-    def _penalty_corner(self, side: int):
+    def _penalty_corner(self, side: int, retake: bool | None = None, retake_count: int = 0):
         t = self._team(side)
         spec = t.specialists(self._lineup(side))
         opp = 1 - side
@@ -522,6 +526,18 @@ class MatchEngine:
         deflector = spec.get("pc_deflector")
         rebounder = spec.get("pc_rebounder") or deflector
         first_runner = opp_spec.get("pc_first_runner")
+        if retake is None:
+            strictness = int(self.referee.get("strictness", 55))
+            retake = retake_count == 0 and (strictness + int(self.minute) * 3 + side * 11) % 97 < 5
+        if retake and retake_count == 0:
+            self._inc_stat(side, "pc_retake")
+            self._add_event(
+                "pc_retake",
+                side,
+                inj,
+                "El árbitro ordena repetir el penalty corner por invasión del área.",
+            )
+            return self._penalty_corner(side, retake=False, retake_count=1)
         self._inc_stat(side, "pc")
         self._record_decision("penalty_corner", side, inj)
         self._add_event("pc", side, inj, f"Penalty corner para {t.name}. {inj.name} coloca la bola en la marca.")
@@ -600,13 +616,25 @@ class MatchEngine:
             self.possession = opp
             self.zone = "middle"
 
-    def _stroke(self, side: int):
+    def _stroke(self, side: int, retake: bool | None = None, retake_count: int = 0):
         t = self._team(side)
         spec = t.specialists(self._lineup(side))
         opp = 1 - side
         opp_spec = self._team(opp).specialists(self._lineup(opp))
         gk = opp_spec.get("stroke_goalkeeper") or self._gk(opp)
         taker = spec.get("stroke_taker")
+        if retake is None:
+            strictness = int(self.referee.get("strictness", 55))
+            retake = retake_count == 0 and (strictness + int(self.minute) * 5 + side * 7) % 101 < 4
+        if retake and retake_count == 0:
+            self._inc_stat(side, "stroke_retake")
+            self._add_event(
+                "stroke_retake",
+                side,
+                taker,
+                "El árbitro ordena repetir el penalty stroke por invasión del portero.",
+            )
+            return self._stroke(side, retake=False, retake_count=1)
         self._inc_stat(side, "strokes")
         self._record_decision("penalty_stroke", side, taker)
         self._add_event("stroke", side, taker, f"Penalty stroke para {t.name}. {taker.name} toma la bola.")
@@ -726,6 +754,9 @@ class MatchEngine:
         advantage: bool | None = None,
         pc_decision: str | None = None,
         distance_call: bool | None = None,
+        dangerous_severity: str | None = None,
+        dangerous_card: bool | None = None,
+        advance_10m: bool | None = None,
     ):
         # side = equipo que comete la falta
         t = self._team(side)
@@ -742,15 +773,26 @@ class MatchEngine:
         self._inc_stat(side, "fouls")
         self._add_event("foul", side, offender, f"Falta de {offender.name} ({t.name}): {profile['label']}.")
         if dangerous:
+            severity = dangerous_severity
+            if severity not in rules.DANGEROUS_PLAY_LEVELS:
+                roll = self.rng.random()
+                if foul_type == "stick":
+                    severity = "dangerous" if roll < 0.25 else ("reckless" if roll < 0.80 else "careless")
+                else:
+                    severity = "dangerous" if roll < 0.20 else ("reckless" if roll < 0.75 else "careless")
+            level = rules.DANGEROUS_PLAY_LEVELS[severity]
             self._inc_stat(side, "dangerous_play")
             self._add_event(
                 "dangerous_play",
                 side,
                 offender,
-                f"Juego peligroso de {offender.name}: el árbitro detiene la jugada y valora la tarjeta.",
+                f"Juego peligroso de {offender.name}: {level['label']}.",
             )
-            if self.rng.random() < 0.45:
+            if dangerous_card is None:
+                dangerous_card = self.rng.random() < float(level["card_chance"])
+            if dangerous_card:
                 self._card(side)
+                self._inc_stat(side, "dangerous_sanction")
         if advantage is None:
             advantage = not dangerous and not in_circle and in_attack and self.rng.random() < 0.25
         if advantage:
@@ -809,6 +851,18 @@ class MatchEngine:
                 opp,
                 None,
                 f"El árbitro obliga a retroceder {rules.FREE_HIT_DISTANCE_METERS} metros a la defensa.",
+            )
+        if advance_10m is None:
+            advance_10m = bool(distance_call) and (
+                float(self.referee.get("strictness", 55)) >= 60 or int(self.minute) % 9 == 0
+            )
+        if advance_10m:
+            self._inc_stat(opp, "free_hit_10m")
+            self._add_event(
+                "free_hit_10m",
+                opp,
+                None,
+                f"El árbitro adelanta el golpe franco {rules.FREE_HIT_ADVANCE_METERS} metros por protestas de la defensa.",
             )
             self.zone = "attacking_23" if self.rng.random() < 0.35 else "middle"
         self.possession = opp

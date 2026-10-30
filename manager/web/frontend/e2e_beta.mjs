@@ -10,7 +10,7 @@ const page = await context.newPage()
 const result = {}
 try {
   const created = await context.request.post('/api/new-game', {
-    data: { club_id: 'cd-terrassa', manager: 'E2E Beta', seed: '20261029' },
+    data: { club_id: 'cd-terrassa', manager: 'E2E Beta', seed: '1' },
   })
   if (!created.ok()) throw new Error(`new-game HTTP ${created.status()}: ${await created.text()}`)
   result.newGame = (await created.json()).ok
@@ -31,10 +31,12 @@ try {
   await page.getByText('Strokes', { exact: true }).waitFor()
   await page.getByText('Decisiones arbitrales').waitFor()
   await page.getByText('Ventajas').waitFor()
+  await page.getByText('PC repetidos').waitFor()
   await page.getByText('Tiempo añadido').waitFor()
   result.refereeAndSetPieces = true
   result.refereeDiscretion = true
   result.refereeDiscipline = true
+  result.refereeSubjective = true
 
   await page.goto('/app/game/analysis')
   await page.getByRole('heading', { name: 'Análisis de partido' }).waitFor()
@@ -113,10 +115,11 @@ try {
   await page.screenshot({ path: '/tmp/opencode/e2e_3d.png' })
 
   let liveData = (await (await context.request.get('/api/match/live')).json()).data
-  for (let attempt = 0; attempt < 4; attempt += 1) {
+  for (let attempt = 0; attempt < 64; attempt += 1) {
     const decision = liveData.last_decision
     if (decision && !decision.reviewed && decision.side !== liveData.user_side) break
-    const advanced = await context.request.post('/api/match/live/advance', { data: { mode: 'quarter' } })
+    if (liveData.snapshot?.finished) break
+    const advanced = await context.request.post('/api/match/live/advance', { data: { mode: 'moment' } })
     if (!advanced.ok()) throw new Error(`live advance HTTP ${advanced.status()}: ${await advanced.text()}`)
     liveData = (await advanced.json()).data
   }
