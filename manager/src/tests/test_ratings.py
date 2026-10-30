@@ -26,7 +26,9 @@ def test_loaded_players_have_their_league_and_stars_change_on_promotion():
     assert after >= before
     state = new_game("cd-terrassa", "Test", seed=900)
     assert all(p.league == "DHA" for p in state.user_team.players)
-    assert all(p.league in {"1A", "1N", "1M", "1G", "1C", "1V", "SUP", "CAT1"} for p in state.free_agents)
+    lower_free = [p for p in state.free_agents if p.league not in {"DHA", "DHB"}]
+    assert lower_free
+    assert all(p.league in {"1A", "1N", "1M", "1G", "1C", "1V", "SUP", "CAT1"} for p in lower_free)
 
 
 def test_spanish_league_ladder_has_clear_boundaries():

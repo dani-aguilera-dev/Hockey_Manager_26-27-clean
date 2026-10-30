@@ -160,7 +160,7 @@ export default function NewGame() {
 
         <div className="newgame-heading">
           <div>
-            <div className="eyebrow">Nueva partida · Paso 2 de 3</div>
+            <div className="eyebrow">Nueva partida · Configuración de carrera</div>
             <h1>Elige país, división y club.</h1>
             <p>Filtra por país, entra en la división y escoge tu próximo proyecto.</p>
           </div>

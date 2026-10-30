@@ -14,7 +14,6 @@ from .calendar import create_dha_fixtures, create_fixtures, dha_table, league_ta
 from .competitions import (
     COMPETITIONS,
     DEFAULT_REGIONAL_LEAGUE,
-    MARKET_SOURCE_SYSTEMS,
     MIN_MATCHDAY_SQUAD,
     MIN_ROSTER_SIZE,
     PROMOTION_FINAL_START,
@@ -160,13 +159,11 @@ def _seed_free_agents(state: GameState) -> None:
 
     No se toca la ficha de ningún jugador oficial: cada club conserva todos
     sus ``Jugador``. Los ``Invitado`` pasan al mercado y solo se reincorporan
-    si un club no llega al mínimo de alineación. El cuerpo técnico no se mezcla
+    si un club no llega al mínimo de plantilla. El cuerpo técnico no se mezcla
     con los futbolistas. No hay equipos protegidos a mano.
     """
     pool: list[PlayerState] = []
     for team in sorted(state.teams.values(), key=lambda item: item.id):
-        if competition(team.league).system not in MARKET_SOURCE_SYSTEMS:
-            continue
         players = [player for player in team.players if player.perfil == "Jugador"]
         guests = [player for player in team.players if player.perfil == "Invitado"]
         team.players = players
@@ -176,23 +173,36 @@ def _seed_free_agents(state: GameState) -> None:
             player.league = team.league
             player.salary = max(player.salary, int(max(5000, (player.overall - 40) * 1100)))
             pool.append(player)
-    # Regla general: ningún club empieza por debajo del mínimo de alineación.
+    # Regla general: ningún club empieza por debajo del mínimo de plantilla.
     # Se completa con el mercado real, priorizando la misma liga y el nivel
     # más bajo disponible para no inflar plantillas ya completas.
     for team in state.teams.values():
-        if len(team.players) >= MIN_MATCHDAY_SQUAD:
+        if team.league in ("DHA", "DHB"):
+            target = MIN_ROSTER_SIZE
+        elif len(team.players) < MIN_MATCHDAY_SQUAD:
+            target = MIN_MATCHDAY_SQUAD
+        else:
             continue
-        candidates = [player for player in pool if player.league == team.league]
-        candidates += [player for player in pool if player.league != team.league]
-        candidates.sort(key=lambda player: (player.overall, player.age, player.name))
-        while len(team.players) < MIN_MATCHDAY_SQUAD and candidates:
+        same_league = sorted(
+            [player for player in pool if player.league == team.league],
+            key=lambda player: (player.overall, player.age, player.name),
+        )
+        other_leagues = sorted(
+            [player for player in pool if player.league != team.league],
+            key=lambda player: (player.overall, player.age, player.name),
+        )
+        candidates = same_league + (other_leagues if team.league in ("DHA", "DHB") else [])
+        while len(team.players) < target and candidates:
             player = candidates.pop(0)
             if player not in pool:
                 continue
             pool.remove(player)
             player.team_name = team.name
             player.league = team.league
+            player.perfil = "Jugador"
             team.players.append(player)
+    for team in state.teams.values():
+        team.wage_budget = sum(player.salary for player in team.players)
     state.free_agents = pool
 
 def _clamp(v, lo, hi):
