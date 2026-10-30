@@ -74,9 +74,17 @@ try {
   if (!(viewerState.ikSolutions > 100)) throw new Error(`viewer ik ${viewerState.ikSolutions}`)
   if (!(viewerState.biomechSolutions > 0)) throw new Error(`viewer biomechanics ${viewerState.biomechSolutions}`)
   if (!(viewerState.clothUpdates > 0)) throw new Error(`viewer cloth ${viewerState.clothUpdates}`)
+  if (viewerState.mocapSource !== 'CMU-09-01') throw new Error(`viewer mocap source ${viewerState.mocapSource}`)
+  if (!(viewerState.mocapFrames > 10)) throw new Error(`viewer mocap frames ${viewerState.mocapFrames}`)
+  if (!(viewerState.mocapApplied > 0)) throw new Error(`viewer mocap applied ${viewerState.mocapApplied}`)
   result.viewerBiomechanics = {
     biomechSolutions: viewerState.biomechSolutions,
     clothUpdates: viewerState.clothUpdates,
+  }
+  result.viewerMocap = {
+    source: viewerState.mocapSource,
+    frames: viewerState.mocapFrames,
+    applied: viewerState.mocapApplied,
   }
   await page.evaluate(() => window.__matchViewer3D.forceContact())
   await page.waitForTimeout(400)

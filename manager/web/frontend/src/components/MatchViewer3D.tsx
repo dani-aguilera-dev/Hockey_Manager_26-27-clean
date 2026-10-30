@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import type { LivePayload } from '../types'
+import runMocap from '../../../../assets/mocap/cmu_09_01_run.json'
 
 type Vec2 = [number, number]
 type PlayerEntity = {
@@ -36,6 +37,13 @@ const FORMATIONS: Record<string, Vec2[]> = {
 }
 const fallbackPositions = FORMATIONS['4-3-3']
 const Y_AXIS = new THREE.Vector3(0, 1, 0)
+const MOCAP_FRAMES = runMocap.frames
+const MOCAP_FPS = runMocap.playback_fps || 60
+
+function sampleMocap(elapsed: number, phase: number) {
+  const index = Math.floor((elapsed * MOCAP_FPS + phase * 9) % MOCAP_FRAMES.length)
+  return MOCAP_FRAMES[Math.max(0, Math.min(MOCAP_FRAMES.length - 1, index))]
+}
 
 function mirror(position: Vec2): Vec2 {
   return [-position[0], position[1]]
@@ -204,7 +212,7 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
   const playersRef = useRef<PlayerEntity[]>([])
   const ballRef = useRef<THREE.Mesh | null>(null)
   const cameraModeRef = useRef<'broadcast' | 'tactical'>('broadcast')
-  const debugRef = useRef({ frames: 0, playerCollisions: 0, bodyCollisions: 0, stickCollisions: 0, stickBodyCollisions: 0, materialBounces: 0, stickFlexes: 0, biomechSolutions: 0, clothUpdates: 0, goals: 0, ballSpeed: 0, ikSolutions: 0, players: 0, sticks: 0, bones: 0, lastEvent: '' })
+  const debugRef = useRef({ frames: 0, playerCollisions: 0, bodyCollisions: 0, stickCollisions: 0, stickBodyCollisions: 0, materialBounces: 0, stickFlexes: 0, biomechSolutions: 0, clothUpdates: 0, mocapFrames: MOCAP_FRAMES.length, mocapApplied: 0, mocapSource: 'CMU-09-01', goals: 0, ballSpeed: 0, ikSolutions: 0, players: 0, sticks: 0, bones: 0, lastEvent: '' })
   const lastEventRef = useRef('')
 
   useEffect(() => {
@@ -388,19 +396,22 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
           player.velocity.set(0, 0, 0)
         }
         const speed = player.velocity.length()
-        const swing = Math.max(-0.85, Math.min(0.85, Math.sin(elapsed * 8 + player.phase) * Math.min(0.75, speed * 0.16)))
-        player.leftLeg.rotation.x = swing
-        player.rightLeg.rotation.x = -swing
-        player.leftShin.rotation.x = Math.max(0, -swing) * 0.9
-        player.rightShin.rotation.x = Math.max(0, swing) * 0.9
-        const lean = Math.min(0.20, speed * 0.022)
+        const mocap = sampleMocap(elapsed, player.phase)
+        const thighScale = 0.85
+        const kneeScale = 0.9
+        player.leftLeg.rotation.x = THREE.MathUtils.degToRad(mocap.lf) * thighScale
+        player.rightLeg.rotation.x = THREE.MathUtils.degToRad(mocap.rf) * thighScale
+        player.leftShin.rotation.x = Math.min(1.6, Math.max(0, THREE.MathUtils.degToRad(mocap.lt)) * kneeScale)
+        player.rightShin.rotation.x = Math.min(1.6, Math.max(0, THREE.MathUtils.degToRad(mocap.rt)) * kneeScale)
+        const lean = Math.min(0.20, speed * 0.022) + THREE.MathUtils.degToRad(mocap.lb[0]) * 0.12
         player.hips.rotation.x = -lean
-        player.hips.rotation.z = Math.sin(elapsed * 8 + player.phase) * 0.025
+        player.hips.rotation.z = THREE.MathUtils.degToRad(mocap.lb[2]) * 0.4 + Math.sin(elapsed * 8 + player.phase) * 0.01
         player.torso.rotation.x = -lean * 0.35
         player.jersey.rotation.x = -lean * 0.55 + Math.sin(elapsed * 4.2 + player.phase) * 0.035
         player.jersey.rotation.z = Math.sin(elapsed * 3.1 + player.phase) * 0.045
         debugRef.current.biomechSolutions += 2
         debugRef.current.clothUpdates += 1
+        debugRef.current.mocapApplied += 1
         const gripLeft = new THREE.Vector3(-0.18, 1.4, 0.82)
         const gripRight = new THREE.Vector3(0.62, 1.0, 1.2)
         solveArm(player.leftArm, player.leftForearm, new THREE.Vector3(-0.72, 2.02, 0), gripLeft)
@@ -524,6 +535,7 @@ export default function MatchViewer3D({ data }: { data: LivePayload }) {
         <button type="button" className="match-viewer-camera" onClick={() => { cameraModeRef.current = cameraModeRef.current === 'broadcast' ? 'tactical' : 'broadcast' }}>Cámara táctica</button>
       </div>
       <div className="match-viewer-badge">3D · MatchEngine</div>
+      <div className="match-viewer-credit">Mocap: CMU Graphics Lab Motion Capture Database</div>
     </div>
   )
 }

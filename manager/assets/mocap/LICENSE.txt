@@ -1,0 +1,16 @@
+CMU Graphics Lab Motion Capture Database
+http://mocap.cs.cmu.edu/
+
+The motion capture data may be copied, modified, or redistributed without
+permission.
+
+Source: http://mocap.cs.cmu.edu/faqs.php
+Accessed: 2026-10-30
+
+Motion data courtesy of Carnegie Mellon University Graphics Lab Motion Capture
+Database.
+
+Files in this directory:
+- source/09.asf
+- source/09_01.amc
+- cmu_09_01_run.json (derived at 60 fps for the Hockey Manager viewer)

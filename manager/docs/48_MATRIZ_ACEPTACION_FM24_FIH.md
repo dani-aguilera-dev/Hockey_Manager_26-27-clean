@@ -107,8 +107,9 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Respuesta de materiales | Restitución de 0,62, fricción, deformación de la bola al impactar y flexión del stick | E2E `viewerMaterials.materialBounces=39`, `stickFlexes=48` | PASS |
 | Colisión stick-cuerpo | Segmento del stick contra puntos del cuerpo rival, empuje y flexión; escenario de contacto determinista | E2E `viewerMaterials.stickBodyCollisions=16` | PASS |
 | Biomecánica procedural | Equilibrio, inclinación del tronco, zancada, flexión de rodilla, contrapeso de brazos y límites articulares | E2E `viewerBiomechanics.biomechSolutions=2464` | PASS |
-| Tejido procedural | Paneles de camiseta con movimiento secundario ligado a velocidad, inclinación y fase del jugador | E2E `viewerBiomechanics.clothUpdates=1232` | PASS |
-| Física 3D AAA / mocap real | No hay captura de movimiento, simulación textil real, colisiones de tejido ni biomecánica de producción | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
+| Tejido procedural | Paneles de camiseta con movimiento secundario ligado a velocidad, inclinación y fase del jugador | E2E `viewerBiomechanics.clothUpdates=1342` | PASS |
+| Mocap real integrado | Clip CMU subject 9 trial 1 (run) a 60 fps, retargetizado a piernas/cadera; licencia y atribución en `assets/mocap` | `test_mocap_clip_has_frames_and_metadata`, E2E `viewerMocap` | PASS |
+| Mocap específico de hockey / física AAA | El clip es una carrera genérica, no mocap de hockey; no hay tejido real, colisiones de tejido ni biomecánica de producción | Matriz lo declara fuera de alcance | FAIL / fuera de alcance |
 
 ## 7. Reglas FIH avanzadas y arbitraje
 
@@ -144,7 +145,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2728,"clothUpdates":1364},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":62,"stickFlexes":71},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":52,"stickCollisions":39,"ballSpeed":1.50},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2684,"clothUpdates":1342},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1342},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":59,"stickFlexes":68},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2684},"viewerPhysics":{"frames":61,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":36,"ballSpeed":1.75},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -154,7 +155,7 @@ Flujo:
 3. Navegar al mes siguiente.
 4. Simular un partido rápido.
 5. Abrir el parte y comprobar árbitro y estadísticas de PC/strokes.
-6. Abrir `/app/game/live`, comprobar el canvas, el esqueleto, los sticks, el IK y las colisiones de cuerpo/stick.
+6. Abrir `/app/game/live`, comprobar el canvas, el esqueleto, los sticks, el IK, las colisiones de cuerpo/stick y el mocap CMU.
 7. Avanzar hasta una decisión contra el usuario y solicitar la revisión de vídeo desde la pantalla en directo.
 8. Abrir `/app/game/board`, comprobar la visión de club y presentar una petición de mejora de entrenamiento.
 9. Abrir `/app/game/loans`, comprobar las cesiones entrantes y solicitar una cesión.
@@ -181,7 +182,7 @@ Flujo:
 
 | Límite anterior | Criterio verificable | Estado |
 | --- | --- | --- |
-| “No hay motor 3D” | Simulación 3D con campo, 22 jugadores con esqueleto, IK, biomecánica procedural, tejido estilizado, sticks, materiales, colisiones de cuerpo/stick-cuerpo y UI | PASS simulación 3D / FAIL física AAA y mocap |
+| “No hay motor 3D” | Simulación 3D con campo, 22 jugadores con esqueleto, IK, biomecánica procedural, mocap CMU, tejido estilizado, sticks, materiales, colisiones de cuerpo/stick-cuerpo y UI | PASS simulación 3D y mocap genérico / FAIL física AAA y mocap específico de hockey |
 | “FIH no cubre cada interpretación” | PC, stroke, shootout, tarjetas, sustituciones, árbitro, revisión de vídeo, ventaja, juego peligroso, 5 metros, decisión de PC, protestas, conducta antideportiva y tiempo añadido tienen pruebas explícitas; el resto de interpretaciones subjetivas no se reclama | PASS para reglas implementadas / FAIL para arbitraje discrecional completo |
 | “No replica todas las pantallas de FM24” | La matriz enumera los flujos cubiertos; la paridad total de pantallas no se declara | FAIL / fuera de alcance |
 | “Prensa textual” | Prensa previa y posterior con medios, efectos e historial | PASS |
@@ -234,4 +235,4 @@ La lista permite priorizar la siguiente iteración sin confundir “flujo cubier
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas (incluidas protestas, tiempo añadido y protesta en directo), de la respuesta de materiales/colisiones stick-cuerpo, de la biomecánica procedural/tejido estilizado del visor, del centro financiero, del análisis de partido, de las responsabilidades del staff, del desarrollo individual, de los premios, del centro de contratos, de las instalaciones del club, de las cláusulas/primas, de la lista de seguimiento, de los planes de partido condicionales y del perfil/carrera del mánager. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: mocap/física textil real, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas (incluidas protestas, tiempo añadido y protesta en directo), de la respuesta de materiales/colisiones stick-cuerpo, de la biomecánica procedural/tejido estilizado del visor, del mocap real CMU integrado, del centro financiero, del análisis de partido, de las responsabilidades del staff, del desarrollo individual, de los premios, del centro de contratos, de las instalaciones del club, de las cláusulas/primas, de la lista de seguimiento, de los planes de partido condicionales y del perfil/carrera del mánager. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: mocap/física textil real, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.
