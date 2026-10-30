@@ -57,6 +57,14 @@ from src.datahub import datahub_overview, set_instructions
 from src.history import history_overview
 from src.analysis import analysis_overview
 from src.contracts import contracts_overview
+from src.shortlist import (
+    add_to_shortlist,
+    is_shortlisted,
+    remove_from_shortlist,
+    shortlist_candidates,
+    shortlist_overview,
+    update_shortlist_entry,
+)
 from src.clauses import clauses_overview, set_clause
 from src.facilities import facilities_overview, upgrade_facility
 from src.awards import awards_overview
@@ -1062,6 +1070,7 @@ def player_detail(player_id):
         "is_user": owner is not None and owner.id == state.club_id,
         "editor": editor_payload(player),
         "market": None,
+        "shortlisted": is_shortlisted(state, player.id),
     }
     if owner is None or owner.id != state.club_id:
         data["market"] = {
@@ -1601,6 +1610,83 @@ def facilities_upgrade():
     _save(state)
     return _ok(
         {"result": result, "facilities": facilities_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.get("/shortlist")
+def shortlist():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(shortlist_overview(state))
+
+
+@api.get("/shortlist/candidates")
+def shortlist_candidates_api():
+    state, err = _state()
+    if err:
+        return err
+    try:
+        limit = max(1, min(40, int(request.args.get("limit", 12))))
+    except (TypeError, ValueError):
+        limit = 12
+    return _ok({"candidates": shortlist_candidates(state, str(request.args.get("q", "")), limit)})
+
+
+@api.post("/shortlist")
+def shortlist_add():
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = add_to_shortlist(
+        state,
+        str(payload.get("player_id", "")),
+        str(payload.get("priority", "media") or "media"),
+        str(payload.get("note", "")),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo añadir al seguimiento."), 409, "shortlist_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "shortlist": shortlist_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.post("/shortlist/<player_id>")
+def shortlist_update(player_id: str):
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    result = update_shortlist_entry(
+        state,
+        player_id,
+        str(payload.get("priority", "media") or "media"),
+        str(payload.get("note", "")),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo actualizar el seguimiento."), 409, "shortlist_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "shortlist": shortlist_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
+
+
+@api.delete("/shortlist/<player_id>")
+def shortlist_remove(player_id: str):
+    state, err = _state()
+    if err:
+        return err
+    result = remove_from_shortlist(state, player_id)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo retirar del seguimiento."), 409, "shortlist_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "shortlist": shortlist_overview(state), "state": _state_payload(state)},
         result.get("message", ""),
     )
 

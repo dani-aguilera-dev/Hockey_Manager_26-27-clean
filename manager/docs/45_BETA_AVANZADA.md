@@ -78,7 +78,7 @@ La auditoría completa está en `46_AUDITORIA_CLUBES.md`.
 
 ## 7. Evidencia técnica
 
-- `python3 -m pytest src/tests -q` → **255 passed**.
+- `python3 -m pytest src/tests -q` → **259 passed**.
 - `npm run build` → SPA React compilada correctamente.
 - `src/tests/test_beta_features.py` cubre:
   - plantillas sin staff;

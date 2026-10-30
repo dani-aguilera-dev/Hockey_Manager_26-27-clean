@@ -538,3 +538,33 @@ def test_api_clauses_update(client):
     result = response.get_json()["data"]
     assert result["clauses"]["summary"]["protected"] == 1
     assert result["state"]["team"]["name"]
+
+
+def test_api_shortlist_add_update_remove(client):
+    _new_api(client, seed="56")
+    overview = client.get("/api/shortlist")
+    assert overview.status_code == 200, overview.get_data(as_text=True)
+    assert overview.get_json()["data"]["entries"] == []
+    candidates = client.get("/api/shortlist/candidates")
+    assert candidates.status_code == 200, candidates.get_data(as_text=True)
+    candidate = candidates.get_json()["data"]["candidates"][0]
+    added = client.post(
+        "/api/shortlist",
+        json={"player_id": candidate["id"], "priority": "alta", "note": "Objetivo prioritario"},
+    )
+    assert added.status_code == 200, added.get_data(as_text=True)
+    payload = added.get_json()["data"]
+    assert payload["shortlist"]["summary"]["total"] == 1
+    assert payload["shortlist"]["entries"][0]["priority"] == "alta"
+    detail = client.get(f"/api/player/{candidate['id']}")
+    assert detail.status_code == 200, detail.get_data(as_text=True)
+    assert detail.get_json()["data"]["shortlisted"] is True
+    updated = client.post(
+        f"/api/shortlist/{candidate['id']}",
+        json={"priority": "baja", "note": "Esperar"},
+    )
+    assert updated.status_code == 200, updated.get_data(as_text=True)
+    assert updated.get_json()["data"]["shortlist"]["entries"][0]["note"] == "Esperar"
+    removed = client.delete(f"/api/shortlist/{candidate['id']}")
+    assert removed.status_code == 200, removed.get_data(as_text=True)
+    assert removed.get_json()["data"]["shortlist"]["entries"] == []

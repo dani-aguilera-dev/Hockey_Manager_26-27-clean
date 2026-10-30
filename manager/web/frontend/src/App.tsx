@@ -23,6 +23,7 @@ import AwardsPage from './pages/Awards'
 import ContractsPage from './pages/Contracts'
 import FacilitiesPage from './pages/Facilities'
 import ClausesPage from './pages/Clauses'
+import ShortlistPage from './pages/Shortlist'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -97,6 +98,7 @@ export default function App() {
         <Route path="contracts" element={<ContractsPage />} />
         <Route path="facilities" element={<FacilitiesPage />} />
         <Route path="clauses" element={<ClausesPage />} />
+        <Route path="shortlist" element={<ShortlistPage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />

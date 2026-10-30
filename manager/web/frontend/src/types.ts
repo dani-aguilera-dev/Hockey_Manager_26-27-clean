@@ -1197,6 +1197,7 @@ export interface PlayerDetailPayload {
     window_text: string
     minimum_salary: number
   }
+  shortlisted?: boolean
 }
 
 export interface FriendlyItem {
@@ -2097,4 +2098,56 @@ export interface ClausesData {
     total_bonus: number
     budget: number
   }
+}
+
+export interface ShortlistEntry {
+  id: string
+  name: string
+  age: number
+  position: string
+  position_group: string
+  overall: number
+  potential: number
+  value: number
+  salary: number
+  contract_until: string
+  team_id: string | null
+  team_name: string
+  league: string
+  league_name: string
+  transfer_listed: boolean
+  asking: number
+  available: boolean
+  loan: boolean
+  priority: 'alta' | 'media' | 'baja'
+  priority_label: string
+  note: string
+  added: string
+}
+
+export interface ShortlistCandidate {
+  id: string
+  name: string
+  age: number
+  position: string
+  overall: number
+  potential: number
+  value: number
+  team_name: string
+  league_name: string
+  asking: number
+}
+
+export interface ShortlistData {
+  entries: ShortlistEntry[]
+  summary: {
+    total: number
+    high: number
+    medium: number
+    low: number
+    total_value: number
+    expiring: number
+    available: number
+  }
+  priorities: Array<{ id: 'alta' | 'media' | 'baja'; label: string; order: number }>
 }

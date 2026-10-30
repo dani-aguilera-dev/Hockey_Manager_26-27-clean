@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, BadgeEuro, Send } from 'lucide-react'
+import { ArrowLeft, BadgeEuro, Send, Star, StarOff } from 'lucide-react'
 import { api } from '../lib/api'
 import { money } from '../lib/format'
 import type { Negotiation, PlayerDetailPayload } from '../types'
@@ -20,12 +20,15 @@ export default function MarketPlayerPage() {
   const [years, setYears] = useState('3')
   const [sending, setSending] = useState(false)
   const [negotiation, setNegotiation] = useState<Negotiation | null>(null)
+  const [shortlisted, setShortlisted] = useState(false)
+  const [shortlistBusy, setShortlistBusy] = useState(false)
 
   useEffect(() => {
     if (!id) return
     api.get<PlayerDetailPayload>(`/player/${id}`)
       .then(({ data }) => {
         setData(data)
+        setShortlisted(Boolean(data.shortlisted))
         setFee(String(data.market?.asking || 0))
         setSalary(String(data.market?.minimum_salary || data.player.salary || 0))
       })
@@ -66,6 +69,23 @@ export default function MarketPlayerPage() {
       toast(err instanceof Error ? err.message : 'La oferta fue rechazada.', 'danger')
     } finally {
       setSending(false)
+    }
+  }
+
+  async function toggleShortlist() {
+    if (!id || !data || data.is_user) return
+    setShortlistBusy(true)
+    try {
+      const response = shortlisted
+        ? await api.delete<{ state?: unknown }>(`/shortlist/${id}`)
+        : await api.post<{ state?: unknown }>('/shortlist', { player_id: id, priority: 'media', note: '' })
+      if (response.data.state) applyState(response.data.state as never)
+      setShortlisted(!shortlisted)
+      toast(response.message || (shortlisted ? 'Retirado del seguimiento.' : 'Añadido al seguimiento.'), 'success')
+    } catch (err) {
+      toast(err instanceof Error ? err.message : 'No se pudo actualizar el seguimiento.', 'danger')
+    } finally {
+      setShortlistBusy(false)
     }
   }
 
@@ -110,7 +130,7 @@ export default function MarketPlayerPage() {
         eyebrow={`Mercado · ${market?.window_text || 'Consulta'}`}
         title="Negociación"
         subtitle={`${player.name} · ${player.subposition} · ${player.origin_team ? `procede de ${player.origin_team}` : data.owner_name}`}
-        actions={<Button icon={ArrowLeft} onClick={() => navigate('/game/market')}>Volver al mercado</Button>}
+        actions={<>{!data.is_user && data.market && <Button icon={shortlisted ? StarOff : Star} onClick={toggleShortlist} loading={shortlistBusy} data-testid="shortlist-toggle">{shortlisted ? 'En seguimiento' : 'Seguir'}</Button>}<Button icon={ArrowLeft} onClick={() => navigate('/game/market')}>Volver al mercado</Button></>}
       />
 
       <div className="market-player-hero">

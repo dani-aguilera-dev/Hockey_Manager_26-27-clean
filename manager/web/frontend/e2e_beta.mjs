@@ -244,6 +244,19 @@ try {
   result.clauses = true
   await page.screenshot({ path: '/tmp/opencode/e2e_clauses.png', fullPage: true })
 
+  await page.goto('/app/game/shortlist')
+  await page.getByRole('heading', { name: 'Lista de seguimiento' }).waitFor()
+  const shortlistAdd = page.locator('[data-testid^="shortlist-add-"]').first()
+  await shortlistAdd.waitFor()
+  await shortlistAdd.click()
+  const shortlistRow = page.locator('.shortlist-row').first()
+  await shortlistRow.waitFor()
+  await shortlistRow.locator('[data-testid^="shortlist-priority-"]').selectOption('alta')
+  await shortlistRow.locator('[data-testid^="shortlist-save-"]').click()
+  await shortlistRow.locator('.badge-ok').filter({ hasText: 'Prioridad alta' }).waitFor()
+  result.shortlist = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_shortlist.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true
