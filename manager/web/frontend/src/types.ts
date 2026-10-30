@@ -2256,3 +2256,62 @@ export interface ManagerProfileData {
     result: string
   }>
 }
+
+export interface CompareCandidate {
+  id: string
+  name: string
+  team_name: string
+  position: string
+  age: number
+  overall: number
+  potential: number
+  value: number
+}
+
+export interface ComparePlayer {
+  id: string
+  name: string
+  age: number
+  position: string
+  position_group: string
+  overall: number
+  potential: number
+  value: number
+  salary: number
+  contract_until: string
+  team_name: string
+  league_name: string
+  origin_team: string
+  apps: number
+  goals: number
+  assists: number
+  rating: number
+  form: number
+  fatigue: number
+  morale: number
+  injury: number
+  suspension: number
+  available: boolean
+  attributes: Record<string, number>
+  overalls: Record<string, number>
+}
+
+export interface CompareAttribute {
+  key: string
+  label: string
+  category: string
+  a: number
+  b: number
+  winner: 'a' | 'b' | 'tie'
+  difference: number
+}
+
+export interface CompareData {
+  ok: boolean
+  a: ComparePlayer
+  b: ComparePlayer
+  attributes: CompareAttribute[]
+  categories: Array<{ name: string; rows: CompareAttribute[] }>
+  summary: { a_wins: number; b_wins: number; ties: number; attributes: number; winner: 'a' | 'b' | 'tie' }
+  differences: { overall: number; potential: number; value: number; salary: number; age: number; rating: number }
+}

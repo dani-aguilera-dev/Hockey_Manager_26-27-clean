@@ -283,6 +283,13 @@ try {
   result.managerProfile = true
   await page.screenshot({ path: '/tmp/opencode/e2e_manager_profile.png', fullPage: true })
 
+  await page.goto('/app/game/compare')
+  await page.getByRole('heading', { name: 'Comparar jugadores' }).waitFor()
+  await page.locator('.compare-grid').waitFor()
+  await page.locator('.compare-row').first().waitFor()
+  result.compare = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_compare.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

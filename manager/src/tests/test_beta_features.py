@@ -625,3 +625,21 @@ def test_api_manager_profile_and_career_record(client):
     assert record["matches"] >= 1
     assert record["wins"] + record["draws"] + record["losses"] == record["matches"]
     assert refreshed["recent"]
+
+
+def test_api_compare_players(client):
+    _new_api(client, seed="59")
+    candidates = client.get("/api/compare/players")
+    assert candidates.status_code == 200, candidates.get_data(as_text=True)
+    players = candidates.get_json()["data"]["players"]
+    assert len(players) >= 2
+    response = client.get(
+        f"/api/compare?player_a={players[0]['id']}&player_b={players[1]['id']}"
+    )
+    assert response.status_code == 200, response.get_data(as_text=True)
+    data = response.get_json()["data"]
+    assert data["a"]["id"] != data["b"]["id"]
+    assert data["attributes"]
+    assert data["summary"]["attributes"] == len(data["attributes"])
+    same = client.get(f"/api/compare?player_a={players[0]['id']}&player_b={players[0]['id']}")
+    assert same.status_code == 409

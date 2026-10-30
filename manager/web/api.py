@@ -66,6 +66,7 @@ from src.shortlist import (
     update_shortlist_entry,
 )
 from src.clauses import clauses_overview, set_clause
+from src.compare import compare_candidates, compare_players
 from src.manager_profile import manager_profile_overview
 from src.match_plans import (
     create_match_plan,
@@ -1619,6 +1620,33 @@ def facilities_upgrade():
         {"result": result, "facilities": facilities_overview(state), "state": _state_payload(state)},
         result.get("message", ""),
     )
+
+
+@api.get("/compare/players")
+def compare_players_api():
+    state, err = _state()
+    if err:
+        return err
+    try:
+        limit = max(1, min(80, int(request.args.get("limit", 30))))
+    except (TypeError, ValueError):
+        limit = 30
+    return _ok({"players": compare_candidates(state, str(request.args.get("q", "")), limit)})
+
+
+@api.get("/compare")
+def compare_api():
+    state, err = _state()
+    if err:
+        return err
+    result = compare_players(
+        state,
+        str(request.args.get("player_a", "")),
+        str(request.args.get("player_b", "")),
+    )
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo comparar."), 409, "compare_failed")
+    return _ok(result)
 
 
 @api.get("/manager")

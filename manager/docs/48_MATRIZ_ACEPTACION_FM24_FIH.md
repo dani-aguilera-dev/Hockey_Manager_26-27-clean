@@ -14,6 +14,7 @@ Esta matriz convierte el objetivo amplio en criterios verificables. No afirma qu
 | Competiciones declaradas | `competitions.json` y `league_rules.json` | `test_spanish_competition_boundaries_are_declared` | PASS |
 | Planes de partido condicionales | `src/match_plans.py`, `/api/match-plans`, `MatchPlans.tsx`: situación, minuto e instrucciones; `MatchEngine.match_plan_effect` | `test_engine_applies_plan_only_when_situation_and_minute_match`, E2E `matchPlans` | PASS |
 | Perfil y carrera del mánager | `src/manager_profile.py`, `/api/manager`, `ManagerProfile.tsx`: récord, palmarés, hitos, temporadas y situación actual | `test_manager_profile_trophies_milestones_and_persistence`, E2E `managerProfile` | PASS |
+| Comparación de jugadores | `src/compare.py`, `/api/compare`, `Compare.tsx`: atributos, estadísticas, contrato, diferencias y resumen | `test_compare_players_has_attributes_categories_and_summary`, E2E `compare` | PASS |
 | Junta y visión de club | `src/board.py`, `/api/board`, `Board.tsx`: confianza, presión, paciencia, visión a corto/medio/largo plazo | `test_board_overview_has_vision_facilities_and_requests`, E2E `boardRequest` | PASS |
 | Peticiones de inversión | `/api/board/request`: entrenamiento, cantera, médico, video, ojeo, estadio y presupuesto; aprobación según confianza y caja | `test_board_request_approved_updates_facility_and_budget`, `test_board_request_rejected_keeps_facility_and_records_history` | PASS |
 | Instalaciones y estadio | Ratings de instalaciones, aforo, academia y presupuesto persistidos en `TeamState` | `test_board_facilities_and_requests_persist_in_team_state` | PASS |
@@ -145,7 +146,7 @@ Script: `manager/web/frontend/e2e_beta.mjs` (Playwright contra Flask).
 Salida verificada:
 
 ```json
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2728,"clothUpdates":1364},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1364},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":61,"stickFlexes":70},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2728},"viewerPhysics":{"frames":62,"playerCollisions":0,"bodyCollisions":51,"stickCollisions":37,"ballSpeed":2.60},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"playerBrands":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2816,"clothUpdates":1408},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1408},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":59,"stickFlexes":68},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2816},"viewerPhysics":{"frames":64,"playerCollisions":0,"bodyCollisions":53,"stickCollisions":36,"ballSpeed":1.69},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"playerBrands":true}
 ```
 
 Flujo:
@@ -175,8 +176,9 @@ Flujo:
 23. Abrir `/app/game/shortlist`, añadir un objetivo, cambiar su prioridad y guardar.
 24. Abrir `/app/game/match-plans`, crear un plan, desactivarlo y comprobar el estado.
 25. Abrir `/app/game/manager`, revisar récord, palmarés e hitos de carrera.
-26. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
-27. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
+26. Abrir `/app/game/compare`, comparar dos jugadores y comprobar el resumen.
+27. Abrir `/app/game/press/post`, responder las cuatro preguntas y completar la rueda.
+28. Abrir `/app/game/commercial` y comprobar los contratos individuales de imagen.
 
 ## 9. Límites convertidos en criterios pass/fail
 
@@ -200,6 +202,7 @@ Flujo:
 | Táctica | PASS | `Tactics.tsx`, `/api/tactics`, táctica en directo |
 | Planes de partido | PASS | `MatchPlans.tsx`, `/api/match-plans`, condiciones por marcador/minuto y efecto en `MatchEngine` |
 | Perfil y carrera del mánager | PASS | `ManagerProfile.tsx`, `/api/manager`, récord, palmarés, hitos, temporadas y situación actual |
+| Comparación de jugadores | PASS | `Compare.tsx`, `/api/compare`, atributos, estadísticas, contrato y resumen |
 | Entrenamiento semanal | PASS | `Training.tsx`, `/api/training` |
 | Médico y disponibilidad | PASS | `Medical.tsx`, `/api/medical` |
 | Mercado, negociaciones y ofertas | PASS | `Market.tsx`, `Offers.tsx`, `/api/market/*` |
@@ -235,4 +238,4 @@ La lista permite priorizar la siguiente iteración sin confundir “flujo cubier
 
 ## 11. Resultado
 
-La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas (incluidas protestas, tiempo añadido y protesta en directo), de la respuesta de materiales/colisiones stick-cuerpo, de la biomecánica procedural/tejido estilizado del visor, del mocap real CMU integrado, del centro financiero, del análisis de partido, de las responsabilidades del staff, del desarrollo individual, de los premios, del centro de contratos, de las instalaciones del club, de las cláusulas/primas, de la lista de seguimiento, de los planes de partido condicionales y del perfil/carrera del mánager. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: mocap/física textil real, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.
+La beta avanzada pasa los criterios de los flujos solicitados, de las reglas FIH operativas, de la revisión de vídeo, de la junta/visión de club, de las cesiones, del data hub con instrucciones al rival, de afiliados/mentoring, del historial completo, del ojeo con pantalla dedicada, de la reunión de equipo, de las decisiones arbitrales implementadas (incluidas protestas, tiempo añadido y protesta en directo), de la respuesta de materiales/colisiones stick-cuerpo, de la biomecánica procedural/tejido estilizado del visor, del mocap real CMU integrado, del centro financiero, del análisis de partido, de las responsabilidades del staff, del desarrollo individual, de los premios, del centro de contratos, de las instalaciones del club, de las cláusulas/primas, de la lista de seguimiento, de los planes de partido condicionales, del perfil/carrera del mánager y de la comparación de jugadores. La matriz distingue explícitamente **PASS** de **FAIL / fuera de alcance**; no se presenta como una réplica completa de FM24 ni como una simulación arbitral discrecional total. El inventario de la sección 10 deja identificados los huecos de paridad que quedan: mocap/física textil real, paridad total de pantallas y el resto de interpretaciones arbitrales subjetivas.

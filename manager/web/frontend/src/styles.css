@@ -1461,3 +1461,29 @@ select option { background: #0b1220; color: #e8eef8; }
   letter-spacing: .02em;
   pointer-events: none;
 }
+
+/* Comparación de jugadores */
+.compare-selectors { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; align-items: end; }
+.compare-hero { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: stretch; }
+.compare-player-card { padding: 14px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.015); }
+.compare-player-card h2 { margin: 7px 0 3px; font-size: 20px; }
+.compare-player-card p { margin: 0 0 8px; color: var(--muted); font-size: 12px; }
+.compare-player-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 12px; }
+.compare-player-numbers span { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); }
+.compare-player-numbers b { color: var(--text); }
+.compare-stats { display: flex; gap: 10px; margin-top: 8px; color: var(--gold); font-size: 12px; }
+.compare-vs { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--muted); font-size: 11px; }
+.compare-grid { display: flex; flex-direction: column; gap: 10px; }
+.compare-category { display: flex; flex-direction: column; gap: 3px; }
+.compare-category-title { margin-top: 6px; color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.compare-row { display: grid; grid-template-columns: 34px 1fr 34px; gap: 8px; align-items: center; padding: 3px 0; font-size: 12px; }
+.compare-row > b { text-align: center; color: var(--muted); }
+.compare-row.a > b:first-child, .compare-row.b > b:last-child { color: var(--gold); }
+.compare-attribute { display: flex; flex-direction: column; gap: 2px; }
+.compare-attribute > span { text-align: center; color: var(--muted); font-size: 11px; }
+.compare-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.compare-bars i { display: block; height: 4px; border-radius: 2px; }
+.compare-bar-a { justify-self: end; background: var(--blue, #3f8cff); }
+.compare-bar-b { justify-self: start; background: var(--gold); }
+@media (max-width: 900px) { .compare-selectors { grid-template-columns: 1fr 1fr; } .compare-hero { grid-template-columns: 1fr; } .compare-vs { flex-direction: row; } }
+@media (max-width: 560px) { .compare-selectors { grid-template-columns: 1fr; } }

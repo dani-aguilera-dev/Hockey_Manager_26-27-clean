@@ -74,6 +74,7 @@ const competitionLinks = [
 const clubLinks = [
   { to: '/game/market', label: 'Mercado', icon: ArrowLeftRight },
   { to: '/game/shortlist', label: 'Seguimiento', icon: Star },
+  { to: '/game/compare', label: 'Comparar jugadores', icon: ArrowLeftRight },
   { to: '/game/contracts', label: 'Contratos', icon: FileSignature },
   { to: '/game/clauses', label: 'Cláusulas', icon: Lock },
   { to: '/game/scouting', label: 'Ojeo', icon: Compass },
