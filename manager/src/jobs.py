@@ -94,6 +94,7 @@ def _offer_payload(state: GameState, offer: dict[str, Any]) -> dict[str, Any]:
         "squad_size": len(team.squad),
         "cross_league": bool(offer.get("cross_league", False)),
         "effective": str(offer.get("effective", "now")),
+        "international": bool(competition(team.league).international),
     }
 
 
@@ -172,6 +173,7 @@ def _make_offer(state: GameState, team: TeamState, cross_league: bool) -> dict[s
         "expires": expires,
         "cross_league": cross_league,
         "effective": "next_season" if cross_league else "now",
+        "international": bool(competition(team.league).international),
         "project": (
             "Proyecto de consolidación y cantera"
             if team.club_tier >= 3
@@ -233,7 +235,19 @@ def generate_job_offers(
             key=lambda team: (competition(team.league).standard, _position(state, team), team.name),
             reverse=True,
         )
-        for team in cross[:2]:
+        international = [
+            team
+            for team in state.teams.values()
+            if team.id != user.id
+            and team.league != state.competition
+            and competition(team.league).international
+            and len(team.squad) >= 14
+        ]
+        international.sort(
+            key=lambda team: (competition(team.league).standard, _position(state, team), team.name),
+            reverse=True,
+        )
+        for team in cross[:2] + international[:2]:
             offer = _make_offer(state, team, True)
             if not _append_offer(state, offer, offers):
                 continue
@@ -262,7 +276,8 @@ def accept_job_offer(state: GameState, offer_id: str) -> dict[str, Any]:
     if offer.get("cross_league"):
         if new_team.league == state.competition:
             return {"ok": False, "message": "La oferta ya no es un cambio de liga."}
-        if competition(new_team.league).system not in ("dha", "dhb_two_phase", "regional"):
+        new_meta = competition(new_team.league)
+        if not new_meta.international and new_meta.system not in ("dha", "dhb_two_phase", "regional"):
             return {"ok": False, "message": "Ese cambio de liga no está soportado."}
         if state.pending_job:
             return {"ok": False, "message": "Ya tienes un acuerdo para la próxima temporada."}

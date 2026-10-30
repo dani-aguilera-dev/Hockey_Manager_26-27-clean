@@ -2430,6 +2430,26 @@ def _apply_pending_job(state: GameState, new_year: int) -> None:
     old_club = state.user_team.name
     state.club_id = new_team.id
     state.competition = new_team.league
+    state.country = new_team.country or state.country
+    for player in new_team.players:
+        player.apps = player.season_goals = player.season_assists = 0
+        player.rating_sum = 0.0
+        player.fatigue = 0
+        player.injury = 0
+        player.suspension = 0
+        player.form = 6.5
+    new_team.played = new_team.won = new_team.drawn = new_team.lost = 0
+    new_team.goals_for = new_team.goals_against = new_team.points = 0
+    new_team.last_lineup = []
+    new_team.prep_bonus = 0.0
+    new_team.cohesion = 12
+    if len(new_team.players) < MIN_ROSTER_SIZE:
+        from .international import replacement_player
+
+        while len(new_team.players) < MIN_ROSTER_SIZE:
+            new_team.players.append(
+                replacement_player(new_team, new_year, len(new_team.players) + 1)
+            )
     meta = competition(state.competition)
     start = date.fromisoformat(f"{new_year}-{meta.start_date[5:]}")
     if meta.system == "dhb_two_phase":

@@ -139,7 +139,7 @@ export default function JobsPage() {
         <div className="job-offer-grid mt-2">
           {data.offers.map((offer) => (
             <div className="job-offer-card" key={offer.id}>
-              <div className="inline" style={{ justifyContent: 'space-between' }}><div className="inline"><Badge tone="neutral">{offer.league_name}</Badge>{offer.cross_league && <Badge tone="gold">Otra liga · próxima temporada</Badge>}</div><span className="small muted">{offer.position}º</span></div>
+              <div className="inline" style={{ justifyContent: 'space-between' }}><div className="inline"><Badge tone="neutral">{offer.league_name}</Badge>{offer.cross_league && <Badge tone="gold">Otra liga · próxima temporada</Badge>}{offer.international && <Badge tone="blue">Internacional</Badge>}</div><span className="small muted">{offer.position}º</span></div>
               <h3>{offer.club_name}</h3>
               <p className="small muted">{offer.project}</p>
               <div className="job-offer-numbers">

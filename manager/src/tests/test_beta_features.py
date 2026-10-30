@@ -706,3 +706,19 @@ def test_api_cross_league_job_pending(client):
     assert payload["jobs"]["pending_job"]["club_id"] == cross[0]["club_id"]
     assert payload["jobs"]["pending_job"]["effective_season"]
     assert payload["state"]["team"]["name"] != cross[0]["club_name"]
+
+
+def test_api_international_job_pending(client):
+    _new_api(client, seed="63")
+    generated = client.post("/api/jobs/offers", json={"force": True, "cross_league": True})
+    assert generated.status_code == 200, generated.get_data(as_text=True)
+    offers = generated.get_json()["data"]["jobs"]["offers"]
+    international = [offer for offer in offers if offer["international"]]
+    assert international, offers
+    accepted = client.post(f"/api/jobs/offers/{international[0]['id']}/accept")
+    assert accepted.status_code == 200, accepted.get_data(as_text=True)
+    payload = accepted.get_json()["data"]
+    assert payload["result"]["pending"] is True
+    assert payload["jobs"]["pending_job"]["club_id"] == international[0]["club_id"]
+    assert payload["jobs"]["pending_job"]["international"] is True
+    assert payload["state"]["team"]["name"] != international[0]["club_name"]

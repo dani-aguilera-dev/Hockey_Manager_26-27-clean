@@ -2338,6 +2338,7 @@ export interface JobOffer {
   status: string
   cross_league: boolean
   effective: 'now' | 'next_season'
+  international: boolean
 }
 
 export interface JobHistoryEntry {
