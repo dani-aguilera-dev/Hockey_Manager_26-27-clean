@@ -214,6 +214,8 @@ class PlayerState:
     brand_deal: dict[str, Any] = field(default_factory=dict)
     loan: dict[str, Any] = field(default_factory=dict)
     development_plan: dict[str, Any] = field(default_factory=dict)
+    release_clause: int = 0
+    renewal_bonus: int = 0
 
     @property
     def youth_category(self) -> str:

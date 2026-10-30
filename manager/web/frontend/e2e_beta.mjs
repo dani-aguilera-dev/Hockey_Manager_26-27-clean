@@ -237,6 +237,13 @@ try {
   result.facilities = true
   await page.screenshot({ path: '/tmp/opencode/e2e_facilities.png', fullPage: true })
 
+  await page.goto('/app/game/clauses')
+  await page.getByRole('heading', { name: 'Cláusulas y primas' }).waitFor()
+  await page.locator('[data-testid^="clause-save-"]').first().click()
+  await page.locator('.clause-saved').waitFor()
+  result.clauses = true
+  await page.screenshot({ path: '/tmp/opencode/e2e_clauses.png', fullPage: true })
+
   await page.goto('/app/game/commercial')
   await page.getByText('CONTRATOS INDIVIDUALES DE IMAGEN').waitFor()
   result.playerBrands = true

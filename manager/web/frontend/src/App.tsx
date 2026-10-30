@@ -22,6 +22,7 @@ import DevelopmentPage from './pages/Development'
 import AwardsPage from './pages/Awards'
 import ContractsPage from './pages/Contracts'
 import FacilitiesPage from './pages/Facilities'
+import ClausesPage from './pages/Clauses'
 import DecisionsPage from './pages/Decisions'
 import Squad from './pages/Squad'
 import PlayerPage from './pages/Player'
@@ -95,6 +96,7 @@ export default function App() {
         <Route path="awards" element={<AwardsPage />} />
         <Route path="contracts" element={<ContractsPage />} />
         <Route path="facilities" element={<FacilitiesPage />} />
+        <Route path="clauses" element={<ClausesPage />} />
         <Route path="decisions" element={<DecisionsPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="chat" element={<ChatPage />} />

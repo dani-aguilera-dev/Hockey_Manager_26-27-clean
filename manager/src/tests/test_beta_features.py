@@ -522,3 +522,19 @@ def test_api_facilities_overview_and_upgrade(client):
     payload = upgrade.get_json()["data"]
     assert payload["facilities"]["history"]
     assert payload["state"]["team"]["name"]
+
+
+def test_api_clauses_update(client):
+    _new_api(client, seed="55")
+    data = client.get("/api/clauses")
+    assert data.status_code == 200, data.get_data(as_text=True)
+    payload = data.get_json()["data"]
+    player = payload["players"][0]
+    response = client.post(
+        f"/api/clauses/{player['id']}",
+        json={"release_clause": 1_000_000, "renewal_bonus": 50_000},
+    )
+    assert response.status_code == 200, response.get_data(as_text=True)
+    result = response.get_json()["data"]
+    assert result["clauses"]["summary"]["protected"] == 1
+    assert result["state"]["team"]["name"]

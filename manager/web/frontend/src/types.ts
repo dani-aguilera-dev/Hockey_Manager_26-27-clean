@@ -2070,3 +2070,31 @@ export interface FacilitiesData {
   upgrades: FacilityUpgrade[]
   history: Array<{ date: string; request_id: string; label: string; cost: number; approved: boolean; message: string }>
 }
+
+export interface ClausePlayer {
+  id: string
+  name: string
+  age: number
+  position: string
+  overall: number
+  salary: number
+  value: number
+  contract_until: string
+  release_clause: number
+  renewal_bonus: number
+  clause_status: string
+  suggested_clause: number
+  suggested_bonus: number
+}
+
+export interface ClausesData {
+  players: ClausePlayer[]
+  summary: {
+    players: number
+    protected: number
+    without_clause: number
+    total_clause: number
+    total_bonus: number
+    budget: number
+  }
+}

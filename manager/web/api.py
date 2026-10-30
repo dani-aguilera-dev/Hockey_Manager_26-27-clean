@@ -57,6 +57,7 @@ from src.datahub import datahub_overview, set_instructions
 from src.history import history_overview
 from src.analysis import analysis_overview
 from src.contracts import contracts_overview
+from src.clauses import clauses_overview, set_clause
 from src.facilities import facilities_overview, upgrade_facility
 from src.awards import awards_overview
 from src.responsibilities import responsibilities_overview, set_responsibility
@@ -1549,6 +1550,35 @@ def analysis():
     if err:
         return err
     return _ok(analysis_overview(state, str(request.args.get("fixture_id", ""))))
+
+
+@api.get("/clauses")
+def clauses():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(clauses_overview(state))
+
+
+@api.post("/clauses/<player_id>")
+def clauses_update(player_id: str):
+    state, err = _state()
+    if err:
+        return err
+    payload = request.get_json(silent=True) or request.form
+    try:
+        release_clause = int(payload.get("release_clause", 0) or 0)
+        renewal_bonus = int(payload.get("renewal_bonus", 0) or 0)
+    except (TypeError, ValueError):
+        return _error("Cláusula o prima no válida.", 400, "invalid_clause")
+    result = set_clause(state, player_id, release_clause, renewal_bonus)
+    if not result.get("ok"):
+        return _error(result.get("message", "No se pudo actualizar la cláusula."), 409, "clause_failed")
+    _save(state)
+    return _ok(
+        {"result": result, "clauses": clauses_overview(state), "state": _state_payload(state)},
+        result.get("message", ""),
+    )
 
 
 @api.get("/facilities")

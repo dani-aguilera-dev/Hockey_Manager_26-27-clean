@@ -1388,3 +1388,7 @@ select option { background: #0b1220; color: #e8eef8; }
 .facility-history-row span { color: var(--muted); font-size: 12px; }
 @media (max-width: 980px) { .facility-grid, .facility-upgrade-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .facility-grid, .facility-upgrade-grid { grid-template-columns: 1fr; } .facility-history-row { align-items: flex-start; flex-direction: column; } }
+
+/* Cláusulas y primas */
+.clause-input { width: 110px; padding: 5px 6px; border: 1px solid var(--line); border-radius: 5px; background: var(--panel); color: var(--text); font-size: 11px; }
+@media (max-width: 760px) { .clause-input { width: 85px; } }
