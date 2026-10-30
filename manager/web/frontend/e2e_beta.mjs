@@ -344,7 +344,9 @@ try {
   await vacancyApply.waitFor()
   await vacancyApply.click()
   await page.locator('.vacancy-application').first().waitFor()
+  await page.getByText('Últimos cambios de entrenador').waitFor()
   result.vacancies = true
+  result.managerChanges = true
   await page.screenshot({ path: '/tmp/opencode/e2e_vacancies.png', fullPage: true })
 
   console.log(JSON.stringify(result))

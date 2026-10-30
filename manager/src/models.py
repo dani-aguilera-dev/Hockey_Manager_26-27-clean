@@ -383,6 +383,9 @@ class TeamState:
     morale: int = 12
     cohesion: int = 12
     manager_rating: int = 60
+    manager_name: str = ""
+    manager_pressure: int = 0
+    manager_since_round: int = 0
     assistant_rating: int = 60
     prep_bonus: float = 0.0
     media_confidence: int = 50
@@ -413,6 +416,11 @@ class TeamState:
     goals_for: int = 0
     goals_against: int = 0
     points: int = 0
+
+    def __post_init__(self) -> None:
+        if not self.manager_name:
+            head = next((member for member in self.staff if member.role == "head_coach"), None)
+            self.manager_name = head.name if head else "Entrenador interino"
 
     @property
     def squad(self) -> list[PlayerState]:
@@ -609,6 +617,9 @@ class TeamState:
             "morale": self.morale,
             "cohesion": self.cohesion,
             "manager_rating": self.manager_rating,
+            "manager_name": self.manager_name,
+            "manager_pressure": self.manager_pressure,
+            "manager_since_round": self.manager_since_round,
             "assistant_rating": self.assistant_rating,
             "prep_bonus": self.prep_bonus,
             "media_confidence": self.media_confidence,
@@ -666,6 +677,9 @@ class TeamState:
             morale=d.get("morale", 12),
             cohesion=d.get("cohesion", 12),
             manager_rating=d.get("manager_rating", 60),
+            manager_name=d.get("manager_name", ""),
+            manager_pressure=d.get("manager_pressure", 0),
+            manager_since_round=d.get("manager_since_round", 0),
             assistant_rating=d.get("assistant_rating", 60),
             prep_bonus=d.get("prep_bonus", 0.0),
             media_confidence=d.get("media_confidence", 50),
@@ -791,6 +805,7 @@ class GameState:
     job_offers: list[dict[str, Any]] = field(default_factory=list)
     job_offer_history: list[dict[str, Any]] = field(default_factory=list)
     manager_contract: dict[str, Any] = field(default_factory=dict)
+    manager_changes: list[dict[str, Any]] = field(default_factory=list)
     pending_job: dict[str, Any] = field(default_factory=dict)
     vacancy_applications: list[dict[str, Any]] = field(default_factory=list)
     trials: list[dict[str, Any]] = field(default_factory=list)
@@ -923,6 +938,7 @@ class GameState:
             "job_offers": self.job_offers,
             "job_offer_history": self.job_offer_history,
             "manager_contract": self.manager_contract,
+            "manager_changes": self.manager_changes,
             "pending_job": self.pending_job,
             "vacancy_applications": self.vacancy_applications,
             "trials": self.trials,
@@ -1009,6 +1025,7 @@ class GameState:
             job_offers=d.get("job_offers", []),
             job_offer_history=d.get("job_offer_history", []),
             manager_contract=d.get("manager_contract", {}),
+            manager_changes=d.get("manager_changes", []),
             pending_job=d.get("pending_job", {}),
             vacancy_applications=d.get("vacancy_applications", []),
             trials=d.get("trials", []),

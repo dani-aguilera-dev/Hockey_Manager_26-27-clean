@@ -52,7 +52,7 @@ export default function VacanciesPage() {
       <PageHeader
         eyebrow="Mercado de entrenadores · candidaturas · banquillos"
         title="Vacantes de entrenador"
-        subtitle="Clubes con el banquillo en dificultades o vacante. Presenta tu candidatura; si el club acepta, se abre una oferta en Trabajo y seguridad."
+        subtitle="Clubes con el banquillo en dificultades o vacante. Los clubes IA pueden destituir a su entrenador tras varias jornadas en la parte baja; si aceptan tu candidatura, se abre una oferta en Trabajo y seguridad."
         actions={<><Badge tone="gold">{data.summary.vacancies} vacantes</Badge><Button icon={Search} onClick={load}>Actualizar</Button></>}
       />
 
@@ -76,7 +76,7 @@ export default function VacanciesPage() {
                 <b className="gold">{Math.round(vacancy.interest * 100)}%</b>
               </div>
               <h3>{vacancy.club_name}</h3>
-              <p className="small muted">{vacancy.position}º de {vacancy.teams} · {vacancy.expectation}</p>
+              <p className="small muted">Entrenador: {vacancy.manager_name} · {vacancy.position}º de {vacancy.teams} · {vacancy.expectation}</p>
               <div className="vacancy-numbers">
                 <div><span>Caja</span><b>{money(vacancy.budget)}</b></div>
                 <div><span>Salarios</span><b>{money(vacancy.wage_budget)}</b></div>
@@ -101,6 +101,22 @@ export default function VacanciesPage() {
       </Card>
 
       {result && <Card className="mt-2"><Badge tone={resultAccepted ? 'ok' : 'neutral'} className="vacancy-applied">{result}</Badge>{resultAccepted && <Button size="sm" className="mt-2" onClick={() => navigate('/game/jobs')}>Ir a Trabajo y seguridad</Button>}</Card>}
+
+      <Card className="mt-2">
+        <div className="inline" style={{ justifyContent: 'space-between' }}>
+          <div><div className="cat">MERCADO DE ENTRENADORES</div><h3 style={{ margin: '3px 0 0' }}>Últimos cambios de entrenador</h3></div>
+          <Badge tone="neutral">{data.changes.length}</Badge>
+        </div>
+        <div className="stack-sm mt-2">
+          {data.changes.map((change, index) => (
+            <div className="manager-change-row" key={`${change.date}-${change.club_id}-${index}`}>
+              <Badge tone={change.type === 'sack' ? 'danger' : 'ok'}>{change.type === 'sack' ? 'Destituido' : 'Nuevo'}</Badge>
+              <div><b>{change.club_name}</b><span>{change.league_name} · {dateLabel(change.date)} · {change.old_manager} → {change.new_manager}</span><span>{change.reason}</span></div>
+            </div>
+          ))}
+          {!data.changes.length && <p className="small muted">Todavía no ha habido cambios de entrenador en esta partida.</p>}
+        </div>
+      </Card>
 
       <Card className="mt-2">
         <h3>Candidaturas</h3>

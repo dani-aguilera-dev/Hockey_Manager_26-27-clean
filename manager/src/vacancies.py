@@ -15,6 +15,7 @@ from typing import Any
 
 from .competitions import competition
 from .jobs import create_job_offer
+from .managers import manager_changes_overview
 from .models import GameState, TeamState
 
 
@@ -68,6 +69,8 @@ def _vacancy_row(state: GameState, team: TeamState) -> dict[str, Any]:
         "expectation": team.board_expectation or "Consolidar el proyecto",
         "board_confidence": team.board_confidence,
         "fan_confidence": team.fan_confidence,
+        "manager_name": team.manager_name,
+        "manager_since_round": team.manager_since_round,
         "standard": round(meta.standard, 1),
         "international": meta.international,
         "same_league": team.league == state.competition,
@@ -88,7 +91,11 @@ def vacancy_overview(state: GameState) -> dict[str, Any]:
         if state.pending_job.get("club_id") == team.id:
             continue
         position, teams = _position(state, team)
-        if team.board_confidence >= 45 and position < max(1, teams - 2):
+        if (
+            team.board_confidence >= 45
+            and position < max(1, teams - 2)
+            and team.manager_name != "Entrenador interino"
+        ):
             continue
         rows.append(_vacancy_row(state, team))
     rows.sort(key=lambda row: (-row["standard"], row["position"], row["club_name"]))
@@ -104,11 +111,14 @@ def vacancy_overview(state: GameState) -> dict[str, Any]:
         )
     return {
         "vacancies": rows[:12],
+        "pool": rows,
         "applications": applications,
+        "changes": manager_changes_overview(state),
         "summary": {
             "vacancies": len(rows),
             "applications": len(state.vacancy_applications),
             "offers": sum(1 for item in state.vacancy_applications if item.get("status") == "offer"),
+            "changes": len(state.manager_changes),
         },
     }
 

@@ -111,7 +111,7 @@ export default function JobsPage() {
             <div><span>Masa salarial</span><b>{money(club.wage_budget)}</b></div>
           </div>
           <div className="mt-2"><Progress value={club.board_confidence} tone={club.board_confidence >= 60 ? 'ok' : club.board_confidence >= 40 ? 'gold' : 'danger'} /></div>
-          <p className="small muted mt-1">La confianza baja si los resultados y la posición quedan por debajo del objetivo. Un ultimátum no expulsa automáticamente: la junta sigue evaluando.</p>
+          <p className="small muted mt-1">La confianza baja si los resultados y la posición quedan por debajo del objetivo. En tu club, un ultimátum no expulsa automáticamente: la junta sigue evaluando. Los clubes IA sí pueden cambiar de entrenador.</p>
         </Card>
 
         <Card>

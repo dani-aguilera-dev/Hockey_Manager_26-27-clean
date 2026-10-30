@@ -35,6 +35,7 @@ from .logistics import apply_travel, travel_options
 from .match_engine import MatchEngine, MatchResult
 from .models import Fixture, GameState, PlayerState, TeamState
 from .scouting import advance_scouting
+from .managers import process_manager_changes, record_manager_change, replacement_manager
 from .training import apply_training_plan, auto_plan
 from .trials import advance_trials
 from .youth import develop_youth, generate_youth, initial_youth, intake
@@ -222,6 +223,9 @@ def new_game(club_id: str, manager_name: str = "Entrenador", seed: int | None = 
         fixtures=[],
         teams=teams,
     )
+    state.teams[club_id].manager_name = manager_name
+    state.teams[club_id].manager_pressure = 0
+    state.teams[club_id].manager_since_round = 0
     # pequeña pretemporada: moral y forma iniciales razonables
     for t in state.teams.values():
         if competition(t.league).system == "dha":
@@ -648,8 +652,9 @@ def play_round(
             _update_user_after_match(state, fx, result)
         else:
             _simulate_fixture_fast(state, fx, rng)
-    # clasificación y recuperación
+    # clasificación, cambios de entrenador y recuperación
     recompute_table(state.teams, _world_fixtures(state))
+    process_manager_changes(state)
     _recover_after_round(state, old_status)
     apply_round_finances(state)
     _reset_week_training(state)
@@ -833,6 +838,7 @@ def finish_live_round(state: GameState, ctx: LiveRoundContext) -> dict:
             state.date = (date.fromisoformat(fixture.date) + timedelta(days=1)).isoformat()
         return user_payload
     recompute_table(state.teams, _world_fixtures(state))
+    process_manager_changes(state)
     _recover_after_round(state, ctx.old_status)
     apply_round_finances(state)
     _reset_week_training(state)
@@ -2427,8 +2433,33 @@ def _apply_pending_job(state: GameState, new_year: int) -> None:
     if new_team is None:
         state.pending_job = {}
         return
-    old_club = state.user_team.name
+    old_team = state.user_team
+    old_club = old_team.name
+    old_manager = old_team.manager_name
+    old_team.manager_name = replacement_manager(old_team)
+    old_team.manager_pressure = 0
+    old_team.manager_since_round = state.round
+    record_manager_change(
+        state,
+        old_team,
+        old_manager,
+        old_team.manager_name,
+        "user_left",
+        "El mánager cambia de club al inicio de la temporada.",
+    )
+    new_old_manager = new_team.manager_name
     state.club_id = new_team.id
+    new_team.manager_name = state.manager_name
+    new_team.manager_pressure = 0
+    new_team.manager_since_round = state.round
+    record_manager_change(
+        state,
+        new_team,
+        new_old_manager,
+        state.manager_name,
+        "user_hired",
+        "Nuevo mánager al frente del club.",
+    )
     state.competition = new_team.league
     state.country = new_team.country or state.country
     for player in new_team.players:
@@ -2619,6 +2650,9 @@ def advance_to_next_season(state: GameState) -> None:
         state.cup_third_id = ""
         state.ehl = {}
     state.round = 1
+    for team in state.teams.values():
+        team.manager_pressure = 0
+        team.manager_since_round = 0
     first_regular = next((f.date for f in state.fixtures if f.phase == "regular"), start.isoformat())
     state.date = (date.fromisoformat(first_regular) - timedelta(days=50)).isoformat()
     state.final4 = {}

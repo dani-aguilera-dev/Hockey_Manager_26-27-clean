@@ -15,6 +15,7 @@ from datetime import date, timedelta
 from typing import Any
 
 from .competitions import competition
+from .managers import record_manager_change, replacement_manager
 from .models import GameState, TeamState
 
 STATUS_LABELS = {
@@ -346,7 +347,31 @@ def accept_job_offer(state: GameState, offer_id: str) -> dict[str, Any]:
     if new_team.league != state.competition:
         return {"ok": False, "message": "Solo se admiten cambios dentro de la misma liga de forma inmediata."}
     old_team = state.user_team
+    old_manager = old_team.manager_name
+    old_team.manager_name = replacement_manager(old_team)
+    old_team.manager_pressure = 0
+    old_team.manager_since_round = state.round
+    record_manager_change(
+        state,
+        old_team,
+        old_manager,
+        old_team.manager_name,
+        "user_left",
+        "El mánager acepta otro banquillo.",
+    )
+    new_old_manager = new_team.manager_name
     state.club_id = new_team.id
+    new_team.manager_name = state.manager_name
+    new_team.manager_pressure = 0
+    new_team.manager_since_round = state.round
+    record_manager_change(
+        state,
+        new_team,
+        new_old_manager,
+        state.manager_name,
+        "user_hired",
+        "Nuevo mánager al frente del club.",
+    )
     state.manager_contract = {
         "club_id": new_team.id,
         "club_name": new_team.name,

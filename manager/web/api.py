@@ -268,6 +268,7 @@ def _team_summary(t, position=None):
         "stadium_name": t.stadium_name,
         "stadium_capacity": t.stadium_capacity,
         "board_expectation": t.board_expectation,
+        "manager_name": t.manager_name,
         "points": t.points,
         "played": t.played,
         "won": t.won,

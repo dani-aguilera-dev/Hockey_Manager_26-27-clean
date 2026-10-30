@@ -148,6 +148,7 @@ export interface TeamSummary {
   stadium_name: string
   stadium_capacity: number
   board_expectation: string
+  manager_name: string
   points: number
   played: number
   won: number
@@ -2465,11 +2466,27 @@ export interface Vacancy {
   expectation: string
   board_confidence: number
   fan_confidence: number
+  manager_name: string
+  manager_since_round: number
   standard: number
   international: boolean
   same_league: boolean
   interest: number
   application_status: string
+}
+
+export interface ManagerChange {
+  date: string
+  season: string
+  round: number
+  type: 'sack' | 'user_left' | 'user_hired'
+  club_id: string
+  club_name: string
+  league: string
+  league_name: string
+  old_manager: string
+  new_manager: string
+  reason: string
 }
 
 export interface VacancyApplication {
@@ -2487,6 +2504,8 @@ export interface VacancyApplication {
 
 export interface VacanciesData {
   vacancies: Vacancy[]
+  pool: Vacancy[]
   applications: VacancyApplication[]
-  summary: { vacancies: number; applications: number; offers: number }
+  changes: ManagerChange[]
+  summary: { vacancies: number; applications: number; offers: number; changes: number }
 }

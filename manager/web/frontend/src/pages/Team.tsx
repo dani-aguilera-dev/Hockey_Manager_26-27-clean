@@ -34,7 +34,7 @@ export default function TeamPage() {
       <PageHeader
         eyebrow={`${team.league}${data.group ? ` · Grupo ${data.group}` : ''} · ${team.country}`}
         title={team.name}
-        subtitle={`${team.city} · ${team.stadium_name} · ${team.stadium_capacity} localidades · objetivo ${team.board_expectation}`}
+        subtitle={`${team.city} · Entrenador: ${team.manager_name} · ${team.stadium_name} · ${team.stadium_capacity} localidades · objetivo ${team.board_expectation}`}
         actions={<><Button icon={BadgeEuro} onClick={() => navigate(`/game/market?club_id=${team.id}`)}>Mercado del club</Button><Button icon={ArrowLeft} onClick={() => navigate('/game/table')}>Volver a la tabla</Button></>}
       />
 

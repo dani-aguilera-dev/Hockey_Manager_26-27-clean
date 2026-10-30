@@ -14,6 +14,7 @@ from src.friendlies import (
     schedule_friendly,
 )
 from src.international import international_data
+from src.managers import process_manager_changes
 from src.player_editor import edit_player, find_player
 from src.press import answer_press, press_context, press_questions
 from src.season import new_game
@@ -778,3 +779,29 @@ def test_api_live_disallowed_goal_review(client):
     assert payload["reviews"][-1]["overturned"] is True
     assert payload["score"][user_side] == 1
     assert any(event["type"] == "goal_disallowed" for event in payload["events"])
+
+
+def test_api_vacancies_include_manager_market(client):
+    import web.app as web
+
+    _new_api(client, seed="66")
+    with client.session_transaction() as sess:
+        game_id = sess["game_id"]
+    state = web.GAMES[game_id]
+    team = state.teams["atletic-terrassa"]
+    team.played = 10
+    team.points = 0
+    team.goals_for = 1
+    team.goals_against = 20
+    team.manager_pressure = 3
+    team.manager_since_round = 0
+    state.round = 12
+    process_manager_changes(state)
+    data = client.get("/api/vacancies")
+    assert data.status_code == 200, data.get_data(as_text=True)
+    payload = data.get_json()["data"]
+    assert payload["changes"]
+    assert payload["changes"][-1]["club_id"] == team.id
+    assert any(row["club_id"] == team.id for row in payload["pool"])
+    assert all(row["manager_name"] for row in payload["pool"])
+    assert payload["summary"]["changes"] == len(payload["changes"])
