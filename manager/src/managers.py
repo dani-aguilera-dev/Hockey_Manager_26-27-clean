@@ -124,13 +124,19 @@ def process_manager_changes(state: GameState) -> list[dict[str, Any]]:
         team.manager_pressure = 0
         team.manager_since_round = state.round
         team.board_confidence = min(100, max(35, team.board_confidence + 6))
+        if old_name == "Entrenador interino":
+            change_type = "hired"
+            reason = f"La junta nombra a {new_name} para cubrir el banquillo."
+        else:
+            change_type = "sack"
+            reason = f"La junta destituye a {old_name} tras {SACK_PRESSURE} avisos en la parte baja."
         change = record_manager_change(
             state,
             team,
             old_name,
             new_name,
-            "sack",
-            f"La junta destituye a {old_name} tras {SACK_PRESSURE} avisos en la parte baja.",
+            change_type,
+            reason,
         )
         state.inbox.append(
             {

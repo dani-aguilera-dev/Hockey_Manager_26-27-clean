@@ -110,7 +110,7 @@ export default function VacanciesPage() {
         <div className="stack-sm mt-2">
           {data.changes.map((change, index) => (
             <div className="manager-change-row" key={`${change.date}-${change.club_id}-${index}`}>
-              <Badge tone={change.type === 'sack' ? 'danger' : 'ok'}>{change.type === 'sack' ? 'Destituido' : 'Nuevo'}</Badge>
+              <Badge tone={change.type === 'sack' ? 'danger' : 'ok'}>{change.type === 'sack' ? 'Destituido' : change.type === 'hired' ? 'Nombrado' : 'Nuevo'}</Badge>
               <div><b>{change.club_name}</b><span>{change.league_name} · {dateLabel(change.date)} · {change.old_manager} → {change.new_manager}</span><span>{change.reason}</span></div>
             </div>
           ))}

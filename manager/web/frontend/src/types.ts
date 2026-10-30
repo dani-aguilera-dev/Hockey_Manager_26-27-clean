@@ -2479,7 +2479,7 @@ export interface ManagerChange {
   date: string
   season: string
   round: number
-  type: 'sack' | 'user_left' | 'user_hired'
+  type: 'sack' | 'hired' | 'user_left' | 'user_hired'
   club_id: string
   club_name: string
   league: string

@@ -35,7 +35,7 @@
 | Trabajo y seguridad | `/api/jobs`, `Jobs.tsx`: confianza, contrato, ofertas de misma liga y otras ligas, aceptar/rechazar e historial | PASS |
 | Cambio entre ligas | Acuerdo diferido, cambio de club y reconstrucción de calendario al avanzar la temporada; incluye ligas internacionales | PASS |
 | Vacantes de entrenador | `/api/vacancies`, `Vacancies.tsx`: clubes con banquillo disponible, candidaturas y ofertas | PASS |
-| Despidos automáticos de clubes IA | `src/managers.py`: presión, destitución, sustituto del cuerpo técnico y `state.manager_changes`; el usuario recibe ultimátum | PASS (clubes IA) |
+| Despidos automáticos de clubes IA | `src/managers.py`: presión, destitución, nombramiento de sustituto del cuerpo técnico o interino y `state.manager_changes`; el usuario recibe ultimátum | PASS (clubes IA) |
 | Pruebas de agentes libres | `/api/trials`, `Trials.tsx`: invitación, progreso, informes y recomendación | PASS |
 | Finanzas detalladas | `/api/finance`, `/api/finance/ticket`, `Finance.tsx`: cuenta de resultados, salarios, proyección y taquilla | PASS |
 | Análisis de partido | `/api/analysis`, `Analysis.tsx`: eficiencia, comparativa, cronología, ratings y archivo | PASS |
@@ -315,17 +315,17 @@
 
 ```text
 python3 -m pytest src/tests -q
-326 passed in 437.01s
+326 passed in 435.37s
 
 cd manager/web/frontend && npm run build
-✓ built in 5.11s
+✓ built in 5.13s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-0Kab3KEs.js → 200
+curl /static/react/assets/index-BAt_kGGI.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2772,"clothUpdates":1386},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1386},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":58,"stickFlexes":67},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2772},"viewerPhysics":{"frames":63,"playerCollisions":0,"bodyCollisions":52,"stickCollisions":34,"ballSpeed":2.34},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2860,"clothUpdates":1430},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1430},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":60,"stickFlexes":69},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2860},"viewerPhysics":{"frames":65,"playerCollisions":0,"bodyCollisions":53,"stickCollisions":37,"ballSpeed":2.55},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true}
 ```
 
 ## Límites conscientes
