@@ -19,7 +19,7 @@
 | Pulido de UI y scouting | Mercado con carga y recuento real; calendario “Agosto de 2026”; tácticas sin lista duplicada; entrenamiento con etiquetas en español; score del ojeador normalizado 60-100 | PASS |
 | Encuadre del visor 3D | Cámara broadcast a 50° y visor de 440 px; el campo llena el marco y se ven ambos goals | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **345 passed** | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **351 passed** | PASS |
 | Persistencia comprimida | zlib + `compact_saves`/`prune_saves`; 1,3 GB → 198 MB, 190 saves, `PRAGMA integrity_check = ok` | PASS |
 | CI y lint | `ruff check src web` limpio; workflow en `docs/ci_workflow.yml`; activación pendiente de scope `workflow` | PASS local / pendiente activar |
 | Diccionario y validación de datos | `docs/50_DICCIONARIO_DATOS.md`, `src/data_validation.py`, `/api/data-validation`, test de backfill que no convierte jugadores en staff | PASS |
@@ -28,6 +28,7 @@
 | Refactor de la API | 138 rutas repartidas en 6 blueprints con `web/api/common.py` | PASS |
 | Refactor de temporada | `season_sim.py` + `season_promotion.py`; `season.py` conserva la API pública | PASS |
 | Refactor del motor | `match_shared.py` + mixins de scoring/referee/tactics/simulation | PASS |
+| Profundidad del motor | Momentum, portador por jugador, fatiga individual y cadena de golpe franco | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/gol anulado/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -353,7 +354,7 @@
 
 ```text
 python3 -m pytest src/tests -q
-345 passed in 273.74s
+351 passed in 273.74s
 
 cd manager/web/frontend && npm run build
 ✓ built in 3.12s

@@ -86,6 +86,7 @@ class SimulationMixin:
             self.finalize()
             return []
         self._tick_suspensions()
+        self.momentum *= 0.985
         start = len(self.events)
         m = self.moment_in_quarter
         self.minute = int((self.quarter - 1) * QUARTER_MINUTES + (m + 1) * (QUARTER_MINUTES / MOMENTS_PER_QUARTER))
@@ -105,11 +106,22 @@ class SimulationMixin:
         opp = 1 - side
         attack = ha if side == 0 else aa
         defense = ad if side == 0 else hd
-        # fatiga por momento: ambos equipos están en el campo
+        carrier = self._carrier(side)
+        fatigue_pen = max(0.0, carrier.fatigue - 55.0) / 100.0 * 0.12
+        # fatiga individual: depende del rol, la resistencia y la carga táctica
         for team_side, team_obj in ((0, self.home), (1, self.away)):
             fat_team = 0.35 + max(0, team_obj.tactics.fatigue_mod()) * 2.5
             for p in self._lineup(team_side):
-                p.fatigue = min(100.0, p.fatigue + fat_team)
+                role_load = 1.0
+                if p.subposition == "Portero":
+                    role_load = 0.55
+                elif p.subposition == "Medio":
+                    role_load = 1.12
+                elif p.subposition == "Delantero":
+                    role_load = 1.06
+                stamina = float(p.attributes.get("resistencia", 50))
+                load = fat_team * role_load * max(0.55, 1.15 - stamina / 250)
+                p.fatigue = min(100.0, p.fatigue + max(0.15, load))
         # minutos para los jugadores que están realmente en el campo
         for team_side in (0, 1):
             for p in self._lineup(team_side):
@@ -118,19 +130,20 @@ class SimulationMixin:
         r = self.rng.random()
         if self.zone == "own_23":
             if r < 0.58:
-                # salida
+                # salida con el portador como protagonista
                 self._inc_stat(side, "passes")
-                if self.rng.random() < 0.85:
+                success = 0.85 + (carrier.attributes.get("pase", 50) - 50) / 500 - fatigue_pen
+                if self.rng.random() < success:
                     self._inc_stat(side, "passes_completed")
+                    self._record_carrier(carrier, "pass", True)
                     self.zone = "middle"
                 else:
+                    self._record_carrier(carrier, "pass", False)
                     self.possession = opp
                     self.zone = "attacking_23"
             elif r < 0.74:
                 self._inc_stat(side, "aerials")
-                self._add_event(
-                    "aerial", side, self._lineup(side)[0], f"{t.name} busca el aerial para superar la presión."
-                )
+                self._add_event("aerial", side, carrier, f"{carrier.name} busca el aerial para superar la presión.")
                 self.zone = "middle"
                 if self.rng.random() < 0.30:
                     self.possession = opp
@@ -142,25 +155,29 @@ class SimulationMixin:
         elif self.zone == "middle":
             if r < 0.44:
                 self._inc_stat(side, "passes")
-                success = self.rng.random() < (0.78 + (attack - defense) / 250)
+                chance = 0.78 + (attack - defense) / 250 + (carrier.attributes.get("pase", 50) - 50) / 400 - fatigue_pen
+                success = self.rng.random() < chance
                 if success:
                     self._inc_stat(side, "passes_completed")
+                    self._record_carrier(carrier, "pass", True)
                     self.zone = "attacking_23" if self.rng.random() < 0.70 else "middle"
                 else:
                     self._inc_stat(opp, "tackles")
+                    self._record_carrier(carrier, "pass", False)
                     self.possession = opp
             elif r < 0.56:
                 self._inc_stat(side, "passes")
-                if self.rng.random() < 0.75:
+                chance = 0.75 + (carrier.attributes.get("pase", 50) - 50) / 400 - fatigue_pen
+                if self.rng.random() < chance:
                     self._inc_stat(side, "passes_completed")
+                    self._record_carrier(carrier, "pass", True)
                     self.zone = "attacking_23"
                 else:
+                    self._record_carrier(carrier, "pass", False)
                     self.possession = opp
             elif r < 0.68:
                 self._inc_stat(side, "aerials")
-                self._add_event(
-                    "aerial", side, self._lineup(side)[0], f"{t.name} lanza un aerial para cambiar de carril."
-                )
+                self._add_event("aerial", side, carrier, f"{carrier.name} lanza un aerial para cambiar de carril.")
                 if self.rng.random() < 0.60:
                     self.zone = "attacking_23"
                 else:
@@ -169,8 +186,8 @@ class SimulationMixin:
                 self._add_event(
                     "three_d",
                     side,
-                    self._lineup(side)[0],
-                    f"{self._lineup(side)[0].name} usa un 3D para superar el stick.",
+                    carrier,
+                    f"{carrier.name} usa un 3D para superar el stick.",
                 )
                 if self.rng.random() < 0.60:
                     self.zone = "attacking_23"
@@ -178,9 +195,7 @@ class SimulationMixin:
                     self.possession = opp
             elif r < 0.88:
                 self._inc_stat(side, "tackles")
-                self._add_event(
-                    "tackle", side, self._lineup(side)[0], f"{self._lineup(side)[0].name} roba con un tackle limpio."
-                )
+                self._add_event("tackle", side, carrier, f"{carrier.name} roba con un tackle limpio.")
                 self.possession = side
             elif r < 0.96:
                 self._foul(side)
@@ -189,7 +204,8 @@ class SimulationMixin:
         elif self.zone == "attacking_23":
             if r < 0.34:
                 self._inc_stat(side, "circle_entries")
-                self._add_event("circle_entry", side, None, f"{t.name} entra al círculo con peligro.")
+                self._add_event("circle_entry", side, carrier, f"{carrier.name} entra al círculo con peligro.")
+                self._shift_momentum(side, 0.05, "entrada al círculo")
                 self.zone = "circle"
             elif r < 0.55:
                 self._penalty_corner(side)
@@ -197,14 +213,17 @@ class SimulationMixin:
                 self._shot(side, "open")
             elif r < 0.82:
                 self._inc_stat(side, "aerials")
-                self._add_event("aerial", side, self._lineup(side)[0], f"{t.name} busca el segundo palo con un aerial.")
+                self._add_event("aerial", side, carrier, f"{carrier.name} busca el segundo palo con un aerial.")
                 self.zone = "circle" if self.rng.random() < 0.6 else "middle"
             elif r < 0.90:
                 self._inc_stat(side, "passes")
-                if self.rng.random() < 0.75:
+                chance = 0.75 + (carrier.attributes.get("pase", 50) - 50) / 400 - fatigue_pen
+                if self.rng.random() < chance:
                     self._inc_stat(side, "passes_completed")
+                    self._record_carrier(carrier, "pass", True)
                     self.zone = "circle" if self.rng.random() < 0.50 else "attacking_23"
                 else:
+                    self._record_carrier(carrier, "pass", False)
                     self.possession = opp
                     self.zone = "middle"
             elif r < 0.97:
@@ -221,9 +240,7 @@ class SimulationMixin:
             elif r < 0.84:
                 self._shot(side, "deflection")
             elif r < 0.92:
-                self._add_event(
-                    "chance", side, self._lineup(side)[0], f"{t.name} genera una ocasión, pero la defensa despeja."
-                )
+                self._add_event("chance", side, carrier, f"{carrier.name} genera una ocasión, pero la defensa despeja.")
                 self.possession = opp
                 self.zone = "middle"
             elif r < 0.96:
@@ -245,7 +262,8 @@ class SimulationMixin:
     def _end_quarter(self):
         for side in (0, 1):
             for p in self._lineup(side):
-                p.fatigue = max(0.0, p.fatigue - 1.5)
+                recovery = 1.2 + float(p.attributes.get("resistencia", 50)) / 100.0
+                p.fatigue = max(0.0, p.fatigue - recovery)
         if self.quarter < 4:
             for side in sorted(self.ai_sides):
                 self._ai_adjust(side)
@@ -326,6 +344,9 @@ class SimulationMixin:
                         "yellow": 0,
                         "red": 0,
                         "rating": 6.0,
+                        "decisions": 0,
+                        "key_passes": 0,
+                        "turnovers": 0,
                     },
                 )
                 rating = self._rating(p)
@@ -375,6 +396,8 @@ class SimulationMixin:
             "home_tactical_bonus": round(self.tactical_matchup_bonus(0), 2),
             "away_tactical_bonus": round(self.tactical_matchup_bonus(1), 2),
             "referee": self.referee,
+            "momentum": round(self.momentum, 3),
+            "momentum_log": self.momentum_log[-8:],
             "opposition": {
                 "side": self.opposition_side,
                 "effect": self.opposition_effect(self.opposition_side) if self.opposition_side is not None else {"attack": 0.0, "defense": 0.0, "players": 0.0},
@@ -411,6 +434,9 @@ class SimulationMixin:
                     "red": st.get("red", 0),
                     "rating": self._rating(p),
                     "fatigue": round(p.fatigue, 1),
+                    "decisions": st.get("decisions", 0),
+                    "key_passes": st.get("key_passes", 0),
+                    "turnovers": st.get("turnovers", 0),
                     "injury": p.injury,
                     "suspension": p.suspension,
                 }
@@ -462,7 +488,20 @@ class SimulationMixin:
         self._subs[side] += 1
         self.played[side].add(inn.id)
         self.player_stats.setdefault(
-            inn.id, {"goals": 0, "assists": 0, "shots": 0, "saves": 0, "green": 0, "yellow": 0, "red": 0, "rating": 6.0}
+            inn.id,
+            {
+                "goals": 0,
+                "assists": 0,
+                "shots": 0,
+                "saves": 0,
+                "green": 0,
+                "yellow": 0,
+                "red": 0,
+                "rating": 6.0,
+                "decisions": 0,
+                "key_passes": 0,
+                "turnovers": 0,
+            },
         )
         self.player_minutes.setdefault(inn.id, 0)
         if coaching:

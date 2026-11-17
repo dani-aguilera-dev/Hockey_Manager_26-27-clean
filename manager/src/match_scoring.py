@@ -37,6 +37,7 @@ class ScoringMixin:
     def _rating(self, p: PlayerState) -> float:
         st = self.player_stats.get(p.id, {})
         r = 6.5 + 1.0 * st.get("goals", 0) + 0.5 * st.get("assists", 0) + 0.12 * st.get("saves", 0)
+        r += 0.05 * st.get("key_passes", 0) - 0.03 * st.get("turnovers", 0)
         r -= 0.35 * st.get("green", 0) + 0.7 * st.get("yellow", 0) + 1.5 * st.get("red", 0)
         if p.injury > 0:
             r -= 0.2
@@ -85,6 +86,7 @@ class ScoringMixin:
     ) -> None:
         t = self._team(side)
         self.score[side] += 1
+        self._shift_momentum(side, 0.18, "gol")
         self._inc_stat(side, "goals")
         self._inc_stat(side, "shots")
         self._inc_stat(side, "shots_on_target")
@@ -216,7 +218,11 @@ class ScoringMixin:
                 [p.attributes.get("pase", 50) + p.attributes.get("pc_injection", 40) * 0.3 for p in lineup],
             )
         self._inc_stat(side, "shots")
-        attack = scorer.attributes.get("definicion", 50) + self.rng.gauss(0, 8)
+        attack = (
+            scorer.attributes.get("definicion", 50)
+            + self.rng.gauss(0, 8)
+            - max(0.0, scorer.fatigue - 50.0) * 0.10
+        )
         gk = self._gk(opp)
         defense = (gk.attributes.get("reflejos", 50) + gk.attributes.get("blocaje", 50)) / 2 + self.rng.gauss(0, 6)
         on_target = self.rng.random() < (0.55 + (attack - 50) / 180)
@@ -228,6 +234,7 @@ class ScoringMixin:
             self.zone = "middle"
             return
         self._inc_stat(side, "shots_on_target")
+        self._shift_momentum(side, 0.04, "tiro a puerta")
         goal_chance = 0.31 + (attack - defense) / 250
         goal_chance = max(0.10, min(0.65, goal_chance))
         if self.rng.random() < goal_chance:
@@ -251,6 +258,7 @@ class ScoringMixin:
         else:
             self._inc_stat(opp, "saves")
             self.player_stats[gk.id]["saves"] += 1
+            self._shift_momentum(opp, 0.03, "parada")
             self._add_event("save", side, gk, f"{gk.name} responde con una parada firme al disparo de {scorer.name}.")
             self.possession = opp
             self.zone = "middle"

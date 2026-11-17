@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import random
+import zlib
 from typing import Any
 
 from . import rules
@@ -10,7 +12,7 @@ from .match_shared import (
     HOME_ADVANTAGE_DEFENSE,
     _mean,
 )
-from .models import TACTIC_MODS
+from .models import TACTIC_MODS, PlayerState
 
 
 class TacticsMixin:
@@ -125,6 +127,11 @@ class TacticsMixin:
             plan_effect = self.match_plan_effect(1)
             aa += plan_effect["attack"]
             ad += plan_effect["defense"]
+        # El momentum premia al equipo que está dominando los últimos momentos.
+        ha += self.momentum * 1.8
+        hd += self.momentum * 1.1
+        aa -= self.momentum * 1.8
+        ad -= self.momentum * 1.1
         return max(25.0, ha), max(25.0, hd), max(25.0, aa), max(25.0, ad)
 
     def _possession_base(self) -> float:
@@ -139,6 +146,7 @@ class TacticsMixin:
             - self.away.tactics.defense_mod() * 0.5
             - max(0, rules.PLAYERS_ON_FIELD - len(home_lineup)) * 0.015
             + max(0, rules.PLAYERS_ON_FIELD - len(away_lineup)) * 0.015
+            + self.momentum * 0.04
         )
         return max(0.30, min(0.70, base))
 
@@ -347,3 +355,87 @@ class TacticsMixin:
             )
         if avg_fatigue > 60 and self._subs[side] < 5 and side in self.auto_sub_sides:
             self._substitute(side)
+
+    # ---------- decisiones por jugador y momentum ----------
+    def _decision_rng(self, salt: str) -> random.Random:
+        """RNG derivado para decisiones de jugador.
+
+        No consume el RNG principal: así los partidos ya guardados conservan
+        su secuencia y el resultado sigue siendo reproducible.
+        """
+        key = "|".join(
+            (
+                str(self.match_date),
+                self.home.id,
+                self.away.id,
+                str(self.quarter),
+                str(int(self.minute)),
+                self.zone,
+                salt,
+            )
+        )
+        return random.Random(zlib.crc32(key.encode("utf-8")))
+
+    def _carrier(self, side: int, zone: str | None = None) -> PlayerState:
+        """Elige al portador de la bola según zona, rol, atributos y fatiga."""
+        zone = zone or self.zone
+        lineup = [p for p in self._lineup(side) if p.subposition != "Portero"] or self._lineup(side)
+        weights: list[float] = []
+        for p in lineup:
+            base = 20.0 + p.attributes.get("control", 50) * 0.5 + p.attributes.get("pase", 50) * 0.3
+            if zone == "own_23":
+                if p.subposition in ("Central", "Lateral"):
+                    base += 25
+                elif p.subposition == "Medio":
+                    base += 10
+                elif p.subposition == "Delantero":
+                    base -= 5
+            elif zone == "middle":
+                if p.subposition == "Medio":
+                    base += 30
+                elif p.subposition == "Delantero":
+                    base += 10
+            elif zone in ("attacking_23", "circle"):
+                if p.subposition == "Delantero":
+                    base += 30
+                elif p.subposition == "Medio":
+                    base += 18
+            base -= max(0.0, p.fatigue - 55.0) * 0.25
+            weights.append(max(1.0, base))
+        return self._decision_rng("carrier").choices(lineup, weights=weights, k=1)[0]
+
+    def _record_carrier(self, player: PlayerState, kind: str, success: bool) -> None:
+        st = self.player_stats.setdefault(player.id, {})
+        st["decisions"] = int(st.get("decisions", 0)) + 1
+        if success and kind in ("pass", "carry") and self.zone in ("attacking_23", "circle"):
+            st["key_passes"] = int(st.get("key_passes", 0)) + 1
+        if not success:
+            st["turnovers"] = int(st.get("turnovers", 0)) + 1
+
+    def _shift_momentum(self, side: int, amount: float, reason: str = "") -> None:
+        """Mueve el momentum hacia el equipo indicado y registra el cambio."""
+        before = self.momentum
+        delta = amount if side == 0 else -amount
+        self.momentum = max(-1.0, min(1.0, before * 0.97 + delta))
+        if abs(self.momentum - before) < 0.0005:
+            return
+        self.momentum_log.append(
+            {
+                "minute": int(self.minute),
+                "quarter": self.quarter,
+                "side": side,
+                "amount": round(self.momentum - before, 3),
+                "momentum": round(self.momentum, 3),
+                "reason": reason,
+            }
+        )
+        crossed = (before < 0.30 <= self.momentum) or (before > -0.30 >= self.momentum)
+        if crossed:
+            beneficiary = 0 if self.momentum > 0 else 1
+            self._add_event(
+                "momentum",
+                beneficiary,
+                None,
+                f"El partido cambia de ritmo a favor de {self._team(beneficiary).name}.",
+            )
+

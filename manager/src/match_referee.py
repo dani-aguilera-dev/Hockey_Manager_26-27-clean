@@ -155,6 +155,7 @@ class RefereeMixin:
             )
             return self._penalty_corner(side, retake=False, retake_count=1)
         self._inc_stat(side, "pc")
+        self._shift_momentum(side, 0.05, "penalty corner")
         self._record_decision("penalty_corner", side, inj)
         self._add_event("pc", side, inj, f"Penalty corner para {t.name}. {inj.name} coloca la bola en la marca.")
         # 1. saque vs primer runner
@@ -193,6 +194,7 @@ class RefereeMixin:
         chance = max(0.12, min(0.70, chance))
         if self.rng.random() < chance:
             self.score[side] += 1
+            self._shift_momentum(side, 0.14, "gol de penalty corner")
             self._inc_stat(side, "goals")
             self._inc_stat(side, "pc_goals")
             self._inc_stat(side, "shots")
@@ -215,6 +217,7 @@ class RefereeMixin:
                 self._inc_stat(side, "shots_on_target")
                 self._inc_stat(opp, "saves")
                 self.player_stats[gk.id]["saves"] += 1
+                self._shift_momentum(opp, 0.04, "parada de penalty corner")
                 self._add_event(
                     "save", side, gk, f"Paradón de {gk.name} al tiro de {shooter.name}. El PC se queda sin premio."
                 )
@@ -261,6 +264,7 @@ class RefereeMixin:
         chance = max(0.55, min(0.92, chance))
         if self.rng.random() < chance:
             self.score[side] += 1
+            self._shift_momentum(side, 0.16, "gol de stroke")
             self._inc_stat(side, "goals")
             self._inc_stat(side, "stroke_goals")
             self._inc_stat(side, "shots")
@@ -514,7 +518,65 @@ class RefereeMixin:
                 f"El árbitro adelanta el golpe franco {rules.FREE_HIT_ADVANCE_METERS} metros por protestas de la defensa.",
             )
             self.zone = "attacking_23" if self.rng.random() < 0.35 else "middle"
-        self.possession = opp
+        self._free_hit(opp)
+
+    def _free_hit(self, side: int):
+        """Cadena de golpe franco: corto, largo o tiro directo.
+
+        Usa un RNG derivado para no alterar la secuencia principal del partido.
+        """
+        t = self._team(side)
+        lineup = [p for p in self._lineup(side) if p.subposition != "Portero"] or self._lineup(side)
+        rng = self._decision_rng("free_hit")
+        taker = max(
+            lineup,
+            key=lambda p: p.attributes.get("pase", 50) * 0.45
+            + p.attributes.get("pc_injection", 50) * 0.30
+            + p.attributes.get("control", 50) * 0.25,
+        )
+        self._inc_stat(side, "free_hits")
+        self.possession = side
+        option = rng.choices(["short", "long", "direct"], weights=[0.45, 0.40, 0.15], k=1)[0]
+        fatigue_pen = max(0.0, taker.fatigue - 55.0) / 100.0 * 0.12
+        if option == "short":
+            chance = 0.74 + (taker.attributes.get("pase", 50) - 50) / 300 - fatigue_pen
+            if rng.random() < chance:
+                self._record_carrier(taker, "pass", True)
+                self._add_event(
+                    "free_hit",
+                    side,
+                    taker,
+                    f"{taker.name} juega corto el golpe franco y {t.name} conserva la posesión.",
+                )
+                self.zone = "attacking_23" if rng.random() < 0.55 else "middle"
+            else:
+                self._record_carrier(taker, "pass", False)
+                self._add_event("free_hit", side, taker, f"El pase corto de {taker.name} es interceptado.")
+                self.possession = 1 - side
+                self.zone = "middle"
+            return
+        if option == "long":
+            target = max(
+                lineup,
+                key=lambda p: p.attributes.get("aerial", 50) + p.attributes.get("definicion", 50) * 0.35,
+            )
+            chance = 0.52 + (taker.attributes.get("pc_injection", 50) - 50) / 300 - fatigue_pen
+            if rng.random() < chance:
+                self._add_event(
+                    "free_hit",
+                    side,
+                    taker,
+                    f"{taker.name} lanza el golpe franco al área y {target.name} gana la posición.",
+                )
+                self.zone = "circle"
+            else:
+                self._add_event("free_hit", side, taker, f"El envío largo de {taker.name} no encuentra receptor.")
+                self.possession = 1 - side
+                self.zone = "middle"
+            return
+        self._add_event("free_hit", side, taker, f"{taker.name} opta por el tiro directo desde el golpe franco.")
+        self.zone = "attacking_23"
+        self._shot(side, "open")
 
     def _card(self, side: int):
         t = self._team(side)
@@ -567,6 +629,7 @@ class RefereeMixin:
             p.suspension_started = self.match_date
             p.absence_note = "Sanción por tarjeta roja"
             suffix = "expulsado; el equipo juega con uno menos el resto del partido."
+        self._shift_momentum(side, -0.10, f"tarjeta {card_type}")
         self._add_event("card", side, p, f"{rules.CARD_LABELS[card_type]} para {p.name} ({t.name}): {reason}. {suffix}")
         p.morale = max(1, p.morale - {"green": 1, "yellow": 2, "red": 4}[card_type])
         if reason in ("retraso deliberado", "conducta antideportiva"):

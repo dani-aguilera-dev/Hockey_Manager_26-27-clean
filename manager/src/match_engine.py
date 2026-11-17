@@ -82,6 +82,10 @@ class MatchEngine(SimulationMixin, RefereeMixin, ScoringMixin, TacticsMixin):
         self.zone = "middle"
         self.possession = 0  # 0 home, 1 away
         self.possession_counts = [0, 0]
+        # Momentum en [-1, 1]: positivo favorece al local. Se alimenta de
+        # goles, ocasiones, paradas y tarjetas, y decae con el tiempo.
+        self.momentum = 0.0
+        self.momentum_log: list[dict[str, Any]] = []
         self.stats = {0: self._empty_stats(), 1: self._empty_stats()}
         self.player_stats: dict[str, dict[str, Any]] = {}
         self.player_minutes: dict[str, int] = {}
@@ -95,6 +99,9 @@ class MatchEngine(SimulationMixin, RefereeMixin, ScoringMixin, TacticsMixin):
                 "yellow": 0,
                 "red": 0,
                 "rating": 6.5,
+                "decisions": 0,
+                "key_passes": 0,
+                "turnovers": 0,
             }
             self.player_minutes[p.id] = 0
         self.injuries: list[dict[str, Any]] = []
@@ -149,6 +156,7 @@ class MatchEngine(SimulationMixin, RefereeMixin, ScoringMixin, TacticsMixin):
             "aerials": 0,
             "passes": 0,
             "passes_completed": 0,
+            "free_hits": 0,
             "goals": 0,
             "fouls": 0,
             "advantage": 0,
