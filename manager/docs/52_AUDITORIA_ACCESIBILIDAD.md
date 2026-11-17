@@ -21,7 +21,7 @@ npm run test:a11y
 ## Resultado
 
 ```json
-{"pages":{"dashboard":{"violations":0,"passes":23},"calendar":{"violations":0,"passes":22},"squad":{"violations":0,"passes":19},"tactics":{"violations":0,"passes":26},"market":{"violations":0,"passes":18},"training":{"violations":0,"passes":13},"match":{"violations":0,"passes":22},"report":{"violations":0,"passes":24},"board":{"violations":0,"passes":19},"finance":{"violations":0,"passes":23},"shortlist":{"violations":0,"passes":21},"options":{"violations":0,"passes":21},"mobile-dashboard":{"violations":0,"passes":22},"mobile-calendar":{"violations":0,"passes":21},"mobile-squad":{"violations":0,"passes":19},"mobile-tactics":{"violations":0,"passes":25}},"violations":[],"keyboard":{"skipLink":true,"skipTarget":"main","navLinks":45},"serious":0,"totalViolations":0,"ok":true,"suite":"a11y","ms":16985}
+{"pages":{"dashboard":{"violations":0,"passes":23},"calendar":{"violations":0,"passes":22},"squad":{"violations":0,"passes":19},"tactics":{"violations":0,"passes":26},"market":{"violations":0,"passes":18},"training":{"violations":0,"passes":13},"match":{"violations":0,"passes":22},"report":{"violations":0,"passes":24},"board":{"violations":0,"passes":19},"finance":{"violations":0,"passes":23},"shortlist":{"violations":0,"passes":21},"options":{"violations":0,"passes":21},"mobile-dashboard":{"violations":0,"passes":22},"mobile-calendar":{"violations":0,"passes":21},"mobile-squad":{"violations":0,"passes":19},"mobile-tactics":{"violations":0,"passes":25}},"violations":[],"keyboard":{"skipLink":true,"skipTarget":"main","navLinks":45},"serious":0,"totalViolations":0,"ok":true,"suite":"a11y","ms":17685}
 ```
 
 - **0 violaciones** en 16 combinaciones pantalla/viewport.

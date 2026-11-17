@@ -10,7 +10,8 @@
     "test:e2e": "node e2e_beta.mjs",
     "test:e2e:smoke": "node e2e_smoke.mjs",
     "test:e2e:live": "node e2e_live.mjs",
-    "test:e2e:all": "node e2e_smoke.mjs && node e2e_live.mjs && node e2e_beta.mjs",
+    "test:e2e:i18n": "node e2e_i18n.mjs",
+    "test:e2e:all": "node e2e_smoke.mjs && node e2e_live.mjs && node e2e_i18n.mjs && node e2e_beta.mjs",
     "test:a11y": "node e2e_a11y.mjs"
   },
   "dependencies": {

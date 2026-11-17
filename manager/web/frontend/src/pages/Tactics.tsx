@@ -3,6 +3,7 @@ import { ArrowUpCircle, Check, Save, Search, Sparkles } from 'lucide-react'
 import { api } from '../lib/api'
 import type { Player, Tactics, TacticsPayload } from '../types'
 import { useToast } from '../context/ToastContext'
+import { useLanguage } from '../lib/i18n'
 import { Avatar, Badge, Button, Card, Field, LoadingBlock, Modal, PageHeader } from '../components/ui'
 import { Pitch } from '../components/Pitch'
 
@@ -67,6 +68,7 @@ function label(value: string) {
 
 export default function TacticsPage() {
   const { toast } = useToast()
+  const { t } = useLanguage()
   const [data, setData] = useState<TacticsPayload | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -83,7 +85,7 @@ export default function TacticsPage() {
         setTactics(data.tactics)
         setSelected(data.line.map((player) => player.id))
       })
-      .catch((err) => toast(err instanceof Error ? err.message : 'No se pudo cargar la táctica.', 'danger'))
+      .catch((err) => toast(err instanceof Error ? err.message : t('No se pudo cargar la táctica.'), 'danger'))
       .finally(() => setLoading(false))
   }, [toast])
 
@@ -154,27 +156,27 @@ export default function TacticsPage() {
       setData(response.data)
       setTactics(response.data.tactics)
       setSelected(response.data.line.map((player) => player.id))
-      toast(response.message || 'Once guardado.', 'success')
+      toast(response.message || t('Once guardado.'), 'success')
     } catch (err) {
-      toast(err instanceof Error ? err.message : 'No se pudo guardar la táctica.', 'danger')
+      toast(err instanceof Error ? err.message : t('No se pudo guardar la táctica.'), 'danger')
     } finally {
       setSaving(false)
     }
   }
 
-  if (loading) return <LoadingBlock label="Cargando pizarra y plantilla…" />
-  if (!data || !tactics) return <Card><p className="muted">No se pudo cargar la táctica.</p></Card>
+  if (loading) return <LoadingBlock label={t('Cargando pizarra y plantilla…')} />
+  if (!data || !tactics) return <Card><p className="muted">{t('No se pudo cargar la táctica.')}</p></Card>
 
   return (
     <>
       <PageHeader
-        eyebrow="Pizarra · una decisión por partido"
-        title="Táctica y once"
-        subtitle="Sistema de hockey: bloque y marcaje, salida, ataque, presión y roles manuales de penalty corner y stroke."
+        eyebrow={t('Pizarra · una decisión por partido')}
+        title={t('Táctica y once')}
+        subtitle={t('Sistema de hockey: bloque y marcaje, salida, ataque, presión y roles manuales de penalty corner y stroke.')}
         actions={
           <>
-            <Button icon={Sparkles} onClick={() => save(true)} loading={saving}>Autoalineación</Button>
-            <Button variant="primary" icon={Save} onClick={() => save(false)} loading={saving}>Guardar once</Button>
+            <Button icon={Sparkles} onClick={() => save(true)} loading={saving}>{t('Autoalineación')}</Button>
+            <Button variant="primary" icon={Save} onClick={() => save(false)} loading={saving}>{t('Guardar once')}</Button>
           </>
         }
       />
@@ -182,32 +184,32 @@ export default function TacticsPage() {
       <div className="tactics-layout">
         <div className="stack">
           <Card>
-            <h3>Planteamiento</h3>
+            <h3>{t('Planteamiento')}</h3>
             <div className="form-grid tactics-form">
-              <Field label="Formación"><select value={tactics.formation} onChange={(event) => setField('formation', event.target.value)}>{data.formations.map((value) => <option key={value}>{value}</option>)}</select></Field>
-              <Field label="Mentalidad"><select value={tactics.mentality} onChange={(event) => setField('mentality', event.target.value)}>{mentality.map((value) => <option key={value} value={value}>{label(value)}</option>)}</select></Field>
-              <Field label="Presión"><select value={tactics.press} onChange={(event) => setField('press', event.target.value)}>{press.map((value) => <option key={value} value={value}>{label(value)}</option>)}</select></Field>
-              <Field label="Sistema defensivo"><select value={tactics.defensive_system} onChange={(event) => setField('defensive_system', event.target.value)}>{defensiveSystems.map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></Field>
-              <Field label="Sistema de ataque"><select value={tactics.attack_system} onChange={(event) => setField('attack_system', event.target.value)}>{attackSystems.map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></Field>
-              <Field label="Salida / build-up"><select value={tactics.outlet} onChange={(event) => setField('outlet', event.target.value)}>{outlets.map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></Field>
-              <Field label="Activador de presión"><select value={tactics.press_trigger} onChange={(event) => setField('press_trigger', event.target.value)}>{triggers.map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></Field>
-              <Field label="Anchura"><select value={tactics.width} onChange={(event) => setField('width', event.target.value)}>{width.map((value) => <option key={value} value={value}>{label(value)}</option>)}</select></Field>
-              <Field label="Tempo"><select value={tactics.tempo} onChange={(event) => setField('tempo', event.target.value)}>{tempo.map((value) => <option key={value} value={value}>{label(value)}</option>)}</select></Field>
-              <Field label="Pase"><select value={tactics.passing} onChange={(event) => setField('passing', event.target.value)}>{passing.map((value) => <option key={value} value={value}>{label(value)}</option>)}</select></Field>
+              <Field label={t('Formación')}><select value={tactics.formation} onChange={(event) => setField('formation', event.target.value)}>{data.formations.map((value) => <option key={value}>{value}</option>)}</select></Field>
+              <Field label={t('Mentalidad')}><select value={tactics.mentality} onChange={(event) => setField('mentality', event.target.value)}>{mentality.map((value) => <option key={value} value={value}>{t(label(value))}</option>)}</select></Field>
+              <Field label={t('Presión')}><select value={tactics.press} onChange={(event) => setField('press', event.target.value)}>{press.map((value) => <option key={value} value={value}>{t(label(value))}</option>)}</select></Field>
+              <Field label={t('Sistema defensivo')}><select value={tactics.defensive_system} onChange={(event) => setField('defensive_system', event.target.value)}>{defensiveSystems.map(([value, text]) => <option key={value} value={value}>{t(text)}</option>)}</select></Field>
+              <Field label={t('Sistema de ataque')}><select value={tactics.attack_system} onChange={(event) => setField('attack_system', event.target.value)}>{attackSystems.map(([value, text]) => <option key={value} value={value}>{t(text)}</option>)}</select></Field>
+              <Field label={t('Salida / build-up')}><select value={tactics.outlet} onChange={(event) => setField('outlet', event.target.value)}>{outlets.map(([value, text]) => <option key={value} value={value}>{t(text)}</option>)}</select></Field>
+              <Field label={t('Activador de presión')}><select value={tactics.press_trigger} onChange={(event) => setField('press_trigger', event.target.value)}>{triggers.map(([value, text]) => <option key={value} value={value}>{t(text)}</option>)}</select></Field>
+              <Field label={t('Anchura')}><select value={tactics.width} onChange={(event) => setField('width', event.target.value)}>{width.map((value) => <option key={value} value={value}>{t(label(value))}</option>)}</select></Field>
+              <Field label={t('Tempo')}><select value={tactics.tempo} onChange={(event) => setField('tempo', event.target.value)}>{tempo.map((value) => <option key={value} value={value}>{t(label(value))}</option>)}</select></Field>
+              <Field label={t('Pase')}><select value={tactics.passing} onChange={(event) => setField('passing', event.target.value)}>{passing.map((value) => <option key={value} value={value}>{t(label(value))}</option>)}</select></Field>
             </div>
-            <div className="notice notice-info mt-2">El once manual se mantiene hasta que cambies de formación. Si cambias de dibujo, el cuerpo técnico autoalinea.</div>
+            <div className="notice notice-info mt-2">{t('El once manual se mantiene hasta que cambies de formación. Si cambias de dibujo, el cuerpo técnico autoalinea.')}</div>
           </Card>
           <Card>
             <div className="inline" style={{ justifyContent: 'space-between' }}>
-              <div><div className="cat">BALÓN PARADO</div><h3 style={{ margin: '3px 0 0' }}>Penalty corner y stroke</h3></div>
-              <Badge tone="gold">Roles manuales</Badge>
+              <div><div className="cat">{t('BALÓN PARADO')}</div><h3 style={{ margin: '3px 0 0' }}>{t('Penalty corner y stroke')}</h3></div>
+              <Badge tone="gold">{t('Roles manuales')}</Badge>
             </div>
             <div className="form-grid tactics-form mt-1">
-              <Field label="Rutina de PC"><select value={tactics.pc_routine} onChange={(event) => setField('pc_routine', event.target.value)}>{pcRoutines.map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></Field>
+              <Field label={t('Rutina de PC')}><select value={tactics.pc_routine} onChange={(event) => setField('pc_routine', event.target.value)}>{pcRoutines.map(([value, text]) => <option key={value} value={value}>{t(text)}</option>)}</select></Field>
               {specialistRoles.map(([field, labelText]) => (
-                <Field key={field} label={labelText}>
+                <Field key={field} label={t(labelText)}>
                   <select value={String(tactics[field] || '')} onChange={(event) => setField(field, event.target.value)}>
-                    <option value="">Automático · mejor atributo</option>
+                    <option value="">{t('Automático · mejor atributo')}</option>
                     {specialistPool.map((player) => (
                       <option key={player.id} value={player.id}>{player.name} · {player.subposition} · {player.overall.toFixed(1)}</option>
                     ))}
@@ -215,10 +217,10 @@ export default function TacticsPage() {
                 </Field>
               ))}
             </div>
-            <p className="small muted mt-1">El sacador, parador, tirador, desviador y jugador de rechace se usan en el próximo PC. El lanzador de stroke también se aplica a la tanda de penaltis.</p>
+            <p className="small muted mt-1">{t('El sacador, parador, tirador, desviador y jugador de rechace se usan en el próximo PC. El lanzador de stroke también se aplica a la tanda de penaltis.')}</p>
           </Card>
           <Card>
-            <div className="inline" style={{ justifyContent: 'space-between' }}><h3 style={{ margin: 0 }}>Banquillo</h3><Badge tone="neutral">{data.bench.length}</Badge></div>
+            <div className="inline" style={{ justifyContent: 'space-between' }}><h3 style={{ margin: 0 }}>{t('Banquillo')}</h3><Badge tone="neutral">{data.bench.length}</Badge></div>
             <div className="stack-sm mt-1">
               {data.bench.map((player) => <PlayerMini key={player.id} player={player} onPromote={() => setPromotePlayer(player)} />)}
             </div>
@@ -229,7 +231,7 @@ export default function TacticsPage() {
           <Card padded={false}>
             <div style={{ padding: '18px 18px 0' }}>
               <div className="inline" style={{ justifyContent: 'space-between' }}>
-                <div><div className="cat">ONCE ACTUAL</div><h3 style={{ margin: '3px 0 0' }}>{tactics.formation}</h3></div>
+                <div><div className="cat">{t('ONCE ACTUAL')}</div><h3 style={{ margin: '3px 0 0' }}>{tactics.formation}</h3></div>
                 <Badge tone="gold">{selected.length}/11</Badge>
               </div>
             </div>
@@ -240,13 +242,13 @@ export default function TacticsPage() {
 
       <Modal
         open={pickerSlot !== null}
-        title={pickerSlotData ? `Elegir ${pickerSlotData.code} · ${pickerSlotData.group}` : 'Elegir jugador'}
+        title={pickerSlotData ? t('Elegir {code} · {group}', { code: pickerSlotData.code, group: t(pickerSlotData.group) }) : t('Elegir jugador')}
         onClose={() => { setPickerSlot(null); setPickerQuery('') }}
         wide
       >
         <div className="player-picker-head">
-          <label className="search-box"><Search size={15} /><input value={pickerQuery} onChange={(event) => setPickerQuery(event.target.value)} placeholder="Buscar por nombre, posición o arquetipo…" /></label>
-          <span className="small muted">{pickerCandidates.length} jugadores disponibles</span>
+          <label className="search-box"><Search size={15} /><input value={pickerQuery} onChange={(event) => setPickerQuery(event.target.value)} placeholder={t('Buscar por nombre, posición o arquetipo…')} /></label>
+          <span className="small muted">{t('{count} jugadores disponibles', { count: pickerCandidates.length })}</span>
         </div>
         <div className="player-picker-list">
           {pickerCandidates.map((player) => {
@@ -257,32 +259,32 @@ export default function TacticsPage() {
               <button type="button" className={`player-picker-row ${current ? 'current' : ''}`} key={player.id} onClick={() => choosePlayer(pickerSlot ?? 0, player.id)}>
                 <Avatar player={player} size={42} />
                 <span className="player-picker-main">
-                  <span className="inline"><b>{player.name}</b>{recommended && <Badge tone="gold">Recomendado</Badge>}{inLineup && !current && <Badge tone="blue">En el once</Badge>}{current && <Badge tone="ok">Actual</Badge>}</span>
+                  <span className="inline"><b>{player.name}</b>{recommended && <Badge tone="gold">{t('Recomendado')}</Badge>}{inLineup && !current && <Badge tone="blue">{t('En el once')}</Badge>}{current && <Badge tone="ok">{t('Actual')}</Badge>}</span>
                   <span>{player.subposition} · {player.archetype} · {player.age} años</span>
-                  <span className="small muted">OVR {player.overall.toFixed(1)} · forma {player.form.toFixed(1)} · fatiga {player.fatigue.toFixed(0)}% · relación {player.relationship}/100</span>
+                  <span className="small muted">OVR {player.overall.toFixed(1)} · forma {player.form.toFixed(1)} · {t('fatiga {value}%', { value: player.fatigue.toFixed(0) })} · relación {player.relationship}/100</span>
                 </span>
-                <span className="player-picker-side"><b>{player.overall.toFixed(1)}</b><span>{player.available ? 'Disponible' : player.absence_label}</span></span>
-                {current ? <Check size={16} className="ok" /> : <span className="picker-arrow">Elegir</span>}
+                <span className="player-picker-side"><b>{player.overall.toFixed(1)}</b><span>{player.available ? t('Disponible') : t(player.absence_label)}</span></span>
+                {current ? <Check size={16} className="ok" /> : <span className="picker-arrow">{t('Elegir')}</span>}
               </button>
             )
           })}
-          {!pickerCandidates.length && <p className="small muted">No hay jugadores que coincidan con la búsqueda.</p>}
+          {!pickerCandidates.length && <p className="small muted">{t('No hay jugadores que coincidan con la búsqueda.')}</p>}
         </div>
       </Modal>
 
       <Modal
         open={Boolean(promotePlayer)}
-        title={`Promover al once · ${promotePlayer?.name || ''}`}
+        title={t('Promover al once · {name}', { name: promotePlayer?.name || '' })}
         onClose={() => setPromotePlayer(null)}
         wide
       >
-        <p className="small muted">Elige qué posición ocupa. El jugador que esté en esa posición pasará al banquillo.</p>
+        <p className="small muted">{t('Elige qué posición ocupa. El jugador que esté en esa posición pasará al banquillo.')}</p>
         <div className="player-picker-list mt-2">
           {allSlots.map((slot) => (
             <button type="button" className="player-picker-row" key={slot.index} onClick={() => { if (promotePlayer) choosePlayer(slot.index, promotePlayer.id); setPromotePlayer(null) }}>
               <span className="slot-code-pill">{slot.code}</span>
-              <span className="player-picker-main"><b>{slot.group}</b><span>{slot.player?.name || 'Vacío'} · {slot.player?.subposition || '—'}</span></span>
-              <span className="picker-arrow">Ocupar</span>
+              <span className="player-picker-main"><b>{slot.group}</b><span>{slot.player?.name || t('Vacío')} · {slot.player?.subposition || '—'}</span></span>
+              <span className="picker-arrow">{t('Ocupar')}</span>
             </button>
           ))}
         </div>
@@ -292,12 +294,13 @@ export default function TacticsPage() {
 }
 
 function PlayerMini({ player, onPromote }: { player: Player; onPromote?: () => void }) {
+  const { t } = useLanguage()
   return (
     <div className="squad-status-row">
       <Avatar player={player} size={30} />
-      <span className="squad-status-main"><b>{player.name}</b><span>{player.subposition} · {player.archetype} · fatiga {player.fatigue.toFixed(0)}%</span></span>
+      <span className="squad-status-main"><b>{player.name}</b><span>{player.subposition} · {player.archetype} · {t('fatiga {value}%', { value: player.fatigue.toFixed(0) })}</span></span>
       <Badge tone="neutral">{player.overall.toFixed(1)}</Badge>
-      {onPromote && <Button size="sm" variant="ghost" icon={ArrowUpCircle} onClick={onPromote}>Al once</Button>}
+      {onPromote && <Button size="sm" variant="ghost" icon={ArrowUpCircle} onClick={onPromote}>{t('Al once')}</Button>}
     </div>
   )
 }
