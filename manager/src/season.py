@@ -7,25 +7,17 @@ import zlib
 from dataclasses import dataclass
 from datetime import date, timedelta
 
-from .affiliates import advance_mentoring
 from .awards import archive_season_awards
 from .calendar import create_fixtures, league_table, recompute_table
 from .competitions import (
-    COMPETITIONS,
     DEFAULT_REGIONAL_LEAGUE,
     MARKET_SOURCE_SYSTEMS,
     MIN_MATCHDAY_SQUAD,
     MIN_ROSTER_SIZE,
-    PROMOTION_FINAL_START,
-    PROMOTION_GROUP_START,
-    PROMOTION_SPOTS,
     competition,
     is_regional,
-    promotion_groups,
 )
 from .cup import CUP_ACTIVATION_ROUND, CUP_OFFSETS, ROUND_PHASES, cup_round_fixtures, cup_start, new_cup
-from .data_loader import load_teams
-from .development import advance_development
 from .ehl import create_ehl, simulate_ehl
 from .finance import apply_round_finances
 from .history import archive_season
@@ -37,11 +29,164 @@ from .managers import (
     record_manager_change,
     replacement_manager,
 )
-from .match_engine import MatchEngine, MatchResult
+from .match_engine import MatchEngine
 from .models import Fixture, GameState, PlayerState, TeamState
-from .scouting import advance_scouting
-from .training import apply_training_plan, auto_plan
-from .trials import advance_trials
+from .season_promotion import (
+    _actual_promotion_groups as _actual_promotion_groups,
+)
+from .season_promotion import (
+    _actual_regional_promoted as _actual_regional_promoted,
+)
+from .season_promotion import (
+    _add_regional_team as _add_regional_team,
+)
+from .season_promotion import (
+    _advance_promotion_groups as _advance_promotion_groups,
+)
+from .season_promotion import (
+    _background_dhb_relegated as _background_dhb_relegated,
+)
+from .season_promotion import (
+    _background_dhb_table as _background_dhb_table,
+)
+from .season_promotion import (
+    _background_regional_promoted as _background_regional_promoted,
+)
+from .season_promotion import (
+    _create_promotion_groups as _create_promotion_groups,
+)
+from .season_promotion import (
+    _dhb_group_table as _dhb_group_table,
+)
+from .season_promotion import (
+    _dhb_groups_by_strength as _dhb_groups_by_strength,
+)
+from .season_promotion import (
+    _ensure_regional_league as _ensure_regional_league,
+)
+from .season_promotion import (
+    _fast_group_rows as _fast_group_rows,
+)
+from .season_promotion import (
+    _fast_rows_for_teams as _fast_rows_for_teams,
+)
+from .season_promotion import (
+    _finish_promotion as _finish_promotion,
+)
+from .season_promotion import (
+    _make_promotion_fixtures as _make_promotion_fixtures,
+)
+from .season_promotion import (
+    _play_promotion_group as _play_promotion_group,
+)
+from .season_promotion import (
+    _promotion_rows as _promotion_rows,
+)
+from .season_promotion import (
+    _promotion_table_rows as _promotion_table_rows,
+)
+from .season_promotion import (
+    _refresh_promotion_tables as _refresh_promotion_tables,
+)
+from .season_promotion import (
+    _regional_qualifying_rows as _regional_qualifying_rows,
+)
+from .season_promotion import (
+    _simulate_dhb_final4 as _simulate_dhb_final4,
+)
+from .season_promotion import (
+    _simulate_promotion_auto as _simulate_promotion_auto,
+)
+from .season_promotion import (
+    _simulate_promotion_fixtures as _simulate_promotion_fixtures,
+)
+from .season_promotion import (
+    _table_from_fixtures as _table_from_fixtures,
+)
+from .season_promotion import (
+    play_final_four as play_final_four,
+)
+from .season_promotion import (
+    play_promotion_round as play_promotion_round,
+)
+from .season_promotion import (
+    setup_dhb_phase1 as setup_dhb_phase1,
+)
+from .season_promotion import (
+    setup_dhb_phase2 as setup_dhb_phase2,
+)
+from .season_sim import (
+    _attendance_and_gate as _attendance_and_gate,
+)
+from .season_sim import (
+    _background_table as _background_table,
+)
+from .season_sim import (
+    _best_dhb_team as _best_dhb_team,
+)
+from .season_sim import (
+    _build_world_fixtures as _build_world_fixtures,
+)
+from .season_sim import (
+    _cities_for as _cities_for,
+)
+from .season_sim import (
+    _clamp as _clamp,
+)
+from .season_sim import (
+    _recover_after_round as _recover_after_round,
+)
+from .season_sim import (
+    _reset_week_training as _reset_week_training,
+)
+from .season_sim import (
+    _simulate_fixture as _simulate_fixture,
+)
+from .season_sim import (
+    _simulate_fixture_fast as _simulate_fixture_fast,
+)
+from .season_sim import (
+    _simulate_world_remaining as _simulate_world_remaining,
+)
+from .season_sim import (
+    _sync_user_league_fixtures as _sync_user_league_fixtures,
+)
+from .season_sim import (
+    _system_code as _system_code,
+)
+from .season_sim import (
+    _system_table as _system_table,
+)
+from .season_sim import (
+    _system_teams as _system_teams,
+)
+from .season_sim import (
+    _travel_for_fixture as _travel_for_fixture,
+)
+from .season_sim import (
+    _update_team_management as _update_team_management,
+)
+from .season_sim import (
+    _update_user_after_match as _update_user_after_match,
+)
+from .season_sim import (
+    _user_result_payload as _user_result_payload,
+)
+from .season_sim import (
+    _world_fixtures as _world_fixtures,
+)
+from .season_sim import (
+    _world_round_fixtures as _world_round_fixtures,
+)
+from .season_sim import (
+    ensure_ai_training as ensure_ai_training,
+)
+from .season_sim import (
+    ensure_week_training as ensure_week_training,
+)
+from .season_sim import (
+    make_lineup as make_lineup,
+)
 from .youth import develop_youth, generate_youth, initial_youth, intake
 
 
@@ -70,59 +215,20 @@ def regional_league_for(team: TeamState, state: GameState) -> str:
     return max(counts, key=lambda code: (counts[code], competition(code).standard))
 
 
-def _system_code(system: str) -> str:
-    return next((meta.code for meta in COMPETITIONS.values() if meta.system == system), "")
 
 
-def _system_teams(state: GameState, system: str) -> list[TeamState]:
-    code = _system_code(system)
-    return [team for team in state.teams.values() if team.league == code] if code else []
 
 
-def _system_table(state: GameState, system: str) -> list[TeamState]:
-    code = _system_code(system)
-    return league_table(state.teams, code) if code else []
 
 
-def _world_fixtures(state: GameState) -> list[Fixture]:
-    """Todos los partidos de liga regular de todas las competiciones."""
-    out: list[Fixture] = []
-    for fixtures in state.league_fixtures.values():
-        out.extend(fixtures)
-    return out
 
 
-def _world_round_fixtures(state: GameState, round_no: int) -> list[Fixture]:
-    return [
-        fixture
-        for fixture in _world_fixtures(state)
-        if fixture.phase == "regular" and fixture.round == round_no and not fixture.played
-    ]
 
 
-def _build_world_fixtures(state: GameState, start: str | None = None) -> None:
-    """Crea el calendario global mediante los sistemas de competición."""
-    from .league_systems import LeagueWorld
-
-    LeagueWorld(state).build(start)
 
 
-def _sync_user_league_fixtures(state: GameState) -> None:
-    if competition(state.competition).system == "dhb_two_phase" and state.fixtures:
-        state.league_fixtures[state.competition] = state.fixtures
 
 
-def _simulate_world_remaining(state: GameState) -> None:
-    """Completa las ligas que aún tengan partidos cuando acaba la del usuario."""
-    remaining = [f for f in _world_fixtures(state) if f.phase == "regular" and not f.played]
-    if not remaining:
-        return
-    for index, fixture in enumerate(sorted(remaining, key=lambda f: (f.date, f.round, f.id))):
-        if state.club_id in (fixture.home_id, fixture.away_id):
-            continue
-        rng = random.Random(state.seed * 1000 + fixture.round * 37 + index)
-        _simulate_fixture_fast(state, fixture, rng)
-    recompute_table(state.teams, _world_fixtures(state))
 
 
 def _dedupe_players(state: GameState) -> None:
@@ -195,8 +301,6 @@ def _seed_free_agents(state: GameState) -> None:
             team.players.append(player)
     state.free_agents = pool
 
-def _clamp(v, lo, hi):
-    return max(lo, min(hi, v))
 
 
 def new_game(club_id: str, manager_name: str = "Entrenador", seed: int | None = None) -> GameState:
@@ -273,14 +377,6 @@ def sync_player_leagues(state: GameState) -> None:
             player.league = DEFAULT_REGIONAL_LEAGUE
 
 
-def _cities_for(state: GameState) -> dict[str, dict]:
-    """Ciudades españolas e internacionales para el cálculo de viajes."""
-    _, _, cities = load_teams()
-    if competition(state.competition).international:
-        from .international import international_cities
-
-        cities.update(international_cities())
-    return cities
 
 
 def _opponent_for_team(state: GameState, team_id: str) -> TeamState | None:
@@ -293,323 +389,24 @@ def _opponent_for_team(state: GameState, team_id: str) -> TeamState | None:
     return None
 
 
-def ensure_ai_training(state: GameState) -> None:
-    """Entrenamiento automático de los clubes IA para no regalar ventaja al usuario."""
-    if state.phase != "regular" or state.ai_training_round == state.round:
-        return
-    for team in state.teams.values():
-        if team.league != state.competition or team.id == state.club_id:
-            continue
-        opponent = _opponent_for_team(state, team.id)
-        rng = random.Random(state.seed * 1000 + state.round * 97 + zlib.crc32(team.id.encode("utf-8")) % 10000)
-        plan = auto_plan(team, opponent, rng)
-        apply_training_plan(team, plan, opponent, rng, delegated=True)
-    state.ai_training_round = state.round
 
 
-def ensure_week_training(state: GameState) -> dict | None:
-    """Aplica el plan automático si el usuario no ha entrenado esta semana."""
-    if state.phase != "regular" or state.week_trained:
-        return None
-    fx = state.next_user_fixture()
-    opponent = None
-    if fx:
-        opp_id = fx.away_id if fx.home_id == state.club_id else fx.home_id
-        opponent = state.teams.get(opp_id)
-    rng = random.Random(state.seed * 1000 + state.round * 53 + 7)
-    plan = auto_plan(state.user_team, opponent, rng)
-    report = apply_training_plan(state.user_team, plan, opponent, rng, delegated=True)
-    state.weekly_plan = plan
-    state.training_report = report
-    state.week_trained = True
-    return report
 
 
-def make_lineup(team: TeamState, player_ids: list[str] | None = None) -> tuple[list[PlayerState], list[PlayerState]]:
-    if not player_ids:
-        return team.auto_lineup()
-    ids = list(dict.fromkeys(player_ids))
-    by_id = {p.id: p for p in team.available_players}
-    chosen = [by_id[i] for i in ids if i in by_id]
-    if len(chosen) != 11:
-        return team.auto_lineup()
-    used = {p.id for p in chosen}
-    bench = [p for p in sorted(team.available_players, key=lambda x: x.overall, reverse=True) if p.id not in used][:7]
-    return chosen, bench
 
 
-def _travel_for_fixture(
-    state: GameState,
-    fixture: Fixture,
-    user_option_id: str | None,
-    user_lineup: list[PlayerState],
-    user_bench: list[PlayerState],
-) -> dict | None:
-    """Aplica el viaje del equipo visitante. Devuelve resumen para el parte."""
-    away = state.teams[fixture.away_id]
-    home = state.teams[fixture.home_id]
-    cities_by_name = _cities_for(state)
-    opts = travel_options(away, home, cities_by_name, squad_size=len(user_lineup) + len(user_bench) or 18)
-    if not opts:
-        return None
-    chosen = None
-    if away.id == state.club_id and user_option_id:
-        chosen = next((o for o in opts if o["id"] == user_option_id), None)
-    if not chosen:
-        # IA o usuario sin elección: equilibrado si cabe, si no el más barato
-        chosen = next((o for o in opts if o["id"] == "equilibrado" and o["cost"] <= away.budget), None)
-        if not chosen:
-            chosen = min(opts, key=lambda o: o["cost"])
-    # si el usuario no puede pagar, usar el más barato
-    if away.id == state.club_id and chosen["cost"] > away.budget:
-        chosen = min(opts, key=lambda o: o["cost"])
-    players = user_lineup + user_bench if away.id == state.club_id else None
-    summary = apply_travel(away, chosen, players=players)
-    summary["from"] = away.name
-    summary["to"] = home.name
-    summary["option_id"] = chosen["id"]
-    summary["mode"] = chosen["mode"]
-    summary["distance_km"] = chosen["distance_km"]
-    summary["hotel_nights"] = chosen["hotel_nights"]
-    return summary
 
 
-def _attendance_and_gate(home: TeamState, away: TeamState, rng: random.Random) -> tuple[int, int]:
-    cap = max(300, home.stadium_capacity or 1000)
-    occ = 0.45 + rng.random() * 0.22
-    # rival atractivo / derbi
-    if away.name in ("Atlètic Terrassa HC", "Club Egara", "Junior FC", "FC Barcelona", "RC Polo"):
-        occ += 0.08
-    price = max(8, min(40, int(home.ticket_price or 15)))
-    occ += (home.fan_confidence - 50) / 500
-    occ -= (price - 15) * 0.012
-    attendance = int(cap * min(0.98, max(0.18, occ)))
-    revenue = attendance * price
-    home.budget += revenue
-    return attendance, revenue
 
 
-def _update_team_management(
-    team: TeamState,
-    lineup: list[PlayerState],
-    opponent: TeamState,
-    opponent_lineup: list[PlayerState],
-    gf: int,
-    ga: int,
-) -> None:
-    """Premia o castiga la gestión: continuidad, resultado, descanso y encaje."""
-    if not lineup:
-        return
-    result = 1 if gf > ga else (0 if gf == ga else -1)
-    previous = set(team.last_lineup)
-    current = {p.id for p in lineup}
-    continuity = len(previous & current) / max(1, len(lineup)) if previous else 0.65
-    target_cohesion = 8.0 + continuity * 8.0 + result * 1.2
-    team.cohesion = int(round(_clamp(team.cohesion * 0.65 + target_cohesion * 0.35, 1, 20)))
-    team_strength = sum(team.lineup_strength(lineup)) / 2
-    opp_strength = sum(opponent.lineup_strength(opponent_lineup)) / 2 if opponent_lineup else 60.0
-    upset = 2.0 if result > 0 and opp_strength > team_strength + 4 else 0.0
-    management = team.management_score(lineup)
-    delta = result * 1.2 + (management - 55.0) * 0.02 + upset
-    team.manager_rating = int(round(_clamp(team.manager_rating + delta, 0, 100)))
-    team.last_lineup = [p.id for p in lineup]
 
 
-def _simulate_fixture(
-    state: GameState,
-    fixture: Fixture,
-    rng: random.Random,
-    user_lineup: list[PlayerState] | None = None,
-    user_bench: list[PlayerState] | None = None,
-    user_travel: dict | None = None,
-    neutral: bool = False,
-    knockout: bool = False,
-    detailed: bool = True,
-) -> MatchResult:
-    home = state.teams[fixture.home_id]
-    away = state.teams[fixture.away_id]
-    if user_lineup and fixture.home_id == state.club_id:
-        h_line, h_bench = user_lineup, user_bench or []
-    else:
-        h_line, h_bench = home.auto_lineup()
-    if user_lineup and fixture.away_id == state.club_id:
-        a_line, a_bench = user_lineup, user_bench or []
-    else:
-        a_line, a_bench = away.auto_lineup()
-    # viaje del visitante (el usuario ya lo eligió; la IA usa equilibrado)
-    if not neutral:
-        tr = _travel_for_fixture(
-            state,
-            fixture,
-            user_travel.get("option_id") if user_travel and away.id == state.club_id else None,
-            a_line,
-            a_bench,
-        )
-        fixture.travel = tr or {}
-    user_side = 0 if fixture.home_id == state.club_id else (1 if fixture.away_id == state.club_id else None)
-    if user_side is None:
-        ai_sides = {0, 1}
-        auto_talk_sides = {0, 1}
-    else:
-        ai_sides = {1 - user_side}
-        auto_talk_sides = {0, 1}  # en simulación rápida el segundo entrenador asume la charla
-    opposition: dict[str, str] = {}
-    opposition_side = None
-    if user_side is not None:
-        opponent_id = away.id if user_side == 0 else home.id
-        opposition = state.opposition_instructions.get(opponent_id, {})
-        opposition_side = 1 - user_side
-    engine = MatchEngine(
-        home,
-        away,
-        rng,
-        neutral=neutral,
-        knockout=knockout,
-        home_lineup=h_line,
-        away_lineup=a_line,
-        home_bench=h_bench,
-        away_bench=a_bench,
-        detailed=detailed,
-        ai_sides=ai_sides,
-        auto_talk_sides=auto_talk_sides,
-        auto_sub_sides={0, 1},
-        match_date=fixture.date,
-        opposition=opposition,
-        opposition_side=opposition_side,
-        match_plans=state.match_plans if user_side is not None else [],
-        plan_side=user_side,
-    )
-    result = engine.simulate()
-    fixture.played = True
-    fixture.home_goals = result.home_goals
-    fixture.away_goals = result.away_goals
-    fixture.home_stats = result.home_stats
-    fixture.away_stats = result.away_stats
-    fixture.events = result.events
-    if not neutral:
-        fixture.attendance, gate = _attendance_and_gate(home, away, rng)
-        result.home_stats["gate_revenue"] = gate
-    _update_team_management(
-        home, engine.home_starters, away, engine.away_starters, result.home_goals, result.away_goals
-    )
-    _update_team_management(
-        away, engine.away_starters, home, engine.home_starters, result.away_goals, result.home_goals
-    )
-    return result
 
 
-def _simulate_fixture_fast(state: GameState, fixture: Fixture, rng: random.Random) -> None:
-    """Resuelve un partido de IA sin el motor detallado.
-
-    El usuario sí juega con MatchEngine. Para que las 16 competiciones avancen
-    a la vez sin multiplicar el coste por cada partido, la IA usa el mismo
-    modelo de fuerza de plantilla que las tablas de fondo, pero guarda el
-    resultado en el calendario real y actualiza la clasificación.
-    """
-    home = state.teams[fixture.home_id]
-    away = state.teams[fixture.away_id]
-    home_line, _ = home.auto_lineup()
-    away_line, _ = away.auto_lineup()
-    home_attack, home_defense = home.lineup_strength(home_line)
-    away_attack, away_defense = away.lineup_strength(away_line)
-    home_goals = max(0, int(rng.gauss(2.4 + (home_attack + 4 - away_defense) / 14, 1.4)))
-    away_goals = max(0, int(rng.gauss(2.2 + (away_attack - home_defense) / 14, 1.4)))
-    fixture.played = True
-    fixture.home_goals = home_goals
-    fixture.away_goals = away_goals
-    total_strength = max(1.0, home_attack + home_defense + away_attack + away_defense)
-    home_possession = round(100 * (home_attack + home_defense) / total_strength, 1)
-    fixture.home_stats = {
-        "possession": home_possession,
-        "shots": max(home_goals, int(home_goals * 2.5 + 2)),
-        "shots_on_target": max(home_goals, int(home_goals * 1.5 + 1)),
-        "pc": max(0, int(rng.gauss(4, 2))),
-        "saves": max(0, int(rng.gauss(4, 2))),
-        "green": 0,
-        "yellow": 0,
-        "red": 0,
-        "gate_revenue": 0,
-    }
-    fixture.away_stats = {
-        "possession": round(100 - home_possession, 1),
-        "shots": max(away_goals, int(away_goals * 2.5 + 2)),
-        "shots_on_target": max(away_goals, int(away_goals * 1.5 + 1)),
-        "pc": max(0, int(rng.gauss(3, 2))),
-        "saves": max(0, int(rng.gauss(4, 2))),
-        "green": 0,
-        "yellow": 0,
-        "red": 0,
-        "gate_revenue": 0,
-    }
-    for team, lineup, goals in ((home, home_line, home_goals), (away, away_line, away_goals)):
-        for player in lineup:
-            player.apps += 1
-            player.rating_sum += 6.5
-        candidates = [p for p in lineup if p.position_group in ("Delantero", "Medio")] or lineup
-        for _ in range(goals):
-            scorer = rng.choice(candidates)
-            scorer.season_goals += 1
-        if goals > (away_goals if team is home else home_goals):
-            team.morale = min(20, team.morale + 1)
-        elif goals < (away_goals if team is home else home_goals):
-            team.morale = max(1, team.morale - 1)
 
 
-def _reset_week_training(state: GameState) -> None:
-    state.week_trained = False
-    state.weekly_plan = []
-    state.training_report = {}
-    for t in state.teams.values():
-        t.prep_bonus = 0.0
-    advance_mentoring(state)
-    advance_scouting(state)
-    advance_development(state)
-    advance_trials(state)
 
 
-def _user_result_payload(state: GameState, fixture: Fixture, result: MatchResult, travel: dict | None) -> dict:
-    home = state.teams[fixture.home_id]
-    away = state.teams[fixture.away_id]
-    user_is_home = fixture.home_id == state.club_id
-    gf = result.home_goals if user_is_home else result.away_goals
-    ga = result.away_goals if user_is_home else result.home_goals
-    user_ratings = result.home_ratings if user_is_home else result.away_ratings
-    user_stats = result.home_stats if user_is_home else result.away_stats
-    players = {p.id: p.name for p in state.user_team.players}
-    ratings = {players.get(pid, pid): r for pid, r in user_ratings.items() if pid in players}
-    return {
-        "fixture_id": fixture.id,
-        "round": fixture.round,
-        "phase": fixture.phase,
-        "home_id": home.id,
-        "home_name": home.name,
-        "away_id": away.id,
-        "away_name": away.name,
-        "home_goals": result.home_goals,
-        "away_goals": result.away_goals,
-        "user_is_home": user_is_home,
-        "user_goals": gf,
-        "user_against": ga,
-        "result": "Victoria" if gf > ga else ("Empate" if gf == ga else "Derrota"),
-        "events": result.events,
-        "home_stats": result.home_stats,
-        "away_stats": result.away_stats,
-        "user_stats": user_stats,
-        "ratings": ratings,
-        "injuries": result.injuries,
-        "cards": result.cards,
-        "player_minutes": result.player_minutes,
-        "attendance": fixture.attendance,
-        "travel": (travel or {}) if not user_is_home else {},
-        "home_management": home.management_profile(),
-        "away_management": away.management_profile(),
-        "prep_bonus": state.user_team.prep_bonus,
-        "shootout": result.shootout,
-        "referee": result.referee,
-        "reviews": result.reviews,
-        "added_time": result.added_time,
-        "date": fixture.date,
-    }
 
 
 def play_round(
@@ -872,99 +669,12 @@ def _maybe_setup_dhb_phase2(state: GameState) -> None:
         setup_dhb_phase2(state)
 
 
-def _update_user_after_match(state: GameState, fixture: Fixture, result: MatchResult) -> None:
-    user = state.user_team
-    is_home = fixture.home_id == user.id
-    gf = result.home_goals if is_home else result.away_goals
-    ga = result.away_goals if is_home else result.home_goals
-    if gf > ga:
-        user.board_confidence = _clamp(user.board_confidence + 2, 0, 100)
-        user.fan_confidence = _clamp(user.fan_confidence + 2, 0, 100)
-        for p in user.players:
-            p.morale = _clamp(p.morale + 1, 1, 20)
-    elif gf < ga:
-        user.board_confidence = _clamp(user.board_confidence - 2, 0, 100)
-        user.fan_confidence = _clamp(user.fan_confidence - 2, 0, 100)
-        for p in user.players:
-            p.morale = _clamp(p.morale - 1, 1, 20)
-    else:
-        user.fan_confidence = _clamp(user.fan_confidence, 0, 100)
-    if user.budget < 0:
-        user.board_confidence = _clamp(user.board_confidence - 3, 0, 100)
-    # goleadores: subida de moral
-    for p in user.players:
-        if p.season_goals and p.id in {e.get("player_id") for e in result.events if e.get("type") == "goal"}:
-            p.morale = _clamp(p.morale + 1, 1, 20)
 
 
-def _recover_after_round(state: GameState, old_status: dict[str, tuple[int, int]]) -> None:
-    for t in state.teams.values():
-        for p in t.players:
-            p.fatigue = max(0.0, p.fatigue - 14.0)
-            inj, sus = old_status.get(p.id, (0, 0))
-            if inj > 0:
-                p.injury = max(0, p.injury - 1)
-            if sus > 0:
-                p.suspension = max(0, p.suspension - 1)
-            if p.injury <= 0:
-                p.injury_type = ""
-                p.injury_severity = ""
-                p.injury_started = ""
-                p.injury_expected = 0
-            if p.suspension <= 0:
-                p.suspension_reason = ""
-                p.suspension_started = ""
-            if p.injury <= 0 and p.suspension <= 0:
-                p.absence_note = ""
 
 
-def _best_dhb_team(state: GameState) -> TeamState:
-    dhb = _system_teams(state, "dhb_two_phase")
-    if not dhb:
-        return None
-
-    def strength(t):
-        line, _ = t.auto_lineup()
-        a, d = t.lineup_strength(line)
-        return a + d
-
-    return max(dhb, key=strength)
 
 
-def _background_table(state: GameState, league: str) -> list[dict]:
-    teams = [t for t in state.teams.values() if t.league == league]
-    if len(teams) < 2:
-        return []
-    ids = sorted(t.id for t in teams)
-    fixtures = create_fixtures(ids, state.date)
-    rng = random.Random(state.seed + zlib.crc32(league.encode("utf-8")) + int(state.season[:4]))
-    rows = {t.id: {"team": t, "points": 0, "gf": 0, "ga": 0, "won": 0, "drawn": 0, "lost": 0} for t in teams}
-    for fx in fixtures:
-        h, a = rows[fx.home_id], rows[fx.away_id]
-        hl, _ = h["team"].auto_lineup()
-        al, _ = a["team"].auto_lineup()
-        ha, hd = h["team"].lineup_strength(hl)
-        aa, ad = a["team"].lineup_strength(al)
-        hg = max(0, int(rng.gauss(2.4 + (ha + 4 - ad) / 14, 1.4)))
-        ag = max(0, int(rng.gauss(2.2 + (aa - hd) / 14, 1.4)))
-        h["gf"] += hg
-        h["ga"] += ag
-        a["gf"] += ag
-        a["ga"] += hg
-        if hg > ag:
-            h["points"] += 3
-            h["won"] += 1
-            a["lost"] += 1
-        elif hg < ag:
-            a["points"] += 3
-            a["won"] += 1
-            h["lost"] += 1
-        else:
-            h["points"] += 1
-            a["points"] += 1
-            h["drawn"] += 1
-            a["drawn"] += 1
-    return sorted(rows.values(), key=lambda r: (-r["points"], -(r["gf"] - r["ga"]), -r["gf"], r["team"].name))
 
 
 def simulate_cup_round(state: GameState, user_lineup_ids: list[str] | None = None) -> dict | None:
@@ -1107,897 +817,60 @@ def _maybe_create_ehl(state: GameState) -> None:
     create_ehl(state)
 
 
-def _dhb_groups_by_strength(state: GameState) -> dict[str, list[str]]:
-    teams = sorted(
-        _system_teams(state, "dhb_two_phase"),
-        key=lambda t: sum(t.lineup_strength(t.auto_lineup()[0])),
-        reverse=True,
-    )
-    groups = {"A": [], "B": []}
-    for i, t in enumerate(teams):
-        groups["A" if i % 2 == 0 else "B"].append(t.id)
-    return groups
 
 
-def _dhb_group_table(state: GameState, group: str) -> list[TeamState]:
-    ids = set(state.dhb_groups.get(group, []))
-    teams = [t for t in state.teams.values() if t.id in ids]
-    return sorted(teams, key=lambda t: (-t.points, -(t.goals_for - t.goals_against), -t.goals_for, t.name))
 
 
-def setup_dhb_phase1(state: GameState, start: str) -> None:
-    groups = _dhb_groups_by_strength(state)
-    state.dhb_phase = 1
-    state.dhb_groups = groups
-    state.dhb_group = next((g for g, ids in groups.items() if state.club_id in ids), "A")
-    fixtures: list[Fixture] = []
-    for g, ids in groups.items():
-        for f in create_fixtures(ids, start):
-            f.id = f"D{g}-{f.id}"
-            fixtures.append(f)
-    state.fixtures = sorted(fixtures, key=lambda f: (f.round, f.date, f.id))
-    state.round = 1
-    state.date = state.fixtures[0].date if state.fixtures else start
 
 
-def setup_dhb_phase2(state: GameState) -> None:
-    a = _dhb_group_table(state, "A")
-    b = _dhb_group_table(state, "B")
-    group_a = [t.id for t in a[:4]] + [t.id for t in b[:4]]
-    group_b = [t.id for t in a[4:]] + [t.id for t in b[4:]]
-    last_date = max(
-        (date.fromisoformat(f.date) for f in state.fixtures if f.phase == "regular"),
-        default=date.fromisoformat(state.date),
-    )
-    start = (last_date + timedelta(days=7)).isoformat()
-    fixtures: list[Fixture] = []
-    for g, ids in (("A", group_a), ("B", group_b)):
-        for f in create_fixtures(ids, start, double=False):
-            f.id = f"P{g}-{f.id}"
-            f.round += 14
-            fixtures.append(f)
-    state.fixtures.extend(fixtures)
-    state.fixtures.sort(key=lambda f: (f.round, f.date, f.id))
-    state.dhb_phase = 2
-    state.dhb_groups = {"A": group_a, "B": group_b}
-    state.dhb_group = next((g for g, ids in state.dhb_groups.items() if state.club_id in ids), "A")
 
 
-def _fast_group_rows(state: GameState, ids: list[str], start: str, double: bool, rng: random.Random) -> dict[str, dict]:
-    fixtures = create_fixtures(ids, start, double=double)
-    rows = {tid: {"team": state.teams[tid], "points": 0, "gf": 0, "ga": 0} for tid in ids}
-    for fx in fixtures:
-        h, a = rows[fx.home_id], rows[fx.away_id]
-        hl, _ = h["team"].auto_lineup()
-        al, _ = a["team"].auto_lineup()
-        ha, hd = h["team"].lineup_strength(hl)
-        aa, ad = a["team"].lineup_strength(al)
-        hg = max(0, int(rng.gauss(2.4 + (ha + 4 - ad) / 14, 1.4)))
-        ag = max(0, int(rng.gauss(2.2 + (aa - hd) / 14, 1.4)))
-        h["gf"] += hg
-        h["ga"] += ag
-        a["gf"] += ag
-        a["ga"] += hg
-        if hg > ag:
-            h["points"] += 3
-        elif ag > hg:
-            a["points"] += 3
-        else:
-            h["points"] += 1
-            a["points"] += 1
-    return rows
 
 
-def _background_dhb_table(state: GameState) -> list[dict]:
-    teams = _system_teams(state, "dhb_two_phase")
-    if len(teams) < 8:
-        return []
-    groups = _dhb_groups_by_strength(state)
-    rng = random.Random(state.seed + 707 + int(state.season[:4]))
-    start = state.date
-    rows_a = _fast_group_rows(state, groups["A"], start, True, rng)
-    rows_b = _fast_group_rows(state, groups["B"], start, True, rng)
-
-    def top(rows):
-        return sorted(rows.values(), key=lambda r: (-r["points"], -(r["gf"] - r["ga"]), -r["gf"]))[:4]
-
-    group_a = [r["team"].id for r in top(rows_a)] + [r["team"].id for r in top(rows_b)]
-    phase1_points = {tid: r["points"] for tid, r in {**rows_a, **rows_b}.items()}
-    phase1_gf = {tid: r["gf"] for tid, r in {**rows_a, **rows_b}.items()}
-    phase1_ga = {tid: r["ga"] for tid, r in {**rows_a, **rows_b}.items()}
-    last_start = (date.fromisoformat(state.fixtures[0].date) + timedelta(days=98)).isoformat()
-    rows2 = _fast_group_rows(state, group_a, last_start, False, rng)
-    for tid, r in rows2.items():
-        r["points"] += phase1_points.get(tid, 0)
-        r["gf"] += phase1_gf.get(tid, 0)
-        r["ga"] += phase1_ga.get(tid, 0)
-    return sorted(rows2.values(), key=lambda r: (-r["points"], -(r["gf"] - r["ga"]), -r["gf"], r["team"].name))
 
 
-def _background_dhb_relegated(state: GameState) -> list[TeamState]:
-    """Calcula los dos últimos de DHB cuando el usuario juega en regional.
-
-    En una partida regional no se disputa la DHB, pero sus dos últimos deben
-    bajar para que la temporada siguiente mantenga el equilibrio de la
-    pirámide. Se simula la segunda fase con el mismo criterio que la DHB.
-    """
-    teams = _system_teams(state, "dhb_two_phase")
-    if len(teams) < 16:
-        return []
-    groups = _dhb_groups_by_strength(state)
-    rng = random.Random(state.seed + 909 + int(state.season[:4]))
-    start = state.date
-    rows_a = _fast_group_rows(state, groups["A"], start, True, rng)
-    rows_b = _fast_group_rows(state, groups["B"], start, True, rng)
-
-    def ordered(rows):
-        return sorted(rows.values(), key=lambda r: (-r["points"], -(r["gf"] - r["ga"]), -r["gf"], r["team"].name))
-
-    # La segunda fase de DHB la forman los cuatro peores de cada grupo inicial.
-    group_b = [r["team"].id for r in ordered(rows_a)[-4:] + ordered(rows_b)[-4:]]
-    phase1 = {**rows_a, **rows_b}
-    rows2 = _fast_group_rows(state, group_b, start, False, rng)
-    for tid, row in rows2.items():
-        first = phase1.get(tid, {})
-        row["points"] += first.get("points", 0)
-        row["gf"] += first.get("gf", 0)
-        row["ga"] += first.get("ga", 0)
-    return [r["team"] for r in ordered(rows2)[-2:]]
 
 
-def _fast_rows_for_teams(
-    teams: list[TeamState], start: str, double: bool, rng: random.Random
-) -> dict[str, dict]:
-    """Versión de la liguilla rápida para equipos que aún no están en el estado."""
-    if len(teams) < 2:
-        return {}
-    fixtures = create_fixtures([team.id for team in teams], start, double=double)
-    rows = {team.id: {"team": team, "points": 0, "gf": 0, "ga": 0} for team in teams}
-    for fixture in fixtures:
-        home, away = rows[fixture.home_id], rows[fixture.away_id]
-        home_line, _ = home["team"].auto_lineup()
-        away_line, _ = away["team"].auto_lineup()
-        home_attack, home_defense = home["team"].lineup_strength(home_line)
-        away_attack, away_defense = away["team"].lineup_strength(away_line)
-        home_goals = max(0, int(rng.gauss(2.4 + (home_attack + 4 - away_defense) / 14, 1.4)))
-        away_goals = max(0, int(rng.gauss(2.2 + (away_attack - home_defense) / 14, 1.4)))
-        home["gf"] += home_goals
-        home["ga"] += away_goals
-        away["gf"] += away_goals
-        away["ga"] += home_goals
-        if home_goals > away_goals:
-            home["points"] += 3
-        elif away_goals > home_goals:
-            away["points"] += 3
-        else:
-            home["points"] += 1
-            away["points"] += 1
-    return rows
 
 
-def _add_regional_team(state: GameState, team: TeamState) -> None:
-    """Incorpora un equipo autonómico sin duplicar a sus jugadores en el mercado."""
-    from .data_loader import norm
-
-    if team.id in state.teams:
-        return
-    state.teams[team.id] = team
-    names = {norm(player.name) for player in team.players}
-    if names:
-        state.free_agents = [player for player in state.free_agents if norm(player.name) not in names]
 
 
-def _ensure_regional_league(state: GameState, code: str) -> None:
-    """Carga una liga autonómica completa si el usuario baja a ella."""
-    from .data_loader import norm
-    from .regional import load_regional_teams
-
-    regional, _, _ = load_regional_teams()
-    added_names: set[str] = set()
-    for tid, team in regional.items():
-        if team.league != code or tid in state.teams:
-            continue
-        state.teams[tid] = team
-        added_names.update(norm(player.name) for player in team.players)
-    if added_names:
-        state.free_agents = [player for player in state.free_agents if norm(player.name) not in added_names]
 
 
-def _background_regional_promoted(state: GameState) -> list[TeamState]:
-    """Dos ascensos autonómicos cuando el usuario juega en DHA o DHB.
-
-    Se simula la fase nacional con un catálogo temporal de las ligas
-    autonómicas, sin añadir 59 equipos al estado ni vaciar el mercado.
-    """
-    from .regional import load_regional_teams
-
-    regional, _, _ = load_regional_teams()
-    by_league: dict[str, list[TeamState]] = {}
-    for team in regional.values():
-        by_league.setdefault(team.league, []).append(team)
-    rng = random.Random(state.seed + 1200 + int(state.season[:4]))
-    winners: list[TeamState] = []
-    for _, leagues in promotion_groups():
-        qualifiers: list[TeamState] = []
-        seen: set[str] = set()
-        for code in leagues:
-            teams = by_league.get(code, [])
-            if len(teams) < 2:
-                continue
-            rows = _fast_rows_for_teams(teams, state.date, True, rng)
-            for row in _promotion_rows(list(rows.values()))[: competition(code).promotion_qualifiers]:
-                team = row["team"]
-                if team.id not in seen:
-                    seen.add(team.id)
-                    qualifiers.append(team)
-        if len(qualifiers) < 2:
-            continue
-        rows = _fast_rows_for_teams(qualifiers[:4], state.date, False, rng)
-        ordered = _promotion_rows(list(rows.values()))
-        if ordered:
-            winners.append(ordered[0]["team"])
-    if len(winners) < 2:
-        return []
-    rows = _fast_rows_for_teams(winners[:4], state.date, False, rng)
-    return [row["team"] for row in _promotion_rows(list(rows.values()))[:PROMOTION_SPOTS]]
 
 
-def _regional_qualifying_rows(state: GameState, code: str) -> list[dict]:
-    """Clasificación de una liga autonómica para formar los cuatro grupos."""
-    if code == state.competition:
-        return [
-            {
-                "team": team,
-                "points": team.points,
-                "gf": team.goals_for,
-                "ga": team.goals_against,
-            }
-            for team in state.table()
-        ]
-    return _background_table(state, code)
 
 
-def _promotion_rows(rows: list[dict]) -> list[dict]:
-    return sorted(
-        rows,
-        key=lambda row: (
-            -row["points"],
-            -((row["gf"]) - (row["ga"])),
-            -row["gf"],
-            row["team"].name,
-        ),
-    )
 
 
-def _play_promotion_group(
-    state: GameState,
-    name: str,
-    leagues: tuple[str, ...],
-    teams: list[TeamState],
-    start: str,
-    phase: str,
-    rng: random.Random,
-) -> dict:
-    """Liguilla a partido único: todos contra todos una sola vez."""
-    fixtures = create_fixtures([team.id for team in teams], start, double=False)
-    rows = {
-        team.id: {
-            "team": team,
-            "points": 0,
-            "gf": 0,
-            "ga": 0,
-            "won": 0,
-            "drawn": 0,
-            "lost": 0,
-        }
-        for team in teams
-    }
-    matches: list[dict] = []
-    for index, fixture in enumerate(fixtures, 1):
-        fixture.id = f"{phase}-{index}"
-        fixture.phase = phase
-        home, away = state.teams[fixture.home_id], state.teams[fixture.away_id]
-        ids = state.manual_lineup or None
-        line, bench = make_lineup(state.user_team, ids) if state.club_id in (home.id, away.id) else (None, None)
-        result = _simulate_fixture(
-            state,
-            fixture,
-            rng,
-            user_lineup=line,
-            user_bench=bench,
-            neutral=True,
-            knockout=False,
-        )
-        h, a = rows[home.id], rows[away.id]
-        h["gf"] += result.home_goals
-        h["ga"] += result.away_goals
-        a["gf"] += result.away_goals
-        a["ga"] += result.home_goals
-        if result.home_goals > result.away_goals:
-            h["points"] += 3
-            h["won"] += 1
-            a["lost"] += 1
-        elif result.home_goals < result.away_goals:
-            a["points"] += 3
-            a["won"] += 1
-            h["lost"] += 1
-        else:
-            h["points"] += 1
-            a["points"] += 1
-            h["drawn"] += 1
-            a["drawn"] += 1
-        if state.club_id in (home.id, away.id):
-            state.last_result = _user_result_payload(state, fixture, result, None)
-        state.fixtures.append(fixture)
-        matches.append(
-            {
-                "id": fixture.id,
-                "round": fixture.round,
-                "date": fixture.date,
-                "home_id": home.id,
-                "away_id": away.id,
-                "home": home.name,
-                "away": away.name,
-                "home_goals": result.home_goals,
-                "away_goals": result.away_goals,
-            }
-        )
-    ordered = _promotion_rows(list(rows.values()))
-    table = []
-    for position, row in enumerate(ordered, 1):
-        table.append(
-            {
-                "position": position,
-                "team_id": row["team"].id,
-                "team": row["team"].name,
-                "points": row["points"],
-                "played": row["won"] + row["drawn"] + row["lost"],
-                "won": row["won"],
-                "drawn": row["drawn"],
-                "lost": row["lost"],
-                "gf": row["gf"],
-                "ga": row["ga"],
-                "gd": row["gf"] - row["ga"],
-            }
-        )
-    winner_id = table[0]["team_id"] if table else ""
-    return {
-        "name": name,
-        "leagues": list(leagues),
-        "teams": [{"id": team.id, "name": team.name, "league": team.league} for team in teams],
-        "table": table,
-        "matches": matches,
-        "winner_id": winner_id,
-        "winner": state.teams[winner_id].name if winner_id in state.teams else "",
-    }
 
 
-def _actual_promotion_groups(state: GameState) -> list[dict]:
-    """Cuatro grupos con los dos primeros reales de cada liga autonómica."""
-    groups: list[dict] = []
-    for group_name, leagues in promotion_groups():
-        team_ids: list[str] = []
-        seen: set[str] = set()
-        for code in leagues:
-            for team in league_table(state.teams, code)[: competition(code).promotion_qualifiers]:
-                if team.id not in seen:
-                    seen.add(team.id)
-                    team_ids.append(team.id)
-        if len(team_ids) < 4:
-            for code in leagues:
-                for team in league_table(state.teams, code):
-                    if team.id not in seen:
-                        seen.add(team.id)
-                        team_ids.append(team.id)
-                    if len(team_ids) >= 4:
-                        break
-                if len(team_ids) >= 4:
-                    break
-        groups.append(
-            {
-                "name": group_name,
-                "leagues": list(leagues),
-                "team_ids": team_ids[:4],
-                "table": [],
-                "winner_id": "",
-            }
-        )
-    return groups
 
 
-def _table_from_fixtures(state: GameState, team_ids: list[str], fixtures: list[Fixture]) -> list[dict]:
-    rows = {
-        tid: {"team": state.teams[tid], "points": 0, "gf": 0, "ga": 0, "won": 0, "drawn": 0, "lost": 0}
-        for tid in team_ids
-        if tid in state.teams
-    }
-    for fixture in fixtures:
-        if not fixture.played or fixture.home_id not in rows or fixture.away_id not in rows:
-            continue
-        home, away = rows[fixture.home_id], rows[fixture.away_id]
-        home["gf"] += fixture.home_goals
-        home["ga"] += fixture.away_goals
-        away["gf"] += fixture.away_goals
-        away["ga"] += fixture.home_goals
-        if fixture.home_goals > fixture.away_goals:
-            home["points"] += 3
-            home["won"] += 1
-            away["lost"] += 1
-        elif fixture.home_goals < fixture.away_goals:
-            away["points"] += 3
-            away["won"] += 1
-            home["lost"] += 1
-        else:
-            home["points"] += 1
-            away["points"] += 1
-            home["drawn"] += 1
-            away["drawn"] += 1
-    ordered = sorted(
-        rows.values(),
-        key=lambda row: (-row["points"], -(row["gf"] - row["ga"]), -row["gf"], row["team"].name),
-    )
-    return [
-        {
-            "position": position,
-            "team_id": row["team"].id,
-            "team": row["team"].name,
-            "points": row["points"],
-            "played": row["won"] + row["drawn"] + row["lost"],
-            "won": row["won"],
-            "drawn": row["drawn"],
-            "lost": row["lost"],
-            "gf": row["gf"],
-            "ga": row["ga"],
-            "gd": row["gf"] - row["ga"],
-        }
-        for position, row in enumerate(ordered, 1)
-    ]
 
 
-def _actual_regional_promoted(state: GameState) -> list[TeamState]:
-    """Resuelve la fase autonómica con los resultados reales ya jugados."""
-    groups = _actual_promotion_groups(state)
-    rng = random.Random(state.seed + 1200 + int(state.season[:4]))
-    winners: list[TeamState] = []
-    for group in groups:
-        fixtures = create_fixtures(group["team_ids"], PROMOTION_GROUP_START, double=False)
-        for index, fixture in enumerate(fixtures):
-            fixture.phase = "promotion_group"
-            fixture.id = f"BG-{len(winners)}-{index}"
-            _simulate_fixture_fast(state, fixture, rng)
-        table = _table_from_fixtures(state, group["team_ids"], fixtures)
-        if table:
-            winners.append(state.teams[table[0]["team_id"]])
-    if len(winners) < 2:
-        return []
-    final_fixtures = create_fixtures([team.id for team in winners[:4]], PROMOTION_FINAL_START, double=False)
-    for index, fixture in enumerate(final_fixtures):
-        fixture.phase = "promotion_final"
-        fixture.id = f"BF-{index}"
-        _simulate_fixture_fast(state, fixture, rng)
-    table = _table_from_fixtures(state, [team.id for team in winners[:4]], final_fixtures)
-    return [state.teams[row["team_id"]] for row in table[:PROMOTION_SPOTS]]
 
 
-def _promotion_table_rows(state: GameState, team_ids: list[str], phase: str) -> list[dict]:
-    ids = set(team_ids)
-    rows = {
-        tid: {"team": state.teams[tid], "points": 0, "gf": 0, "ga": 0, "won": 0, "drawn": 0, "lost": 0}
-        for tid in team_ids
-        if tid in state.teams
-    }
-    fixtures = [
-        fixture
-        for fixture in state.league_fixtures.get("PROMOTION", [])
-        if fixture.phase == phase
-        and fixture.played
-        and fixture.home_id in ids
-        and fixture.away_id in ids
-    ]
-    for fixture in fixtures:
-        home, away = rows[fixture.home_id], rows[fixture.away_id]
-        home["gf"] += fixture.home_goals
-        home["ga"] += fixture.away_goals
-        away["gf"] += fixture.away_goals
-        away["ga"] += fixture.home_goals
-        if fixture.home_goals > fixture.away_goals:
-            home["points"] += 3
-            home["won"] += 1
-            away["lost"] += 1
-        elif fixture.home_goals < fixture.away_goals:
-            away["points"] += 3
-            away["won"] += 1
-            home["lost"] += 1
-        else:
-            home["points"] += 1
-            away["points"] += 1
-            home["drawn"] += 1
-            away["drawn"] += 1
-    ordered = sorted(
-        rows.values(),
-        key=lambda row: (-row["points"], -(row["gf"] - row["ga"]), -row["gf"], row["team"].name),
-    )
-    return [
-        {
-            "position": position,
-            "team_id": row["team"].id,
-            "team": row["team"].name,
-            "points": row["points"],
-            "played": row["won"] + row["drawn"] + row["lost"],
-            "won": row["won"],
-            "drawn": row["drawn"],
-            "lost": row["lost"],
-            "gf": row["gf"],
-            "ga": row["ga"],
-            "gd": row["gf"] - row["ga"],
-        }
-        for position, row in enumerate(ordered, 1)
-    ]
 
 
-def _refresh_promotion_tables(state: GameState) -> None:
-    group_fixtures = [
-        fixture
-        for fixture in state.league_fixtures.get("PROMOTION", [])
-        if fixture.phase == "promotion_group"
-    ]
-    if group_fixtures:
-        for group in state.promotion.get("groups", []):
-            table = _promotion_table_rows(state, group.get("team_ids", []), "promotion_group")
-            group["table"] = table
-            group["winner_id"] = table[0]["team_id"] if table else ""
-    final_group = state.promotion.get("final_group")
-    if final_group:
-        table = _promotion_table_rows(state, final_group.get("team_ids", []), "promotion_final")
-        final_group["table"] = table
-        final_group["champion_id"] = table[0]["team_id"] if table else ""
-        final_group["promoted_ids"] = [row["team_id"] for row in table[:PROMOTION_SPOTS]]
 
 
-def _make_promotion_fixtures(
-    state: GameState, groups: list[dict], phase: str, start: str
-) -> list[Fixture]:
-    fixtures: list[Fixture] = []
-    for group_index, group in enumerate(groups, 1):
-        team_ids = group.get("team_ids", [])
-        if len(team_ids) < 2:
-            continue
-        for fixture_index, fixture in enumerate(create_fixtures(team_ids, start, double=False), 1):
-            fixture.id = f"PROM-{phase}-{group_index}-{fixture_index}"
-            fixture.phase = phase
-            fixtures.append(fixture)
-    state.league_fixtures["PROMOTION"] = fixtures
-    state.fixtures = fixtures
-    return fixtures
 
 
-def _create_promotion_groups(state: GameState) -> None:
-    groups = _actual_promotion_groups(state)
-    state.promotion = {
-        "format": "regional_promotion",
-        "stage": "groups",
-        "groups": groups,
-        "final_group": None,
-        "promoted_ids": [],
-        "champion_id": "",
-    }
-    _make_promotion_fixtures(state, groups, "promotion_group", PROMOTION_GROUP_START)
-    state.phase = "promotion"
-    state.promotion_round = 1
-    first = next((f for f in state.fixtures if not f.played), None)
-    if first:
-        state.date = (date.fromisoformat(first.date) - timedelta(days=1)).isoformat()
-    _refresh_promotion_tables(state)
 
 
-def _simulate_promotion_fixtures(state: GameState, fixtures: list[Fixture]) -> None:
-    for index, fixture in enumerate(sorted(fixtures, key=lambda f: (f.round, f.id))):
-        if fixture.played:
-            continue
-        rng = random.Random(state.seed * 1000 + fixture.round * 37 + index)
-        _simulate_fixture_fast(state, fixture, rng)
 
 
-def _finish_promotion(state: GameState) -> None:
-    _refresh_promotion_tables(state)
-    final_group = state.promotion.get("final_group") or {}
-    table = final_group.get("table", [])
-    promoted_ids = [row["team_id"] for row in table[:PROMOTION_SPOTS]]
-    champion_id = table[0]["team_id"] if table else ""
-    dhb_table = _system_table(state, "dhb_two_phase")
-    dha_table = _system_table(state, "dha")
-    state.playout = {
-        "format": "regional_promotion",
-        "groups": state.promotion.get("groups", []),
-        "semifinals": [],
-        "final_group": final_group,
-        "final": final_group,
-        "champion_id": champion_id,
-        "promoted_id": promoted_ids[0] if promoted_ids else "",
-        "promoted_ids": promoted_ids,
-        "dhb_promoted_ids": [team.id for team in dhb_table[:2]],
-        "dha_relegated_ids": [team.id for team in dha_table[-2:]],
-    }
-    state.final4 = {
-        "format": "regional_promotion_final_group",
-        "champion_id": champion_id,
-        "promoted_ids": promoted_ids,
-    }
-    state.promoted_ids = promoted_ids
-    state.relegated_ids = [team.id for team in dhb_table[-2:]]
-    state.promotion_round = 0
-    record_season_career(state)
-    _process_age_and_retirements(state)
-    state.phase = "season_end"
-    state.date = f"{int(state.season[:4]) + 1}-06-30"
-    _board_review(state)
-    state.history.append(season_summary(state))
-    promoted_names = [state.teams[tid].name for tid in promoted_ids if tid in state.teams]
-    state.inbox.append(
-        {
-            "date": state.date,
-            "from": "Prensa",
-            "subject": f"Fin de la temporada {state.season}",
-            "body": (
-                "Fase Nacional de ascenso a DHB: cuatro grupos y liguilla final. "
-                f"Ascienden: {', '.join(promoted_names) if promoted_names else '—'}."
-            ),
-        }
-    )
 
 
-def _simulate_promotion_auto(state: GameState) -> None:
-    """Resuelve la fase completa cuando el usuario no está implicado."""
-    if state.phase != "promotion":
-        _create_promotion_groups(state)
-    _simulate_promotion_fixtures(
-        state, [f for f in state.league_fixtures.get("PROMOTION", []) if f.phase == "promotion_group"]
-    )
-    _refresh_promotion_tables(state)
-    winners = [group["winner_id"] for group in state.promotion.get("groups", []) if group.get("winner_id")]
-    final_group = {
-        "name": "Fase final",
-        "leagues": [],
-        "team_ids": winners[:4],
-        "table": [],
-        "winner_id": "",
-    }
-    state.promotion["final_group"] = final_group
-    state.promotion["stage"] = "final"
-    _make_promotion_fixtures(state, [final_group], "promotion_final", PROMOTION_FINAL_START)
-    _simulate_promotion_fixtures(
-        state, [f for f in state.league_fixtures.get("PROMOTION", []) if f.phase == "promotion_final"]
-    )
-    _finish_promotion(state)
 
 
-def _advance_promotion_groups(state: GameState) -> None:
-    _refresh_promotion_tables(state)
-    winners = [group["winner_id"] for group in state.promotion.get("groups", []) if group.get("winner_id")]
-    final_group = {
-        "name": "Fase final",
-        "leagues": [],
-        "team_ids": winners[:4],
-        "table": [],
-        "winner_id": "",
-    }
-    state.promotion["final_group"] = final_group
-    state.promotion["stage"] = "final"
-    _make_promotion_fixtures(state, [final_group], "promotion_final", PROMOTION_FINAL_START)
-    state.promotion_round = 1
-    if state.club_id not in final_group["team_ids"]:
-        _simulate_promotion_fixtures(
-            state, [f for f in state.league_fixtures.get("PROMOTION", []) if f.phase == "promotion_final"]
-        )
-        _finish_promotion(state)
-    else:
-        first = next((f for f in state.fixtures if not f.played), None)
-        if first:
-            state.date = (date.fromisoformat(first.date) - timedelta(days=1)).isoformat()
-        _refresh_promotion_tables(state)
 
 
-def play_promotion_round(
-    state: GameState, user_lineup_ids: list[str] | None = None
-) -> dict | None:
-    if state.phase != "promotion":
-        return None
-    stage = state.promotion.get("stage", "groups")
-    phase = "promotion_group" if stage == "groups" else "promotion_final"
-    fixtures = [
-        fixture
-        for fixture in state.league_fixtures.get("PROMOTION", [])
-        if fixture.phase == phase and fixture.round == state.promotion_round and not fixture.played
-    ]
-    if not fixtures:
-        return None
-    old_status = {p.id: (p.injury, p.suspension) for t in state.teams.values() for p in t.players}
-    effective_ids = user_lineup_ids if user_lineup_ids is not None else (state.manual_lineup or None)
-    user_lineup, user_bench = make_lineup(state.user_team, effective_ids)
-    user_fixture = next((f for f in fixtures if state.club_id in (f.home_id, f.away_id)), None)
-    user_payload = None
-    for index, fixture in enumerate(fixtures):
-        is_user = state.club_id in (fixture.home_id, fixture.away_id)
-        rng = random.Random(state.seed * 1000 + state.promotion_round * 37 + index + 7000)
-        if is_user:
-            result = _simulate_fixture(
-                state,
-                fixture,
-                rng,
-                user_lineup=user_lineup,
-                user_bench=user_bench,
-                neutral=True,
-                knockout=False,
-                detailed=True,
-            )
-            user_payload = _user_result_payload(state, fixture, result, None)
-            state.last_result = user_payload
-            _update_user_after_match(state, fixture, result)
-        else:
-            _simulate_fixture_fast(state, fixture, rng)
-    _refresh_promotion_tables(state)
-    _recover_after_round(state, old_status)
-    _reset_week_training(state)
-    state.promotion_round += 1
-    if state.promotion_round > 3:
-        if stage == "groups":
-            _advance_promotion_groups(state)
-        else:
-            _finish_promotion(state)
-    elif user_fixture:
-        state.date = (date.fromisoformat(user_fixture.date) + timedelta(days=1)).isoformat()
-    return user_payload
 
 
-def _simulate_dhb_final4(state: GameState, user_lineup_ids: list[str] | None = None) -> str | None:
-    table = _dhb_group_table(state, "A")
-    if len(table) < 4:
-        return None
-    semis = [(table[0], table[3]), (table[1], table[2])]
-    winners = []
-    results = []
-    for i, (a, b) in enumerate(semis, 1):
-        fx = Fixture(id=f"DHB-SF{i}", round=200 + i, date="2027-04-10", home_id=a.id, away_id=b.id, phase="dhb_sf")
-        rng = random.Random(state.seed + 1700 + i)
-        ids = user_lineup_ids if user_lineup_ids is not None else (state.manual_lineup or None)
-        line, bench = make_lineup(state.user_team, ids) if state.club_id in (a.id, b.id) else (None, None)
-        res = _simulate_fixture(state, fx, rng, user_lineup=line, user_bench=bench, neutral=True, knockout=True)
-        state.fixtures.append(fx)
-        win = res.shootout.get("winner_id") if res.shootout else (a.id if res.home_goals > res.away_goals else b.id)
-        winners.append(state.teams[win])
-        results.append((fx, res, win))
-    final = Fixture(
-        id="DHB-F", round=204, date="2027-04-11", home_id=winners[0].id, away_id=winners[1].id, phase="dhb_final"
-    )
-    rng = random.Random(state.seed + 1800)
-    ids = user_lineup_ids if user_lineup_ids is not None else (state.manual_lineup or None)
-    line, bench = make_lineup(state.user_team, ids) if state.club_id in (winners[0].id, winners[1].id) else (None, None)
-    res = _simulate_fixture(state, final, rng, user_lineup=line, user_bench=bench, neutral=True, knockout=True)
-    state.fixtures.append(final)
-    champion = (
-        res.shootout.get("winner_id")
-        if res.shootout
-        else (winners[0].id if res.home_goals > res.away_goals else winners[1].id)
-    )
-    state.final4 = {
-        "semifinals": [
-            {
-                "home_id": fx.home_id,
-                "away_id": fx.away_id,
-                "home_goals": r.home_goals,
-                "away_goals": r.away_goals,
-                "shootout": r.shootout,
-                "winner_id": w,
-            }
-            for fx, r, w in results
-        ],
-        "final": {
-            "home_id": final.home_id,
-            "away_id": final.away_id,
-            "home_goals": res.home_goals,
-            "away_goals": res.away_goals,
-            "shootout": res.shootout,
-            "winner_id": champion,
-        },
-        "champion_id": champion,
-    }
-    return champion
 
 
-def play_final_four(state: GameState, user_lineup_ids: list[str] | None = None) -> dict:
-    """Simula semifinales, final y playout de DHA."""
-    table = _system_table(state, "dha")
-    if len(table) < 12:
-        return {}
-    semis = [(table[0], table[3]), (table[1], table[2])]
-    results = []
-    winners = []
-    for i, (a, b) in enumerate(semis, 1):
-        fx = Fixture(id=f"SF{i}", round=23, date="2027-04-10", home_id=a.id, away_id=b.id, phase="final4_sf")
-        rng = random.Random(state.seed + 800 + i)
-        ids = user_lineup_ids if user_lineup_ids is not None else (state.manual_lineup or None)
-        line, bench = make_lineup(state.user_team, ids) if state.club_id in (a.id, b.id) else (None, None)
-        res = _simulate_fixture(state, fx, rng, user_lineup=line, user_bench=bench, neutral=True, knockout=True)
-        state.fixtures.append(fx)
-        winner_id = (
-            res.shootout.get("winner_id") if res.shootout else (a.id if res.home_goals > res.away_goals else b.id)
-        )
-        winners.append(state.teams[winner_id])
-        results.append({"fixture": fx, "result": res, "winner_id": winner_id})
-        if state.club_id in (a.id, b.id):
-            state.last_result = _user_result_payload(state, fx, res, None)
-    final = Fixture(
-        id="F1", round=24, date="2027-04-11", home_id=winners[0].id, away_id=winners[1].id, phase="final4_final"
-    )
-    rng = random.Random(state.seed + 900)
-    ids = user_lineup_ids if user_lineup_ids is not None else (state.manual_lineup or None)
-    line, bench = make_lineup(state.user_team, ids) if state.club_id in (winners[0].id, winners[1].id) else (None, None)
-    res = _simulate_fixture(state, final, rng, user_lineup=line, user_bench=bench, neutral=True, knockout=True)
-    state.fixtures.append(final)
-    champion_id = (
-        res.shootout.get("winner_id")
-        if res.shootout
-        else (winners[0].id if res.home_goals > res.away_goals else winners[1].id)
-    )
-    state.final4 = {
-        "semifinals": [
-            {
-                "home_id": r["fixture"].home_id,
-                "away_id": r["fixture"].away_id,
-                "home_goals": r["result"].home_goals,
-                "away_goals": r["result"].away_goals,
-                "shootout": r["result"].shootout,
-                "winner_id": r["winner_id"],
-            }
-            for r in results
-        ],
-        "final": {
-            "home_id": final.home_id,
-            "away_id": final.away_id,
-            "home_goals": res.home_goals,
-            "away_goals": res.away_goals,
-            "shootout": res.shootout,
-            "winner_id": champion_id,
-        },
-        "champion_id": champion_id,
-    }
-    if state.club_id in (final.home_id, final.away_id):
-        state.last_result = _user_result_payload(state, final, res, None)
-    eleventh = table[10]
-    dhb = _best_dhb_team(state)
-    playout = {}
-    if dhb:
-        fx = Fixture(id="PO1", round=25, date="2027-04-17", home_id=eleventh.id, away_id=dhb.id, phase="playout")
-        rng = random.Random(state.seed + 1000)
-        ids = user_lineup_ids if user_lineup_ids is not None else (state.manual_lineup or None)
-        line, bench = make_lineup(state.user_team, ids) if state.club_id in (eleventh.id, dhb.id) else (None, None)
-        res = _simulate_fixture(state, fx, rng, user_lineup=line, user_bench=bench, neutral=True, knockout=True)
-        state.fixtures.append(fx)
-        winner_id = (
-            res.shootout.get("winner_id")
-            if res.shootout
-            else (eleventh.id if res.home_goals > res.away_goals else dhb.id)
-        )
-        stays_id = eleventh.id if winner_id == eleventh.id else None
-        promoted_id = None if stays_id else dhb.id
-        relegated_id = None if stays_id else eleventh.id
-        playout = {
-            "home_id": eleventh.id,
-            "away_id": dhb.id,
-            "home_goals": res.home_goals,
-            "away_goals": res.away_goals,
-            "shootout": res.shootout,
-            "winner_id": winner_id,
-            "stays_id": stays_id,
-            "promoted_id": promoted_id,
-            "relegated_id": relegated_id,
-            "direct_relegated_id": table[11].id,
-            "note": "El representante DHB se elige por potencial de plantilla (modelo).",
-        }
-        if state.club_id in (eleventh.id, dhb.id):
-            state.last_result = _user_result_payload(state, fx, res, None)
-    state.playout = playout
-    return state.final4
 
 
 def _board_target(team: TeamState, code: str) -> int:
