@@ -1,7 +1,8 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FastForward, Flag, MessageSquare, MonitorCheck, Play, Timer, UserRoundPlus } from 'lucide-react'
+import { FastForward, Flag, MessageSquare, MonitorCheck, Play, Timer, UserRoundPlus, Volume2, VolumeX } from 'lucide-react'
 import { api } from '../lib/api'
+import { MatchAudio } from '../lib/matchAudio'
 import { dateLabel } from '../lib/format'
 import type { LivePayload } from '../types'
 import { useGame } from '../context/GameContext'
@@ -22,6 +23,41 @@ export default function LiveMatch() {
   const [press, setPress] = useState('media')
   const [tempo, setTempo] = useState('normal')
   const [passing, setPassing] = useState('mixto')
+  const [audioOn, setAudioOn] = useState(() => {
+    try { return localStorage.getItem('hm_audio') === '1' } catch { return false }
+  })
+  const audioRef = useRef<MatchAudio | null>(null)
+  const audioPrimed = useRef(false)
+  const audioSeen = useRef<Set<string>>(new Set())
+
+  useEffect(() => {
+    if (!audioOn) {
+      audioRef.current?.disable()
+      return
+    }
+    if (!audioRef.current) audioRef.current = new MatchAudio()
+    void audioRef.current.enable()
+  }, [audioOn])
+
+  useEffect(() => () => { audioRef.current?.dispose() }, [])
+
+  useEffect(() => {
+    if (!data) return
+    const keyOf = (event: { minute: number; type: string; text: string }) => `${event.minute}|${event.type}|${event.text}`
+    if (!audioPrimed.current) {
+      for (const event of data.events) audioSeen.current.add(keyOf(event))
+      audioPrimed.current = true
+      return
+    }
+    const fresh = data.events.filter((event) => {
+      const key = keyOf(event)
+      if (audioSeen.current.has(key)) return false
+      audioSeen.current.add(key)
+      return true
+    })
+    if (!audioOn) return
+    for (const event of fresh.slice(-6)) audioRef.current?.play(event.type)
+  }, [data, audioOn])
 
   useEffect(() => {
     api.get<LivePayload>('/match/live')
@@ -130,6 +166,10 @@ export default function LiveMatch() {
   const barHome = homePossession || 50
   const decisionLabels: Record<string, string> = { goal: 'Gol', goal_disallowed: 'Gol anulado', penalty_corner: 'Penalty corner', penalty_stroke: 'Penalty stroke' }
   const referralsLeft = data.referrals?.[data.user_side] ?? 0
+  const momentum = Number(data.snapshot?.momentum || 0)
+  const momentumHome = Math.max(8, Math.min(92, Math.round(50 + momentum * 50)))
+  const momentumLabel = momentum > 0.15 ? `${data.home.name} domina` : momentum < -0.15 ? `${data.away.name} domina` : 'Partido igualado'
+  const momentumLog = (data.snapshot?.momentum_log || []).slice(-4).reverse()
   const reviewable = data.last_decision && !data.last_decision.reviewed && (
     data.last_decision.side !== data.user_side
     || (data.last_decision.type === 'goal_disallowed' && data.last_decision.side === data.user_side)
@@ -141,7 +181,25 @@ export default function LiveMatch() {
         eyebrow={`${data.fixture.label} · ${dateLabel(data.fixture.date)}`}
         title="Partido en directo"
         subtitle={`${data.home.name} vs ${data.away.name} · ${data.finished ? 'Finalizado' : `${data.quarter}º cuarto · ${data.minute}'`}`}
-        actions={<Badge tone={data.finished ? 'ok' : 'danger'}>{data.finished ? 'Finalizado' : 'EN DIRECTO'}</Badge>}
+        actions={
+          <div className="inline">
+            <Button
+              size="sm"
+              variant="ghost"
+              icon={audioOn ? Volume2 : VolumeX}
+              aria-pressed={audioOn}
+              title={audioOn ? 'Silenciar ambiente' : 'Activar ambiente del partido'}
+              onClick={() => {
+                const next = !audioOn
+                try { localStorage.setItem('hm_audio', next ? '1' : '0') } catch {}
+                setAudioOn(next)
+              }}
+            >
+              {audioOn ? 'Ambiente on' : 'Ambiente off'}
+            </Button>
+            <Badge tone={data.finished ? 'ok' : 'danger'}>{data.finished ? 'Finalizado' : 'EN DIRECTO'}</Badge>
+          </div>
+        }
       />
 
       <Suspense fallback={<div className="match-viewer-3d"><LoadingBlock label="Cargando visor 3D…" /></div>}>
@@ -185,6 +243,27 @@ export default function LiveMatch() {
           </Card>
           <Card>
             <div className="inline" style={{ justifyContent: 'space-between' }}>
+              <h3 style={{ margin: 0 }}>Momentum</h3>
+              <Badge tone={Math.abs(momentum) > 0.15 ? 'gold' : 'neutral'}>{momentumLabel}</Badge>
+            </div>
+            <div className="momentum-bar mt-2" role="img" aria-label={`Momentum ${Math.round(momentum * 100)} a favor de ${momentum >= 0 ? data.home.name : data.away.name}`}>
+              <span className="momentum-home" style={{ width: `${momentumHome}%` }} />
+              <span className="momentum-away" style={{ width: `${100 - momentumHome}%` }} />
+            </div>
+            <div className="momentum-labels"><span>{data.home.name}</span><b>{momentum > 0 ? '+' : ''}{Math.round(momentum * 100)}</b><span>{data.away.name}</span></div>
+            {momentumLog.length > 0 && (
+              <div className="stack-sm mt-2">
+                {momentumLog.map((item, index) => (
+                  <div className="momentum-row" key={`${item.minute}-${index}`}>
+                    <span className="event-minute">{item.minute}'</span>
+                    <p className="small">{item.reason || 'Cambio de ritmo'} · <b>{item.momentum > 0 ? data.home.name : data.away.name}</b></p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
+          <Card>
+            <div className="inline" style={{ justifyContent: 'space-between' }}>
               <h3 style={{ margin: 0 }}>Revisión de vídeo</h3>
               <Badge tone={referralsLeft ? 'neutral' : 'danger'}>{referralsLeft} referencia(s)</Badge>
             </div>
@@ -224,10 +303,10 @@ export default function LiveMatch() {
             <h3>Tu once</h3>
             <div className="table-wrap">
               <table className="data-table">
-                <thead><tr><th></th><th>Jugador</th><th>Pos</th><th className="num">Min</th><th className="num">G</th><th className="num">A</th><th className="num">Rating</th><th className="num">Fatiga</th></tr></thead>
+                <thead><tr><th></th><th>Jugador</th><th>Pos</th><th className="num">Min</th><th className="num">G</th><th className="num">A</th><th className="num" title="Decisiones">Dec</th><th className="num" title="Pases clave">PC+</th><th className="num" title="Pérdidas">Per</th><th className="num">Rating</th><th className="num">Fatiga</th></tr></thead>
                 <tbody>{data.player_rows.map((row) => {
                   const player = data.line.find((item) => item.id === row.id)
-                  return <tr key={row.id}><td>{player ? <Avatar player={player} size={24} /> : null}</td><td>{row.name}</td><td>{row.position}</td><td className="num">{row.minutes}</td><td className="num">{row.goals}</td><td className="num">{row.assists}</td><td className="num">{row.rating.toFixed(2)}</td><td className="num">{row.fatigue}%</td></tr>
+                  return <tr key={row.id}><td>{player ? <Avatar player={player} size={24} /> : null}</td><td>{row.name}</td><td>{row.position}</td><td className="num">{row.minutes}</td><td className="num">{row.goals}</td><td className="num">{row.assists}</td><td className="num">{row.decisions ?? 0}</td><td className="num">{row.key_passes ?? 0}</td><td className="num">{row.turnovers ?? 0}</td><td className="num">{row.rating.toFixed(2)}</td><td className="num">{row.fatigue}%</td></tr>
                 })}</tbody>
               </table>
             </div>

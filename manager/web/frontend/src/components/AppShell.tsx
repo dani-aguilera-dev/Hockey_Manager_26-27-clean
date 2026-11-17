@@ -40,6 +40,7 @@ import {
 } from 'lucide-react'
 import { api } from '../lib/api'
 import { dateLabel, shortLeague } from '../lib/format'
+import { useLanguage } from '../lib/i18n'
 import type { GameState } from '../types'
 import { useGame } from '../context/GameContext'
 import { useToast } from '../context/ToastContext'
@@ -99,9 +100,10 @@ const clubLinks = [
 ]
 
 function NavGroup({ title, links, onNavigate }: { title: string; links: typeof primary; onNavigate?: () => void }) {
+  const { t } = useLanguage()
   return (
     <div className="nav-group">
-      <div className="nav-group-title">{title}</div>
+      <div className="nav-group-title">{t(title)}</div>
       {links.map(({ to, label, icon: Icon, end }) => (
         <NavLink
           key={to}
@@ -111,7 +113,7 @@ function NavGroup({ title, links, onNavigate }: { title: string; links: typeof p
           className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
         >
           <Icon size={17} />
-          <span>{label}</span>
+          <span>{t(label)}</span>
         </NavLink>
       ))}
     </div>
@@ -120,6 +122,7 @@ function NavGroup({ title, links, onNavigate }: { title: string; links: typeof p
 
 function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const { game } = useGame()
+  const { t } = useLanguage()
   if (!game) return null
   const links = game.objectives?.system === 'regional'
     ? [...competitionLinks, { to: '/game/promotion', label: 'Fase de ascenso', icon: Trophy }]
@@ -144,13 +147,13 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       </nav>
       <div className="sidebar-footer">
         <div className="season-chip">
-          <span>Temporada</span>
+          <span>{t('Temporada')}</span>
           <b>{game.game.season}</b>
           <small>J{game.game.round} · {shortLeague(game.competition.code)}</small>
         </div>
         <NavLink to="/game/options" className="nav-link" onClick={onNavigate}>
           <Settings size={17} />
-          <span>Ajustes</span>
+          <span>{t('Ajustes')}</span>
         </NavLink>
       </div>
     </aside>
@@ -160,6 +163,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 function Topbar({ onMenu }: { onMenu: () => void }) {
   const { game, refresh } = useGame()
   const { toast } = useToast()
+  const { t } = useLanguage()
   const navigate = useNavigate()
   const [saving, setSaving] = useState(false)
   if (!game) return null
@@ -189,7 +193,7 @@ function Topbar({ onMenu }: { onMenu: () => void }) {
 
   return (
     <header className="topbar">
-      <button className="icon-btn mobile-only" onClick={onMenu} aria-label="Abrir menú">
+      <button className="icon-btn mobile-only" onClick={onMenu} aria-label={t('Abrir menú')}>
         <Menu size={20} />
       </button>
       <div className="topbar-context">
@@ -198,20 +202,20 @@ function Topbar({ onMenu }: { onMenu: () => void }) {
         <ChevronRight size={14} />
         <b>{game.competition.short_name}</b>
         <span className="topbar-dot">·</span>
-        <span>{game.game.phase === 'season_end' ? 'Fin de temporada' : game.game.phase === 'promotion' ? `Fase de ascenso · J${game.game.promotion_round || 1}` : `Jornada ${game.game.round}`}</span>
+        <span>{game.game.phase === 'season_end' ? t('Fin de temporada') : game.game.phase === 'promotion' ? `${t('Fase de ascenso')} · J${game.game.promotion_round || 1}` : `${t('Jornada')} ${game.game.round}`}</span>
         <span className="topbar-dot">·</span>
         <span>{dateLabel(game.game.date)}</span>
       </div>
       <div className="topbar-actions">
-        {game.game.live_active && <Badge tone="danger">En directo</Badge>}
+        {game.game.live_active && <Badge tone="danger">{t('En directo')}</Badge>}
         <span className="save-name" title={game.game.save_name}>{game.game.save_name}</span>
-        <button className="icon-btn" onClick={() => navigate('/saves')} aria-label="Gestionar partidas guardadas" title="Gestionar partidas guardadas">
+        <button className="icon-btn" onClick={() => navigate('/saves')} aria-label={t('Gestionar partidas guardadas')} title={t('Gestionar partidas guardadas')}>
           <FolderOpen size={18} />
         </button>
-        <button className="icon-btn" onClick={save} aria-label="Guardar" title="Guardar partida" disabled={saving}>
+        <button className="icon-btn" onClick={save} aria-label={t('Guardar')} title={t('Guardar partida')} disabled={saving}>
           <Save size={18} className={saving ? 'spin' : ''} />
         </button>
-        <button className="icon-btn" onClick={exit} aria-label="Salir" title="Salir de la partida">
+        <button className="icon-btn" onClick={exit} aria-label={t('Salir')} title={t('Salir')}>
           <LogOut size={18} />
         </button>
       </div>
@@ -220,27 +224,28 @@ function Topbar({ onMenu }: { onMenu: () => void }) {
 }
 
 function MobileNav({ onMore }: { onMore: () => void }) {
+  const { t } = useLanguage()
   return (
     <nav className="mobile-nav">
       <NavLink to="/game" end className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}>
         <LayoutDashboard size={19} />
-        <span>Inicio</span>
+        <span>{t('Inicio')}</span>
       </NavLink>
       <NavLink to="/game/squad" className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}>
         <Users size={19} />
-        <span>Plantilla</span>
+        <span>{t('Plantilla')}</span>
       </NavLink>
       <NavLink to="/game/match" className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}>
         <Flag size={19} />
-        <span>Partido</span>
+        <span>{t('Partido')}</span>
       </NavLink>
       <NavLink to="/game/market" className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}>
         <ArrowLeftRight size={19} />
-        <span>Mercado</span>
+        <span>{t('Mercado')}</span>
       </NavLink>
       <button type="button" className="mobile-nav-link" onClick={onMore}>
         <Menu size={19} />
-        <span>Más</span>
+        <span>{t('Más')}</span>
       </button>
     </nav>
   )
@@ -271,6 +276,7 @@ function SackedScreen({ game }: { game: GameState }) {
 
 export function GameLayout() {
   const { game, loading, error } = useGame()
+  const { t } = useLanguage()
   const [drawer, setDrawer] = useState(false)
   const location = useLocation()
 
@@ -301,7 +307,7 @@ export function GameLayout() {
 
   return (
     <>
-      <a className="skip-link" href="#main">Saltar al contenido</a>
+      <a className="skip-link" href="#main">{t('Saltar al contenido')}</a>
       <div className="app-shell">
       <Sidebar />
       <div className="app-main">

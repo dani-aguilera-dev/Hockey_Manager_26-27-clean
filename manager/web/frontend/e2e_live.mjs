@@ -48,6 +48,11 @@ await run('live', async ({ context, page }) => {
   }
   result.viewer3d = true
 
+  await page.locator('.momentum-bar').waitFor()
+  result.momentum = await page.locator('.momentum-labels b').innerText()
+  await page.getByRole('button', { name: 'Ambiente off' }).click()
+  await page.getByRole('button', { name: 'Ambiente on' }).waitFor()
+  result.audioToggle = await page.getByRole('button', { name: 'Ambiente on' }).getAttribute('aria-pressed') === 'true'
   await page.getByTestId('live-protest-respectful').click()
   await page.locator('.protest-used').waitFor()
   result.liveProtest = true

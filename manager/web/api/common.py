@@ -647,6 +647,8 @@ def _live_payload(state, ctx):
             "protest",
             "unsportsmanlike",
             "added_time",
+            "momentum",
+            "free_hit",
         )
     ]
     user_side = ctx.user_side

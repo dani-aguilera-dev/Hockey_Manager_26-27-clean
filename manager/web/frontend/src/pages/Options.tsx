@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, RotateCcw, Save } from 'lucide-react'
 import { api } from '../lib/api'
 import { useToast } from '../context/ToastContext'
+import { useLanguage } from '../lib/i18n'
 import { Button, Card, LoadingBlock, Logo, Notice, PageHeader } from '../components/ui'
 
 interface Prefs {
@@ -14,6 +15,7 @@ interface Prefs {
 export default function Options({ embedded = false }: { embedded?: boolean }) {
   const navigate = useNavigate()
   const { toast } = useToast()
+  const { lang, setLang, t } = useLanguage()
   const [prefs, setPrefs] = useState<Prefs>({ text_size: 'normal', compact: false, confirm_exit: true })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -58,6 +60,20 @@ export default function Options({ embedded = false }: { embedded?: boolean }) {
   const body = (
     <>
       <Card>
+        <div className="option-block">
+          <h3>{t('Idioma / Language')}</h3>
+          <p className="small">{t('Interfaz de navegación y guía inicial. El contenido editorial sigue en español.')}</p>
+          <div className="stack-sm">
+            <label className="option-card">
+              <input type="radio" name="lang" checked={lang === 'es'} onChange={() => setLang('es')} />
+              <span><b>Español</b><br /><span>Navegación y guía en español</span></span>
+            </label>
+            <label className="option-card">
+              <input type="radio" name="lang" checked={lang === 'en'} onChange={() => setLang('en')} />
+              <span><b>English</b><br /><span>Navigation and onboarding in English</span></span>
+            </label>
+          </div>
+        </div>
         <div className="option-block">
           <h3>Tamaño del texto</h3>
           <p className="small">Aumenta el tamaño base de toda la interfaz.</p>

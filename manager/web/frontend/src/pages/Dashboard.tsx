@@ -4,6 +4,7 @@ import { ArrowRight, CalendarDays, ChevronRight, CircleDollarSign, ClipboardList
 import { api } from '../lib/api'
 import { dateLabel, money, positionLabel, shortLeague } from '../lib/format'
 import { useGame } from '../context/GameContext'
+import { useLanguage } from '../lib/i18n'
 import { useToast } from '../context/ToastContext'
 import type { DailyEvent, GameState } from '../types'
 import { Avatar, Badge, Button, Card, Crest, Modal, PageHeader, Progress, SectionTitle, StatCard } from '../components/ui'
@@ -12,6 +13,7 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const { game, applyState } = useGame()
   const { toast } = useToast()
+  const { t } = useLanguage()
   const [busy, setBusy] = useState<string | null>(null)
   const [targetDate, setTargetDate] = useState('')
   const [simulation, setSimulation] = useState<NonNullable<GameState['simulation']> | null>(null)
@@ -98,8 +100,8 @@ export default function Dashboard() {
       {showGuide && (
         <Card className="onboarding-card">
           <div className="inline" style={{ justifyContent: 'space-between' }}>
-            <div><div className="cat">PRIMEROS PASOS</div><h3 style={{ margin: '3px 0 0' }}>Tu primera semana</h3></div>
-            <Button size="sm" variant="ghost" onClick={() => { try { localStorage.setItem('hm_onboarding_done', '1') } catch {} setShowGuide(false) }}>Ocultar guía</Button>
+            <div><div className="cat">{t('Primeros pasos').toUpperCase()}</div><h3 style={{ margin: '3px 0 0' }}>{t('Tu primera semana')}</h3></div>
+            <Button size="sm" variant="ghost" onClick={() => { try { localStorage.setItem('hm_onboarding_done', '1') } catch {} setShowGuide(false) }}>{t('Ocultar guía')}</Button>
           </div>
           <div className="onboarding-steps mt-2">
             {[
@@ -110,8 +112,8 @@ export default function Dashboard() {
             ].map(([number, title, detail, path]) => (
               <button type="button" className="onboarding-step" key={number} onClick={() => navigate(path)}>
                 <b>{number}</b>
-                <span>{title}</span>
-                <small>{detail}</small>
+                <span>{t(title)}</span>
+                <small>{t(detail)}</small>
               </button>
             ))}
           </div>

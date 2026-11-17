@@ -46,5 +46,17 @@ await run('smoke', async ({ context, page }) => {
   await page.locator('.analysis-timeline').waitFor()
   result.analysis = true
 
+  await page.goto('/app/game/options')
+  await page.getByRole('heading', { name: /La interfaz/ }).waitFor()
+  await page.getByRole('radio', { name: /English/ }).check()
+  await page.locator('.nav-link', { hasText: 'Squad' }).first().waitFor()
+  result.i18nEnglish = await page.evaluate(() => document.documentElement.lang === 'en')
+  await page.reload()
+  await page.locator('.nav-link', { hasText: 'Squad' }).first().waitFor()
+  result.i18nPersisted = true
+  await page.getByRole('radio', { name: /Español/ }).check()
+  await page.locator('.nav-link', { hasText: 'Plantilla' }).first().waitFor()
+  result.i18nSpanish = true
+
   return result
 })

@@ -1380,6 +1380,9 @@ export interface LivePayload {
     red: number
     rating: number
     fatigue: number
+    decisions?: number
+    key_passes?: number
+    turnovers?: number
     injury: number
     suspension: number
   }>
@@ -1406,6 +1409,8 @@ export interface LivePayload {
     away_management: Record<string, number>
     home_tactical_bonus: number
     away_tactical_bonus: number
+    momentum?: number
+    momentum_log?: Array<{ minute: number; quarter: number; side: number; amount: number; momentum: number; reason: string }>
   }
   subs_left: number
   referrals: [number, number]

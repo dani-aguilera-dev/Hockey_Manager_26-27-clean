@@ -13,6 +13,7 @@ const pages = [
   ['board', '/app/game/board'],
   ['finance', '/app/game/finance'],
   ['shortlist', '/app/game/shortlist'],
+  ['options', '/app/game/options'],
 ]
 
 await run('a11y', async ({ context, page }) => {

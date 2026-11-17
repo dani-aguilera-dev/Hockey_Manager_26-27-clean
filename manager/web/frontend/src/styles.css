@@ -1566,3 +1566,12 @@ select option { background: #0b1220; color: #e8eef8; }
 .skip-link:focus { left: 8px; }
 @media (max-width: 900px) { .onboarding-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .onboarding-steps { grid-template-columns: 1fr; } }
+
+/* Momentum del partido */
+.momentum-bar { display: flex; height: 12px; overflow: hidden; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.04); }
+.momentum-home { background: linear-gradient(90deg, rgba(255,176,32,.85), rgba(255,176,32,.45)); transition: width .35s ease; }
+.momentum-away { background: linear-gradient(90deg, rgba(120,180,255,.35), rgba(120,180,255,.8)); transition: width .35s ease; }
+.momentum-labels { display: flex; justify-content: space-between; gap: 8px; margin-top: 5px; font-size: 10px; color: var(--muted); }
+.momentum-labels b { color: var(--text); }
+.momentum-row { display: flex; gap: 8px; align-items: baseline; }
+.momentum-row p { margin: 0; }
