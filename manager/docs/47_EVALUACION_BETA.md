@@ -31,6 +31,7 @@
 | Profundidad del motor | Momentum, portador por jugador, fatiga individual y cadena de golpe franco | PASS |
 | Cobertura medida | `pytest --cov`: 74% global con CLI legacy, 83% del núcleo web; motor 90–97%, temporada 88–91% | PASS |
 | E2E dividido | `e2e_smoke.mjs`, `e2e_live.mjs` y `e2e_beta.mjs`; cada suite crea su partida y se ejecuta por separado | PASS |
+| Auditoría axe WCAG 2.2 AA | 0 violaciones en 11 pantallas de escritorio y 4 móviles; skip link y foco en `main`; 45 enlaces de navegación con nombre | PASS automatizado / sin lector de pantalla manual |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/gol anulado/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |

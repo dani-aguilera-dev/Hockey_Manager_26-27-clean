@@ -943,8 +943,10 @@ select option { background: #0b1220; color: #e8eef8; }
 .month-day.today { border-color: var(--gold); box-shadow: inset 0 0 0 1px rgba(255,176,32,.2); }
 .month-day-number { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 700; }
 .month-event {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
+  min-height: 24px;
   margin: 2px 0;
   padding: 3px 5px;
   overflow: hidden;

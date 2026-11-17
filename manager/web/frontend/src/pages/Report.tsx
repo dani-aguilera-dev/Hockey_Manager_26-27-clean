@@ -110,7 +110,7 @@ export default function ReportPage() {
 
       <Card className="mt-2">
         <h3>Crónica</h3>
-        <div className="event-list" style={{ maxHeight: 420 }}>
+        <div className="event-list" style={{ maxHeight: 420 }} role="region" aria-label="Crónica del partido" tabIndex={0}>
           {report.events?.length ? report.events.map((event, index) => <div className={`event-row ${event.type}`} key={`${event.minute}-${index}`}><span className="event-minute">{event.minute}'</span><p><b>{event.text}</b></p></div>) : <p className="small muted">Sin eventos registrados.</p>}
         </div>
       </Card>

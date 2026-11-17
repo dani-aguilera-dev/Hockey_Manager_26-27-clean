@@ -39,7 +39,6 @@ export function Pitch({
                     tabIndex={selectable ? 0 : undefined}
                     onClick={selectable ? () => onSlotClick?.(slot.index) : undefined}
                     onKeyDown={selectable ? (event) => { if (event.key === 'Enter' || event.key === ' ') onSlotClick?.(slot.index) } : undefined}
-                    aria-label={selectable ? `Cambiar ${slot.code}` : undefined}
                   >
                     <div className="slot-top">
                       <span className="slot-code">{slot.code}</span>

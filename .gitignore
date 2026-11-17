@@ -29,3 +29,8 @@ manager/web/frontend/tsconfig.tsbuildinfo
 
 # Bloqueos de LibreOffice
 .~lock.*#
+
+# Cobertura y artefactos locales
+.coverage
+manager/.coverage
+htmlcov/

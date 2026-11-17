@@ -306,7 +306,7 @@ export function GameLayout() {
       <Sidebar />
       <div className="app-main">
         <Topbar onMenu={() => setDrawer(true)} />
-        <main className="app-content" id="main">
+        <main className="app-content" id="main" tabIndex={-1}>
           <Outlet />
         </main>
       </div>
