@@ -34,10 +34,15 @@ ruff check src web
 All checks passed!
 
 python3 -m pytest src/tests -q
-342 passed
+345 passed
 ```
 
 ## Persistencia
 
 Los saves nuevos se guardan comprimidos con zlib. La base de datos pasó de
 **1,3 GB a 198 MB** con 190 partidas, manteniendo `PRAGMA integrity_check = ok`.
+
+```bash
+python3 scripts/compact_saves.py
+python3 scripts/prune_saves.py --keep 50 --apply
+```

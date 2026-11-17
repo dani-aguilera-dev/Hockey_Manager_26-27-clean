@@ -825,3 +825,14 @@ def test_api_user_resign_and_rehire(client):
     assert state["game"]["user_sacked"] is False
     assert state["game"]["user_sacking"] == {}
     assert state["team"]["name"] == offers[0]["club_name"]
+
+
+def test_api_data_validation(client):
+    _new_api(client, seed="68")
+    response = client.get("/api/data-validation")
+    assert response.status_code == 200, response.get_data(as_text=True)
+    data = response.get_json()["data"]
+    assert data["ok"] is True
+    assert data["summary"]["teams"] > 100
+    assert data["summary"]["players"] > 3000
+    assert data["summary"]["guests"] > 0

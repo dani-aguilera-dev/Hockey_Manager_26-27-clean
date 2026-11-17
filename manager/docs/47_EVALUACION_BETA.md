@@ -19,10 +19,10 @@
 | Pulido de UI y scouting | Mercado con carga y recuento real; calendario “Agosto de 2026”; tácticas sin lista duplicada; entrenamiento con etiquetas en español; score del ojeador normalizado 60-100 | PASS |
 | Encuadre del visor 3D | Cámara broadcast a 50° y visor de 440 px; el campo llena el marco y se ven ambos goals | PASS |
 | Clubes internacionales descritos | 70 clubes con ciudad, país, historia y fuente en `data/international.json` | PASS |
-| Backend | `python3 -m pytest src/tests -q` → **342 passed** | PASS |
-| Persistencia comprimida | zlib + `compact_saves`; 1,3 GB → 198 MB, 190 saves, `PRAGMA integrity_check = ok` | PASS |
+| Backend | `python3 -m pytest src/tests -q` → **345 passed** | PASS |
+| Persistencia comprimida | zlib + `compact_saves`/`prune_saves`; 1,3 GB → 198 MB, 190 saves, `PRAGMA integrity_check = ok` | PASS |
 | CI y lint | `ruff check src web` limpio; workflow en `docs/ci_workflow.yml`; activación pendiente de scope `workflow` | PASS local / pendiente activar |
-| Diccionario y validación de datos | `docs/50_DICCIONARIO_DATOS.md`, `src/data_validation.py`, tests de perfiles/duplicados | PASS |
+| Diccionario y validación de datos | `docs/50_DICCIONARIO_DATOS.md`, `src/data_validation.py`, `/api/data-validation`, test de backfill que no convierte jugadores en staff | PASS |
 | Code splitting | `three` y `MatchViewer3D` en chunks separados/lazy; main 667 KB (164 KB gzip), three 480 KB | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
@@ -349,7 +349,7 @@
 
 ```text
 python3 -m pytest src/tests -q
-342 passed in 294.83s
+345 passed in 273.74s
 
 cd manager/web/frontend && npm run build
 ✓ built in 3.15s
@@ -359,7 +359,7 @@ curl /app → 200
 curl /static/react/assets/index-BCSw6h2H.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2640,"clothUpdates":1320},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1320},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":60,"stickFlexes":69},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2640},"viewerPhysics":{"frames":60,"playerCollisions":0,"bodyCollisions":53,"stickCollisions":37,"ballSpeed":1.47},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":3520,"clothUpdates":1760},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1760},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":75,"stickFlexes":83},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3520},"viewerPhysics":{"frames":80,"playerCollisions":0,"bodyCollisions":63,"stickCollisions":45,"ballSpeed":1.41},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
 ```
 
 ## Límites conscientes

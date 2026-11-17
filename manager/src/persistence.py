@@ -225,7 +225,7 @@ def _backfill_ratings(state: GameState) -> None:
     if state.event_flags.get("ratings_v3"):
         return
     from .competitions import DEFAULT_REGIONAL_LEAGUE
-    from .data_loader import TOOLS, norm
+    from .data_loader import STAFF_PROFILES, TOOLS, norm
 
     path = TOOLS / "player_attributes_v2.csv"
     if not path.exists():
@@ -234,10 +234,14 @@ def _backfill_ratings(state: GameState) -> None:
         rows = list(csv.DictReader(handle))
     team_rows = {}
     for row in rows:
+        if str(row.get("perfil", "")).strip().lower() in STAFF_PROFILES:
+            continue
         key = (str(row.get("equipo", "")).strip(), str(row.get("jugador", "")).strip())
         team_rows[key] = row
     free_rows = {}
     for row in rows:
+        if str(row.get("perfil", "")).strip().lower() in STAFF_PROFILES:
+            continue
         if str(row.get("liga", "")).strip() in (DEFAULT_REGIONAL_LEAGUE, "1ª Andaluza"):
             free_rows.setdefault(norm(str(row.get("jugador", "")).strip()), row)
     for team in state.teams.values():
@@ -415,6 +419,26 @@ def compact_saves(path: Path | str = DEFAULT_DB) -> dict:
     finally:
         conn.close()
     return {"converted": converted, "bytes_before": before, "bytes_after": after}
+
+
+def prune_saves(path: Path | str = DEFAULT_DB, keep: int = 50) -> dict:
+    """Conserva las partidas más recientes y elimina el resto.
+
+    Pensado para limpiar saves de pruebas. No se ejecuta automáticamente.
+    """
+    keep = max(1, int(keep))
+    conn = _connect(path)
+    try:
+        rows = conn.execute("SELECT id FROM saves ORDER BY updated_at DESC, id DESC").fetchall()
+        delete_ids = [row[0] for row in rows[keep:]]
+        if delete_ids:
+            conn.executemany("DELETE FROM saves WHERE id=?", [(save_id,) for save_id in delete_ids])
+            conn.commit()
+            conn.execute("VACUUM")
+            conn.commit()
+        return {"deleted": len(delete_ids), "kept": min(keep, len(rows))}
+    finally:
+        conn.close()
 
 
 def export_json(state: GameState, path: Path | str) -> Path:

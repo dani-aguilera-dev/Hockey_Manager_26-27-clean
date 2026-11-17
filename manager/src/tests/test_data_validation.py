@@ -25,3 +25,13 @@ def test_validation_detects_staff_as_player_and_duplicate():
     kinds = {issue["kind"] for issue in report["errors"]}
     assert "staff_as_player" in kinds
     assert "duplicate_id" in kinds
+
+
+def test_backfill_does_not_turn_players_into_staff():
+    from src.persistence import backfill_state
+
+    state = new_game("cd-terrassa", "Data Validation", seed=1403)
+    state.event_flags.pop("ratings_v3", None)
+    backfill_state(state)
+    report = validate_state(state)
+    assert report["ok"] is True, report["errors"]

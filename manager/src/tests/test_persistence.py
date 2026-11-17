@@ -184,3 +184,24 @@ def test_legacy_text_save_is_readable_and_can_be_compacted():
         assert report["bytes_after"] < report["bytes_before"]
         loaded_again = load_game("legacy", db)
         assert loaded_again.club_id == state.club_id
+
+
+def test_prune_saves_keeps_most_recent():
+    import sqlite3
+
+    from src.persistence import prune_saves
+
+    with tempfile.TemporaryDirectory() as td:
+        db = Path(td) / "prune.db"
+        for index in range(5):
+            state = new_game("cd-terrassa", f"Prune {index}", seed=1500 + index)
+            save_game(state, f"prune-{index}", db)
+        conn = sqlite3.connect(db)
+        for index in range(5):
+            conn.execute("UPDATE saves SET updated_at=? WHERE name=?", (f"2026-01-0{index + 1}T00:00:00", f"prune-{index}"))
+        conn.commit()
+        conn.close()
+        report = prune_saves(db, keep=2)
+        assert report == {"deleted": 3, "kept": 2}
+        names = [row["name"] for row in list_saves(db)]
+        assert names == ["prune-4", "prune-3"]

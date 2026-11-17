@@ -51,6 +51,7 @@ from src.conversations import (
 from src.cup import cup_next_user_fixture, cup_round_fixtures, cup_status_text
 from src.daily import next_match_date, simulate_days
 from src.data_loader import load_clubs
+from src.data_validation import validate_state
 from src.datahub import datahub_overview, set_instructions
 from src.development import clear_development_plan, development_overview, set_development_plan
 from src.ehl import ehl_next_date, ehl_status_text, simulate_ehl_round
@@ -1887,6 +1888,14 @@ def match_plans_delete(plan_id: str):
         {"result": result, "match_plans": match_plans_overview(state), "state": _state_payload(state)},
         result.get("message", ""),
     )
+
+
+@api.get("/data-validation")
+def data_validation():
+    state, err = _state()
+    if err:
+        return err
+    return _ok(validate_state(state))
 
 
 @api.get("/shortlist")
