@@ -11,7 +11,6 @@ import random
 import re
 import unicodedata
 import zlib
-from pathlib import Path
 
 from .models import PlayerState, TeamState
 from .runtime import project_root

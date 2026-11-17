@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import random
 import zlib
-from datetime import date
 from typing import Any
 
 from .competitions import competition

@@ -133,9 +133,8 @@ def test_api_news_has_awards_and_related_data(client):
 def test_api_pending_event_can_be_resolved(client):
     from datetime import date
 
-    from src.events import trigger_event
-
     import web.app as web
+    from src.events import trigger_event
 
     _new(client, seed="21")
     state = list(web.GAMES.values())[-1]

@@ -9,13 +9,11 @@ afición, marca y taquilla.
 from __future__ import annotations
 
 import random
-import zlib
 from datetime import date, timedelta
 from typing import Any
 
 from .competitions import competition
 from .models import GameState, TeamState
-
 
 SPONSOR_CATEGORIES = {
     "equipacion": "Equipación",

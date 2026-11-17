@@ -55,6 +55,7 @@ def test_benalmadena_has_first_and_second_team_in_primera_andalucia():
 
 def test_regional_teams_do_not_repeat_players():
     from collections import Counter
+
     from src.regional import load_regional_teams
 
     teams, _, _ = load_regional_teams()
@@ -74,6 +75,7 @@ def test_all_regional_leagues_have_their_full_team_count():
 
 def test_every_regional_team_has_a_real_crest_file():
     from pathlib import Path
+
     from src.regional import load_regional_teams
 
     teams, _, _ = load_regional_teams()

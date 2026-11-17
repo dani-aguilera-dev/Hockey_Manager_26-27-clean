@@ -1,8 +1,6 @@
 import random
 
 from src.market import (
-    accept_incoming_offer,
-    asking_price,
     generate_incoming_offers,
     list_player_for_transfer,
     market_players,

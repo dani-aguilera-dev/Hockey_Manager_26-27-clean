@@ -13,7 +13,7 @@ from datetime import date
 from typing import Any
 
 from .competitions import competition
-from .models import GameState, PlayerState, TeamState
+from .models import GameState, TeamState
 
 FOCUS_OPTIONS: dict[str, dict[str, Any]] = {
     "tecnica": {

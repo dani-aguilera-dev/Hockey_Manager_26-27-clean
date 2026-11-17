@@ -1,8 +1,9 @@
+import random
+
 from src.models import GameState
-from src.responsibilities import responsibility_bonus, responsibilities_overview, set_responsibility
+from src.responsibilities import responsibilities_overview, responsibility_bonus, set_responsibility
 from src.season import new_game
 from src.training import apply_training_plan
-import random
 
 
 def test_responsibilities_overview_has_areas_and_staff():

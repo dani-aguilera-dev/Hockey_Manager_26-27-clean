@@ -9,7 +9,7 @@ from src.market import (
     renew_contract,
     staff_candidates,
 )
-from src.season import advance_to_next_season, new_game, play_round, season_summary
+from src.season import advance_to_next_season, new_game, play_round
 
 
 def test_market_window():

@@ -17,7 +17,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from .competitions import LEAGUE_RATING_TARGETS, competition
-from .models import BoardMember, PlayerState, StaffMember, Tactics, TeamState
+from .models import PlayerState, StaffMember, Tactics, TeamState
 
 DATA = Path(__file__).resolve().parents[1] / "data" / "international.json"
 REAL_DATA = DATA.with_name("international_real.json")
@@ -214,9 +214,7 @@ def _make_player(club: dict, index: int, rng: random.Random) -> PlayerState:
         bonus = 0
         if position == "Portero" and key in ("reflejos", "blocaje", "pc_gk_save", "stroke_save", "rebote_gk", "agilidad"):
             bonus = 7
-        elif position == "Defensa" and key in ("cobertura", "posicionamiento", "pressing", "fuerza", "pc_first_runner"):
-            bonus = 4
-        elif position == "Medio" and key in ("pase", "control", "vision", "distribucion", "resistencia"):
+        elif position == "Defensa" and key in ("cobertura", "posicionamiento", "pressing", "fuerza", "pc_first_runner") or position == "Medio" and key in ("pase", "control", "vision", "distribucion", "resistencia"):
             bonus = 4
         elif position == "Delantero" and key in ("definicion", "velocidad", "regate_3d", "pc_flick", "desmarque"):
             bonus = 5
@@ -371,7 +369,7 @@ def replacement_player(team: TeamState, year: int, seq: int) -> PlayerState:
         "league": team.league,
         "country": team.country,
     }
-    rng = random.Random(zlib.crc32(f"{team.id}-{year}-{seq}".encode("utf-8")))
+    rng = random.Random(zlib.crc32(f"{team.id}-{year}-{seq}".encode()))
     player = _make_player(club, seq, rng)
     player.team_name = team.name
     player.league = team.league

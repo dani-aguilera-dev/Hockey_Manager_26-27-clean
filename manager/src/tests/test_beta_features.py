@@ -1,5 +1,4 @@
 import pytest
-
 from src.brands import (
     accept_brand_offer,
     accept_player_brand_offer,

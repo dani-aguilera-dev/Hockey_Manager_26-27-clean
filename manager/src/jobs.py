@@ -9,8 +9,6 @@ posición y la forma reciente.
 
 from __future__ import annotations
 
-import random
-import zlib
 from datetime import date, timedelta
 from typing import Any
 

@@ -27,7 +27,7 @@ def test_web_new_and_main_routes(client):
     assert client.get("/", follow_redirects=True).status_code == 200
     assert client.get("/app").status_code == 200
     r = _new(client)
-    assert "Dashboard".encode() in r.data
+    assert b"Dashboard" in r.data
     for path in (
         "/dashboard",
         "/squad",
@@ -100,8 +100,8 @@ def test_web_crests_and_news(client):
     assert client.get("/static/crests/cd-terrassa.png").mimetype == "image/png"
     r = client.get("/news")
     assert r.status_code == 200
-    assert "Actualidad".encode() in r.data
-    assert "Noticias".encode() in r.data
+    assert b"Actualidad" in r.data
+    assert b"Noticias" in r.data
 
 
 def test_web_live_match(client):
@@ -188,7 +188,7 @@ def test_web_game_menu_options_and_exit(client):
     assert "text-large" in client.get("/dashboard").get_data(as_text=True)
     r = client.post("/exit-game", follow_redirects=True)
     assert r.status_code == 200
-    assert "Hockey Manager".encode() in r.data
+    assert b"Hockey Manager" in r.data
 
 
 def test_web_save_and_load(client):

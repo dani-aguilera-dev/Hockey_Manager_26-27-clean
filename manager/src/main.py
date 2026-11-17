@@ -3,14 +3,13 @@
 from __future__ import annotations
 
 import argparse
-import sys
 
 from .competitions import COMPETITIONS
 from .international import load_all_teams
 from .persistence import DEFAULT_DB
 from .regional import load_regional_teams
 from .season import new_game, play_round, season_summary
-from .ui import GameUI, money
+from .ui import GameUI
 
 
 def auto_season(club_id: str | None, manager: str, seed: int | None) -> int:

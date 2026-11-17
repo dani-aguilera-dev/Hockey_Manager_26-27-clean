@@ -11,10 +11,9 @@ import textwrap
 from datetime import date
 from pathlib import Path
 
-from .calendar import league_table
 from .cup import ROUND_NAMES, cup_next_user_fixture, cup_round_fixtures, cup_status_text
-from .data_loader import dha_teams, load_clubs, load_teams
-from .finance import financial_summary, sponsor_income
+from .data_loader import load_clubs, load_teams
+from .finance import financial_summary
 from .logistics import travel_options
 from .market import (
     STAFF_LABELS,
@@ -45,13 +44,6 @@ from .season import (
     season_summary,
 )
 from .training import (
-    DAYS,
-    PLAN_PRESETS,
-    SESSION_ORDER,
-    SESSION_TYPES,
-    apply_training_plan,
-    auto_plan,
-    format_plan,
     plan_name,
 )
 from .youth import promote_youth, release_youth
@@ -91,7 +83,7 @@ def line():
     print("-" * W)
 
 
-def money(n: int | float) -> str:
+def money(n: float) -> str:
     return f"{int(round(n)):,}".replace(",", ".") + " €"
 
 
@@ -1107,7 +1099,6 @@ class GameUI:
         engine = ctx.engine
         home = s.teams[ctx.fixture.home_id]
         away = s.teams[ctx.fixture.away_id]
-        user_side = ctx.user_side
         header(f"PARTIDO EN DIRECTO · {home.name.upper()} vs {away.name.upper()}")
         print(f"{fmt_date(ctx.fixture.date)} · Jornada {ctx.fixture.round} · {home.stadium_name}")
         print("El resto de la jornada ya se ha simulado. Tu partido se juega ahora.")
@@ -1308,7 +1299,7 @@ class GameUI:
         ]
         print(f"{'Estadística':<24} {short(home.name, 28):>28} {short(away.name, 28):>28}")
         for label, hv, av in rows:
-            print(f"{label:<24} {str(hv):>28} {str(av):>28}")
+            print(f"{label:<24} {hv!s:>28} {av!s:>28}")
         hm = home.management_profile(engine.home_lineup)
         am = away.management_profile(engine.away_lineup)
         print(f"\nGestión local: {hm['score']:.0f}/100 · bonus {hm['bonus']:+.2f} · cohesión {home.cohesion}/20")
@@ -1355,7 +1346,6 @@ class GameUI:
         engine = ctx.engine
         side = ctx.user_side
         t = self.state.user_team
-        opp = self.state.teams[engine.away.id] if side == 0 else self.state.teams[engine.home.id]
         while True:
             header("TÁCTICA EN DIRECTO")
             tac = t.tactics
@@ -1499,7 +1489,7 @@ class GameUI:
         ]
         print(f"{'Estadística':<24} {short(p['home_name'], 28):>28} {short(p['away_name'], 28):>28}")
         for label, hv, av in rows:
-            print(f"{label:<24} {str(hv):>28} {str(av):>28}")
+            print(f"{label:<24} {hv!s:>28} {av!s:>28}")
         section("GESTIÓN")
         hm = p.get("home_management") or {}
         am = p.get("away_management") or {}

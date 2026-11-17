@@ -1,14 +1,12 @@
 from pathlib import Path
 
 import pytest
-
 from src.competitions import COMPETITIONS
 from src.international import load_international_teams
 from src.market import market_players
 from src.persistence import load_game, save_game
 from src.ratings import stars
 from src.season import advance_to_next_season, new_game, play_round
-
 
 INTERNATIONAL_CASES = [
     ("ned-amsterdam", "NED", 12, 132),

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r manager/requirements-dev.txt
+      - name: Lint
+        working-directory: manager
+        run: ruff check src web
+      - name: Tests
+        working-directory: manager
+        run: python -m pytest src/tests -q
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: manager/web/frontend/package-lock.json
+      - name: Install
+        working-directory: manager/web/frontend
+        run: npm ci
+      - name: Build
+        working-directory: manager/web/frontend
+        run: npm run build

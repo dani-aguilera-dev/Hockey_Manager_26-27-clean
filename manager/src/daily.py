@@ -7,13 +7,12 @@ partido del usuario para que pueda preparar el once y decidir cómo jugarlo.
 from __future__ import annotations
 
 import random
-import zlib
 from datetime import date, timedelta
 from typing import Any
 
 from .competitions import code_for_system, competition
-from .models import GameState, PlayerState, TeamState
 from .conversations import add_player_chat, check_promises, random_conversation
+from .models import GameState, PlayerState
 
 
 def _rng(state: GameState, day: date, salt: int = 0) -> random.Random:

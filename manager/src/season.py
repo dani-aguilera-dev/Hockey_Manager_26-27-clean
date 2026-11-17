@@ -6,11 +6,10 @@ import random
 import zlib
 from dataclasses import dataclass
 from datetime import date, timedelta
-from typing import Any
 
 from .affiliates import advance_mentoring
 from .awards import archive_season_awards
-from .calendar import create_dha_fixtures, create_fixtures, dha_table, league_table, recompute_table
+from .calendar import create_fixtures, league_table, recompute_table
 from .competitions import (
     COMPETITIONS,
     DEFAULT_REGIONAL_LEAGUE,
@@ -24,26 +23,27 @@ from .competitions import (
     is_regional,
     promotion_groups,
 )
-from .cup import CUP_ACTIVATION_ROUND, CUP_OFFSETS, ROUND_NAMES, ROUND_PHASES, cup_round_fixtures, cup_start, new_cup
-from .development import advance_development
+from .cup import CUP_ACTIVATION_ROUND, CUP_OFFSETS, ROUND_PHASES, cup_round_fixtures, cup_start, new_cup
 from .data_loader import load_teams
-from .ehl import create_ehl, ehl_next_date, simulate_ehl
+from .development import advance_development
+from .ehl import create_ehl, simulate_ehl
 from .finance import apply_round_finances
 from .history import archive_season
 from .loans import return_loans
 from .logistics import apply_travel, travel_options
-from .match_engine import MatchEngine, MatchResult
-from .models import Fixture, GameState, PlayerState, TeamState
-from .scouting import advance_scouting
 from .managers import (
     process_manager_changes,
     process_user_sacking,
     record_manager_change,
     replacement_manager,
 )
+from .match_engine import MatchEngine, MatchResult
+from .models import Fixture, GameState, PlayerState, TeamState
+from .scouting import advance_scouting
 from .training import apply_training_plan, auto_plan
 from .trials import advance_trials
 from .youth import develop_youth, generate_youth, initial_youth, intake
+
 
 # Fase Nacional de ascenso a DHB (RFEH, Circular nº1 2026-27, apartado 1.3).
 # Los equipos se agrupan por zonas geográficas a partir de la clasificación de

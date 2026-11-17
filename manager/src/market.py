@@ -64,7 +64,7 @@ STAFF_NAMES = [
 def market_window(state: GameState) -> str:
     if state.phase != "regular":
         return "cerrado"
-    from datetime import date, timedelta
+    from datetime import date
 
     today = date.fromisoformat(state.date)
     year = int(state.season[:4])
@@ -511,7 +511,7 @@ def generate_incoming_offers(state: GameState, rng: random.Random | None = None)
         return state.transfer_offers
     rng = rng or _rng(state, 7)
     _ai_market_activity(state, rng)
-    new_offers = daily_transfer_activity(state, date.fromisoformat(state.date), rng)
+    daily_transfer_activity(state, date.fromisoformat(state.date), rng)
     state.market_offers_round = state.round
     state.market_offers_date = state.date
     return state.transfer_offers

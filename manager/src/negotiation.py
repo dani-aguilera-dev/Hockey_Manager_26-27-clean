@@ -9,7 +9,7 @@ tests; la interfaz nueva usa estas funciones.
 from __future__ import annotations
 
 import zlib
-from datetime import date, timedelta
+from datetime import date
 from typing import Any
 
 from .market import (
@@ -326,12 +326,12 @@ def _respond_buy(
     salary: int | None,
     years: int | None,
 ) -> dict[str, Any]:
+    day = date.fromisoformat(state.date)
     player, seller, free_agent = _find_player(state, negotiation["player_id"])
     if player is None:
         negotiation["status"] = "rejected"
         _update_negotiation(state, negotiation)
         return {"ok": False, "message": "El jugador ya no está disponible."}
-    day = date.fromisoformat(state.date)
     offer = dict(negotiation.get("offer", {}))
     ask = dict(negotiation.get("ask", {}))
     if action == "walk":
@@ -411,7 +411,6 @@ def _respond_renewal(
         negotiation["status"] = "rejected"
         _update_negotiation(state, negotiation)
         return {"ok": False, "message": "El jugador ya no está disponible."}
-    day = date.fromisoformat(state.date)
     offer = dict(negotiation.get("offer", {}))
     ask = dict(negotiation.get("ask", {}))
     if action == "walk":

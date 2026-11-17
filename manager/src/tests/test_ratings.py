@@ -31,6 +31,7 @@ def test_loaded_players_have_their_league_and_stars_change_on_promotion():
 
 def test_spanish_league_ladder_has_clear_boundaries():
     import statistics
+
     from src.data_loader import load_teams
     from src.regional import load_regional_teams
 
@@ -53,6 +54,7 @@ def test_spanish_league_ladder_has_clear_boundaries():
 
 def test_international_leagues_follow_the_world_hierarchy():
     import statistics
+
     from src.competitions import LEAGUE_RATING_TARGETS
     from src.international import load_international_teams
 

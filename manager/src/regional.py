@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 from .data_loader import load_lower_division_free_agents, load_teams, norm
-from .models import TeamState, Tactics
+from .models import Tactics, TeamState
 
 DATA = Path(__file__).resolve().parents[1] / "data" / "regional_teams.json"
 

@@ -160,7 +160,7 @@ class Tactics:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, d: dict) -> "Tactics":
+    def from_dict(cls, d: dict) -> Tactics:
         return cls(**{k: d.get(k, getattr(cls(), k)) for k in cls().__dict__})
 
 
@@ -283,7 +283,7 @@ class PlayerState:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, d: dict) -> "PlayerState":
+    def from_dict(cls, d: dict) -> PlayerState:
         return cls(**d)
 
 
@@ -315,7 +315,7 @@ class StaffMember:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, d: dict) -> "StaffMember":
+    def from_dict(cls, d: dict) -> StaffMember:
         return cls(
             role=d["role"],
             name=d["name"],
@@ -340,7 +340,7 @@ class BoardMember:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, d: dict) -> "BoardMember":
+    def from_dict(cls, d: dict) -> BoardMember:
         return cls(
             role=d["role"],
             name=d["name"],
@@ -653,7 +653,7 @@ class TeamState:
         }
 
     @classmethod
-    def from_dict(cls, d: dict) -> "TeamState":
+    def from_dict(cls, d: dict) -> TeamState:
         return cls(
             id=d["id"],
             name=d["name"],
@@ -734,7 +734,7 @@ class Fixture:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, d: dict) -> "Fixture":
+    def from_dict(cls, d: dict) -> Fixture:
         return cls(**d)
 
 
@@ -963,7 +963,7 @@ class GameState:
         }
 
     @classmethod
-    def from_dict(cls, d: dict) -> "GameState":
+    def from_dict(cls, d: dict) -> GameState:
         state = cls(
             manager_name=d["manager_name"],
             club_id=d["club_id"],

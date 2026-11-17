@@ -16,7 +16,6 @@ import json
 import math
 import random
 import unicodedata
-from collections import defaultdict
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parents[2]
@@ -43,17 +42,17 @@ def load_players():
         for k in ("edad", "goles"):
             try:
                 r[k] = int(float(r.get(k) or 0))
-            except:
+            except Exception:
                 r[k] = 0
         for k, v in list(r.items()):
             if k.startswith("attr_"):
                 try:
                     r[k] = int(float(v or 50))
-                except:
+                except Exception:
                     r[k] = 50
         try:
             r["overall"] = float(r.get("overall") or 0)
-        except:
+        except Exception:
             r["overall"] = 0.0
     return rows
 

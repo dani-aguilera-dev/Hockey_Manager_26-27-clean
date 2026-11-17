@@ -7,7 +7,6 @@ No participan equipos de DHB.
 from __future__ import annotations
 
 import json
-import random
 from datetime import date, timedelta
 from pathlib import Path
 

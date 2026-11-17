@@ -119,7 +119,6 @@ def _team_last_result(state: GameState) -> str:
 
 def _contextual_prompt(topic: str, ctx: dict[str, Any], base: str) -> str:
     """Añade datos reales al texto de apertura para que no sea genérico."""
-    name = ctx.get("name", "Entrenador")
     details: dict[str, str] = {
         "role": (
             f"Llevo {ctx.get('apps', 0)} partidos y ahora mismo soy {str(ctx.get('role', 'rotación')).lower()}. "
@@ -462,7 +461,7 @@ def _options(topic: str, ctx: dict[str, Any]) -> list[dict[str, Any]]:
     performance = ctx.get("performance", "")
     if topic == "role":
         prompt = {
-            "joven": f"Entrenador, soy joven y necesito saber qué papel voy a tener. No quiero quedarme en el banquillo sin entender por qué.",
+            "joven": "Entrenador, soy joven y necesito saber qué papel voy a tener. No quiero quedarme en el banquillo sin entender por qué.",
             "veterano": "A estas alturas quiero claridad. Sé lo que puedo dar y necesito saber si el club cuenta conmigo de verdad.",
             "madurez": "Quiero saber cuál es mi rol en el equipo. Estoy en un momento en el que necesito minutos y responsabilidad.",
         }.get(age, "Quiero saber cuál es mi papel en el equipo.")

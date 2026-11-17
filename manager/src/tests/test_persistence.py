@@ -2,7 +2,6 @@ import tempfile
 from pathlib import Path
 
 import pytest
-
 from src.market import generate_incoming_offers, renew_contract
 from src.persistence import delete_save, export_json, import_json, list_saves, load_game, rename_save, save_game
 from src.season import ensure_week_training, new_game, play_round

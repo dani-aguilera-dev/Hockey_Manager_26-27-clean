@@ -1,4 +1,4 @@
-from src.data_loader import load_clubs, load_teams
+from src.data_loader import load_teams
 from src.logistics import apply_travel, distance_between, travel_options
 
 

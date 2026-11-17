@@ -13,7 +13,7 @@ from datetime import date, timedelta
 from typing import Any
 
 from .competitions import competition
-from .models import Fixture, GameState, PlayerState
+from .models import Fixture, GameState
 
 
 def _official_dates(state: GameState, days: int = 75) -> set[str]:
@@ -144,11 +144,10 @@ def play_friendly(
     if state.date < fixture.date:
         return {"ok": False, "message": f"El amistoso es el {fixture.date}; avanza el calendario hasta esa fecha."}
     # Importar aquí evita un ciclo de importación con season.
-    from .season import _simulate_fixture, _user_result_payload, _update_user_after_match, make_lineup
+    from .season import _simulate_fixture, _update_user_after_match, _user_result_payload, make_lineup
 
     lineup, bench = make_lineup(state.user_team, user_lineup_ids or state.manual_lineup or None)
     rng = random.Random(state.seed * 9001 + date.fromisoformat(fixture.date).toordinal() + sum(ord(c) for c in fixture.id))
-    old_status = {p.id: (p.injury, p.suspension) for team in state.teams.values() for p in team.players}
     result = _simulate_fixture(
         state,
         fixture,

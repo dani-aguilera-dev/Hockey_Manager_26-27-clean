@@ -11,82 +11,6 @@ import uuid
 from datetime import date, timedelta
 
 from flask import Blueprint, jsonify, request, session
-
-from src.calendar import league_table
-from src.commercial import (
-    accept_sponsor_offer,
-    commercial_summary,
-    generate_sponsor_offers,
-    reject_sponsor_offer,
-    run_campaign,
-    set_ticket_price,
-)
-from src.competitions import COMPETITIONS, competition, playable_competitions
-from src.conversations import (
-    apply_conversation_choice,
-    conversation_targets,
-    create_conversation,
-    random_conversation,
-    target_summary,
-    topics_for_target,
-)
-from src.cup import cup_next_user_fixture, cup_round_fixtures, cup_status_text
-from src.daily import add_player_chat, next_match_date, simulate_days
-from src.events import event_history as game_event_history
-from src.events import pending_events as pending_game_events
-from src.events import resolve_event as resolve_game_event
-from src.data_loader import load_clubs
-from src.ehl import ehl_next_date, ehl_status_text, simulate_ehl_round
-from src.finance import finance_overview, financial_summary
-from src.friendlies import (
-    cancel_friendly,
-    friendlies_payload,
-    play_friendly,
-    schedule_friendly,
-)
-from src.brands import (
-    accept_brand_offer,
-    accept_player_brand_offer,
-    brand_summary,
-    reject_brand_offer,
-    reject_player_brand_offer,
-)
-from src.board import board_overview, request_board
-from src.loans import loan_overview, offer_loan_out, request_loan_in
-from src.datahub import datahub_overview, set_instructions
-from src.history import history_overview
-from src.analysis import analysis_overview
-from src.contracts import contracts_overview
-from src.shortlist import (
-    add_to_shortlist,
-    is_shortlisted,
-    remove_from_shortlist,
-    shortlist_candidates,
-    shortlist_overview,
-    update_shortlist_entry,
-)
-from src.clauses import clauses_overview, set_clause
-from src.compare import compare_candidates, compare_players
-from src.jobs import (
-    accept_job_offer,
-    generate_job_offers,
-    job_security_overview,
-    reject_job_offer,
-)
-from src.managers import resign_user
-from src.trials import end_trial, invite_trial, trial_overview
-from src.vacancies import apply_vacancy, vacancy_overview
-from src.manager_profile import manager_profile_overview
-from src.match_plans import (
-    create_match_plan,
-    delete_match_plan,
-    match_plans_overview,
-    update_match_plan,
-)
-from src.facilities import facilities_overview, upgrade_facility
-from src.awards import awards_overview
-from src.responsibilities import responsibilities_overview, set_responsibility
-from src.development import clear_development_plan, development_overview, set_development_plan
 from src.affiliates import (
     affiliate_overview,
     assign_mentor,
@@ -95,9 +19,64 @@ from src.affiliates import (
     mentoring_overview,
     request_affiliate,
 )
-from src.player_editor import edit_player, editor_payload, find_player
+from src.analysis import analysis_overview
+from src.awards import awards_overview
+from src.board import board_overview, request_board
+from src.brands import (
+    accept_brand_offer,
+    accept_player_brand_offer,
+    brand_summary,
+    reject_brand_offer,
+    reject_player_brand_offer,
+)
+from src.clauses import clauses_overview, set_clause
+from src.commercial import (
+    accept_sponsor_offer,
+    commercial_summary,
+    generate_sponsor_offers,
+    reject_sponsor_offer,
+    run_campaign,
+    set_ticket_price,
+)
+from src.compare import compare_candidates, compare_players
+from src.competitions import COMPETITIONS, competition, playable_competitions
+from src.contracts import contracts_overview
+from src.conversations import (
+    apply_conversation_choice,
+    conversation_targets,
+    create_conversation,
+    random_conversation,
+    topics_for_target,
+)
+from src.cup import cup_next_user_fixture, cup_round_fixtures, cup_status_text
+from src.daily import next_match_date, simulate_days
+from src.data_loader import load_clubs
+from src.datahub import datahub_overview, set_instructions
+from src.development import clear_development_plan, development_overview, set_development_plan
+from src.ehl import ehl_next_date, ehl_status_text, simulate_ehl_round
+from src.events import event_history as game_event_history
+from src.events import pending_events as pending_game_events
+from src.events import resolve_event as resolve_game_event
+from src.facilities import facilities_overview, upgrade_facility
+from src.finance import finance_overview, financial_summary
+from src.friendlies import (
+    cancel_friendly,
+    friendlies_payload,
+    play_friendly,
+    schedule_friendly,
+)
+from src.history import history_overview
 from src.international import club_catalog, international_cities, load_all_teams
+from src.jobs import (
+    accept_job_offer,
+    generate_job_offers,
+    job_security_overview,
+    reject_job_offer,
+)
+from src.loans import loan_overview, offer_loan_out, request_loan_in
 from src.logistics import travel_options
+from src.manager_profile import manager_profile_overview
+from src.managers import resign_user
 from src.market import (
     STAFF_LABELS,
     accept_incoming_offer,
@@ -117,15 +96,25 @@ from src.market import (
     staff_candidates,
     staff_market,
 )
+from src.match_plans import (
+    create_match_plan,
+    delete_match_plan,
+    match_plans_overview,
+    update_match_plan,
+)
+from src.models import FORMATION_SLOTS
 from src.negotiation import (
     counter_incoming_offer,
     respond_negotiation,
     start_renewal_negotiation,
     start_transfer_negotiation,
 )
-from src.models import FORMATION_SLOTS
 from src.news import awards_for_last_match, news_feed
-from src.persistence import delete_save as delete_saved_game, list_saves, load_game, rename_save as rename_saved_game
+from src.objectives import competition_objectives
+from src.persistence import delete_save as delete_saved_game
+from src.persistence import list_saves, load_game
+from src.persistence import rename_save as rename_saved_game
+from src.player_editor import edit_player, editor_payload, find_player
 from src.press import (
     answer_post_press,
     answer_press,
@@ -136,11 +125,10 @@ from src.press import (
     press_context,
     press_questions,
 )
-from src.objectives import competition_objectives
 from src.promotion import promotion_path
-from src.ratings import league_label, profile, scout_stars, stars_bar, stars_text, tier
+from src.ratings import league_label, profile, stars_bar, stars_text, tier
+from src.responsibilities import responsibilities_overview, set_responsibility
 from src.scouting import cancel_assignment, create_assignment, scouting_overview
-from src.team_meeting import perform_team_meeting, team_meeting_context
 from src.season import (
     advance_to_next_season,
     finish_live_round,
@@ -152,7 +140,18 @@ from src.season import (
     simulate_cup_remaining,
     simulate_cup_round,
 )
+from src.shortlist import (
+    add_to_shortlist,
+    is_shortlisted,
+    remove_from_shortlist,
+    shortlist_candidates,
+    shortlist_overview,
+    update_shortlist_entry,
+)
+from src.team_meeting import perform_team_meeting, team_meeting_context
 from src.training import DAYS, PLAN_PRESETS, SESSION_ORDER, SESSION_TYPES, apply_training_plan, auto_plan, plan_name
+from src.trials import end_trial, invite_trial, trial_overview
+from src.vacancies import apply_vacancy, vacancy_overview
 from src.youth import CATEGORY_AGES, CATEGORY_LABELS, YOUTH_CATEGORIES, promote_youth, release_youth
 
 api = Blueprint("api", __name__, url_prefix="/api")
@@ -286,7 +285,6 @@ def _team_summary(t, position=None):
 
 
 def _team(t):
-    web = _web()
     payload = _team_summary(t)
     payload.update(
         {

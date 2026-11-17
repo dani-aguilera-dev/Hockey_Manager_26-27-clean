@@ -2,7 +2,6 @@ from datetime import date, timedelta
 
 from src.events import (
     definitions,
-    event_history,
     pending_events,
     resolve_event,
     tick_events,

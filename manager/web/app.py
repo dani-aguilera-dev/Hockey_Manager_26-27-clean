@@ -13,15 +13,25 @@ from datetime import date, timedelta
 from functools import wraps
 from pathlib import Path
 
-from flask import Flask, Response, abort, flash, redirect, render_template, request, send_from_directory, session, url_for
-from src.calendar import league_table
+from flask import (
+    Flask,
+    Response,
+    abort,
+    flash,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    session,
+    url_for,
+)
+from src.competitions import COMPETITIONS, competition, playable_competitions
 from src.cup import cup_next_user_fixture, cup_round_fixtures, cup_status_text
 from src.daily import add_player_chat, next_match_date, simulate_days
-from src.competitions import COMPETITIONS, competition, playable_competitions
-from src.data_loader import load_clubs, load_teams
-from src.international import load_all_teams
+from src.data_loader import load_clubs
 from src.ehl import ehl_next_date, ehl_status_text, simulate_ehl_round
 from src.finance import financial_summary
+from src.international import load_all_teams
 from src.market import (
     STAFF_LABELS,
     accept_incoming_offer,
@@ -46,7 +56,6 @@ from src.ratings import league_label, scout_stars, stars_bar, stars_text, tier
 from src.runtime import project_root
 from src.season import (
     advance_to_next_season,
-    ensure_week_training,
     finish_live_round,
     make_lineup,
     new_game,
@@ -63,7 +72,6 @@ from src.training import (
     SESSION_TYPES,
     apply_training_plan,
     auto_plan,
-    format_plan,
     plan_name,
 )
 from src.youth import CATEGORY_AGES, CATEGORY_LABELS, YOUTH_CATEGORIES, promote_youth, release_youth
@@ -1303,7 +1311,7 @@ def match_live():
 @app.route("/match/live/advance", methods=["POST"])
 @login_required
 def match_live_advance():
-    state = get_state()
+    get_state()
     gid = session.get("game_id")
     ctx = LIVE.get(gid)
     if not ctx:
@@ -1338,7 +1346,7 @@ def match_live_tactics():
 @app.route("/match/live/sub", methods=["POST"])
 @login_required
 def match_live_sub():
-    state = get_state()
+    get_state()
     gid = session.get("game_id")
     ctx = LIVE.get(gid)
     if not ctx:
@@ -1360,7 +1368,7 @@ def match_live_finish():
         return redirect(url_for("match_page"))
     if not ctx.engine.finished:
         ctx.engine.simulate()
-    payload = finish_live_round(state, ctx)
+    finish_live_round(state, ctx)
     LIVE.pop(gid, None)
     save_state(state)
     return redirect(url_for("match_report"))
@@ -1408,7 +1416,7 @@ def new_season_redirect():
     return redirect(url_for("season_end"))
 
 
-from web.api import api as api_blueprint  # noqa: E402  (registered after all routes)
+from web.api import api as api_blueprint  # noqa: E402
 
 app.register_blueprint(api_blueprint)
 

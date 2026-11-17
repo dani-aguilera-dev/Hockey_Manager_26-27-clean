@@ -1,4 +1,3 @@
-from src.models import FORMATION_SLOTS
 from src.season import new_game
 
 

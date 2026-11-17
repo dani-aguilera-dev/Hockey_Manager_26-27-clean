@@ -12,7 +12,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 from . import rules
-from .models import SLOT_TO_SUB, TACTIC_MODS, PlayerState, TeamState
+from .models import TACTIC_MODS, PlayerState, TeamState
 
 HOME_ADVANTAGE_ATTACK = 4.0
 HOME_ADVANTAGE_DEFENSE = 2.0
@@ -282,14 +282,14 @@ class MatchEngine:
             if self.minute < int(plan.get("from_minute", 45) or 0):
                 continue
             instructions = plan.get("instructions") or {}
-            for field, value in instructions.items():
-                if field not in TACTIC_MODS or value not in TACTIC_MODS[field]:
+            for field_name, value in instructions.items():
+                if field_name not in TACTIC_MODS or value not in TACTIC_MODS[field_name]:
                     continue
-                old_value = getattr(tactics, field, "")
+                old_value = getattr(tactics, field_name, "")
                 if old_value == value:
                     continue
-                old_mod = TACTIC_MODS[field].get(old_value, (0.0, 0.0))
-                new_mod = TACTIC_MODS[field][value]
+                old_mod = TACTIC_MODS[field_name].get(old_value, (0.0, 0.0))
+                new_mod = TACTIC_MODS[field_name][value]
                 attack += new_mod[0] - old_mod[0]
                 defense += new_mod[1] - old_mod[1]
             active.append(str(plan.get("id", "")))
@@ -913,7 +913,6 @@ class MatchEngine:
         deflected: bool | None = None,
     ):
         self._clear_advantage(side)
-        t = self._team(side)
         opp = 1 - side
         lineup = self._lineup(side)
         # peso por atributos ofensivos y posición

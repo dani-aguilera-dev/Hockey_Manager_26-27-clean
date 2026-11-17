@@ -1,5 +1,5 @@
-from datetime import date, timedelta
 import random
+from datetime import date, timedelta
 
 from src.commercial import (
     accept_sponsor_offer,
@@ -147,7 +147,7 @@ def test_staff_market_is_fictitious_and_hireable():
         assert any(member.name == candidates[0]["name"] for member in state.user_team.staff)
 
 
-def test_commercial_income_flows_through_round_finance():  # noqa: E302
+def test_commercial_income_flows_through_round_finance():
     state = new_game("cd-terrassa", "Test", seed=945)
     offers = generate_sponsor_offers(state, force=True)
     assert accept_sponsor_offer(state, offers[0]["id"])["ok"]

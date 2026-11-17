@@ -11,7 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from .calendar import create_fixtures, sort_table
-from .competitions import Competition, COMPETITIONS
+from .competitions import COMPETITIONS, Competition
 from .models import Fixture, GameState, TeamState
 
 
