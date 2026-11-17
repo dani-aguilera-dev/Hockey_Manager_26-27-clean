@@ -29,6 +29,8 @@
 | Refactor de temporada | `season_sim.py` + `season_promotion.py`; `season.py` conserva la API pública | PASS |
 | Refactor del motor | `match_shared.py` + mixins de scoring/referee/tactics/simulation | PASS |
 | Profundidad del motor | Momentum, portador por jugador, fatiga individual y cadena de golpe franco | PASS |
+| Cobertura medida | `pytest --cov`: 74% global con CLI legacy, 83% del núcleo web; motor 90–97%, temporada 88–91% | PASS |
+| E2E dividido | `e2e_smoke.mjs`, `e2e_live.mjs` y `e2e_beta.mjs`; cada suite crea su partida y se ejecuta por separado | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/gol anulado/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -354,7 +356,7 @@
 
 ```text
 python3 -m pytest src/tests -q
-351 passed in 273.74s
+351 passed in 365.09s
 
 cd manager/web/frontend && npm run build
 ✓ built in 3.12s
@@ -363,8 +365,14 @@ curl /api/health → 200
 curl /app → 200
 curl /static/react/assets/index-DXz-jzOk.js → 200
 
+node web/frontend/e2e_smoke.mjs
+{"health":true,"newGame":true,"onboarding":true,"dashboard":true,"calendar":true,"squad":true,"tactics":true,"market":true,"quickMatch":true,"report":true,"analysis":true,"ok":true,"suite":"smoke","ms":6856}
+
+node web/frontend/e2e_live.mjs
+{"liveStart":true,"viewer":{"players":22,"frames":68,"bones":374,"sticks":22,"ikSolutions":2992,"biomechSolutions":2992,"mocapFrames":74},"viewer3d":true,"liveProtest":true,"momentsAdvanced":true,"finished":true,"ok":true,"suite":"live","ms":22047}
+
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":3608,"clothUpdates":1804},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1804},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":74,"stickFlexes":82},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3608},"viewerPhysics":{"frames":82,"playerCollisions":0,"bodyCollisions":64,"stickCollisions":45,"ballSpeed":1.71},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":3168,"clothUpdates":1584},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1584},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":70,"stickFlexes":78},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3168},"viewerPhysics":{"frames":72,"playerCollisions":0,"bodyCollisions":60,"stickCollisions":42,"ballSpeed":1.75},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1804},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":74,"stickFlexes":82},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3608},"viewerPhysics":{"frames":82,"playerCollisions":0,"bodyCollisions":64,"stickCollisions":45,"ballSpeed":1.71},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
 ```
 
 ## Límites conscientes

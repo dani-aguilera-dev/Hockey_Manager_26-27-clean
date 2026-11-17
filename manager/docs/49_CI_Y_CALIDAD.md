@@ -23,9 +23,12 @@ git push
 El workflow ejecuta:
 
 - `ruff check src web`
-- `python -m pytest src/tests -q`
+- `python -m pytest src/tests -q --cov=src --cov=web --cov-report=term`
 - `npm ci`
 - `npm run build`
+
+Cobertura local: 74% global con CLI legacy, 83% del núcleo web. Detalle en
+`docs/51_COBERTURA_Y_E2E.md`.
 
 ## Gates locales ya verificados
 
