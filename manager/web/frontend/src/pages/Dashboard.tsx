@@ -15,6 +15,9 @@ export default function Dashboard() {
   const [busy, setBusy] = useState<string | null>(null)
   const [targetDate, setTargetDate] = useState('')
   const [simulation, setSimulation] = useState<NonNullable<GameState['simulation']> | null>(null)
+  const [showGuide, setShowGuide] = useState(() => {
+    try { return localStorage.getItem('hm_onboarding_done') !== '1' } catch { return true }
+  })
 
   if (!game) return null
   const { team, game: meta, competition, table, finance, next_fixture: next } = game
@@ -90,6 +93,29 @@ export default function Dashboard() {
           <ShieldCheck size={16} />
           <div><b>Solo tienes {availableCount} jugadores disponibles.</b> El once puede salir incompleto. Revisa la <button className="link-button" type="button" onClick={() => navigate('/game/medical')}>enfermería</button> y valora llamar a la cantera.</div>
         </div>
+      )}
+
+      {showGuide && (
+        <Card className="onboarding-card">
+          <div className="inline" style={{ justifyContent: 'space-between' }}>
+            <div><div className="cat">PRIMEROS PASOS</div><h3 style={{ margin: '3px 0 0' }}>Tu primera semana</h3></div>
+            <Button size="sm" variant="ghost" onClick={() => { try { localStorage.setItem('hm_onboarding_done', '1') } catch {} setShowGuide(false) }}>Ocultar guía</Button>
+          </div>
+          <div className="onboarding-steps mt-2">
+            {[
+              ['1', 'Revisa la plantilla', 'Fichas, posición y disponibilidad.', '/game/squad'],
+              ['2', 'Ajusta la táctica', 'Formación, presión y roles de PC.', '/game/tactics'],
+              ['3', 'Planifica el entrenamiento', 'Carga, moral y preparación del rival.', '/game/training'],
+              ['4', 'Prepara el partido', 'Once, previa y decisión de jugar.', '/game/match'],
+            ].map(([number, title, detail, path]) => (
+              <button type="button" className="onboarding-step" key={number} onClick={() => navigate(path)}>
+                <b>{number}</b>
+                <span>{title}</span>
+                <small>{detail}</small>
+              </button>
+            ))}
+          </div>
+        </Card>
       )}
 
       <div className="dashboard-kpis">

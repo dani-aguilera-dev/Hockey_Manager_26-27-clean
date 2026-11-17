@@ -24,6 +24,7 @@
 | CI y lint | `ruff check src web` limpio; workflow en `docs/ci_workflow.yml`; activación pendiente de scope `workflow` | PASS local / pendiente activar |
 | Diccionario y validación de datos | `docs/50_DICCIONARIO_DATOS.md`, `src/data_validation.py`, `/api/data-validation`, test de backfill que no convierte jugadores en staff | PASS |
 | Code splitting | `three` y `MatchViewer3D` en chunks separados/lazy; main 667 KB (164 KB gzip), three 480 KB | PASS |
+| Onboarding y accesibilidad | Guía de primeros pasos en el dashboard, enlace “Saltar al contenido”, focus visible y reduced motion | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/gol anulado/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -352,14 +353,14 @@ python3 -m pytest src/tests -q
 345 passed in 273.74s
 
 cd manager/web/frontend && npm run build
-✓ built in 3.15s
+✓ built in 3.12s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-BCSw6h2H.js → 200
+curl /static/react/assets/index-DXz-jzOk.js → 200
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":3520,"clothUpdates":1760},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1760},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":75,"stickFlexes":83},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3520},"viewerPhysics":{"frames":80,"playerCollisions":0,"bodyCollisions":63,"stickCollisions":45,"ballSpeed":1.41},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":3608,"clothUpdates":1804},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1804},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":74,"stickFlexes":82},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3608},"viewerPhysics":{"frames":82,"playerCollisions":0,"bodyCollisions":64,"stickCollisions":45,"ballSpeed":1.71},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
 ```
 
 ## Límites conscientes

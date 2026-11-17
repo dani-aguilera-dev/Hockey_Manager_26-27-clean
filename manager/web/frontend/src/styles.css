@@ -1551,3 +1551,16 @@ select option { background: #0b1220; color: #e8eef8; }
 /* Mánager sin club */
 .sacked-screen .notice { max-width: 620px; text-align: left; }
 .sacked-screen .actions { justify-content: center; flex-wrap: wrap; }
+
+/* Onboarding y accesibilidad */
+.onboarding-card { border-color: rgba(255,176,32,.35); background: linear-gradient(135deg, rgba(255,176,32,.06), rgba(255,255,255,.01)); }
+.onboarding-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.onboarding-step { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.015); color: var(--text); text-align: left; cursor: pointer; }
+.onboarding-step:hover { border-color: rgba(255,176,32,.5); }
+.onboarding-step b { color: var(--gold); font-size: 16px; }
+.onboarding-step span { font-size: 12px; font-weight: 700; }
+.onboarding-step small { color: var(--muted); font-size: 10px; line-height: 1.35; }
+.skip-link { position: fixed; left: -9999px; top: 8px; z-index: 2000; padding: 8px 12px; border-radius: 6px; background: var(--gold); color: #17120a; font-weight: 700; }
+.skip-link:focus { left: 8px; }
+@media (max-width: 900px) { .onboarding-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .onboarding-steps { grid-template-columns: 1fr; } }

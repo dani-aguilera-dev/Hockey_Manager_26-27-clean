@@ -300,7 +300,9 @@ export function GameLayout() {
   }
 
   return (
-    <div className="app-shell">
+    <>
+      <a className="skip-link" href="#main">Saltar al contenido</a>
+      <div className="app-shell">
       <Sidebar />
       <div className="app-main">
         <Topbar onMenu={() => setDrawer(true)} />
@@ -324,6 +326,7 @@ export function GameLayout() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   )
 }
