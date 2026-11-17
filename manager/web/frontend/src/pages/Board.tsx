@@ -5,11 +5,13 @@ import { dateLabel, money } from '../lib/format'
 import type { BoardData, BoardRequestOption } from '../types'
 import { useGame } from '../context/GameContext'
 import { useToast } from '../context/ToastContext'
+import { useLanguage } from '../lib/i18n'
 import { Badge, Button, Card, LoadingBlock, PageHeader, Progress, StatCard } from '../components/ui'
 
 export default function BoardPage() {
   const { applyState } = useGame()
   const { toast } = useToast()
+  const { t } = useLanguage()
   const [data, setData] = useState<BoardData | null>(null)
   const [loading, setLoading] = useState(true)
   const [busy, setBusy] = useState<string | null>(null)
@@ -18,7 +20,7 @@ export default function BoardPage() {
     setLoading(true)
     api.get<BoardData>('/board')
       .then(({ data }) => setData(data))
-      .catch((err) => toast(err instanceof Error ? err.message : 'No se pudo cargar la junta.', 'danger'))
+      .catch((err) => toast(err instanceof Error ? err.message : t('No se pudo cargar la junta.'), 'danger'))
       .finally(() => setLoading(false))
   }
 
@@ -30,16 +32,16 @@ export default function BoardPage() {
       const response = await api.post<{ board: BoardData; state: unknown }>('/board/request', { request_id: request.id })
       setData(response.data.board)
       applyState(response.data.state as never)
-      toast(response.message || 'Petición registrada.', response.data.board.history[0]?.approved ? 'success' : 'info')
+      toast(response.message || t('Petición registrada.'), response.data.board.history[0]?.approved ? 'success' : 'info')
     } catch (err) {
-      toast(err instanceof Error ? err.message : 'No se pudo procesar la petición.', 'danger')
+      toast(err instanceof Error ? err.message : t('No se pudo procesar la petición.'), 'danger')
     } finally {
       setBusy(null)
     }
   }
 
-  if (loading) return <LoadingBlock label="Reuniéndose con la junta…" />
-  if (!data) return <Card><p className="muted">No se pudo cargar la junta.</p></Card>
+  if (loading) return <LoadingBlock label={t('Reuniéndose con la junta…')} />
+  if (!data) return <Card><p className="muted">{t('No se pudo cargar la junta.')}</p></Card>
 
   const confidenceTone = data.confidence >= 65 ? 'ok' : data.confidence >= 40 ? 'gold' : 'danger'
 
@@ -47,39 +49,39 @@ export default function BoardPage() {
     <>
       <PageHeader
         eyebrow={`${data.competition.short_name} · ${data.competition.position}º de ${data.competition.teams}`}
-        title="Junta y visión de club"
-        subtitle="Confianza, objetivos a medio plazo, instalaciones y peticiones de inversión. La junta decide según resultados, caja y proyecto."
-        actions={<Badge tone={confidenceTone}>{data.confidence}/100 confianza</Badge>}
+        title={t('Junta y visión de club')}
+        subtitle={t('Confianza, objetivos a medio plazo, instalaciones y peticiones de inversión. La junta decide según resultados, caja y proyecto.')}
+        actions={<Badge tone={confidenceTone}>{t('{value}/100 confianza', { value: data.confidence })}</Badge>}
       />
 
       <div className="dashboard-kpis">
-        <StatCard label="Confianza de la junta" value={`${data.confidence}/100`} hint={`Presión ${data.pressure} · paciencia ${data.patience}/5`} tone={confidenceTone} icon={Landmark} />
-        <StatCard label="Afición" value={`${data.fan_confidence}/100`} hint="Apoyo de la grada" tone="blue" icon={Users} />
-        <StatCard label="Caja disponible" value={money(data.budget)} hint={`Fichajes ${money(data.transfer_budget)}`} tone="gold" icon={Wallet} />
-        <StatCard label="Posición" value={`${data.competition.position}º`} hint={`${data.competition.short_name} · ${data.competition.teams} equipos`} icon={TrendingUp} />
+        <StatCard label={t('Confianza de la junta')} value={`${data.confidence}/100`} hint={t('Presión {pressure} · paciencia {patience}/5', { pressure: t(data.pressure), patience: data.patience })} tone={confidenceTone} icon={Landmark} />
+        <StatCard label={t('Afición')} value={`${data.fan_confidence}/100`} hint={t('Apoyo de la grada')} tone="blue" icon={Users} />
+        <StatCard label={t('Caja disponible')} value={money(data.budget)} hint={t('Fichajes {value}', { value: money(data.transfer_budget) })} tone="gold" icon={Wallet} />
+        <StatCard label={t('Posición')} value={`${data.competition.position}º`} hint={t('{competition} · {count} equipos', { competition: data.competition.short_name, count: data.competition.teams })} icon={TrendingUp} />
       </div>
 
       <div className="split-2 mt-2">
         <Card>
           <div className="inline" style={{ justifyContent: 'space-between' }}>
-            <div><div className="cat">VISIÓN DE CLUB</div><h3 style={{ margin: '3px 0 0' }}>El proyecto que defiende la junta</h3></div>
+            <div><div className="cat">{t('VISIÓN DE CLUB')}</div><h3 style={{ margin: '3px 0 0' }}>{t('El proyecto que defiende la junta')}</h3></div>
             <ShieldCheck size={22} className="gold" />
           </div>
           <div className="stack-sm mt-2">
             {data.vision.map((item) => (
               <div className="board-vision-row" key={item.horizon}>
-                <Badge tone="neutral">{item.horizon}</Badge>
-                <div><b>{item.goal}</b><span>{item.detail}</span></div>
+                <Badge tone="neutral">{t(item.horizon)}</Badge>
+                <div><b>{t(item.goal)}</b><span>{item.detail.startsWith('Objetivo de la temporada en ') ? t('Objetivo de la temporada en {league}', { league: item.detail.replace('Objetivo de la temporada en ', '') }) : t(item.detail)}</span></div>
               </div>
             ))}
           </div>
-          <p className="small muted mt-2">Objetivo oficial: {data.expectation || 'Consolidar el proyecto'}.</p>
+          <p className="small muted mt-2">{t('Objetivo oficial: {value}.', { value: data.expectation || t('Consolidar el proyecto') })}</p>
         </Card>
 
         <Card>
           <div className="inline" style={{ justifyContent: 'space-between' }}>
-            <div><div className="cat">INSTALACIONES</div><h3 style={{ margin: '3px 0 0' }}>{data.stadium.name || 'Instalaciones del club'}</h3></div>
-            <Badge tone="neutral">{data.stadium.capacity.toLocaleString('es-ES')} plazas</Badge>
+            <div><div className="cat">{t('INSTALACIONES')}</div><h3 style={{ margin: '3px 0 0' }}>{data.stadium.name || t('Instalaciones del club')}</h3></div>
+            <Badge tone="neutral">{t('{value} plazas', { value: data.stadium.capacity.toLocaleString('es-ES') })}</Badge>
           </div>
           <div className="board-facilities mt-2">
             {data.facilities.map((facility) => (
@@ -94,22 +96,22 @@ export default function BoardPage() {
 
       <Card className="mt-2">
         <div className="inline" style={{ justifyContent: 'space-between' }}>
-          <div><div className="cat">PETICIONES A LA JUNTA</div><h3 style={{ margin: '3px 0 0' }}>Inversión y proyecto</h3></div>
-          <Badge tone="gold">{data.requests.filter((request) => request.available).length} disponibles</Badge>
+          <div><div className="cat">{t('PETICIONES A LA JUNTA')}</div><h3 style={{ margin: '3px 0 0' }}>{t('Inversión y proyecto')}</h3></div>
+          <Badge tone="gold">{t('{count} disponibles', { count: data.requests.filter((request) => request.available).length })}</Badge>
         </div>
-        <p className="small muted mt-1">Cada petición consume caja y puede ser aprobada o rechazada según la confianza y el estado financiero. El historial queda registrado.</p>
+        <p className="small muted mt-1">{t('Cada petición consume caja y puede ser aprobada o rechazada según la confianza y el estado financiero. El historial queda registrado.')}</p>
         <div className="board-request-grid mt-2">
           {data.requests.map((request) => (
             <div className="board-request" key={request.id}>
               <div className="inline" style={{ justifyContent: 'space-between' }}>
-                <Badge tone={request.available ? 'blue' : 'danger'}>{request.available ? 'Disponible' : 'Sin caja'}</Badge>
-                <span className="small muted">{Math.round(request.approval_chance * 100)}% aprobación</span>
+                <Badge tone={request.available ? 'blue' : 'danger'}>{request.available ? t('Disponible') : t('Sin caja')}</Badge>
+                <span className="small muted">{t('{value}% aprobación', { value: Math.round(request.approval_chance * 100) })}</span>
               </div>
-              <h3>{request.label}</h3>
-              <p className="small muted">{request.description}</p>
+              <h3>{t(request.label)}</h3>
+              <p className="small muted">{t(request.description)}</p>
               <div className="board-request-numbers">
-                <div><span>Coste</span><b>{request.cost ? money(request.cost) : '—'}</b></div>
-                <div><span>Efecto</span><b>{request.effect_text}</b></div>
+                <div><span>{t('Coste')}</span><b>{request.cost ? money(request.cost) : '—'}</b></div>
+                <div><span>{t('Efecto')}</span><b>{t(request.effect_text)}</b></div>
               </div>
               <Button
                 size="sm"
@@ -120,7 +122,7 @@ export default function BoardPage() {
                 disabled={!request.available}
                 data-testid={`board-request-${request.id}`}
               >
-                Solicitar
+                {t('Solicitar')}
               </Button>
             </div>
           ))}
@@ -129,30 +131,30 @@ export default function BoardPage() {
 
       <div className="split-2 mt-2">
         <Card>
-          <h3>Junta directiva</h3>
+          <h3>{t('Junta directiva')}</h3>
           <div className="stack-sm mt-2">
             {data.board_members.map((member) => (
               <div className="board-member-row" key={`${member.role}-${member.name}`}>
                 <span className="sponsor-mark"><Landmark size={16} /></span>
-                <div><b>{member.name}</b><span>{member.role.replaceAll('_', ' ')}</span></div>
-                <Badge tone={member.confidence === 'alta' ? 'ok' : member.confidence === 'media' ? 'gold' : 'neutral'}>{member.confidence}</Badge>
+                <div><b>{member.name}</b><span>{t(member.role.replaceAll('_', ' '))}</span></div>
+                <Badge tone={member.confidence === 'alta' ? 'ok' : member.confidence === 'media' ? 'gold' : 'neutral'}>{t(member.confidence)}</Badge>
               </div>
             ))}
-            {!data.board_members.length && <p className="small muted">La junta no tiene miembros registrados en esta partida.</p>}
+            {!data.board_members.length && <p className="small muted">{t('La junta no tiene miembros registrados en esta partida.')}</p>}
           </div>
         </Card>
 
         <Card>
-          <h3>Historial de peticiones</h3>
+          <h3>{t('Historial de peticiones')}</h3>
           <div className="stack-sm mt-2">
             {data.history.map((entry, index) => (
               <div className="board-history-row" key={`${entry.date}-${entry.request_id}-${index}`}>
-                <Badge tone={entry.approved ? 'ok' : 'danger'}>{entry.approved ? 'Aprobada' : 'Rechazada'}</Badge>
-                <div><b>{entry.label}</b><span>{dateLabel(entry.date)} · {entry.message}</span></div>
+                <Badge tone={entry.approved ? 'ok' : 'danger'}>{entry.approved ? t('Aprobada') : t('Rechazada')}</Badge>
+                <div><b>{t(entry.label)}</b><span>{dateLabel(entry.date)} · {entry.message}</span></div>
                 <b className="small">{entry.cost ? money(entry.cost) : '—'}</b>
               </div>
             ))}
-            {!data.history.length && <p className="small muted">Todavía no has presentado ninguna petición a la junta.</p>}
+            {!data.history.length && <p className="small muted">{t('Todavía no has presentado ninguna petición a la junta.')}</p>}
           </div>
         </Card>
       </div>

@@ -23,7 +23,7 @@
 | Persistencia comprimida | zlib + `compact_saves`/`prune_saves`; 1,3 GB → 198 MB, 190 saves, `PRAGMA integrity_check = ok` | PASS |
 | CI y lint | `ruff check src web` limpio; workflow en `docs/ci_workflow.yml`; activación pendiente de scope `workflow` | PASS local / pendiente activar |
 | Diccionario y validación de datos | `docs/50_DICCIONARIO_DATOS.md`, `src/data_validation.py`, `/api/data-validation`, test de backfill que no convierte jugadores en staff | PASS |
-| Code splitting | `three` y `MatchViewer3D` en chunks separados/lazy; main 698 KB (176 KB gzip), three 480 KB | PASS |
+| Code splitting | `three` y `MatchViewer3D` en chunks separados/lazy; main 721 KB (185 KB gzip), three 480 KB | PASS |
 | Onboarding y accesibilidad | Guía de primeros pasos en el dashboard, enlace “Saltar al contenido”, focus visible y reduced motion | PASS |
 | Refactor de la API | 138 rutas repartidas en 6 blueprints con `web/api/common.py` | PASS |
 | Refactor de temporada | `season_sim.py` + `season_promotion.py`; `season.py` conserva la API pública | PASS |
@@ -32,7 +32,7 @@
 | Cobertura medida | `pytest --cov`: 74% global con CLI legacy, 83% del núcleo web; motor 90–97%, temporada 88–91% | PASS |
 | E2E dividido | `e2e_smoke.mjs`, `e2e_live.mjs` y `e2e_beta.mjs`; cada suite crea su partida y se ejecuta por separado | PASS |
 | Auditoría axe WCAG 2.2 AA | 0 violaciones en 12 pantallas de escritorio y 4 móviles; skip link y foco en `main`; 45 enlaces de navegación con nombre | PASS automatizado / sin lector de pantalla manual |
-| Audio e i18n | Ambiente y efectos procedurales con Web Audio (apagado por defecto, persistente); navegación, guía y pantallas principales en español/inglés con `document.lang` | PASS parcial: el contenido editorial y el resto de pantallas siguen en español |
+| Audio e i18n | Ambiente y efectos procedurales con Web Audio (apagado por defecto, persistente); navegación, guía y 14 pantallas principales en español/inglés con `document.lang` | PASS parcial: el contenido editorial y el resto de pantallas siguen en español |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/gol anulado/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
@@ -358,26 +358,26 @@
 
 ```text
 python3 -m pytest src/tests -q
-351 passed in 311.67s
+351 passed in 415.79s
 
 cd manager/web/frontend && npm run build
-✓ built in 3.46s
+✓ built in 3.84s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-C1NrGn-5.js → 200
+curl /static/react/assets/index-jbQ8Db0g.js → 200
 
 node web/frontend/e2e_smoke.mjs
-{"health":true,"newGame":true,"onboarding":true,"dashboard":true,"calendar":true,"squad":true,"tactics":true,"market":true,"quickMatch":true,"report":true,"analysis":true,"i18nEnglish":true,"i18nPersisted":true,"i18nSpanish":true,"ok":true,"suite":"smoke","ms":6341}
+{"health":true,"newGame":true,"onboarding":true,"dashboard":true,"calendar":true,"squad":true,"tactics":true,"market":true,"quickMatch":true,"report":true,"analysis":true,"i18nEnglish":true,"i18nPersisted":true,"i18nSpanish":true,"ok":true,"suite":"smoke","ms":10188}
 
 node web/frontend/e2e_live.mjs
-{"liveStart":true,"viewer":{"players":22,"frames":79,"bones":374,"sticks":22,"ikSolutions":3476,"biomechSolutions":3476,"mocapFrames":74},"viewer3d":true,"momentum":"0","audioToggle":true,"liveProtest":true,"momentsAdvanced":true,"finished":true,"ok":true,"suite":"live","ms":21313}
+{"liveStart":true,"viewer":{"players":22,"frames":61,"bones":374,"sticks":22,"ikSolutions":2684,"biomechSolutions":2684,"mocapFrames":74},"viewer3d":true,"momentum":"0","audioToggle":true,"liveProtest":true,"momentsAdvanced":true,"finished":true,"ok":true,"suite":"live","ms":25622}
 
 node web/frontend/e2e_i18n.mjs
-{"options":true,"squad":true,"market":true,"tactics":true,"match":true,"report":true,"spanishRestored":true,"ok":true,"suite":"i18n","ms":6039}
+{"options":true,"squad":true,"market":true,"tactics":true,"match":true,"report":true,"player":true,"team":true,"training":true,"finance":true,"board":true,"news":true,"press":true,"jobs":true,"spanishRestored":true,"ok":true,"suite":"i18n","ms":14396}
 
 node web/frontend/e2e_beta.mjs
-{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":3168,"clothUpdates":1584},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1584},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":69,"stickFlexes":77},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":3168},"viewerPhysics":{"frames":72,"playerCollisions":0,"bodyCollisions":59,"stickCollisions":43,"ballSpeed":2.31},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
+{"newGame":true,"calendar":true,"monthNavigation":true,"quickMatch":true,"refereeAndSetPieces":true,"refereeDiscretion":true,"refereeDiscipline":true,"refereeSubjective":true,"refereeAdvantage":true,"goalDisallowed":true,"goalOutsideCircle":true,"goalHand":true,"analysis":true,"postPress":true,"viewerBiomechanics":{"biomechSolutions":2508,"clothUpdates":1254},"viewerMocap":{"source":"CMU-09-01","frames":74,"applied":1254},"liveProtest":true,"viewer3d":true,"viewerMaterials":{"stickBodyCollisions":16,"materialBounces":58,"stickFlexes":67},"viewerSkeleton":{"bones":374,"sticks":22,"ikSolutions":2508},"viewerPhysics":{"frames":57,"playerCollisions":0,"bodyCollisions":50,"stickCollisions":34,"ballSpeed":2.8},"videoReview":true,"videoReviewType":"penalty_corner","boardRequest":true,"loans":true,"datahub":true,"affiliates":true,"mentoring":true,"history":true,"scouting":true,"teamMeeting":true,"finance":true,"responsibilities":true,"development":true,"awards":true,"contracts":true,"facilities":true,"clauses":true,"shortlist":true,"matchPlans":true,"managerProfile":true,"compare":true,"trials":true,"playerBrands":true,"jobs":true,"crossLeagueJob":true,"internationalJob":true,"vacancies":true,"managerChanges":true,"userSacking":true}
 ```
 
 ## Límites conscientes

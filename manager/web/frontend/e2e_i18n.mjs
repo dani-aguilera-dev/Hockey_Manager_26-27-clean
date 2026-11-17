@@ -38,6 +38,49 @@ await run('i18n', async ({ context, page }) => {
   await page.getByText('Refereeing decisions', { exact: true }).waitFor()
   result.report = await page.getByText('Statistics', { exact: true }).isVisible()
 
+  const state = (await (await context.request.get('/api/state')).json()).data
+  const playerId = state.team.players[0].id
+  const teamId = state.team.id
+
+  await page.goto(`/app/game/player/${playerId}`)
+  await page.getByText('Performance', { exact: true }).waitFor()
+  await page.getByText('Attributes', { exact: true }).waitFor()
+  result.player = await page.getByText('Status and market', { exact: true }).isVisible()
+
+  await page.goto(`/app/game/team/${teamId}`)
+  await page.getByText(/record/i).first().waitFor()
+  await page.getByText('Coaching staff', { exact: true }).waitFor()
+  result.team = await page.getByText(/academy/i).first().isVisible()
+
+  await page.goto('/app/game/training')
+  await page.getByRole('heading', { name: 'Weekly training', exact: true }).waitFor()
+  await page.getByText('Automatic plan', { exact: true }).waitFor()
+  result.training = await page.getByText('Quick reference', { exact: true }).isVisible()
+
+  await page.goto('/app/game/finance')
+  await page.getByRole('heading', { name: 'Finance centre', exact: true }).waitFor()
+  await page.getByText(/available cash/i).first().waitFor()
+  result.finance = await page.getByText(/profit and loss/i).first().isVisible()
+
+  await page.goto('/app/game/board')
+  await page.getByRole('heading', { name: 'Board and club vision', exact: true }).waitFor()
+  await page.getByText(/board confidence/i).first().waitFor()
+  result.board = await page.getByText(/board requests/i).first().isVisible()
+
+  await page.goto('/app/game/news')
+  await page.getByRole('heading', { name: 'News', exact: true }).waitFor()
+  result.news = await page.getByText('Back to club', { exact: true }).isVisible()
+
+  await page.goto('/app/game/press')
+  await page.getByRole('heading', { name: 'Press conference', exact: true }).waitFor()
+  await page.getByText(/accredited outlet/i).first().waitFor()
+  result.press = await page.getByText(/media relations/i).first().isVisible()
+
+  await page.goto('/app/game/jobs')
+  await page.getByRole('heading', { name: 'Job security', exact: true }).waitFor()
+  await page.getByText(/board confidence/i).first().waitFor()
+  result.jobs = await page.getByText('Find offers', { exact: true }).isVisible()
+
   await page.goto('/app/game/options')
   await page.getByRole('radio', { name: /Español/ }).check()
   await page.getByRole('heading', { name: /La interfaz/ }).waitFor()

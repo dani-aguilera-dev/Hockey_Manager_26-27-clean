@@ -32,7 +32,8 @@ manual en todos los dispositivos. Es ambiente procedural, no comentario de voz.
 - Traduce la navegación completa (45 enlaces), los títulos de grupo, la barra
   superior, la navegación móvil y la guía “Tu primera semana”.
 - Traduce las pantallas principales: **plantilla, mercado, táctica, previa,
-  informe del partido y ajustes**, incluidas etiquetas, botones, filtros,
+  informe del partido, ajustes, jugador, equipo, entrenamiento, finanzas,
+  junta, noticias, prensa y trabajo**, incluidas etiquetas, botones, filtros,
   estados vacíos y textos de ayuda.
 - El selector está en **Ajustes → Idioma / Language**.
 - Persiste en `localStorage` (`hm_lang`) y actualiza
@@ -53,13 +54,13 @@ npm run test:e2e:i18n
 ```
 
 ```json
-{"options":true,"squad":true,"market":true,"tactics":true,"match":true,"report":true,"spanishRestored":true,"ok":true,"suite":"i18n","ms":6039}
+{"options":true,"squad":true,"market":true,"tactics":true,"match":true,"report":true,"player":true,"team":true,"training":true,"finance":true,"board":true,"news":true,"press":true,"jobs":true,"spanishRestored":true,"ok":true,"suite":"i18n","ms":14396}
 ```
 
 ## Por qué es parcial
 
 Una traducción completa exige extraer cientos de cadenas de las 50+ pantallas
 y de los textos generados por el motor. Se han traducido la navegación, la
-guía inicial y las seis pantallas principales; el resto de pantallas y los
+guía inicial y catorce pantallas principales; el resto de pantallas y los
 textos editoriales/datos siguen en español. Se declara **PASS parcial / FAIL
 traducción completa** en `docs/48`.
