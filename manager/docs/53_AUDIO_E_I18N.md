@@ -19,7 +19,7 @@ en directo lo activa con un gesto del usuario y guarda la preferencia en
 Evidencia E2E:
 
 ```json
-{"audioToggle":true}
+{"momentum":"0","audioToggle":true}
 ```
 
 Límites: no hay mezcla por pistas ni ducking, y no se ha hecho una escucha
