@@ -10,6 +10,7 @@ from __future__ import annotations
 import csv
 import json
 import sqlite3
+import zlib
 from datetime import datetime
 from pathlib import Path
 
@@ -38,9 +39,22 @@ def _connect(path: Path | str = DEFAULT_DB) -> sqlite3.Connection:
     return conn
 
 
+def _encode_state(state: GameState) -> bytes:
+    """Serializa el estado y lo comprime para no inflar la base de datos."""
+    raw = json.dumps(state.to_dict(), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    return zlib.compress(raw, 3)
+
+
+def _decode_state(raw: bytes | str) -> dict:
+    """Acepta saves nuevos comprimidos y saves antiguos en texto."""
+    if isinstance(raw, bytes):
+        raw = zlib.decompress(raw).decode("utf-8")
+    return json.loads(raw)
+
+
 def save_game(state: GameState, name: str | None = None, path: Path | str = DEFAULT_DB) -> str:
     name = name or f"{state.user_team.name} · {state.season} · J{state.round}"
-    payload = json.dumps(state.to_dict(), ensure_ascii=False, separators=(",", ":"))
+    payload = _encode_state(state)
     now = datetime.now().isoformat(timespec="seconds")
     conn = _connect(path)
     try:
@@ -317,7 +331,7 @@ def load_game(name_or_id: str | int, path: Path | str = DEFAULT_DB) -> GameState
         conn.close()
     if not row:
         raise KeyError(f"No existe la partida: {name_or_id}")
-    state = GameState.from_dict(json.loads(row[0]))
+    state = GameState.from_dict(_decode_state(row[0]))
     _backfill_communities(state)
     _backfill_media(state)
     _backfill_leagues(state)
@@ -370,6 +384,37 @@ def rename_save(name_or_id: str | int, new_name: str, path: Path | str = DEFAULT
         return new_name
     finally:
         conn.close()
+
+
+def compact_saves(path: Path | str = DEFAULT_DB) -> dict:
+    """Comprime los saves antiguos que todavía están en texto y compacta SQLite.
+
+    Es idempotente: los saves ya comprimidos se dejan intactos. Hacer una copia
+    de seguridad de la base de datos antes de ejecutarlo en producción.
+    """
+    conn = _connect(path)
+    converted = 0
+    before = 0
+    after = 0
+    try:
+        rows = conn.execute("SELECT id, state_json FROM saves").fetchall()
+        for save_id, raw in rows:
+            if isinstance(raw, bytes):
+                before += len(raw)
+                after += len(raw)
+                continue
+            text = str(raw)
+            before += len(text.encode("utf-8"))
+            blob = zlib.compress(text.encode("utf-8"), 3)
+            after += len(blob)
+            conn.execute("UPDATE saves SET state_json=? WHERE id=?", (blob, save_id))
+            converted += 1
+        conn.commit()
+        conn.execute("VACUUM")
+        conn.commit()
+    finally:
+        conn.close()
+    return {"converted": converted, "bytes_before": before, "bytes_after": after}
 
 
 def export_json(state: GameState, path: Path | str) -> Path:

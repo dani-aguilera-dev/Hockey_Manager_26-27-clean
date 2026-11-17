@@ -137,3 +137,51 @@ def test_saves_can_be_renamed_and_deleted():
         assert delete_save("carrera-a-renombrada", db) is True
         assert "carrera-a-renombrada" not in {row["name"] for row in list_saves(db)}
         assert delete_save("no-existe", db) is False
+
+
+def test_saves_are_compressed_and_compact_is_idempotent():
+    import json
+    import sqlite3
+
+    from src.persistence import compact_saves
+
+    state = new_game("cd-terrassa", "Test", seed=1301)
+    with tempfile.TemporaryDirectory() as td:
+        db = Path(td) / "compressed.db"
+        save_game(state, "compressed", db)
+        conn = sqlite3.connect(db)
+        raw = conn.execute("SELECT state_json FROM saves WHERE name='compressed'").fetchone()[0]
+        conn.close()
+        assert isinstance(raw, bytes)
+        assert len(raw) < len(json.dumps(state.to_dict()).encode("utf-8"))
+        report = compact_saves(db)
+        assert report["converted"] == 0
+        loaded = load_game("compressed", db)
+        assert loaded.club_id == state.club_id
+        assert loaded.user_team.name == state.user_team.name
+
+
+def test_legacy_text_save_is_readable_and_can_be_compacted():
+    import json
+    import sqlite3
+
+    from src.persistence import compact_saves
+
+    state = new_game("cd-terrassa", "Test", seed=1302)
+    with tempfile.TemporaryDirectory() as td:
+        db = Path(td) / "legacy.db"
+        save_game(state, "legacy", db)
+        conn = sqlite3.connect(db)
+        conn.execute(
+            "UPDATE saves SET state_json=? WHERE name=?",
+            (json.dumps(state.to_dict(), ensure_ascii=False, separators=(",", ":")), "legacy"),
+        )
+        conn.commit()
+        conn.close()
+        loaded = load_game("legacy", db)
+        assert loaded.club_id == state.club_id
+        report = compact_saves(db)
+        assert report["converted"] == 1
+        assert report["bytes_after"] < report["bytes_before"]
+        loaded_again = load_game("legacy", db)
+        assert loaded_again.club_id == state.club_id
