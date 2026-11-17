@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FastForward, Flag, MessageSquare, MonitorCheck, Play, Timer, UserRoundPlus } from 'lucide-react'
 import { api } from '../lib/api'
@@ -7,7 +7,7 @@ import type { LivePayload } from '../types'
 import { useGame } from '../context/GameContext'
 import { useToast } from '../context/ToastContext'
 import { Avatar, Badge, Button, Card, Crest, Field, LoadingBlock, PageHeader } from '../components/ui'
-import MatchViewer3D from '../components/MatchViewer3D'
+const MatchViewer3D = lazy(() => import('../components/MatchViewer3D'))
 
 export default function LiveMatch() {
   const navigate = useNavigate()
@@ -144,7 +144,9 @@ export default function LiveMatch() {
         actions={<Badge tone={data.finished ? 'ok' : 'danger'}>{data.finished ? 'Finalizado' : 'EN DIRECTO'}</Badge>}
       />
 
-      <MatchViewer3D data={data} />
+      <Suspense fallback={<div className="match-viewer-3d"><LoadingBlock label="Cargando visor 3D…" /></div>}>
+        <MatchViewer3D data={data} />
+      </Suspense>
 
       <Card className="mt-2">
         <div className="scoreboard">

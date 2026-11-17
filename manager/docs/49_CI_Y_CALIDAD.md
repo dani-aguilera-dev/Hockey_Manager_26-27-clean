@@ -34,7 +34,7 @@ ruff check src web
 All checks passed!
 
 python3 -m pytest src/tests -q
-340 passed
+342 passed
 ```
 
 ## Persistencia

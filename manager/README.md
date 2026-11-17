@@ -1,6 +1,6 @@
 # Hockey Manager España 2026-27
 
-Diseño y prototipo de un juego de **entrenador y gestión de club** de hockey hierba, solo texto, inspirado en la arquitectura de Football Manager y adaptado a la DHA, la DHB, la Primera Andaluza y seis ligas internacionales.
+Juego de **entrenador y gestión de club** de hockey hierba con interfaz web React, API Flask, motor de partido por eventos y visor 3D estilizado. Inspirado en la arquitectura de Football Manager y adaptado a la DHA, la DHB, las ligas regionales y seis ligas internacionales.
 
 ## Estado
 
@@ -9,7 +9,10 @@ Diseño y prototipo de un juego de **entrenador y gestión de club** de hockey h
 - **Motor:** DHA y DHB jugables, partidos en directo, mercado, staff, entrenamiento, cantera, Copa, EHL, multi-temporada y guardado/carga.
 - **Web React:** Flask como backend/API + SPA React en `/app`, con fotos de jugadores, escudos oficiales de iSquad, noticias inmersivas y diseño responsive.
 - **Beta avanzada:** calendario de amistosos, prensa con periodistas y medios, marcas reales de equipación (Osaka, Ritual, Gryphon, TK, Grays, STX…), editor de fichas, perfiles de plantilla de la fuente, mercado/calendario/tácticas pulidos, auditoría de plantillas y simulación 3D del partido con esqueleto, IK, sticks, respuesta de materiales, colisiones de cuerpo/stick-cuerpo, biomecánica procedural, mocap CMU, tejido estilizado, revisión de vídeo, junta y visión de club, cesiones, data hub, afiliados y mentoring, historial completo, ojeo con asignaciones, reunión de equipo, arbitraje discrecional, ventaja con retorno, gol anulado por pie, revés o mano, gol solo desde el círculo, severidad del juego peligroso, protestas, tiempo añadido, protesta en directo, responsabilidades del staff, desarrollo individual, premios, centro de contratos, instalaciones, cláusulas, lista de seguimiento, planes de partido, perfil del mánager, comparación de jugadores, ofertas de trabajo (misma liga, otras ligas e internacional), vacantes de entrenador, despidos automáticos de clubes IA y del usuario, pruebas de agentes libres, centro financiero, análisis de partido y conexión a MatchEngine.
-- **Tests:** 338 superados.
+- **Persistencia:** saves JSON comprimidos con zlib; compactación SQLite de 1,3 GB a 198 MB con 190 partidas y `PRAGMA integrity_check = ok`. Ver `docs/49_CI_Y_CALIDAD.md`.
+- **Calidad:** `ruff check src web` limpio, 342 tests y workflow de CI preparado en `docs/ci_workflow.yml`.
+- **Datos:** diccionario y validación automática en `docs/50_DICCIONARIO_DATOS.md`; `python3 -m src.data_validation`.
+- **Tests:** 342 superados.
 
 ## Inicio rápido
 
@@ -98,16 +101,16 @@ El juego incluye:
 - **ligas regionales jugables**: 1N, 1A, 1M, 1G, 1C, 1V, Superlliga Catalana y Primera Catalana, con fase regular, equipos B sin jugadores repetidos y eliminatorias de ascenso a DHB. Ver `docs/37_LIGAS_REGIONALES.md` y `docs/38_AUDITORIA_EQUIPOS_Y_PLANTILLAS.md`.
 - **beta avanzada**: calendario y amistosos, prensa con periodistas/medios y confianza mediática, marcas reales de equipación, editor de jugadores y auditoría de clubes. Ver `docs/45_BETA_AVANZADA.md` y `docs/46_AUDITORIA_CLUBES.md`. Ver también `docs/48_MATRIZ_ACEPTACION_FM24_FIH.md`.
 
-Pendiente:
+Pendiente real:
 
-- revisar permisos de los escudos oficiales descargados de iSquad;
+- mocap específico de hockey con licencia redistribuible y física 3D de producción;
+- paridad total de pantallas FM24 y arbitraje discrecional completo;
 - guardado en mitad de un partido en directo;
 - EHL interactiva (ahora se simula);
 - descenso DHB → 1ª Andaluza y fases de ascenso regionales interactivas;
-- auditoría formal de accesibilidad con lector de pantalla.
-- ajustar la convocatoria de la interfaz a 5 suplentes;
-- completar rehabilitación, recaídas y llamada a cantera con menos de 11 disponibles;
-- ampliar el catálogo de eventos y sus cadenas.
+- auditoría formal de accesibilidad con lector de pantalla;
+- refactor de los módulos grandes (`api.py`, `season.py`, `match_engine.py`);
+- activar el workflow de CI con un token que tenga scope `workflow`.
 
 ## Estructura
 

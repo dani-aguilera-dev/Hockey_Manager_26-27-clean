@@ -8,6 +8,14 @@ export default defineConfig({
     outDir: '../static/react',
     emptyOutDir: true,
     sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          three: ['three'],
+        },
+      },
+    },
   },
   server: {
     port: 5173,
