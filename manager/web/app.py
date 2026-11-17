@@ -1416,9 +1416,9 @@ def new_season_redirect():
     return redirect(url_for("season_end"))
 
 
-from web.api import api as api_blueprint  # noqa: E402
+from web.api import register_api  # noqa: E402
 
-app.register_blueprint(api_blueprint)
+register_api(app)
 
 
 if __name__ == "__main__":
