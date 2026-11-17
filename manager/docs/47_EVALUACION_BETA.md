@@ -23,7 +23,7 @@
 | Persistencia comprimida | zlib + `compact_saves`/`prune_saves`; 1,3 GB → 198 MB, 190 saves, `PRAGMA integrity_check = ok` | PASS |
 | CI y lint | `ruff check src web` limpio; workflow en `docs/ci_workflow.yml`; activación pendiente de scope `workflow` | PASS local / pendiente activar |
 | Diccionario y validación de datos | `docs/50_DICCIONARIO_DATOS.md`, `src/data_validation.py`, `/api/data-validation`, test de backfill que no convierte jugadores en staff | PASS |
-| Code splitting | `three` y `MatchViewer3D` en chunks separados/lazy; main 667 KB (164 KB gzip), three 480 KB | PASS |
+| Code splitting | `three` y `MatchViewer3D` en chunks separados/lazy; main 679 KB (168 KB gzip), three 480 KB | PASS |
 | Onboarding y accesibilidad | Guía de primeros pasos en el dashboard, enlace “Saltar al contenido”, focus visible y reduced motion | PASS |
 | Refactor de la API | 138 rutas repartidas en 6 blueprints con `web/api/common.py` | PASS |
 | Refactor de temporada | `season_sim.py` + `season_promotion.py`; `season.py` conserva la API pública | PASS |
@@ -361,11 +361,11 @@ python3 -m pytest src/tests -q
 351 passed in 323.99s
 
 cd manager/web/frontend && npm run build
-✓ built in 3.12s
+✓ built in 3.44s
 
 curl /api/health → 200
 curl /app → 200
-curl /static/react/assets/index-DXz-jzOk.js → 200
+curl /static/react/assets/index-719foas9.js → 200
 
 node web/frontend/e2e_smoke.mjs
 {"health":true,"newGame":true,"onboarding":true,"dashboard":true,"calendar":true,"squad":true,"tactics":true,"market":true,"quickMatch":true,"report":true,"analysis":true,"i18nEnglish":true,"i18nPersisted":true,"i18nSpanish":true,"ok":true,"suite":"smoke","ms":7535}
