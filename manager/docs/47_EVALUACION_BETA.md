@@ -25,6 +25,9 @@
 | Diccionario y validación de datos | `docs/50_DICCIONARIO_DATOS.md`, `src/data_validation.py`, `/api/data-validation`, test de backfill que no convierte jugadores en staff | PASS |
 | Code splitting | `three` y `MatchViewer3D` en chunks separados/lazy; main 667 KB (164 KB gzip), three 480 KB | PASS |
 | Onboarding y accesibilidad | Guía de primeros pasos en el dashboard, enlace “Saltar al contenido”, focus visible y reduced motion | PASS |
+| Refactor de la API | 138 rutas repartidas en 6 blueprints con `web/api/common.py` | PASS |
+| Refactor de temporada | `season_sim.py` + `season_promotion.py`; `season.py` conserva la API pública | PASS |
+| Refactor del motor | `match_shared.py` + mixins de scoring/referee/tactics/simulation | PASS |
 | Frontend | `npm run build` → SPA compilada sin errores TypeScript | PASS |
 | Servidor web | `/api/health` 200; `/app` 200; asset React 200 | PASS |
 | Revisión de vídeo | `/api/match/live/review`, gol/gol anulado/PC/stroke revisables, referencia por equipo y corrección de marcador | PASS |
